@@ -4,9 +4,11 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, Sparkles, PlayCircle } from "lucide-react";
 import { buttonStyles } from "@/components/ui";
 import { useAppStore } from "@/store/useAppStore";
+import { isFullyMocked } from "@/lib/env";
 
 const projection = [
   { when: "72h", label: "barriga mais baixa" },
@@ -21,11 +23,19 @@ export default function Welcome() {
   const ready = useAppStore((s) => s.ready);
   const user = useAppStore((s) => s.user);
   const onboarding = useAppStore((s) => s.data.user?.onboarding ?? null);
+  const enterDemo = useAppStore((s) => s.enterDemo);
+  const [demoLoading, setDemoLoading] = useState(false);
 
   // Usuária que já entrou e concluiu o onboarding vai direto pro app.
   useEffect(() => {
     if (ready && user && onboarding) router.replace("/inicio");
   }, [ready, user, onboarding, router]);
+
+  async function verDemo() {
+    setDemoLoading(true);
+    await enterDemo();
+    router.replace("/inicio");
+  }
 
   return (
     <div className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col overflow-hidden bg-cream px-7 pt-safe pb-safe">
@@ -122,6 +132,17 @@ export default function Welcome() {
         >
           Já sou assinante · Entrar
         </Link>
+
+        {isFullyMocked && (
+          <button
+            onClick={verDemo}
+            disabled={demoLoading}
+            className="flex w-full items-center justify-center gap-1.5 pt-1 text-sm font-medium text-sage-deep disabled:opacity-50"
+          >
+            <PlayCircle className="size-4" />
+            {demoLoading ? "Abrindo demonstração…" : "Ver demonstração"}
+          </button>
+        )}
       </motion.div>
     </div>
   );

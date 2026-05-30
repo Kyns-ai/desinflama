@@ -15,6 +15,7 @@ import type {
 } from "@/types/domain";
 import { emptyAppData } from "@/types/domain";
 import { newJourney, phaseForDay, totalDays } from "@/lib/journey";
+import { buildDemoData } from "@/lib/demo";
 import { initialScore } from "@/lib/score";
 import { recomputedScores } from "@/lib/computeGutScore";
 import { bumpStreak } from "@/lib/streak";
@@ -54,6 +55,8 @@ interface AppState {
 
   setOnboarding: (onboarding: OnboardingData) => Promise<void>;
   startJourney: (challenge?: ChallengeType) => Promise<void>;
+  /** Entra com a conta de demonstração já populada (modo mock). */
+  enterDemo: () => Promise<void>;
   toggleChecklistItem: (day: number, index: number) => Promise<void>;
   completeDay: (day: number) => Promise<void>;
   addLog: (log: DailyLog) => Promise<void>;
@@ -199,6 +202,17 @@ export const useAppStore = create<AppState>((set, get) => {
     signIn: async (email, password) => {
       const user = await authService.signInWithEmail(email, password);
       await hydrateUser(user);
+    },
+
+    enterDemo: async () => {
+      const user = await authService.signInWithEmail(
+        "demo@desinflama.app",
+        "demo1234"
+      );
+      repository.setNamespace(user.id);
+      const data = buildDemoData(user);
+      await repository.save(data);
+      set({ user, data, ready: true });
     },
 
     signInWithProvider: async (provider) => {
