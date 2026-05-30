@@ -1,0 +1,353 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowLeft, ArrowRight, Check, PlayCircle, Sparkles } from "lucide-react";
+import { Button, ProgressBar } from "@/components/ui";
+import { useAppStore } from "@/store/useAppStore";
+import {
+  QUESTIONS,
+  BLOAT_PROFILES,
+  WELCOME_VIDEO,
+  type AnswerMap,
+} from "@/content/onboarding";
+import type { BloatType, Goal, SymptomKey } from "@/types/domain";
+import { cn } from "@/lib/cn";
+
+type Phase = "quiz" | "loading" | "mapa";
+const ease = [0.22, 1, 0.36, 1] as const;
+
+export default function Onboarding() {
+  const router = useRouter();
+  const setOnboarding = useAppStore((s) => s.setOnboarding);
+  const startJourney = useAppStore((s) => s.startJourney);
+
+  const [phase, setPhase] = useState<Phase>("quiz");
+  const [step, setStep] = useState(0);
+  const [answers, setAnswers] = useState<AnswerMap>({});
+
+  const q = QUESTIONS[step];
+  const isLast = step === QUESTIONS.length - 1;
+
+  function valueFor(id: string): string[] {
+    const v = (answers as Record<string, unknown>)[id];
+    if (Array.isArray(v)) return v as string[];
+    return v ? [v as string] : [];
+  }
+
+  function advance() {
+    if (isLast) setPhase("loading");
+    else setStep((s) => s + 1);
+  }
+
+  function selectSingle(value: string) {
+    setAnswers((a) => ({ ...a, [q.id]: value }));
+    setTimeout(advance, 220);
+  }
+
+  function toggleMulti(value: string) {
+    setAnswers((a) => {
+      const cur = (a[q.id as keyof AnswerMap] as string[] | undefined) ?? [];
+      const next = cur.includes(value)
+        ? cur.filter((x) => x !== value)
+        : [...cur, value];
+      return { ...a, [q.id]: next };
+    });
+  }
+
+  function back() {
+    if (step === 0) router.replace("/auth");
+    else setStep((s) => s - 1);
+  }
+
+  async function finish() {
+    await setOnboarding({
+      bloatType: (answers.bloatType ?? "fermentacao") as BloatType,
+      symptoms: (answers.symptoms ?? []) as SymptomKey[],
+      goal: (answers.goal ?? "desinchar") as Goal,
+      worstTime: answers.worstTime,
+    });
+    await startJourney("main14");
+    router.replace("/inicio");
+  }
+
+  if (phase === "loading")
+    return <MapaLoader onDone={() => setPhase("mapa")} />;
+  if (phase === "mapa")
+    return <Mapa bloatType={(answers.bloatType ?? "fermentacao") as BloatType} onStart={finish} />;
+
+  const selected = valueFor(q.id);
+  const canContinue = selected.length > 0;
+
+  return (
+    <div className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col bg-cream px-6 pt-safe pb-safe">
+      <div className="flex items-center gap-3 pt-4">
+        <button
+          onClick={back}
+          aria-label="Voltar"
+          className="grid size-10 place-items-center rounded-full text-ink-soft transition-colors active:bg-black/5"
+        >
+          <ArrowLeft className="size-5" />
+        </button>
+        <ProgressBar
+          className="flex-1"
+          value={0}
+          segments={QUESTIONS.length}
+          active={step}
+        />
+      </div>
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={q.id}
+          initial={{ opacity: 0, x: 24 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -24 }}
+          transition={{ duration: 0.32, ease }}
+          className="flex flex-1 flex-col py-8"
+        >
+          <h1 className="font-display text-[1.85rem] font-semibold leading-tight tracking-tight text-ink">
+            {q.title}
+          </h1>
+          {q.subtitle && (
+            <p className="mt-2 text-[15px] text-ink-soft">{q.subtitle}</p>
+          )}
+
+          <div className="mt-7 flex-1 space-y-3">
+            {q.options.map((opt) => {
+              const active = selected.includes(opt.value);
+              return (
+                <button
+                  key={opt.value}
+                  onClick={() =>
+                    q.multi ? toggleMulti(opt.value) : selectSingle(opt.value)
+                  }
+                  className={cn(
+                    "flex w-full items-center gap-3.5 rounded-2xl border p-4 text-left transition-all active:scale-[0.99]",
+                    active
+                      ? "border-sage bg-sage-tint/60 shadow-[var(--shadow-soft)]"
+                      : "border-line bg-surface"
+                  )}
+                >
+                  {opt.emoji && <span className="text-2xl">{opt.emoji}</span>}
+                  <span className="min-w-0 flex-1">
+                    <span className="block font-semibold tracking-tight text-ink">
+                      {opt.label}
+                    </span>
+                    {opt.desc && (
+                      <span className="mt-0.5 block text-sm leading-snug text-ink-soft">
+                        {opt.desc}
+                      </span>
+                    )}
+                  </span>
+                  <span
+                    className={cn(
+                      "grid size-6 shrink-0 place-items-center rounded-full border-2 transition-colors",
+                      active
+                        ? "border-sage bg-sage text-white"
+                        : "border-line"
+                    )}
+                  >
+                    {active && <Check className="size-3.5" strokeWidth={3} />}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {q.multi && (
+            <Button
+              fullWidth
+              size="lg"
+              disabled={!canContinue}
+              onClick={advance}
+              className="mt-4"
+            >
+              Continuar <ArrowRight className="size-5" />
+            </Button>
+          )}
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+}
+
+/* --------------------------- Loader (serif) --------------------------- */
+
+function MapaLoader({ onDone }: { onDone: () => void }) {
+  const steps = [
+    "Lendo suas respostas…",
+    "Cruzando com os padrões de inchaço…",
+    "Montando seu Mapa de Inchaço…",
+  ];
+  const [i, setI] = useState(0);
+
+  useEffect(() => {
+    const t1 = setTimeout(() => setI(1), 900);
+    const t2 = setTimeout(() => setI(2), 1800);
+    const t3 = setTimeout(onDone, 2900);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+    };
+  }, [onDone]);
+
+  return (
+    <div className="grid min-h-dvh place-items-center bg-cream px-8">
+      <div className="flex flex-col items-center text-center">
+        <div className="relative mb-8 size-20">
+          <div className="absolute inset-0 rounded-full border-4 border-cream-deep" />
+          <div className="absolute inset-0 animate-spin rounded-full border-4 border-transparent border-t-sage [animation-duration:1s]" />
+          <div className="absolute inset-0 grid place-items-center">
+            <Sparkles className="size-7 text-sage-deep" />
+          </div>
+        </div>
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={i}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.4 }}
+            className="font-display text-2xl font-semibold tracking-tight text-ink"
+          >
+            {steps[i]}
+          </motion.p>
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------ Mapa ------------------------------ */
+
+function Mapa({
+  bloatType,
+  onStart,
+}: {
+  bloatType: BloatType;
+  onStart: () => void;
+}) {
+  const p = BLOAT_PROFILES[bloatType];
+  const projection = [
+    { when: "72h", label: "barriga mais baixa" },
+    { when: "7 dias", label: "1ª vitória visível" },
+    { when: "14 dias", label: "intestino reparado" },
+  ];
+  const [busy, setBusy] = useState(false);
+
+  return (
+    <div className="mx-auto min-h-dvh w-full max-w-md bg-cream px-6 pt-safe pb-safe">
+      <motion.div
+        initial="hidden"
+        animate="show"
+        variants={{ show: { transition: { staggerChildren: 0.08 } } }}
+        className="flex flex-col py-8"
+      >
+        <Reveal>
+          <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-sage-tint px-3 py-1 text-xs font-semibold text-sage-dark">
+            <Sparkles className="size-3.5" /> Seu Mapa de Inchaço
+          </span>
+        </Reveal>
+
+        <Reveal>
+          <div className="mt-5 text-5xl">{p.emoji}</div>
+        </Reveal>
+        <Reveal>
+          <h1 className="mt-3 font-display text-[2rem] font-semibold leading-tight tracking-tight text-ink">
+            {p.name}
+          </h1>
+        </Reveal>
+        <Reveal>
+          <p className="mt-1 text-lg font-medium text-sage-deep">{p.tagline}</p>
+        </Reveal>
+
+        <Reveal>
+          <div className="mt-5 rounded-2xl border border-line bg-surface p-5">
+            <p className="text-xs font-semibold uppercase tracking-wide text-ink-faint">
+              Por que isso acontece
+            </p>
+            <p className="mt-2 text-[15px] leading-relaxed text-ink">
+              {p.cause}
+            </p>
+          </div>
+        </Reveal>
+
+        <Reveal>
+          <div className="mt-3 flex items-stretch gap-2">
+            {projection.map((x) => (
+              <div
+                key={x.when}
+                className="flex-1 rounded-2xl bg-cream-deep/60 px-3 py-3 text-center"
+              >
+                <div className="font-display text-lg font-semibold text-sage-deep">
+                  {x.when}
+                </div>
+                <div className="mt-0.5 text-[11px] leading-tight text-ink-soft">
+                  {x.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+
+        {/* Vídeo de boas-vindas da nutri (placeholder + transcrição) */}
+        <Reveal>
+          <div className="mt-5 overflow-hidden rounded-2xl border border-line bg-surface">
+            <div className="relative grid h-32 place-items-center bg-gradient-to-br from-sage-deep to-sage-dark">
+              <PlayCircle className="size-11 text-white/90" strokeWidth={1.6} />
+              <span className="absolute bottom-3 right-3 rounded-full bg-black/25 px-2 py-0.5 text-xs font-medium text-white backdrop-blur">
+                {WELCOME_VIDEO.durationLabel}
+              </span>
+            </div>
+            <details className="group p-4">
+              <summary className="flex cursor-pointer list-none items-center justify-between font-semibold tracking-tight text-ink">
+                {WELCOME_VIDEO.title}
+                <span className="text-sm font-medium text-sage-deep group-open:hidden">
+                  ler
+                </span>
+              </summary>
+              <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
+                {WELCOME_VIDEO.transcript}
+              </p>
+            </details>
+          </div>
+        </Reveal>
+
+        <Reveal>
+          <p className="mt-5 text-center text-[15px] text-ink-soft">{p.plan}</p>
+        </Reveal>
+
+        <Reveal>
+          <Button
+            fullWidth
+            size="lg"
+            loading={busy}
+            className="mt-5"
+            onClick={() => {
+              setBusy(true);
+              onStart();
+            }}
+          >
+            Começar meu Dia 1 <ArrowRight className="size-5" />
+          </Button>
+        </Reveal>
+      </motion.div>
+    </div>
+  );
+}
+
+function Reveal({ children }: { children: React.ReactNode }) {
+  return (
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, y: 14 },
+        show: { opacity: 1, y: 0, transition: { duration: 0.5, ease } },
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}

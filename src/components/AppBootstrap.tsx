@@ -1,24 +1,31 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useAppStore } from "@/store/useAppStore";
 
 /**
- * Hidrata o store (sessão + dados persistidos) uma vez ao montar e segura a UI
- * com um splash da marca até estar pronto. Vai no layout das abas.
+ * Gating das abas (a hidratação do store é global, via StoreHydrator):
+ *  - sem usuário → /auth
+ *  - sem onboarding → /onboarding
+ * Segura a UI com um splash da marca enquanto resolve.
  */
 export function AppBootstrap({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
   const ready = useAppStore((s) => s.ready);
-  const bootstrap = useAppStore((s) => s.bootstrap);
-  const started = useRef(false);
+  const user = useAppStore((s) => s.user);
+  const onboarding = useAppStore((s) => s.data.user?.onboarding ?? null);
 
   useEffect(() => {
-    if (started.current) return;
-    started.current = true;
-    bootstrap();
-  }, [bootstrap]);
+    if (!ready) return;
+    if (!user) {
+      router.replace("/auth");
+    } else if (!onboarding) {
+      router.replace("/onboarding");
+    }
+  }, [ready, user, onboarding, router]);
 
-  if (!ready) return <BootSplash />;
+  if (!ready || !user || !onboarding) return <BootSplash />;
   return <>{children}</>;
 }
 

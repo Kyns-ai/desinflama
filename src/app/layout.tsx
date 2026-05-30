@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
 import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
+import { StoreHydrator } from "@/components/StoreHydrator";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -56,6 +57,7 @@ export default function RootLayout({
       className={`${inter.variable} ${fraunces.variable} antialiased`}
     >
       <body>
+        <StoreHydrator />
         {children}
         <ServiceWorkerRegister />
       </body>

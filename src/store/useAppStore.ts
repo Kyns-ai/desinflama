@@ -6,8 +6,14 @@
  * (onboarding, concluir dia, registrar, etc.) sobre `update()`.
  */
 import { create } from "zustand";
-import type { AppData, OnboardingData, Subscription } from "@/types/domain";
+import type {
+  AppData,
+  ChallengeType,
+  OnboardingData,
+  Subscription,
+} from "@/types/domain";
 import { emptyAppData } from "@/types/domain";
+import { newJourney } from "@/lib/journey";
 import { loadOrInit } from "@/data/Repository";
 import { authService, repository, subscriptionService } from "@/services";
 import type { AuthUser, OAuthProvider } from "@/services/AuthService";
@@ -31,6 +37,7 @@ interface AppState {
   deleteAccount: () => Promise<void>;
 
   setOnboarding: (onboarding: OnboardingData) => Promise<void>;
+  startJourney: (challenge?: ChallengeType) => Promise<void>;
 
   // Assinatura
   refreshSubscription: () => Promise<void>;
@@ -135,6 +142,12 @@ export const useAppStore = create<AppState>((set, get) => {
     setOnboarding: async (onboarding) => {
       await get().update((d) => {
         if (d.user) d.user.onboarding = onboarding;
+      });
+    },
+
+    startJourney: async (challenge = "main14") => {
+      await get().update((d) => {
+        if (!d.progress) d.progress = newJourney(challenge);
       });
     },
 

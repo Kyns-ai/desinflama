@@ -1,9 +1,12 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { buttonStyles } from "@/components/ui";
+import { useAppStore } from "@/store/useAppStore";
 
 const projection = [
   { when: "72h", label: "barriga mais baixa" },
@@ -14,6 +17,16 @@ const projection = [
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function Welcome() {
+  const router = useRouter();
+  const ready = useAppStore((s) => s.ready);
+  const user = useAppStore((s) => s.user);
+  const onboarding = useAppStore((s) => s.data.user?.onboarding ?? null);
+
+  // Usuária que já entrou e concluiu o onboarding vai direto pro app.
+  useEffect(() => {
+    if (ready && user && onboarding) router.replace("/inicio");
+  }, [ready, user, onboarding, router]);
+
   return (
     <div className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col overflow-hidden bg-cream px-7 pt-safe pb-safe">
       {/* atmosfera: halos suaves de sálvia e coral */}
@@ -94,13 +107,13 @@ export default function Welcome() {
         className="relative space-y-3 pb-6"
       >
         <Link
-          href="/inicio"
+          href="/auth?mode=signup"
           className={buttonStyles({ size: "lg", fullWidth: true })}
         >
           Começar agora <ArrowRight className="size-5" />
         </Link>
         <Link
-          href="/inicio"
+          href="/auth?mode=login"
           className={buttonStyles({
             variant: "ghost",
             size: "md",

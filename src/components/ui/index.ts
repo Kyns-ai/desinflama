@@ -7,3 +7,4 @@ export { IconCircle } from "./IconCircle";
 export { SectionTitle } from "./SectionTitle";
 export { EmptyState } from "./EmptyState";
 export { Skeleton } from "./Skeleton";
+export { Input } from "./Input";
