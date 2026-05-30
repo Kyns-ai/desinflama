@@ -126,7 +126,7 @@ export default function Registrar() {
           Como você está hoje?
         </h1>
         <p className="mt-1 text-[15px] text-ink-soft">
-          Rápido — e alimenta seu Gut Score.
+          Rápido — e alimenta seu Índice Intestinal.
         </p>
       </header>
 

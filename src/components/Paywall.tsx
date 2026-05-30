@@ -14,7 +14,7 @@ import { cn } from "@/lib/cn";
 const BENEFITS = [
   "Programa completo de 14 dias + Reset de 21",
   "Seu Mapa de Inchaço personalizado",
-  "Gut Score e gráficos de progresso",
+  "Índice Intestinal e gráficos de progresso",
   "Biblioteca da nutri: aulas, receitas e trocas",
   "Desafios mensais e Modo Manutenção",
   "Cancele quando quiser, sem burocracia",

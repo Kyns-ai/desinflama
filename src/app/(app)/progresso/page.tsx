@@ -67,12 +67,12 @@ export default function Progresso() {
         </p>
       </header>
 
-      {/* Gut Score no tempo */}
+      {/* Índice Intestinal no tempo */}
       {score.length >= 2 && (
         <Card elevation="card">
           <div className="mb-1 flex items-center justify-between">
             <h2 className="font-semibold tracking-tight text-ink">
-              Gut Score no tempo
+              Índice Intestinal no tempo
             </h2>
             <span className="font-display text-2xl font-semibold text-sage-deep">
               {score[score.length - 1].value}
@@ -87,7 +87,7 @@ export default function Progresso() {
           <EmptyState
             icon={LineChartIcon}
             title="Seus gráficos aparecem aqui"
-            description="Assim que você fizer alguns registros, mostramos seu Gut Score no tempo, a queda do inchaço e seus melhores e piores dias."
+            description="Assim que você fizer alguns registros, mostramos seu Índice Intestinal no tempo, a queda do inchaço e seus melhores e piores dias."
             action={
               <Link href="/registrar" className={buttonStyles({ size: "md" })}>
                 Fazer meu 1º registro

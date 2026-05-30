@@ -1,5 +1,5 @@
 /**
- * Helpers de Gut Score para a UI. O MOTOR completo (computeGutScore, com pesos
+ * Helpers de Índice Intestinal para a UI. O MOTOR completo (computeGutScore, com pesos
  * e regra anti-despenque) é da Fase 8; aqui ficam o baseline inicial e leituras
  * usadas pelo dashboard/progresso.
  */

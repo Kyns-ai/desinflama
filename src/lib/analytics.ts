@@ -26,7 +26,7 @@ export function symptomSeries(
     .map((l) => ({ date: l.date, value: l.symptoms[key] as number }));
 }
 
-/** Série do Gut Score — último ponto de cada dia. */
+/** Série do Índice Intestinal — último ponto de cada dia. */
 export function scoreSeries(scores: GutScorePoint[]): SeriesPoint[] {
   const byDay = new Map<string, number>();
   for (const p of scores) byDay.set(p.date, p.value);

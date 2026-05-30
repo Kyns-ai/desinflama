@@ -25,7 +25,7 @@ export function logInsight(logs: DailyLog[], current: DailyLog): string {
 
   // primeira vez / fallback acolhedor
   if (logs.length <= 1) {
-    return "Primeiro registro feito! Cada um deixa seu Gut Score mais real 📈";
+    return "Primeiro registro feito! Cada um deixa seu Índice Intestinal mais real 📈";
   }
 
   const positives = [

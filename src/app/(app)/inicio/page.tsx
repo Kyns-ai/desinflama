@@ -53,7 +53,7 @@ export default function Inicio() {
         </span>
       </header>
 
-      {/* Gut Score */}
+      {/* Índice Intestinal */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
@@ -113,7 +113,7 @@ export default function Inicio() {
               Como você está hoje?
             </h3>
             <p className="text-sm text-ink-soft">
-              30 segundos que melhoram seu Gut Score
+              30 segundos que melhoram seu Índice Intestinal
             </p>
           </div>
           <ChevronRight className="size-5 shrink-0 text-ink-faint" />
@@ -131,7 +131,7 @@ export default function Inicio() {
               </span>
             </div>
             <p className="mt-1.5 text-[15px] text-[#7c5d18]/85">
-              Quando o Gut Score trava, uma avaliação individual com a nutri
+              Quando o Índice Intestinal trava, uma avaliação individual com a nutri
               costuma destravar. Quer entender suas opções?
             </p>
             <span className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-[#7c5d18]">

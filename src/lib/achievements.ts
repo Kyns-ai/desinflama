@@ -41,7 +41,7 @@ export const ACHIEVEMENTS: AchievementDef[] = [
   {
     id: "score-70",
     title: "Intestino feliz",
-    description: "Seu Gut Score chegou a 70",
+    description: "Seu Índice Intestinal chegou a 70",
     emoji: "💚",
     check: (d) => d.scores.some((s) => s.value >= 70),
   },

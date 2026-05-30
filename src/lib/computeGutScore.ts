@@ -1,5 +1,5 @@
 /**
- * Motor do Gut Score (Fase 8). Função pura + recomputação diária a partir do
+ * Motor do Índice Intestinal (Fase 8). Função pura + recomputação diária a partir do
  * estado real. Substitui os incrementos ad-hoc: cada dia tem UM ponto, recalculado
  * quando a usuária conclui o dia ou registra.
  *
@@ -42,7 +42,7 @@ export interface DayScoreInput {
   recentDiscomfort: number | null;
 }
 
-/** Calcula o valor/delta do Gut Score de um dia. Pura e testável. */
+/** Calcula o valor/delta do Índice Intestinal de um dia. Pura e testável. */
 export function computeDayScore(
   input: DayScoreInput,
   w: ScoreWeights = SCORE_WEIGHTS
@@ -80,7 +80,7 @@ export function computeDayScore(
 
 const avg = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : 0);
 
-/** Recalcula o ponto de Gut Score de hoje a partir do AppData e devolve o novo
+/** Recalcula o ponto de Índice Intestinal de hoje a partir do AppData e devolve o novo
  *  array de scores (um ponto por dia). */
 export function recomputedScores(
   d: AppData,

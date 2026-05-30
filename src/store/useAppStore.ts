@@ -188,7 +188,7 @@ export const useAppStore = create<AppState>((set, get) => {
     startJourney: async (challenge = "main14") => {
       await get().update((d) => {
         if (!d.progress) d.progress = newJourney(challenge);
-        // semente do Gut Score: baseline a partir do onboarding
+        // semente do Índice Intestinal: baseline a partir do onboarding
         if (d.scores.length === 0) {
           d.scores.push({
             date: todayKey(),
@@ -228,7 +228,7 @@ export const useAppStore = create<AppState>((set, get) => {
         }
         // ofensiva
         d.streak = bumpStreak(d.streak, today);
-        // Gut Score: recomputa o ponto do dia (motor da Fase 8)
+        // Índice Intestinal: recomputa o ponto do dia (motor da Fase 8)
         d.scores = recomputedScores(d, today);
         // conquistas
         const { list, newlyUnlocked } = reconcileAchievements(d, today);
@@ -244,7 +244,7 @@ export const useAppStore = create<AppState>((set, get) => {
         // substitui o registro do dia, se já existir
         d.logs = [...d.logs.filter((l) => l.date !== log.date), log];
         d.streak = bumpStreak(d.streak, log.date);
-        // Gut Score: recomputa o ponto do dia (motor da Fase 8)
+        // Índice Intestinal: recomputa o ponto do dia (motor da Fase 8)
         d.scores = recomputedScores(d, log.date);
         const { list, newlyUnlocked } = reconcileAchievements(d, log.date);
         d.achievements = list;

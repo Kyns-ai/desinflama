@@ -17,7 +17,7 @@ interface ScoreRingProps {
 }
 
 /**
- * Gut Score — anel animado. O número conta de `from` até `value` e o arco
+ * Índice Intestinal — anel animado. O número conta de `from` até `value` e o arco
  * preenche junto. É a peça-assinatura do app (ver dashboard).
  */
 export function ScoreRing({
@@ -26,7 +26,7 @@ export function ScoreRing({
   delta,
   size = 220,
   stroke = 16,
-  label = "Gut Score",
+  label = "Índice Intestinal",
   className,
 }: ScoreRingProps) {
   const start = from ?? value;
