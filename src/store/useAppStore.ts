@@ -9,6 +9,7 @@ import { create } from "zustand";
 import type {
   AppData,
   ChallengeType,
+  DailyLog,
   OnboardingData,
   Subscription,
 } from "@/types/domain";
@@ -43,6 +44,7 @@ interface AppState {
   startJourney: (challenge?: ChallengeType) => Promise<void>;
   toggleChecklistItem: (day: number, index: number) => Promise<void>;
   completeDay: (day: number) => Promise<void>;
+  addLog: (log: DailyLog) => Promise<void>;
 
   // Assinatura
   refreshSubscription: () => Promise<void>;
@@ -198,6 +200,20 @@ export const useAppStore = create<AppState>((set, get) => {
           : initialScore(d.user?.onboarding ?? null);
         const value = Math.min(100, prev + 8);
         d.scores.push({ date: today, value, delta: value - prev });
+      });
+    },
+
+    addLog: async (log) => {
+      await get().update((d) => {
+        // substitui o registro do dia, se já existir
+        d.logs = [...d.logs.filter((l) => l.date !== log.date), log];
+        d.streak = bumpStreak(d.streak, log.date);
+        // Gut Score: +4 por registrar refeição+sintoma (motor completo na Fase 8)
+        const prev = d.scores.length
+          ? d.scores[d.scores.length - 1].value
+          : initialScore(d.user?.onboarding ?? null);
+        const value = Math.min(100, prev + 4);
+        d.scores.push({ date: log.date, value, delta: value - prev });
       });
     },
 
