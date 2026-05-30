@@ -19,6 +19,7 @@ import { initialScore } from "@/lib/score";
 import { bumpStreak } from "@/lib/streak";
 import { todayKey } from "@/lib/date";
 import { loadOrInit } from "@/data/Repository";
+import { blobStore } from "@/data/storage";
 import { authService, repository, subscriptionService } from "@/services";
 import type { AuthUser, OAuthProvider } from "@/services/AuthService";
 import type { SubPackage } from "@/services/SubscriptionService";
@@ -45,6 +46,8 @@ interface AppState {
   toggleChecklistItem: (day: number, index: number) => Promise<void>;
   completeDay: (day: number) => Promise<void>;
   addLog: (log: DailyLog) => Promise<void>;
+  addPhoto: (dataUrl: string) => Promise<void>;
+  removePhoto: (id: string) => Promise<void>;
 
   // Assinatura
   refreshSubscription: () => Promise<void>;
@@ -214,6 +217,22 @@ export const useAppStore = create<AppState>((set, get) => {
           : initialScore(d.user?.onboarding ?? null);
         const value = Math.min(100, prev + 4);
         d.scores.push({ date: log.date, value, delta: value - prev });
+      });
+    },
+
+    addPhoto: async (dataUrl) => {
+      const id = `photo-${todayKey()}-${get().data.photos.length + 1}`;
+      const ref = await blobStore.save(id, dataUrl);
+      await get().update((d) => {
+        d.photos.push({ id, date: todayKey(), ref, private: true });
+      });
+    },
+
+    removePhoto: async (id) => {
+      const photo = get().data.photos.find((p) => p.id === id);
+      if (photo) await blobStore.remove(photo.ref);
+      await get().update((d) => {
+        d.photos = d.photos.filter((p) => p.id !== id);
       });
     },
 
