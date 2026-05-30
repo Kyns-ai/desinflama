@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Search, ChevronRight, Flame } from "lucide-react";
 import { getProvider } from "@/data/provider";
 import { Card, PageHeader, Badge, type Tone } from "@/components/ui";
-import { fmtDate } from "@/lib/cn";
 import type { PlanId } from "@/lib/types";
 
 const PLAN_LABEL: Record<PlanId, { label: string; tone: Tone }> = {

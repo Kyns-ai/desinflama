@@ -99,29 +99,27 @@ export function Donut({
   const total = data.reduce((s, d) => s + d.count, 0) || 1;
   const r = size / 2 - 14;
   const c = 2 * Math.PI * r;
-  let offset = 0;
+  // offset acumulado sem mutação durante o render
+  const segs = data.map((d, i) => {
+    const before = data.slice(0, i).reduce((s, x) => s + x.count, 0);
+    return { d, dash: (d.count / total) * c, offset: (before / total) * c };
+  });
   return (
     <div className="flex items-center gap-5">
       <svg width={size} height={size} className="-rotate-90">
-        {data.map((d, i) => {
-          const frac = d.count / total;
-          const dash = frac * c;
-          const seg = (
-            <circle
-              key={i}
-              cx={size / 2}
-              cy={size / 2}
-              r={r}
-              fill="none"
-              stroke={d.color}
-              strokeWidth="16"
-              strokeDasharray={`${dash} ${c - dash}`}
-              strokeDashoffset={-offset}
-            />
-          );
-          offset += dash;
-          return seg;
-        })}
+        {segs.map(({ d, dash, offset }, i) => (
+          <circle
+            key={i}
+            cx={size / 2}
+            cy={size / 2}
+            r={r}
+            fill="none"
+            stroke={d.color}
+            strokeWidth="16"
+            strokeDasharray={`${dash} ${c - dash}`}
+            strokeDashoffset={-offset}
+          />
+        ))}
       </svg>
       <ul className="space-y-1.5">
         {data.map((d) => (

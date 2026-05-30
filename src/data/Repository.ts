@@ -40,11 +40,36 @@ export class LocalRepository implements Repository {
   }
 }
 
-/** Carrega os dados do usuário, criando um estado vazio se for o primeiro acesso. */
+/** Carrega os dados do usuário, criando um estado vazio se for o primeiro acesso.
+ *  Normaliza contra o shape atual para que dados persistidos por versões antigas
+ *  (sem campos aninhados novos) não quebrem a UI. */
 export async function loadOrInit(repo: Repository): Promise<AppData> {
   const existing = await repo.load();
-  if (existing) return { ...emptyAppData(), ...existing };
-  const fresh = emptyAppData();
-  await repo.save(fresh);
-  return fresh;
+  if (!existing) {
+    const fresh = emptyAppData();
+    await repo.save(fresh);
+    return fresh;
+  }
+  return normalize(existing);
+}
+
+function normalize(d: Partial<AppData>): AppData {
+  const base = emptyAppData();
+  const streak = { ...base.streak, ...(d.streak ?? {}) };
+  const progress = d.progress
+    ? { ...d.progress, completedAt: d.progress.completedAt ?? {}, completedDays: d.progress.completedDays ?? [] }
+    : null;
+  return {
+    ...base,
+    ...d,
+    streak,
+    progress,
+    subscription: { ...base.subscription, ...(d.subscription ?? {}) },
+    logs: d.logs ?? [],
+    scores: d.scores ?? [],
+    photos: d.photos ?? [],
+    achievements: d.achievements ?? [],
+    checklists: d.checklists ?? {},
+    flags: d.flags ?? {},
+  };
 }

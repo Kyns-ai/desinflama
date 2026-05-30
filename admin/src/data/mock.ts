@@ -22,7 +22,6 @@ const NOMES = [
   "Yasmin Cunha", "Eduarda Martins", "Rafaela Moura", "Clara Antunes", "Lívia Farias",
 ];
 
-const PLANOS = ["annual", "monthly", "trial", "free"] as const;
 const FASES = ["main14", "reset21", "maintenance"] as const;
 
 function daysAgoISO(n: number): string {

@@ -40,6 +40,8 @@ export interface DayScoreInput {
   streakCurrent: number;
   /** desconforto médio dos últimos dias registrados (para tendência). */
   recentDiscomfort: number | null;
+  /** outra atividade que conta (ex.: concluir dia de desafio mensal). */
+  otherActivity?: boolean;
 }
 
 /** Calcula o valor/delta do Índice Intestinal de um dia. Pura e testável. */
@@ -47,21 +49,25 @@ export function computeDayScore(
   input: DayScoreInput,
   w: ScoreWeights = SCORE_WEIGHTS
 ): { value: number; delta: number } {
-  const { prevValue, todayLog, dayCompletedToday, streakCurrent, recentDiscomfort } =
+  const { prevValue, todayLog, dayCompletedToday, streakCurrent, recentDiscomfort, otherActivity } =
     input;
 
   const registered = !!todayLog && Object.keys(todayLog.symptoms).length > 0;
 
   // Sem nenhuma atividade hoje → estaciona (não cai).
-  if (!registered && !dayCompletedToday) {
+  if (!registered && !dayCompletedToday && !otherActivity) {
     return { value: prevValue, delta: 0 };
   }
 
   let gain = 0;
   if (dayCompletedToday) gain += w.completeDay;
   if (registered) gain += w.register;
+  else if (otherActivity) gain += w.register; // ex.: dia de desafio mensal
   if (todayLog?.hydrationOk) gain += w.hydration;
-  if (streakCurrent > 0) gain += Math.min(streakCurrent, w.streakCap) > 0 ? w.streakPerDay : 0;
+  // Bônus de ofensiva: nudge diário fixo enquanto a streak está ativa. O score é
+  // cumulativo (prevValue + gain), então escalar pelo tamanho da streak explodiria
+  // até 100 — por isso um valor fixo pequeno; `streakCap` fica como knob reservado.
+  if (streakCurrent > 0) gain += w.streakPerDay;
 
   // Tendência dos sintomas: melhora soma (1..trendMax), piora subtrai (suave).
   if (registered && recentDiscomfort != null) {
@@ -84,7 +90,8 @@ const avg = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.le
  *  array de scores (um ponto por dia). */
 export function recomputedScores(
   d: AppData,
-  today: string = todayKey()
+  today: string = todayKey(),
+  opts?: { otherActivity?: boolean }
 ): GutScorePoint[] {
   const prevPoint = [...d.scores]
     .filter((p) => p.date < today)
@@ -113,6 +120,7 @@ export function recomputedScores(
     dayCompletedToday,
     streakCurrent: d.streak.current,
     recentDiscomfort,
+    otherActivity: opts?.otherActivity,
   });
 
   const others = d.scores.filter((p) => p.date !== today);

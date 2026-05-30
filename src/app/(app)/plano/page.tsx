@@ -30,9 +30,18 @@ export default function Plano() {
     setRestoring(false);
   }
 
+  const [delError, setDelError] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false);
   async function excluir() {
-    await deleteAccount();
-    router.replace("/");
+    setDeleting(true);
+    setDelError(null);
+    try {
+      await deleteAccount();
+      router.replace("/");
+    } catch (e) {
+      setDelError(e instanceof Error ? e.message : "Não foi possível excluir.");
+      setDeleting(false);
+    }
   }
 
   const renew = subscription.renewsAt
@@ -154,17 +163,24 @@ export default function Plano() {
           <Card elevation="soft" className="border border-danger/30">
             <p className="font-semibold text-ink">Excluir sua conta?</p>
             <p className="mt-1 text-sm text-ink-soft">
-              Isso apaga seus dados deste aparelho. Não dá pra desfazer.
+              Isso apaga sua conta e todos os seus dados de forma permanente.
+              Não dá pra desfazer.
             </p>
+            {delError && (
+              <p className="mt-2 rounded-lg bg-danger-tint px-3 py-2 text-sm text-danger">
+                {delError}
+              </p>
+            )}
             <div className="mt-3 flex gap-2">
               <Button
                 variant="secondary"
                 fullWidth
+                disabled={deleting}
                 onClick={() => setConfirmDelete(false)}
               >
                 Cancelar
               </Button>
-              <Button variant="danger" fullWidth onClick={excluir}>
+              <Button variant="danger" fullWidth loading={deleting} onClick={excluir}>
                 <Check className="size-4" /> Confirmar
               </Button>
             </div>

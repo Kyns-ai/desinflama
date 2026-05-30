@@ -84,9 +84,16 @@ export class RevenueCatSubscriptionService implements SubscriptionService {
 
   async init(userId: string) {
     if (await this.isNative()) {
+      const apiKey = await this.platformKey();
+      // Falha alto se a chave da plataforma faltar — pega misconfig na QA,
+      // não no usuário pagante.
+      if (!apiKey) {
+        console.error(
+          "[RevenueCat] chave da plataforma nativa ausente (Apple/Google)."
+        );
+        return;
+      }
       const Purchases = await this.loadNative();
-      const apiKey =
-        (await this.platformKey()) ?? env.revenuecat.appleKey ?? "";
       if (!this.configured) {
         await Purchases.configure({ apiKey });
         this.configured = true;
@@ -97,7 +104,12 @@ export class RevenueCatSubscriptionService implements SubscriptionService {
         this.emit(toSubscription(ci as unknown as RCCustomerInfo))
       );
     } else {
-      if (!env.revenuecat.webKey) return;
+      if (!env.revenuecat.webKey) {
+        console.error(
+          "[RevenueCat] NEXT_PUBLIC_REVENUECAT_WEB_KEY ausente — checkout web indisponível."
+        );
+        return;
+      }
       const Purchases = await this.loadWeb();
       Purchases.configure(env.revenuecat.webKey, userId);
       this.configured = true;

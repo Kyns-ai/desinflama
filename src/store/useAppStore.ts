@@ -79,6 +79,19 @@ function clone<T>(v: T): T {
     : JSON.parse(JSON.stringify(v));
 }
 
+/** Fila serial de escrita: garante que dois update() nunca corram em paralelo e
+ *  sobrescrevam um ao outro (cada um re-clona o estado mais recente). */
+let writeChain: Promise<void> = Promise.resolve();
+
+/** Handles para desinscrever listeners ao trocar de usuário / sair. */
+let unsubscribeStatus: (() => void) | null = null;
+let unsubscribeAuth: (() => void) | null = null;
+
+function uid(): string {
+  if (typeof crypto !== "undefined" && crypto.randomUUID) return crypto.randomUUID();
+  return `id_${Math.abs((Date.now() ^ (Math.floor(performance.now?.() ?? 0))) >>> 0)}`;
+}
+
 /** Dispara notificação local para conquistas recém-desbloqueadas (se ativadas). */
 function notifyAchievements(novas: AchievementDef[]) {
   if (!novas.length) return;
@@ -115,38 +128,67 @@ export const useAppStore = create<AppState>((set, get) => {
     data: emptyAppData(),
 
     bootstrap: async () => {
-      const user = await authService.getCurrentUser();
-      repository.setNamespace(user?.id ?? "anon");
-      const data = await loadOrInit(repository);
+      try {
+        const user = await authService.getCurrentUser();
+        repository.setNamespace(user?.id ?? "anon");
+        const data = await loadOrInit(repository);
 
-      if (user) {
-        data.user = data.user ?? {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          onboarding: null,
-          createdAt: new Date().toISOString(),
-        };
-        await subscriptionService.init(user.id);
-        data.subscription = await subscriptionService.getStatus();
-        await repository.save(data);
-      }
+        if (user) {
+          data.user = data.user ?? {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            onboarding: null,
+            createdAt: new Date().toISOString(),
+          };
+          await subscriptionService.init(user.id);
+          data.subscription = await subscriptionService.getStatus();
+          await repository.save(data);
+        }
 
-      set({ user, data, ready: true });
+        set({ user, data });
 
-      // Reage a mudanças de entitlement (ex.: compra concluída em outro device).
-      subscriptionService.onStatusChange((sub) => {
-        get().update((d) => {
-          d.subscription = sub;
+        // Reage a mudanças de entitlement (compra concluída em outro device).
+        // Ignora emissões quando não há usuária logada (evita vazar premium
+        // para o namespace anon / próxima conta).
+        unsubscribeStatus?.();
+        unsubscribeStatus = subscriptionService.onStatusChange((sub) => {
+          if (!get().user) return;
+          get().update((d) => {
+            d.subscription = sub;
+          });
         });
-      });
+
+        // Reage a mudanças de sessão (OAuth nativo via deep-link, refresh, abas).
+        unsubscribeAuth?.();
+        unsubscribeAuth = authService.onAuthChange((u) => {
+          const current = get().user;
+          if (u && u.id !== current?.id) {
+            void hydrateUser(u);
+          } else if (!u && current) {
+            repository.setNamespace("anon");
+            set({ user: null, data: emptyAppData() });
+          }
+        });
+      } catch {
+        // Falha de storage/sessão não pode travar o app no splash para sempre.
+        repository.setNamespace("anon");
+        set({ user: null, data: emptyAppData() });
+      } finally {
+        set({ ready: true });
+      }
     },
 
-    update: async (mutator) => {
-      const draft = clone(get().data);
-      mutator(draft);
-      set({ data: draft });
-      await repository.save(draft);
+    update: (mutator) => {
+      // Serializa: cada mutação re-clona o estado mais recente e persiste em fila.
+      const result = writeChain.then(async () => {
+        const draft = clone(get().data);
+        mutator(draft);
+        set({ data: draft });
+        await repository.save(draft);
+      });
+      writeChain = result.catch(() => {});
+      return result;
     },
 
     signUp: async (email, password, name) => {
@@ -166,6 +208,10 @@ export const useAppStore = create<AppState>((set, get) => {
     },
 
     signOut: async () => {
+      // Para de ouvir entitlement antes de limpar, pra um push tardio não
+      // reescrever a assinatura na conta anon.
+      unsubscribeStatus?.();
+      unsubscribeStatus = null;
       await authService.signOut();
       await subscriptionService.signOut();
       repository.setNamespace("anon");
@@ -240,13 +286,16 @@ export const useAppStore = create<AppState>((set, get) => {
 
     addLog: async (log) => {
       let novas: AchievementDef[] = [];
+      const today = todayKey();
       await get().update((d) => {
         // substitui o registro do dia, se já existir
         d.logs = [...d.logs.filter((l) => l.date !== log.date), log];
-        d.streak = bumpStreak(d.streak, log.date);
+        // a ofensiva só conta atividade de HOJE — editar um dia passado não
+        // deve regredir nem inflar a streak atual.
+        if (log.date === today) d.streak = bumpStreak(d.streak, today);
         // Índice Intestinal: recomputa o ponto do dia (motor da Fase 8)
         d.scores = recomputedScores(d, log.date);
-        const { list, newlyUnlocked } = reconcileAchievements(d, log.date);
+        const { list, newlyUnlocked } = reconcileAchievements(d, today);
         d.achievements = list;
         novas = newlyUnlocked;
       });
@@ -254,7 +303,7 @@ export const useAppStore = create<AppState>((set, get) => {
     },
 
     addPhoto: async (dataUrl) => {
-      const id = `photo-${todayKey()}-${get().data.photos.length + 1}`;
+      const id = `photo-${todayKey()}-${uid()}`;
       const ref = await blobStore.save(id, dataUrl);
       let novas: AchievementDef[] = [];
       await get().update((d) => {
@@ -317,7 +366,8 @@ export const useAppStore = create<AppState>((set, get) => {
       await get().update((d) => {
         d.flags[`mc:${challengeId}:${day}`] = true;
         d.streak = bumpStreak(d.streak, today);
-        d.scores = recomputedScores(d, today);
+        // concluir um dia de desafio mensal conta como atividade do dia.
+        d.scores = recomputedScores(d, today, { otherActivity: true });
         const { list, newlyUnlocked } = reconcileAchievements(d, today);
         d.achievements = list;
         novas = newlyUnlocked;

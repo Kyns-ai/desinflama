@@ -202,10 +202,21 @@ export class SupabaseAuthService implements AuthService {
   }
 
   async deleteAccount() {
-    // A exclusão definitiva exige uma Edge Function com service role
-    // (configurada na Fase 12). Aqui encerramos a sessão.
+    // Exclusão DEFINITIVA: chama a Edge Function `delete-account` (service role)
+    // que apaga o usuário de auth.users + todas as linhas owned. Código em
+    // supabase/functions/delete-account/. Só encerra a sessão após apagar.
     const sb = await getSupabase();
-    await sb?.auth.signOut();
+    if (!sb) return;
+    const { error } = await sb.functions.invoke("delete-account", {
+      method: "POST",
+    });
+    if (error) {
+      // Não engole silenciosamente — a exclusão é exigência da App Store.
+      throw new Error(
+        "Não conseguimos excluir agora. Tente de novo em instantes."
+      );
+    }
+    await sb.auth.signOut();
   }
 
   onAuthChange(cb: (u: AuthUser | null) => void) {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
@@ -31,10 +31,15 @@ export default function AuthPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  function routeAfterAuth() {
-    const onboarding = useAppStore.getState().data.user?.onboarding;
-    router.replace(onboarding ? "/inicio" : "/onboarding");
-  }
+  const user = useAppStore((s) => s.user);
+  const onboarding = useAppStore((s) => s.data.user?.onboarding ?? null);
+
+  // Roteia quando a sessão fica disponível — cobre e-mail/senha E o OAuth
+  // (que volta por redirect/deep-link e hidrata via onAuthChange, não pela
+  // promessa awaitada).
+  useEffect(() => {
+    if (user) router.replace(onboarding ? "/inicio" : "/onboarding");
+  }, [user, onboarding, router]);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -51,7 +56,7 @@ export default function AuthPage() {
     try {
       if (mode === "signup") await signUp(email, password, name);
       else await signIn(email, password);
-      routeAfterAuth();
+      // a navegação acontece no efeito acima quando `user` é setado.
     } catch (err) {
       setError(err instanceof Error ? err.message : "Algo deu errado.");
       setLoading(false);
@@ -63,7 +68,8 @@ export default function AuthPage() {
     setLoading(true);
     try {
       await signInWithProvider(provider);
-      routeAfterAuth();
+      // mock: resolve na hora (efeito navega). Supabase: redirect/deep-link
+      // → onAuthChange hidrata → efeito navega.
     } catch (err) {
       setError(err instanceof Error ? err.message : "Algo deu errado.");
       setLoading(false);

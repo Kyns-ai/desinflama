@@ -96,7 +96,11 @@ function makeSupabaseProvider(): DataProvider {
           .from("profiles")
           .select("id,name,email,created_at,subscriptions(plan,is_premium),journey_progress(current_day,challenge_type)")
           .limit(50);
-        if (query) q = q.or(`name.ilike.%${query}%,email.ilike.%${query}%`);
+        if (query) {
+          // remove metacaracteres do PostgREST p/ evitar injeção no filtro .or()
+          const safe = query.replace(/[,()*:%\\"']/g, "").trim().slice(0, 60);
+          if (safe) q = q.or(`name.ilike.%${safe}%,email.ilike.%${safe}%`);
+        }
         const { data } = await q;
         if (!data) return mockUsers();
         return data.map((p: Record<string, unknown>) => mapUserRow(p));
@@ -140,8 +144,12 @@ function makeSupabaseProvider(): DataProvider {
 }
 
 function mapUserRow(p: Record<string, unknown>): UserRow {
-  const sub = (p.subscriptions as { plan?: string; is_premium?: boolean }) ?? {};
-  const prog = (p.journey_progress as { current_day?: number; challenge_type?: string }) ?? {};
+  // PostgREST devolve embeds 1:N como ARRAY — pega o primeiro registro.
+  const first = <T,>(v: unknown): T | undefined =>
+    Array.isArray(v) ? (v[0] as T) : (v as T | undefined);
+  const sub = first<{ plan?: string; is_premium?: boolean }>(p.subscriptions) ?? {};
+  const prog =
+    first<{ current_day?: number; challenge_type?: string }>(p.journey_progress) ?? {};
   return {
     id: String(p.id),
     name: String(p.name ?? "—"),
