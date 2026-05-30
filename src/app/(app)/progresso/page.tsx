@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { LineChart as LineChartIcon, TrendingDown, TrendingUp, AlertCircle, Trophy } from "lucide-react";
+import { LineChart as LineChartIcon, TrendingDown, TrendingUp, AlertCircle, Trophy, UserCheck, ChevronRight } from "lucide-react";
 import { EmptyState, buttonStyles, Card, Badge } from "@/components/ui";
+import { isScoreStalled } from "@/lib/score";
 import { LineChart } from "@/components/charts/LineChart";
 import { PhotoGallery } from "@/components/PhotoGallery";
 import { useAppStore } from "@/store/useAppStore";
@@ -53,6 +54,7 @@ export default function Progresso() {
   const triggers = triggerInsights(logs);
   const marcos = milestones(logs, streak.longest);
   const hasData = logs.length > 0;
+  const stalled = isScoreStalled(scores);
 
   return (
     <div className="space-y-6">
@@ -194,6 +196,29 @@ export default function Progresso() {
             ))}
           </div>
         </section>
+      )}
+
+      {/* Upsell de acompanhamento quando o score trava */}
+      {stalled && (
+        <Link href="/acompanhamento" className="block">
+          <Card
+            elevation="soft"
+            className="flex items-center gap-3.5 border border-gold/30 bg-gold-tint/50 transition-transform active:scale-[0.99]"
+          >
+            <span className="grid size-11 shrink-0 place-items-center rounded-2xl bg-white text-[#9a7322]">
+              <UserCheck className="size-5" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <h3 className="font-semibold tracking-tight text-ink">
+                Seu padrão pede um olhar de perto
+              </h3>
+              <p className="text-sm text-ink-soft">
+                Veja como funciona o acompanhamento individual
+              </p>
+            </div>
+            <ChevronRight className="size-5 shrink-0 text-ink-faint" />
+          </Card>
+        </Link>
       )}
 
       {/* Fotos privadas */}

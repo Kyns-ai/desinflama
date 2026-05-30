@@ -122,7 +122,7 @@ export default function Inicio() {
 
       {/* Upsell contextual (slot) — aparece quando o score estaciona */}
       {stalled && (
-        <Link href="/perfil" className="block">
+        <Link href="/acompanhamento" className="block">
           <div className="rounded-2xl border border-gold/30 bg-gold-tint/60 p-5 transition-transform active:scale-[0.99]">
             <div className="flex items-center gap-2">
               <Sparkles className="size-5 text-[#9a7322]" />

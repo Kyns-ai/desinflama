@@ -16,6 +16,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { Button, Badge, Card } from "@/components/ui";
+import { Paywall } from "@/components/Paywall";
 import { useAppStore } from "@/store/useAppStore";
 import { getDay } from "@/content/journey";
 import { phaseForDay, totalDays } from "@/lib/journey";
@@ -35,6 +36,8 @@ export function DayView({ day }: { day: number }) {
   const toggleItem = useAppStore((s) => s.toggleChecklistItem);
   const completeDay = useAppStore((s) => s.completeDay);
   const ready = useAppStore((s) => s.ready);
+  const isPremium = useAppStore((s) => s.data.subscription.isPremium);
+  const FREE_DAYS = 3;
 
   const content = getDay(day);
   const challenge = progress?.challengeType ?? "main14";
@@ -51,6 +54,17 @@ export function DayView({ day }: { day: number }) {
   useEffect(() => {
     if (isLocked) router.replace("/jornada");
   }, [isLocked, router]);
+
+  // Tier grátis: dias 1–3 abertos; o programa completo é premium (não-paywall-morto).
+  if (!isPremium && day > FREE_DAYS) {
+    return (
+      <Paywall
+        reason={`O Dia ${day} faz parte do programa completo. Continue de onde parou.`}
+        onClose={() => router.push("/jornada")}
+        onPurchased={() => router.replace(`/jornada/${day}`)}
+      />
+    );
+  }
 
   if (!content) {
     return (

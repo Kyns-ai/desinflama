@@ -13,6 +13,7 @@ import {
   MockSubscriptionService,
   type SubscriptionService,
 } from "./SubscriptionService";
+import { RevenueCatSubscriptionService } from "./RevenueCatService";
 
 export const repository: Repository = new LocalRepository();
 
@@ -20,9 +21,10 @@ export const authService: AuthService = env.supabase.configured
   ? new SupabaseAuthService()
   : new MockAuthService();
 
-// O RevenueCat real (web + IAP nativo) é conectado na Fase 10 por trás desta
-// mesma interface. Até lá, e quando não há chaves, usamos o mock funcional.
-export const subscriptionService: SubscriptionService =
-  new MockSubscriptionService();
+// RevenueCat real (Web Billing + Apple IAP + Google Play Billing) quando há
+// chaves; caso contrário, mock funcional. A UI não muda — depende da interface.
+export const subscriptionService: SubscriptionService = env.revenuecat.configured
+  ? new RevenueCatSubscriptionService()
+  : new MockSubscriptionService();
 
 export type { AuthService, SubscriptionService, Repository };
