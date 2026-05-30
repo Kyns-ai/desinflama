@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ *
+ *  Desinflama Admin — tokens (mesma marca, layout de dashboard)
+ * ------------------------------------------------------------------ */
+@theme {
+  --color-cream: #faf7f2;
+  --color-canvas: #f4f1ea;
+  --color-surface: #ffffff;
+
+  --color-ink: #232220;
+  --color-ink-soft: #5c5953;
+  --color-ink-faint: #9a958c;
+
+  --color-sage: #4fb286;
+  --color-sage-deep: #3c9a71;
+  --color-sage-dark: #2f7657;
+  --color-sage-tint: #e7f3ec;
+
+  --color-coral: #f2856d;
+  --color-coral-deep: #e66b52;
+  --color-coral-dark: #b9482f;
+  --color-coral-tint: #fce9e3;
+
+  --color-gold: #d8a657;
+  --color-gold-tint: #f6ecd8;
+  --color-sky: #6aa6c4;
+  --color-sky-tint: #e4f0f5;
+  --color-plum: #9b7aa6;
+  --color-plum-tint: #efe7f2;
+  --color-danger: #d9694f;
+  --color-danger-tint: #f8e6e1;
+
+  --color-line: #ece6db;
+  --color-line-soft: #f2ede4;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
+
+  --shadow-soft: 0 1px 2px rgba(67, 56, 38, 0.04),
+    0 8px 24px -14px rgba(67, 56, 38, 0.1);
+  --shadow-card: 0 1px 3px rgba(67, 56, 38, 0.05),
+    0 12px 32px -18px rgba(67, 56, 38, 0.14);
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: var(--font-serif);
+  font-optical-sizing: auto;
+  letter-spacing: -0.015em;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
