@@ -562,6 +562,157 @@ export const DAYS: DayContent[] = [
     completionMessage:
       "DESAFIO CONCLUÍDO 🏆🗺️ Você tem seu mapa. Agora é manter a leveza — e a gente segue com você.",
   },
+
+  /* ------------------- RESET PROFUNDO · Rebalance (15–21) ------------------- */
+  {
+    day: 15,
+    phase: "Rebalance",
+    lesson: {
+      title: "Reset Profundo: agora a gente cuida do todo",
+      body: "Você já mapeou a comida. Mas o intestino também responde a sono, estresse e movimento — é o famoso eixo intestino-cérebro. Nestes 7 dias a gente afina esses pilares pra consolidar o que você conquistou. Pense no Reset como a diferença entre desinchar e ficar desinchada.",
+    },
+    checklist: [
+      "Mantenha sua base de alimentos tolerados",
+      "Durma e acorde em horários parecidos",
+      "Caminhe 20–30 min",
+      "Registre sono e estresse hoje",
+    ],
+    meals: {
+      cafe: ["Ovos + abacate (⅛) + chá", "Iogurte tolerado + aveia + frutas low FODMAP", "Crepioca + chá de hortelã"],
+      almoco: ["Proteína + arroz + legumes tolerados", "Peixe + batata + salada", "Frango + quinoa + abobrinha"],
+      jantar: ["Sopa leve de legumes + proteína", "Salmão + purê de batata-doce", "Omelete + salada verde"],
+      lanche: ["Frutas toleradas", "Castanhas", "Iogurte tolerado"],
+    },
+    completionMessage: "Dia 15 ✅ Começou o ajuste fino do seu corpo todo.",
+  },
+  {
+    day: 16,
+    phase: "Rebalance",
+    lesson: {
+      title: "Sono: a faxina noturna do intestino",
+      body: "Enquanto você dorme, o intestino faz movimentos de limpeza (o complexo motor migratório) que “varrem” restos e bactérias. Dormir mal trava essa faxina e favorece o inchaço. Hoje a meta é higiene do sono: menos tela à noite, quarto escuro e um ritmo regular.",
+    },
+    checklist: [
+      "Desligue telas 30 min antes de dormir",
+      "Última refeição pelo menos 2h antes de deitar",
+      "Chá de camomila ou hortelã à noite",
+      "Registre como dormiu",
+    ],
+    meals: {
+      cafe: ["Mingau de aveia sem glúten + banana", "Ovos + tapioca", "Iogurte tolerado + sementes"],
+      almoco: ["Frango + arroz + cenoura", "Peixe + batata + salada", "Carne magra + quinoa + vagem"],
+      jantar: ["Jantar leve: sopa + proteína (cedo)", "Omelete + salada", "Peixe + legumes no vapor"],
+      lanche: ["Banana", "Castanhas", "Chá de camomila"],
+    },
+    completionMessage: "Dia 16 ✅ Sono cuidado é intestino que se repara sozinho.",
+  },
+  {
+    day: 17,
+    phase: "Rebalance",
+    lesson: {
+      title: "Estresse: respirar muda sua digestão",
+      body: "Em estresse, o corpo entra em “luta ou fuga” e a digestão simplesmente para — por isso a barriga estufa em dias tensos. A boa notícia: dá pra desligar isso conscientemente. A respiração lenta ativa o nervo vago, que liga o “modo digestão”. Hoje você testa 5 minutos disso antes de comer.",
+    },
+    checklist: [
+      "Antes de uma refeição, respire fundo por 5 min",
+      "Coma com calma, sem tela, mastigando bem",
+      "Faça uma pausa de 10 min no dia só pra você",
+      "Registre seu nível de estresse",
+    ],
+    meals: {
+      cafe: ["Ovos + abacate + chá", "Iogurte tolerado + aveia + morango", "Crepioca + café"],
+      almoco: ["Proteína + arroz + legumes", "Peixe + batata + salada", "Frango + quinoa"],
+      jantar: ["Sopa reconfortante + proteína", "Omelete + salada", "Salmão + purê"],
+      lanche: ["Frutas toleradas", "Castanhas", "Chá"],
+    },
+    completionMessage: "Dia 17 ✅ Você ensinou seu corpo a digerir em paz.",
+  },
+  {
+    day: 18,
+    phase: "Rebalance",
+    lesson: {
+      title: "Movimento: o empurrãozinho que o intestino ama",
+      body: "Não precisa de academia pesada — caminhar já estimula o intestino a se mover e libera gases presos. O movimento depois das refeições é especialmente bom contra o inchaço pós-comida. Hoje você inclui uma caminhada leve depois de uma refeição maior.",
+    },
+    checklist: [
+      "Caminhe 10–15 min após o almoço ou jantar",
+      "Inclua um alongamento de torção suave",
+      "Mantenha a hidratação",
+      "Registre como a barriga respondeu",
+    ],
+    meals: {
+      cafe: ["Panqueca de banana + ovo", "Ovos + tapioca + mamão", "Iogurte tolerado + aveia"],
+      almoco: ["Frango + arroz + abobrinha", "Peixe + batata-doce + salada", "Carne + quinoa + cenoura"],
+      jantar: ["Sopa + proteína", "Omelete + salada", "Peixe + legumes"],
+      lanche: ["Banana", "Castanhas", "Kiwi"],
+    },
+    completionMessage: "Dia 18 ✅ Mexer o corpo é mexer o intestino. Sentiu?",
+  },
+  {
+    day: 19,
+    phase: "Rebalance",
+    lesson: {
+      title: "Reforçando o que você tolera",
+      body: "A esta altura você já sabe muito sobre o seu corpo. Hoje a gente reforça a variedade DENTRO do que cai bem — porque variar alimentos tolerados alimenta uma microbiota diversa e forte. Não é sobre comer pouco; é sobre comer bem e variado dentro do seu mapa.",
+    },
+    checklist: [
+      "Inclua um alimento tolerado que você não come há dias",
+      "Capriche em cores no prato (legumes variados)",
+      "Mantenha sono e movimento",
+      "Registre seus sintomas",
+    ],
+    meals: {
+      cafe: ["Ovos + abacate + frutas", "Iogurte tolerado + aveia + sementes", "Crepioca + chá"],
+      almoco: ["Bowl colorido: proteína + arroz + legumes variados", "Peixe + batata + salada", "Frango + quinoa + abóbora"],
+      jantar: ["Sopa de legumes variados + proteína", "Salmão + purê", "Omelete + salada"],
+      lanche: ["Frutas toleradas variadas", "Castanhas", "Iogurte tolerado"],
+    },
+    completionMessage: "Dia 19 ✅ Variedade é força pra sua microbiota.",
+  },
+  {
+    day: 20,
+    phase: "Rebalance",
+    lesson: {
+      title: "Montando sua rotina de manutenção",
+      body: "Amanhã o Reset acaba — mas a leveza fica, se você tiver uma rotina simples. Manutenção não é dieta: é uma base de alimentos que caem bem + os grupos que você tolera + atenção (não proibição) nos gatilhos + sono, movimento e calma. Hoje você desenha essa rotina do seu jeito.",
+    },
+    checklist: [
+      "Liste 3 refeições-curinga que sempre caem bem",
+      "Defina 1 hábito de sono e 1 de movimento pra manter",
+      "Anote seus gatilhos pra consultar quando precisar",
+      "Registre seus sintomas",
+    ],
+    meals: {
+      cafe: ["Seu café curinga", "Ovos + tapioca + fruta", "Iogurte tolerado + aveia"],
+      almoco: ["Seu prato-base favorito", "Peixe + batata + salada", "Frango + quinoa + legumes"],
+      jantar: ["Seu jantar leve preferido", "Sopa + proteína", "Omelete + salada"],
+      lanche: ["Seus lanches seguros", "Castanhas", "Frutas toleradas"],
+    },
+    completionMessage: "Dia 20 ✅ Sua rotina de leveza está quase pronta.",
+  },
+  {
+    day: 21,
+    phase: "Rebalance",
+    milestone: "Reset Profundo concluído",
+    lesson: {
+      title: "21 dias: você se transformou 🌟",
+      body: "Três semanas atrás, viver estufada parecia normal. Hoje você tem um mapa, uma rotina e — o mais importante — entende o seu corpo. Daqui pra frente é manutenção: a leveza que você conquistou se mantém com pequenas escolhas conscientes, não com restrição. Você não depende mais de adivinhação. Parabéns: isso é pra vida.",
+    },
+    checklist: [
+      "Compare sua barriga, energia e pele com o Dia 1",
+      "Comemore essa conquista (sem ser com comida) 🎉",
+      "Ative o Modo Manutenção pra não voltar a inchar",
+      "Escolha seu próximo desafio mensal quando quiser",
+    ],
+    meals: {
+      cafe: ["Seu café da manhã favorito do programa", "Ovos + tapioca + fruta", "Iogurte tolerado + aveia"],
+      almoco: ["Seu prato-base de manutenção", "Peixe + batata + salada", "Frango + quinoa + legumes"],
+      jantar: ["Algo leve que você ama", "Sopa + proteína", "Omelete + salada"],
+      lanche: ["Suas frutas e castanhas toleradas", "Iogurte tolerado", "Gelatina sem açúcar"],
+    },
+    completionMessage:
+      "21 DIAS 🌟 Você se transformou. Agora é manutenção — e a gente segue do seu lado.",
+  },
 ];
 
 /** Acessa o conteúdo de um dia. Retorna null se ainda não foi escrito. */

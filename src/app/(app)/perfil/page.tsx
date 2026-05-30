@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/cn";
 import {
   Crown,
   Map,
@@ -23,6 +25,7 @@ interface Row {
   caption?: string;
   href: string;
   tone: "sage" | "coral" | "gold" | "sky" | "plum" | "neutral";
+  kind?: "link" | "toggle";
 }
 
 const GRUPOS: { titulo: string; rows: Row[] }[] = [
@@ -31,22 +34,22 @@ const GRUPOS: { titulo: string; rows: Row[] }[] = [
     rows: [
       { icon: Map, label: "Meu Mapa de Inchaço", href: "/perfil", tone: "sage" },
       { icon: BookOpen, label: "Biblioteca da nutri", href: "/aprender", tone: "plum" },
-      { icon: Award, label: "Conquistas e níveis", href: "/perfil", tone: "gold" },
+      { icon: Award, label: "Conquistas e níveis", href: "/conquistas", tone: "gold" },
     ],
   },
   {
     titulo: "Conta",
     rows: [
-      { icon: Bell, label: "Notificações", href: "/perfil", tone: "coral" },
+      { icon: Bell, label: "Notificações", href: "/perfil", tone: "coral", kind: "toggle" },
       {
         icon: Crown,
         label: "Meu plano",
         caption: "Gerencie ou cancele quando quiser",
-        href: "/perfil",
+        href: "/plano",
         tone: "gold",
       },
-      { icon: ShieldCheck, label: "Privacidade", href: "/perfil", tone: "sky" },
-      { icon: HelpCircle, label: "Ajuda", href: "/perfil", tone: "neutral" },
+      { icon: ShieldCheck, label: "Privacidade", href: "/plano", tone: "sky" },
+      { icon: HelpCircle, label: "Ajuda", href: "/plano", tone: "neutral" },
     ],
   },
 ];
@@ -115,24 +118,28 @@ export default function Perfil() {
             {g.titulo}
           </h2>
           <Card elevation="soft" className="divide-y divide-line p-0">
-            {g.rows.map((r) => (
-              <Link
-                key={r.label}
-                href={r.href}
-                className="flex items-center gap-3.5 p-4 transition-colors active:bg-cream-deep/50"
-              >
-                <IconCircle icon={r.icon} tone={r.tone} size="sm" />
-                <div className="min-w-0 flex-1">
-                  <p className="font-medium tracking-tight text-ink">
-                    {r.label}
-                  </p>
-                  {r.caption && (
-                    <p className="text-sm text-ink-soft">{r.caption}</p>
-                  )}
-                </div>
-                <ChevronRight className="size-5 shrink-0 text-ink-faint" />
-              </Link>
-            ))}
+            {g.rows.map((r) =>
+              r.kind === "toggle" ? (
+                <NotifToggle key={r.label} row={r} />
+              ) : (
+                <Link
+                  key={r.label}
+                  href={r.href}
+                  className="flex items-center gap-3.5 p-4 transition-colors active:bg-cream-deep/50"
+                >
+                  <IconCircle icon={r.icon} tone={r.tone} size="sm" />
+                  <div className="min-w-0 flex-1">
+                    <p className="font-medium tracking-tight text-ink">
+                      {r.label}
+                    </p>
+                    {r.caption && (
+                      <p className="text-sm text-ink-soft">{r.caption}</p>
+                    )}
+                  </div>
+                  <ChevronRight className="size-5 shrink-0 text-ink-faint" />
+                </Link>
+              )
+            )}
           </Card>
         </section>
       ))}
@@ -142,6 +149,50 @@ export default function Perfil() {
         className="flex w-full items-center justify-center gap-2 py-2 text-sm font-medium text-ink-faint transition-colors active:text-ink-soft"
       >
         <LogOut className="size-4" /> Sair
+      </button>
+    </div>
+  );
+}
+
+function NotifToggle({ row }: { row: Row }) {
+  const enabled = useAppStore((s) => s.data.flags.notifications ?? false);
+  const enable = useAppStore((s) => s.enableNotifications);
+  const disable = useAppStore((s) => s.disableNotifications);
+  const [busy, setBusy] = useState(false);
+
+  async function toggle() {
+    setBusy(true);
+    if (enabled) await disable();
+    else await enable();
+    setBusy(false);
+  }
+
+  return (
+    <div className="flex items-center gap-3.5 p-4">
+      <IconCircle icon={row.icon} tone={row.tone} size="sm" />
+      <div className="min-w-0 flex-1">
+        <p className="font-medium tracking-tight text-ink">{row.label}</p>
+        <p className="text-sm text-ink-soft">
+          Lembretes do seu dia e da ofensiva
+        </p>
+      </div>
+      <button
+        onClick={toggle}
+        disabled={busy}
+        role="switch"
+        aria-checked={enabled}
+        aria-label="Ativar notificações"
+        className={cn(
+          "relative h-7 w-12 shrink-0 rounded-full transition-colors",
+          enabled ? "bg-sage" : "bg-cream-deep"
+        )}
+      >
+        <span
+          className={cn(
+            "absolute top-1 size-5 rounded-full bg-white shadow transition-all",
+            enabled ? "left-6" : "left-1"
+          )}
+        />
       </button>
     </div>
   );

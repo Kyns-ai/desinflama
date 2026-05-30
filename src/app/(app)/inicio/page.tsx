@@ -16,6 +16,7 @@ import { useAppStore } from "@/store/useAppStore";
 import { currentScore, scoreMicrocopy, isScoreStalled } from "@/lib/score";
 import { phaseForDay } from "@/lib/journey";
 import { lessonTitleFor } from "@/content/journey";
+import { MONTHLY_CHALLENGES } from "@/content/challenges";
 import { humanDate } from "@/lib/date";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -70,31 +71,35 @@ export default function Inicio() {
         </Card>
       </motion.div>
 
-      {/* Seu dia de hoje */}
-      <Link href="/jornada" className="block">
-        <Card className="transition-transform active:scale-[0.99]" elevation="card">
-          <div className="flex items-center justify-between">
-            <Badge tone={phase.tone}>Fase {phase.phase}</Badge>
-            <span className="text-sm font-medium text-ink-faint">
-              Dia {day} de {challenge === "reset21" ? 21 : 14}
-            </span>
-          </div>
-          <h2 className="mt-3 font-display text-xl font-semibold tracking-tight text-ink">
-            Seu dia de hoje
-          </h2>
-          <p className="mt-1 text-[15px] text-ink-soft">{phase.focus}</p>
-          <div
-            className={buttonStyles({
-              variant: "sage",
-              size: "md",
-              fullWidth: true,
-              className: "mt-4",
-            })}
-          >
-            Ver meu dia <ArrowRight className="size-4" />
-          </div>
-        </Card>
-      </Link>
+      {/* Seu dia de hoje (jornada) ou Manutenção */}
+      {challenge === "maintenance" ? (
+        <MaintenanceBlock flags={data.flags} />
+      ) : (
+        <Link href="/jornada" className="block">
+          <Card className="transition-transform active:scale-[0.99]" elevation="card">
+            <div className="flex items-center justify-between">
+              <Badge tone={phase.tone}>Fase {phase.phase}</Badge>
+              <span className="text-sm font-medium text-ink-faint">
+                Dia {day} de {challenge === "reset21" ? 21 : 14}
+              </span>
+            </div>
+            <h2 className="mt-3 font-display text-xl font-semibold tracking-tight text-ink">
+              Seu dia de hoje
+            </h2>
+            <p className="mt-1 text-[15px] text-ink-soft">{phase.focus}</p>
+            <div
+              className={buttonStyles({
+                variant: "sage",
+                size: "md",
+                fullWidth: true,
+                className: "mt-4",
+              })}
+            >
+              Ver meu dia <ArrowRight className="size-4" />
+            </div>
+          </Card>
+        </Link>
+      )}
 
       {/* Como você está hoje? */}
       <Link href="/registrar" className="block">
@@ -181,6 +186,58 @@ export default function Inicio() {
             </div>
           </Card>
         </Link>
+      </div>
+    </div>
+  );
+}
+
+function MaintenanceBlock({ flags }: { flags: Record<string, boolean> }) {
+  return (
+    <div className="space-y-4">
+      <Card elevation="card" className="bg-gradient-to-br from-sage-deep to-sage-dark text-white">
+        <Badge tone="gold" className="bg-white/20 text-white">
+          Modo Manutenção
+        </Badge>
+        <h2 className="mt-3 font-display text-xl font-semibold tracking-tight">
+          Sua leveza, todo dia
+        </h2>
+        <p className="mt-1 text-[15px] text-white/85">
+          Seu intestino está bem agora — manutenção é o que impede de voltar.
+          Registre, observe e mantenha o ritmo.
+        </p>
+      </Card>
+
+      <div>
+        <h2 className="mb-3 text-base font-semibold tracking-tight text-ink">
+          Desafios mensais
+        </h2>
+        <div className="space-y-3">
+          {MONTHLY_CHALLENGES.map((c) => {
+            const done = c.dias.filter(
+              (d) => flags[`mc:${c.id}:${d.day}`]
+            ).length;
+            const pct = Math.round((done / c.dias.length) * 100);
+            return (
+              <Link key={c.id} href={`/desafios/${c.id}`} className="block">
+                <Card
+                  elevation="soft"
+                  className="flex items-center gap-4 transition-transform active:scale-[0.99]"
+                >
+                  <span className="text-3xl">{c.emoji}</span>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-semibold tracking-tight text-ink">
+                      {c.nome}
+                    </h3>
+                    <p className="truncate text-sm text-ink-soft">
+                      {done > 0 ? `${done}/${c.dias.length} dias · ${pct}%` : c.descricao}
+                    </p>
+                  </div>
+                  <ChevronRight className="size-5 shrink-0 text-ink-faint" />
+                </Card>
+              </Link>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

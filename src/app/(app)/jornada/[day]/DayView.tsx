@@ -78,12 +78,18 @@ export function DayView({ day }: { day: number }) {
     setCelebrating(true);
   }
 
+  const isFinalDay =
+    (challenge === "main14" && day === 14) ||
+    (challenge === "reset21" && day === 21);
+
   if (celebrating) {
     return (
       <Celebration
         message={content.completionMessage}
         milestone={content.milestone}
-        onDone={() => router.replace("/inicio")}
+        onDone={() =>
+          router.replace(isFinalDay ? "/concluir" : "/inicio")
+        }
       />
     );
   }

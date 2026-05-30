@@ -18,6 +18,16 @@ import { newJourney, phaseForDay, totalDays } from "@/lib/journey";
 import { initialScore } from "@/lib/score";
 import { recomputedScores } from "@/lib/computeGutScore";
 import { bumpStreak } from "@/lib/streak";
+import {
+  reconcileAchievements,
+  type AchievementDef,
+} from "@/lib/achievements";
+import {
+  requestNotifPermission,
+  scheduleRetentionNudges,
+  fireMilestoneNotification,
+  cancelAllNudges,
+} from "@/lib/notifications";
 import { todayKey } from "@/lib/date";
 import { loadOrInit } from "@/data/Repository";
 import { blobStore } from "@/data/storage";
@@ -50,6 +60,13 @@ interface AppState {
   addPhoto: (dataUrl: string) => Promise<void>;
   removePhoto: (id: string) => Promise<void>;
 
+  // Retenção
+  enableNotifications: () => Promise<boolean>;
+  disableNotifications: () => Promise<void>;
+  enterMaintenance: () => Promise<void>;
+  startResetProfundo: () => Promise<void>;
+  completeChallengeDay: (challengeId: string, day: number) => Promise<void>;
+
   // Assinatura
   refreshSubscription: () => Promise<void>;
   purchase: (planId: SubPackage["id"]) => Promise<void>;
@@ -60,6 +77,18 @@ function clone<T>(v: T): T {
   return typeof structuredClone === "function"
     ? structuredClone(v)
     : JSON.parse(JSON.stringify(v));
+}
+
+/** Dispara notificação local para conquistas recém-desbloqueadas (se ativadas). */
+function notifyAchievements(novas: AchievementDef[]) {
+  if (!novas.length) return;
+  if (!useAppStore.getState().data.flags.notifications) return;
+  for (const a of novas) {
+    fireMilestoneNotification(
+      `Conquista desbloqueada ${a.emoji}`,
+      `${a.title} — ${a.description}`
+    );
+  }
 }
 
 export const useAppStore = create<AppState>((set, get) => {
@@ -180,6 +209,7 @@ export const useAppStore = create<AppState>((set, get) => {
     },
 
     completeDay: async (day) => {
+      let novas: AchievementDef[] = [];
       await get().update((d) => {
         if (!d.progress) return;
         const today = todayKey();
@@ -200,25 +230,40 @@ export const useAppStore = create<AppState>((set, get) => {
         d.streak = bumpStreak(d.streak, today);
         // Gut Score: recomputa o ponto do dia (motor da Fase 8)
         d.scores = recomputedScores(d, today);
+        // conquistas
+        const { list, newlyUnlocked } = reconcileAchievements(d, today);
+        d.achievements = list;
+        novas = newlyUnlocked;
       });
+      notifyAchievements(novas);
     },
 
     addLog: async (log) => {
+      let novas: AchievementDef[] = [];
       await get().update((d) => {
         // substitui o registro do dia, se já existir
         d.logs = [...d.logs.filter((l) => l.date !== log.date), log];
         d.streak = bumpStreak(d.streak, log.date);
         // Gut Score: recomputa o ponto do dia (motor da Fase 8)
         d.scores = recomputedScores(d, log.date);
+        const { list, newlyUnlocked } = reconcileAchievements(d, log.date);
+        d.achievements = list;
+        novas = newlyUnlocked;
       });
+      notifyAchievements(novas);
     },
 
     addPhoto: async (dataUrl) => {
       const id = `photo-${todayKey()}-${get().data.photos.length + 1}`;
       const ref = await blobStore.save(id, dataUrl);
+      let novas: AchievementDef[] = [];
       await get().update((d) => {
         d.photos.push({ id, date: todayKey(), ref, private: true });
+        const { list, newlyUnlocked } = reconcileAchievements(d, todayKey());
+        d.achievements = list;
+        novas = newlyUnlocked;
       });
+      notifyAchievements(novas);
     },
 
     removePhoto: async (id) => {
@@ -227,6 +272,57 @@ export const useAppStore = create<AppState>((set, get) => {
       await get().update((d) => {
         d.photos = d.photos.filter((p) => p.id !== id);
       });
+    },
+
+    enableNotifications: async () => {
+      const granted = await requestNotifPermission();
+      if (granted) {
+        await scheduleRetentionNudges(get().data.progress?.currentDay ?? 1);
+      }
+      await get().update((d) => {
+        d.flags.notifications = granted;
+      });
+      return granted;
+    },
+
+    disableNotifications: async () => {
+      await cancelAllNudges();
+      await get().update((d) => {
+        d.flags.notifications = false;
+      });
+    },
+
+    enterMaintenance: async () => {
+      await get().update((d) => {
+        if (d.progress) {
+          d.progress.challengeType = "maintenance";
+          d.progress.phase = "Manutenção";
+        }
+      });
+    },
+
+    startResetProfundo: async () => {
+      await get().update((d) => {
+        if (d.progress) {
+          d.progress.challengeType = "reset21";
+          d.progress.currentDay = Math.max(15, d.progress.currentDay);
+          d.progress.phase = "Rebalance";
+        }
+      });
+    },
+
+    completeChallengeDay: async (challengeId, day) => {
+      let novas: AchievementDef[] = [];
+      const today = todayKey();
+      await get().update((d) => {
+        d.flags[`mc:${challengeId}:${day}`] = true;
+        d.streak = bumpStreak(d.streak, today);
+        d.scores = recomputedScores(d, today);
+        const { list, newlyUnlocked } = reconcileAchievements(d, today);
+        d.achievements = list;
+        novas = newlyUnlocked;
+      });
+      notifyAchievements(novas);
     },
 
     refreshSubscription: async () => {
