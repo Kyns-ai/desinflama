@@ -14,6 +14,8 @@ import type {
 } from "@/types/domain";
 import { emptyAppData } from "@/types/domain";
 import { newJourney } from "@/lib/journey";
+import { initialScore } from "@/lib/score";
+import { todayKey } from "@/lib/date";
 import { loadOrInit } from "@/data/Repository";
 import { authService, repository, subscriptionService } from "@/services";
 import type { AuthUser, OAuthProvider } from "@/services/AuthService";
@@ -148,6 +150,14 @@ export const useAppStore = create<AppState>((set, get) => {
     startJourney: async (challenge = "main14") => {
       await get().update((d) => {
         if (!d.progress) d.progress = newJourney(challenge);
+        // semente do Gut Score: baseline a partir do onboarding
+        if (d.scores.length === 0) {
+          d.scores.push({
+            date: todayKey(),
+            value: initialScore(d.user?.onboarding ?? null),
+            delta: 0,
+          });
+        }
       });
     },
 

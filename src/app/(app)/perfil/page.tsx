@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   Crown,
   Map,
@@ -13,9 +14,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { Card, IconCircle, Badge } from "@/components/ui";
-
-// Semente da Fase 0 — a Fase 2 conecta ao usuário real; a Fase 10, ao plano.
-const SEED = { nome: "Marina", email: "marina@email.com", plano: "Avaliação" };
+import { useAppStore } from "@/store/useAppStore";
 
 interface Row {
   icon: LucideIcon;
@@ -51,6 +50,25 @@ const GRUPOS: { titulo: string; rows: Row[] }[] = [
 ];
 
 export default function Perfil() {
+  const router = useRouter();
+  const user = useAppStore((s) => s.user);
+  const subscription = useAppStore((s) => s.data.subscription);
+  const signOut = useAppStore((s) => s.signOut);
+
+  const nome = user?.name ?? "você";
+  const planoLabel = subscription.isPremium
+    ? subscription.plan === "annual"
+      ? "Anual"
+      : subscription.plan === "monthly"
+        ? "Mensal"
+        : "Premium"
+    : "Avaliação";
+
+  async function handleSignOut() {
+    await signOut();
+    router.replace("/");
+  }
+
   return (
     <div className="space-y-6">
       <header className="pt-5">
@@ -61,15 +79,15 @@ export default function Perfil() {
 
       <Card elevation="card" className="flex items-center gap-4">
         <span className="grid size-14 shrink-0 place-items-center rounded-full bg-sage text-xl font-semibold text-white">
-          {SEED.nome[0]}
+          {nome.charAt(0).toUpperCase()}
         </span>
         <div className="min-w-0 flex-1">
           <p className="font-display text-lg font-semibold tracking-tight text-ink">
-            {SEED.nome}
+            {nome}
           </p>
-          <p className="truncate text-sm text-ink-soft">{SEED.email}</p>
+          <p className="truncate text-sm text-ink-soft">{user?.email}</p>
         </div>
-        <Badge tone="gold">{SEED.plano}</Badge>
+        <Badge tone="gold">{planoLabel}</Badge>
       </Card>
 
       {/* Ancoragem do anual (Fase 10 conecta ao paywall real) */}
@@ -117,12 +135,12 @@ export default function Perfil() {
         </section>
       ))}
 
-      <Link
-        href="/"
-        className="flex items-center justify-center gap-2 py-2 text-sm font-medium text-ink-faint"
+      <button
+        onClick={handleSignOut}
+        className="flex w-full items-center justify-center gap-2 py-2 text-sm font-medium text-ink-faint transition-colors active:text-ink-soft"
       >
         <LogOut className="size-4" /> Sair
-      </Link>
+      </button>
     </div>
   );
 }
