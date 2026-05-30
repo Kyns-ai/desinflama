@@ -16,6 +16,7 @@ import type {
 import { emptyAppData } from "@/types/domain";
 import { newJourney, phaseForDay, totalDays } from "@/lib/journey";
 import { initialScore } from "@/lib/score";
+import { recomputedScores } from "@/lib/computeGutScore";
 import { bumpStreak } from "@/lib/streak";
 import { todayKey } from "@/lib/date";
 import { loadOrInit } from "@/data/Repository";
@@ -197,12 +198,8 @@ export const useAppStore = create<AppState>((set, get) => {
         }
         // ofensiva
         d.streak = bumpStreak(d.streak, today);
-        // Gut Score: +8 por concluir o dia (motor completo na Fase 8)
-        const prev = d.scores.length
-          ? d.scores[d.scores.length - 1].value
-          : initialScore(d.user?.onboarding ?? null);
-        const value = Math.min(100, prev + 8);
-        d.scores.push({ date: today, value, delta: value - prev });
+        // Gut Score: recomputa o ponto do dia (motor da Fase 8)
+        d.scores = recomputedScores(d, today);
       });
     },
 
@@ -211,12 +208,8 @@ export const useAppStore = create<AppState>((set, get) => {
         // substitui o registro do dia, se já existir
         d.logs = [...d.logs.filter((l) => l.date !== log.date), log];
         d.streak = bumpStreak(d.streak, log.date);
-        // Gut Score: +4 por registrar refeição+sintoma (motor completo na Fase 8)
-        const prev = d.scores.length
-          ? d.scores[d.scores.length - 1].value
-          : initialScore(d.user?.onboarding ?? null);
-        const value = Math.min(100, prev + 4);
-        d.scores.push({ date: log.date, value, delta: value - prev });
+        // Gut Score: recomputa o ponto do dia (motor da Fase 8)
+        d.scores = recomputedScores(d, log.date);
       });
     },
 
