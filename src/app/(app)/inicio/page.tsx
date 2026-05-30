@@ -9,6 +9,7 @@ import {
   HeartPulse,
   ChevronRight,
   Sparkles,
+  BookOpen,
 } from "lucide-react";
 import { ScoreRing, Card, Badge, IconCircle, buttonStyles } from "@/components/ui";
 import { useAppStore } from "@/store/useAppStore";
@@ -134,6 +135,25 @@ export default function Inicio() {
           </div>
         </Link>
       )}
+
+      {/* Biblioteca */}
+      <Link href="/aprender" className="block">
+        <Card
+          elevation="soft"
+          className="flex items-center gap-4 transition-transform active:scale-[0.99]"
+        >
+          <IconCircle icon={BookOpen} tone="plum" size="lg" />
+          <div className="min-w-0 flex-1">
+            <h3 className="font-semibold tracking-tight text-ink">
+              Aprender com a nutri
+            </h3>
+            <p className="text-sm text-ink-soft">
+              Aulas, gatilhos, trocas e receitas
+            </p>
+          </div>
+          <ChevronRight className="size-5 shrink-0 text-ink-faint" />
+        </Card>
+      </Link>
 
       {/* Aula do dia */}
       <div>

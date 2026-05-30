@@ -11,6 +11,7 @@ import {
   HelpCircle,
   ChevronRight,
   LogOut,
+  BookOpen,
   type LucideIcon,
 } from "lucide-react";
 import { Card, IconCircle, Badge } from "@/components/ui";
@@ -29,6 +30,7 @@ const GRUPOS: { titulo: string; rows: Row[] }[] = [
     titulo: "Você",
     rows: [
       { icon: Map, label: "Meu Mapa de Inchaço", href: "/perfil", tone: "sage" },
+      { icon: BookOpen, label: "Biblioteca da nutri", href: "/aprender", tone: "plum" },
       { icon: Award, label: "Conquistas e níveis", href: "/perfil", tone: "gold" },
     ],
   },
