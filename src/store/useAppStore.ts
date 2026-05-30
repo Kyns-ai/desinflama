@@ -13,8 +13,9 @@ import type {
   Subscription,
 } from "@/types/domain";
 import { emptyAppData } from "@/types/domain";
-import { newJourney } from "@/lib/journey";
+import { newJourney, phaseForDay, totalDays } from "@/lib/journey";
 import { initialScore } from "@/lib/score";
+import { bumpStreak } from "@/lib/streak";
 import { todayKey } from "@/lib/date";
 import { loadOrInit } from "@/data/Repository";
 import { authService, repository, subscriptionService } from "@/services";
@@ -40,6 +41,8 @@ interface AppState {
 
   setOnboarding: (onboarding: OnboardingData) => Promise<void>;
   startJourney: (challenge?: ChallengeType) => Promise<void>;
+  toggleChecklistItem: (day: number, index: number) => Promise<void>;
+  completeDay: (day: number) => Promise<void>;
 
   // Assinatura
   refreshSubscription: () => Promise<void>;
@@ -158,6 +161,43 @@ export const useAppStore = create<AppState>((set, get) => {
             delta: 0,
           });
         }
+      });
+    },
+
+    toggleChecklistItem: async (day, index) => {
+      await get().update((d) => {
+        const cur = d.checklists[day] ?? [];
+        d.checklists[day] = cur.includes(index)
+          ? cur.filter((i) => i !== index)
+          : [...cur, index];
+      });
+    },
+
+    completeDay: async (day) => {
+      await get().update((d) => {
+        if (!d.progress) return;
+        const today = todayKey();
+        if (!d.progress.completedDays.includes(day)) {
+          d.progress.completedDays.push(day);
+          d.progress.completedAt[day] = today;
+        }
+        // avança para o próximo dia (se houver)
+        const total = totalDays(d.progress.challengeType);
+        if (d.progress.currentDay === day && day < total) {
+          d.progress.currentDay = day + 1;
+          d.progress.phase = phaseForDay(
+            d.progress.currentDay,
+            d.progress.challengeType
+          ).phase;
+        }
+        // ofensiva
+        d.streak = bumpStreak(d.streak, today);
+        // Gut Score: +8 por concluir o dia (motor completo na Fase 8)
+        const prev = d.scores.length
+          ? d.scores[d.scores.length - 1].value
+          : initialScore(d.user?.onboarding ?? null);
+        const value = Math.min(100, prev + 8);
+        d.scores.push({ date: today, value, delta: value - prev });
       });
     },
 

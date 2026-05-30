@@ -159,6 +159,8 @@ export interface AppData {
   streak: Streak;
   photos: Photo[];
   achievements: Achievement[];
+  /** Itens do checklist marcados por dia da jornada (dia → índices). */
+  checklists: Record<number, number[]>;
   /** chaves de notificações/flags simples. */
   flags: Record<string, boolean>;
 }
@@ -188,6 +190,7 @@ export function emptyAppData(): AppData {
     streak: { ...EMPTY_STREAK },
     photos: [],
     achievements: [],
+    checklists: {},
     flags: {},
   };
 }
