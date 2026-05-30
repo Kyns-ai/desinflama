@@ -1,0 +1,187 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ *
+ *  Desinflama — Design tokens
+ *  Mood: calmo, clínico-aconchegante, premium, feminino sem clichê.
+ *  Serif (Fraunces) nos momentos emocionais · Inter na UI/dados.
+ * ------------------------------------------------------------------ */
+
+@theme {
+  /* — Cores de marca — */
+  --color-cream: #faf7f2; /* canvas base off-white */
+  --color-cream-deep: #f3ede3; /* surfaces afundadas / trilhas */
+  --color-surface: #ffffff; /* cards */
+
+  --color-ink: #2b2b2b; /* texto principal grafite */
+  --color-ink-soft: #5c5953; /* texto secundário */
+  --color-ink-faint: #9a958c; /* legendas / placeholders */
+
+  --color-sage: #4fb286; /* primária */
+  --color-sage-deep: #3c9a71; /* hover / pressed */
+  --color-sage-dark: #2f7657; /* texto sobre tint */
+  --color-sage-tint: #e7f3ec; /* fundo suave sucesso/primária */
+
+  --color-coral: #f2856d; /* acento / CTA */
+  --color-coral-deep: #e66b52; /* hover */
+  --color-coral-dark: #b9482f; /* texto sobre tint */
+  --color-coral-tint: #fce9e3; /* fundo suave do acento */
+
+  --color-gold: #d8a657; /* marcos / conquistas */
+  --color-gold-tint: #f6ecd8;
+
+  --color-sky: #6aa6c4; /* energia / hidratação */
+  --color-sky-tint: #e4f0f5;
+
+  --color-plum: #9b7aa6; /* pele / bônus */
+  --color-plum-tint: #efe7f2;
+
+  --color-danger: #d9694f;
+  --color-danger-tint: #f8e6e1;
+
+  --color-line: #ece6db; /* bordas/divisórias quentes */
+  --color-line-soft: #f2ede4;
+
+  /* — Tipografia — */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
+
+  /* — Raios — */
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+
+  /* — Sombras suaves e quentes (não cinza-azulado) — */
+  --shadow-soft: 0 1px 2px rgba(67, 56, 38, 0.04),
+    0 8px 24px -12px rgba(67, 56, 38, 0.12);
+  --shadow-card: 0 1px 3px rgba(67, 56, 38, 0.05),
+    0 12px 32px -16px rgba(67, 56, 38, 0.16);
+  --shadow-lift: 0 2px 6px rgba(67, 56, 38, 0.06),
+    0 20px 48px -20px rgba(67, 56, 38, 0.22);
+  --shadow-coral: 0 8px 22px -10px rgba(230, 107, 82, 0.55);
+  --shadow-sage: 0 8px 22px -10px rgba(60, 154, 113, 0.45);
+
+  /* — Animações — */
+  --animate-rise: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-pop: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  --animate-fade: fade 0.4s ease both;
+  --animate-shimmer: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  60% {
+    transform: scale(1.06);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ *  Base
+ * ------------------------------------------------------------------ */
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  height: 100%;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100%;
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* safe areas para o notch / home indicator no iOS */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  overscroll-behavior-y: none;
+}
+
+/* Tipografia utilitária para momentos emocionais */
+.font-display {
+  font-family: var(--font-serif);
+  font-optical-sizing: auto;
+  letter-spacing: -0.015em;
+}
+
+/* Esconde scrollbars em carrosséis horizontais mantendo o scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Helpers de safe-area */
+.pt-safe {
+  padding-top: var(--safe-top);
+}
+.pb-safe {
+  padding-bottom: var(--safe-bottom);
+}
+.min-h-screen-safe {
+  min-height: calc(100dvh);
+}
+
+/* Foco acessível e quente */
+:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Range input estilizado (escala de hidratação etc.) */
+input[type="range"] {
+  accent-color: var(--color-sage);
+}
+
+::selection {
+  background: var(--color-sage-tint);
+  color: var(--color-sage-dark);
+}

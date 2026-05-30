@@ -1,0 +1,21 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Desinflama">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5ABF92"/>
+      <stop offset="1" stop-color="#3C9A71"/>
+    </linearGradient>
+    <linearGradient id="leaf" x1="160" y1="120" x2="360" y2="400" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FBF8F3"/>
+      <stop offset="1" stop-color="#F3EDE3"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="128" fill="url(#bg)"/>
+  <!-- folha / barriga leve -->
+  <path d="M256 108c-86 0-150 60-150 150 0 78 56 146 150 146s150-68 150-146c0-90-64-150-150-150z" fill="url(#leaf)"/>
+  <!-- nervura central que sobe como um broto -->
+  <path d="M256 360c0-70 6-128 0-196" stroke="#4FB286" stroke-width="16" stroke-linecap="round"/>
+  <path d="M256 230c22-6 44-22 52-48" stroke="#4FB286" stroke-width="16" stroke-linecap="round"/>
+  <path d="M256 280c-22-6-44-22-52-48" stroke="#4FB286" stroke-width="16" stroke-linecap="round"/>
+  <!-- gota coral: o ponto de virada -->
+  <circle cx="256" cy="178" r="22" fill="#F2856D"/>
+</svg>
