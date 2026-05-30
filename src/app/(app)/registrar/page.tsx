@@ -4,6 +4,9 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, TrendingUp } from "lucide-react";
 import { Button, Card } from "@/components/ui";
+import { useAppStore } from "@/store/useAppStore";
+import { todayKey } from "@/lib/date";
+import type { DailyLog, Mood, SymptomKey } from "@/types/domain";
 import { cn } from "@/lib/cn";
 
 const SINTOMAS = [
@@ -21,11 +24,29 @@ const HUMORES = [
 ] as const;
 
 export default function Registrar() {
+  const update = useAppStore((s) => s.update);
   const [valores, setValores] = useState<Record<string, number>>({});
   const [humor, setHumor] = useState<number | null>(null);
   const [salvo, setSalvo] = useState(false);
 
   const completo = SINTOMAS.every((s) => valores[s.key]) && humor !== null;
+
+  async function salvar() {
+    const hoje = todayKey();
+    const log: DailyLog = {
+      id: `${hoje}-${Date.now()}`,
+      date: hoje,
+      meals: [],
+      symptoms: valores as Partial<Record<SymptomKey, number>>,
+      mood: (humor as Mood) ?? null,
+      createdAt: new Date().toISOString(),
+    };
+    await update((d) => {
+      // substitui o registro do dia, se houver
+      d.logs = [...d.logs.filter((l) => l.date !== hoje), log];
+    });
+    setSalvo(true);
+  }
 
   if (salvo) {
     return (
@@ -147,7 +168,7 @@ export default function Registrar() {
             fullWidth
             size="lg"
             disabled={!completo}
-            onClick={() => setSalvo(true)}
+            onClick={salvar}
           >
             {completo ? "Salvar registro" : "Preencha tudo para salvar"}
           </Button>
