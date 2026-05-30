@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowLeft,
   ChevronDown,
-  PlayCircle,
+  BookOpen,
   ArrowLeftRight,
   Clock,
 } from "lucide-react";
@@ -106,7 +106,7 @@ function LessonCard({ lesson }: { lesson: Lesson }) {
         className="flex w-full items-center gap-3 p-4 text-left"
       >
         <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-sage-deep to-sage-dark text-white">
-          <PlayCircle className="size-6" strokeWidth={1.8} />
+          <BookOpen className="size-6" strokeWidth={1.8} />
         </span>
         <span className="min-w-0 flex-1">
           <span className="block font-semibold leading-snug tracking-tight text-ink">

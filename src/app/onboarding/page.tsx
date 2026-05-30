@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Check, PlayCircle, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Quote, Sparkles } from "lucide-react";
 import { Button, ProgressBar } from "@/components/ui";
 import { useAppStore } from "@/store/useAppStore";
 import {
@@ -293,26 +293,18 @@ function Mapa({
           </div>
         </Reveal>
 
-        {/* Vídeo de boas-vindas da nutri (placeholder + transcrição) */}
+        {/* Mensagem de boas-vindas da nutri */}
         <Reveal>
-          <div className="mt-5 overflow-hidden rounded-2xl border border-line bg-surface">
-            <div className="relative grid h-32 place-items-center bg-gradient-to-br from-sage-deep to-sage-dark">
-              <PlayCircle className="size-11 text-white/90" strokeWidth={1.6} />
-              <span className="absolute bottom-3 right-3 rounded-full bg-black/25 px-2 py-0.5 text-xs font-medium text-white backdrop-blur">
-                {WELCOME_VIDEO.durationLabel}
-              </span>
-            </div>
-            <details className="group p-4">
-              <summary className="flex cursor-pointer list-none items-center justify-between font-semibold tracking-tight text-ink">
+          <div className="mt-5 rounded-2xl border border-line bg-surface p-4">
+            <div className="mb-2 flex items-center gap-2">
+              <Quote className="size-4 text-sage-deep" />
+              <h3 className="font-semibold tracking-tight text-ink">
                 {WELCOME_VIDEO.title}
-                <span className="text-sm font-medium text-sage-deep group-open:hidden">
-                  ler
-                </span>
-              </summary>
-              <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
-                {WELCOME_VIDEO.transcript}
-              </p>
-            </details>
+              </h3>
+            </div>
+            <p className="text-[15px] leading-relaxed text-ink-soft">
+              {WELCOME_VIDEO.transcript}
+            </p>
           </div>
         </Reveal>
 

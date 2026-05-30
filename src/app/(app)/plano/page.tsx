@@ -114,9 +114,11 @@ export default function Plano() {
             Você pode cancelar quando quiser e continua com acesso até o fim do
             período já pago. Sem pegadinha.
           </p>
-          {canShowExternalPurchase() ? (
+          {canShowExternalPurchase() && subscription.managementUrl ? (
             <a
-              href={subscription.managementUrl ?? "#"}
+              href={subscription.managementUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-sage-deep"
             >
               Gerenciar assinatura <ExternalLink className="size-4" />

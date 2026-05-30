@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowLeft,
   Check,
-  PlayCircle,
+  BookOpen,
   Coffee,
   Sun,
   Moon,
@@ -134,24 +134,16 @@ export function DayView({ day }: { day: number }) {
       </header>
 
       {/* Aula do dia */}
-      <Card elevation="card" className="overflow-hidden p-0">
-        <div className="relative grid h-40 place-items-center bg-gradient-to-br from-sage-deep to-sage-dark">
-          <PlayCircle className="size-12 text-white/90" strokeWidth={1.6} />
-          <span className="absolute bottom-3 right-3 rounded-full bg-black/25 px-2 py-0.5 text-xs font-medium text-white backdrop-blur">
-            2–3 min
-          </span>
+      <Card elevation="card">
+        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-sage-deep">
+          <BookOpen className="size-4" /> Aula · leitura de 3 min
         </div>
-        <div className="p-5">
-          <p className="text-xs font-semibold uppercase tracking-wide text-ink-faint">
-            Entenda seu corpo
-          </p>
-          <h1 className="mt-1 font-display text-[1.4rem] font-semibold leading-snug tracking-tight text-ink">
-            {content.lesson.title}
-          </h1>
-          <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">
-            {content.lesson.body}
-          </p>
-        </div>
+        <h1 className="mt-2 font-display text-[1.4rem] font-semibold leading-snug tracking-tight text-ink">
+          {content.lesson.title}
+        </h1>
+        <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">
+          {content.lesson.body}
+        </p>
       </Card>
 
       {/* Checklist */}
@@ -257,14 +249,8 @@ export function DayView({ day }: { day: number }) {
       {/* Concluir */}
       {!isDone ? (
         <div className="sticky bottom-24 z-10">
-          <Button
-            fullWidth
-            size="lg"
-            loading={busy}
-            onClick={concluir}
-            className={cn(!allChecked && "opacity-95")}
-          >
-            {allChecked ? `Concluir Dia ${day}` : `Concluir Dia ${day}`}
+          <Button fullWidth size="lg" loading={busy} onClick={concluir}>
+            Concluir Dia {day}
             <Check className="size-5" strokeWidth={2.6} />
           </Button>
           {!allChecked && (

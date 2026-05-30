@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import {
   Flame,
   ArrowRight,
-  PlayCircle,
   HeartPulse,
   ChevronRight,
   Sparkles,
@@ -75,7 +74,7 @@ export default function Inicio() {
       {challenge === "maintenance" ? (
         <MaintenanceBlock flags={data.flags} />
       ) : (
-        <Link href="/jornada" className="block">
+        <Link href={`/jornada/${day}`} className="block">
           <Card className="transition-transform active:scale-[0.99]" elevation="card">
             <div className="flex items-center justify-between">
               <Badge tone={phase.tone}>Fase {phase.phase}</Badge>
@@ -165,25 +164,23 @@ export default function Inicio() {
         <h2 className="mb-3 text-base font-semibold tracking-tight text-ink">
           Aula de hoje
         </h2>
-        <Link href="/jornada" className="block">
+        <Link href={`/jornada/${day}`} className="block">
           <Card
             elevation="card"
-            className="overflow-hidden p-0 transition-transform active:scale-[0.99]"
+            className="flex items-center gap-4 transition-transform active:scale-[0.99]"
           >
-            <div className="relative grid h-36 place-items-center bg-gradient-to-br from-sage-deep to-sage-dark">
-              <PlayCircle className="size-12 text-white/90" strokeWidth={1.6} />
-              <span className="absolute bottom-3 right-3 rounded-full bg-black/25 px-2 py-0.5 text-xs font-medium text-white backdrop-blur">
-                3 min
-              </span>
-            </div>
-            <div className="p-5">
+            <span className="grid size-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-sage-deep to-sage-dark text-white">
+              <BookOpen className="size-6" strokeWidth={1.9} />
+            </span>
+            <div className="min-w-0 flex-1">
               <p className="text-xs font-semibold uppercase tracking-wide text-ink-faint">
-                Entenda seu corpo
+                Leitura · 3 min
               </p>
-              <h3 className="mt-1 font-display text-lg font-semibold leading-snug tracking-tight text-ink">
+              <h3 className="mt-0.5 font-display text-lg font-semibold leading-snug tracking-tight text-ink">
                 {lessonTitleFor(day)}
               </h3>
             </div>
+            <ChevronRight className="size-5 shrink-0 text-ink-faint" />
           </Card>
         </Link>
       </div>

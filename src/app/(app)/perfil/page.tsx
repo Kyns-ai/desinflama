@@ -32,7 +32,7 @@ const GRUPOS: { titulo: string; rows: Row[] }[] = [
   {
     titulo: "Você",
     rows: [
-      { icon: Map, label: "Meu Mapa de Inchaço", href: "/perfil", tone: "sage" },
+      { icon: Map, label: "Meu Mapa de Inchaço", href: "/mapa", tone: "sage" },
       { icon: BookOpen, label: "Biblioteca da nutri", href: "/aprender", tone: "plum" },
       { icon: Award, label: "Conquistas e níveis", href: "/conquistas", tone: "gold" },
     ],
@@ -48,8 +48,8 @@ const GRUPOS: { titulo: string; rows: Row[] }[] = [
         href: "/plano",
         tone: "gold",
       },
-      { icon: ShieldCheck, label: "Privacidade", href: "/plano", tone: "sky" },
-      { icon: HelpCircle, label: "Ajuda", href: "/plano", tone: "neutral" },
+      { icon: ShieldCheck, label: "Privacidade", href: "/privacidade", tone: "sky" },
+      { icon: HelpCircle, label: "Ajuda", href: "/ajuda", tone: "neutral" },
     ],
   },
 ];
@@ -95,8 +95,8 @@ export default function Perfil() {
         <Badge tone="gold">{planoLabel}</Badge>
       </Card>
 
-      {/* Ancoragem do anual (Fase 10 conecta ao paywall real) */}
-      <Link href="/inicio" className="block">
+      {/* Ancoragem do anual */}
+      <Link href="/paywall" className="block">
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-sage-deep to-sage-dark p-5 text-white shadow-[var(--shadow-sage)] transition-transform active:scale-[0.99]">
           <div className="flex items-center gap-2">
             <Crown className="size-5" />
