@@ -47,5 +47,13 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Para você registrar suas fotos de progresso, que ficam privadas no seu aparelho.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Para você escolher uma foto de progresso da sua galeria.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Para salvar suas fotos de progresso, se você quiser.</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>

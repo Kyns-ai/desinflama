@@ -34,8 +34,11 @@ export const metadata: Metadata = {
   },
   formatDetection: { telephone: false },
   icons: {
-    icon: [{ url: "/icons/icon.svg", type: "image/svg+xml" }],
-    apple: "/icons/icon.svg",
+    icon: [
+      { url: "/icons/icon.svg", type: "image/svg+xml" },
+      { url: "/icons/icon-192.webp", type: "image/webp", sizes: "192x192" },
+    ],
+    apple: "/icons/apple-touch-icon.png",
   },
 };
 
