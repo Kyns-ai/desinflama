@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Desinflama 🌿
 
-## Getting Started
+Produto de saúde intestinal para mulheres (PT-BR). **Um codebase → Web/PWA +
+iOS (App Store) + Android (Google Play)**, com **Next.js (static export) +
+Capacitor**. Guia a usuária por um **Desafio Desincha de 14 dias** (Low FODMAP /
+5R), extensão **Reset 21 dias**, e **Modo Manutenção** com desafios mensais —
+focado em **sintomas** (inchaço, gases, digestão, energia, pele), nunca calorias.
 
-First, run the development server:
+## Stack
+
+- **Next.js 16** (App Router, `output: 'export'`) + **React 19** + **TypeScript**
+- **Tailwind v4** (design tokens) · **Inter** (UI) + **Fraunces** (serif emocional)
+- **Capacitor 8** (iOS via SwiftPM + Android) — Preferences, Filesystem, Camera,
+  Haptics, Local Notifications, Network, App
+- **Zustand** (estado) · **framer-motion** (animação) · **lucide-react** (ícones)
+- **Supabase** (auth + dados) · **RevenueCat** (assinatura unificada: Web Billing/
+  Stripe + Apple IAP + Google Play Billing)
+
+## Rodando
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev            # web (http://localhost:3000)
+npm run build          # gera ./out (estático)
+npx cap sync           # copia para ios/ e android/
+npm run ios            # abre Xcode
+npm run android        # abre Android Studio
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Modo dev sem chaves:** sem `.env.local`, o app roda 100% em mocks (auth,
+assinatura e dados locais). Copie `.env.example` → `.env.local` e preencha para
+ativar Supabase/RevenueCat reais — a UI não muda (tudo atrás de interfaces de
+serviço).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Arquitetura
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **SPA client-rendered** sob `output: 'export'` (sem route handlers, server
+  actions, middleware ou APIs de runtime no servidor). Tudo interativo é `'use client'`.
+- **Serviços atrás de interfaces** (`src/services`): `AuthService`,
+  `SubscriptionService`, `Repository`. Uma *composition root* (`services/index.ts`)
+  escolhe real vs mock por env.
+- **Persistência** (`src/data`): Preferences/Filesystem (nativo) vs IndexedDB
+  (web). Documento `AppData` por usuário; fotos como blobs separados.
+- **Estado** (`src/store/useAppStore.ts`): hidrata, persiste e expõe ações
+  semânticas (onboarding, concluir dia, registrar, conquistas, assinatura).
+- **Motor Gut Score** (`src/lib/computeGutScore.ts`): pesos + regra anti-despenque,
+  recomputado por dia.
+- **Conteúdo** (`src/content`): jornada, desafios, aulas, gatilhos, trocas,
+  receitas — em PT-BR, base FODMAP/5R, com fontes em `SOURCES.md` (revisão da nutri).
 
-## Learn More
+## Monetização & compliance
 
-To learn more about Next.js, take a look at the following resources:
+Venda no funil web (Stripe) **e** in-app (IAP), unificadas pelo **RevenueCat**
+(App User ID = id do Supabase). App **não é paywall morto** (Dias 1–3 grátis +
+login + IAP), **sem link de compra externa no iOS** fora de EUA/UE, com
+**Restaurar compra**, **exclusão de conta** e cancelamento transparente.
+Ver **`STORE_SUBMISSION.md`** para o passo a passo de publicação.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Estrutura
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/
+  app/              rotas (welcome, auth, onboarding, (app)/abas, legais)
+  components/       UI (design system em ui/), shell, gráficos, paywall
+  content/          conteúdo do programa (+ SOURCES.md)
+  data/             storage + Repository
+  services/         Auth / Subscription / RevenueCat
+  store/            Zustand
+  lib/              score, streak, journey, analytics, notifications, etc.
+```
