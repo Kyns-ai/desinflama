@@ -20,6 +20,8 @@ import {
 } from "lucide-react";
 import { ScoreRing, Card, Badge, IconCircle, Button, buttonStyles } from "@/components/ui";
 import { SeedMeter } from "@/components/SeedMeter";
+import { Confetti } from "@/components/Confetti";
+import { haptic } from "@/lib/haptics";
 import { useAppStore } from "@/store/useAppStore";
 import { currentScore, scoreMicrocopy, isScoreStalled } from "@/lib/score";
 import { leveledUp, type GardenLevel } from "@/lib/garden";
@@ -114,6 +116,7 @@ export default function Inicio() {
     await completeDay(day);
     const after = useAppStore.getState().data.seeds;
     setLevelUp(leveledUp(before, after));
+    void haptic("success");
     setBusy(false);
     setCelebrating(true);
   }
@@ -427,7 +430,8 @@ function DayCelebration({
   onDone: () => void;
 }) {
   return (
-    <div className="flex min-h-[80vh] flex-col items-center justify-center px-8 text-center">
+    <div className="relative flex min-h-[80vh] flex-col items-center justify-center px-8 text-center">
+      <Confetti />
       <motion.div
         initial={{ scale: 0.5, opacity: 0, rotate: -8 }}
         animate={{ scale: 1, opacity: 1, rotate: 0 }}

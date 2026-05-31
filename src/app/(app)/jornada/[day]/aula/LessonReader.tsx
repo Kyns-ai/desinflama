@@ -5,8 +5,10 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowRight, Check, Sprout, Trophy } from "lucide-react";
 import { Button } from "@/components/ui";
+import { Confetti } from "@/components/Confetti";
 import { useAppStore } from "@/store/useAppStore";
 import { getDay, lessonCards, type QuizItem } from "@/content/journey";
+import { haptic } from "@/lib/haptics";
 import { cn } from "@/lib/cn";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -47,6 +49,7 @@ export function LessonReader({ day }: { day: number }) {
 
   async function finish() {
     const r = await completeLesson(day);
+    void haptic("success");
     setReward({ seeds: r.seeds });
     setDone(true);
   }
@@ -247,7 +250,8 @@ function LessonDone({
   onClose: () => void;
 }) {
   return (
-    <div className="flex min-h-dvh flex-col items-center justify-center bg-cream px-8 text-center">
+    <div className="relative flex min-h-dvh flex-col items-center justify-center bg-cream px-8 text-center">
+      <Confetti />
       <motion.div
         initial={{ scale: 0.5, opacity: 0, rotate: -8 }}
         animate={{ scale: 1, opacity: 1, rotate: 0 }}
