@@ -70,6 +70,8 @@ function normalize(d: Partial<AppData>): AppData {
     photos: d.photos ?? [],
     achievements: d.achievements ?? [],
     checklists: d.checklists ?? {},
+    seeds: d.seeds ?? 0,
+    lessonsDone: d.lessonsDone ?? {},
     flags: d.flags ?? {},
   };
 }

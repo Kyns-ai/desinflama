@@ -161,6 +161,10 @@ export interface AppData {
   achievements: Achievement[];
   /** Itens do checklist marcados por dia da jornada (dia → índices). */
   checklists: Record<number, number[]>;
+  /** Sementes acumuladas (gamificação — viram nível/jardim e desbloqueios). */
+  seeds: number;
+  /** Aulas concluídas por dia (dia → true). */
+  lessonsDone: Record<number, boolean>;
   /** chaves de notificações/flags simples. */
   flags: Record<string, boolean>;
 }
@@ -191,6 +195,8 @@ export function emptyAppData(): AppData {
     photos: [],
     achievements: [],
     checklists: {},
+    seeds: 0,
+    lessonsDone: {},
     flags: {},
   };
 }

@@ -82,6 +82,8 @@ export function buildDemoData(user: { id: string; name: string; email: string })
     logs,
     scores,
     streak: { current: 5, longest: 5, lastActiveDate: day(1) }, // ativa até ontem
+    seeds: 11, // aulas dos dias 1-5 + check-ins
+    lessonsDone: { 1: true, 2: true, 3: true, 4: true, 5: true },
     flags: { notifications: false },
   };
 

@@ -24,16 +24,51 @@ export interface DayMeals {
   lanche?: string[];
 }
 
+/** Um card da aula — bite-sized, estilo Headway/Noom. */
+export interface LessonCard {
+  /** Título curto do card (opcional; serifa no leitor). */
+  heading?: string;
+  /** Corpo do card (2–4 frases). */
+  body: string;
+  emoji?: string;
+}
+
+/** Pergunta de compreensão ao fim da aula. */
+export interface QuizItem {
+  question: string;
+  options: string[];
+  correctIndex: number;
+  /** Explicação mostrada após responder ("Isso! Porque…"). */
+  explain: string;
+}
+
+export interface Lesson {
+  title: string;
+  /** Resumo de 1 parágrafo (fallback e prévia). */
+  body: string;
+  durationMin?: number;
+  /** Cards deslizáveis; se ausente, o leitor usa um único card com `body`. */
+  cards?: LessonCard[];
+  /** Mini-quiz de compreensão (opcional). */
+  quiz?: QuizItem[];
+}
+
 export interface DayContent {
   day: number;
   phase: JourneyPhase;
   /** Marco especial (ex.: dia 7, dia 14) — celebração na conclusão. */
   milestone?: string;
-  lesson: { title: string; body: string };
+  lesson: Lesson;
   checklist: string[];
   meals: DayMeals;
   swaps?: Swap[];
   completionMessage: string;
+}
+
+/** Normaliza a aula em cards (fallback: um único card com o body). */
+export function lessonCards(lesson: Lesson): LessonCard[] {
+  if (lesson.cards && lesson.cards.length) return lesson.cards;
+  return [{ body: lesson.body }];
 }
 
 export const DAYS: DayContent[] = [
@@ -43,7 +78,59 @@ export const DAYS: DayContent[] = [
     phase: "Choque",
     lesson: {
       title: "Por que você vive estufada (não é o quanto você come)",
-      body: "O inchaço quase nunca é gordura ou “comer demais”. Na maioria das vezes é fermentação: certos carboidratos chegam ao intestino e viram comida pra bactérias, que produzem gás — e o gás estufa sua barriga, principalmente à noite. Nos próximos 3 dias a gente corta os maiores fermentadores pro seu intestino parar de produzir esse gás. Não é pra sempre — é pra acalmar agora e depois descobrir exatamente o que TE faz mal.",
+      durationMin: 2,
+      body: "O inchaço quase nunca é gordura ou “comer demais”. Na maioria das vezes é fermentação: certos carboidratos chegam ao intestino e viram comida pra bactérias, que produzem gás — e o gás estufa sua barriga, principalmente à noite.",
+      cards: [
+        {
+          heading: "Não é gordura. É gás.",
+          emoji: "🎈",
+          body: "Aquela barriga que cresce ao longo do dia e aperta a roupa à noite quase nunca é gordura nem “comer demais”. É gás preso no intestino.",
+        },
+        {
+          heading: "O que realmente acontece",
+          emoji: "🔬",
+          body: "Certos carboidratos chegam ao intestino sem serem digeridos e viram comida pras suas bactérias. Elas fermentam esses carboidratos e produzem gás — e o gás estufa a barriga.",
+        },
+        {
+          heading: "Os maiores fermentadores",
+          emoji: "🧅",
+          body: "Trigo, cebola e alho, leite e derivados, feijão e grão-de-bico, refrigerante e adoçantes. Parecem inofensivos, mas são os campeões de produzir gás.",
+        },
+        {
+          heading: "Cortar agora não é pra sempre",
+          emoji: "🌱",
+          body: "Nos primeiros 3 dias a gente tira esses fermentadores só pra acalmar. Depois você reintroduz um por um e descobre exatamente o que faz mal PRA VOCÊ.",
+        },
+        {
+          heading: "Seu primeiro passo é hoje",
+          emoji: "🎯",
+          body: "Tirando o combustível, o intestino para de produzir tanto gás. Muita gente já sente a barriga mais baixa em 72h. Bora começar.",
+        },
+      ],
+      quiz: [
+        {
+          question: "Na maioria das vezes, o inchaço à noite é causado por…",
+          options: [
+            "Gordura acumulada na barriga",
+            "Gás da fermentação de certos carboidratos",
+            "Beber água demais",
+          ],
+          correctIndex: 1,
+          explain:
+            "Isso! Certos carboidratos viram comida pras bactérias, que produzem gás — e o gás estufa a barriga.",
+        },
+        {
+          question: "Cortar os fermentadores nos primeiros dias é…",
+          options: [
+            "Pra sempre",
+            "Temporário — pra acalmar e depois achar seus gatilhos",
+            "Só pra perder peso",
+          ],
+          correctIndex: 1,
+          explain:
+            "Exato. É pra acalmar agora; depois você reintroduz pra descobrir o que TE faz mal.",
+        },
+      ],
     },
     checklist: [
       "Beba ~2L de água ao longo do dia",
@@ -87,7 +174,54 @@ export const DAYS: DayContent[] = [
     phase: "Choque",
     lesson: {
       title: "O alho e a cebola: os vilões invisíveis",
-      body: "Eles parecem inofensivos, mas alho e cebola são campeões em frutanos — um tipo de fibra que quase ninguém digere bem e que fermenta forte no intestino. O problema é que estão em quase tudo: tempero pronto, caldo, molho, salgadinho. Por isso hoje a gente lê rótulos e usa o truque do azeite aromatizado: frite alho no azeite, retire o alho e use só o óleo. O sabor fica, o frutano não.",
+      durationMin: 2,
+      body: "Alho e cebola são campeões em frutanos — uma fibra que quase ninguém digere bem e que fermenta forte. E estão escondidos em quase tudo. Hoje você aprende a fugir deles sem perder o sabor.",
+      cards: [
+        {
+          heading: "Pequenos, mas poderosos",
+          emoji: "🧅",
+          body: "Alho e cebola parecem inofensivos, mas são os maiores fermentadores da maioria das pessoas. O “culpado” chama frutano: uma fibra que o seu intestino não absorve e que as bactérias adoram.",
+        },
+        {
+          heading: "Eles se escondem",
+          emoji: "🕵️‍♀️",
+          body: "O problema não é só o alho do refogado. Frutano está em tempero pronto, caldo em cubo, molho de tomate, salgadinho, sopa de pacote. Por isso a gente vira detetive de rótulo.",
+        },
+        {
+          heading: "O truque do azeite aromatizado",
+          emoji: "🫒",
+          body: "Doure o alho no azeite, retire o alho e use só o óleo. O frutano não passa pro óleo — então fica todo o sabor, sem o gás. Funciona com cebola também.",
+        },
+        {
+          heading: "Use a parte verde",
+          emoji: "🌿",
+          body: "A parte verde da cebolinha é liberada e dá aquele toque de cebola sem o frutano. Guarde no lugar da cebola picada.",
+        },
+      ],
+      quiz: [
+        {
+          question: "O que torna alho e cebola tão “fermentadores”?",
+          options: [
+            "A gordura",
+            "O frutano, uma fibra que fermenta no intestino",
+            "O sal",
+          ],
+          correctIndex: 1,
+          explain:
+            "Isso! O frutano não é absorvido e vira festa pras bactérias, que produzem gás.",
+        },
+        {
+          question: "Como manter o sabor do alho sem o frutano?",
+          options: [
+            "Usar o dobro de alho",
+            "Dourar o alho no azeite e usar só o óleo",
+            "Comer cru",
+          ],
+          correctIndex: 1,
+          explain:
+            "Exato. O frutano não passa pro óleo — fica o sabor, sai o gás.",
+        },
+      ],
     },
     checklist: [
       "Continue sem trigo, leite, feijão, refrigerante e adoçante",
@@ -126,7 +260,54 @@ export const DAYS: DayContent[] = [
     phase: "Choque",
     lesson: {
       title: "Água, gengibre e movimento: o trio anti-inchaço",
-      body: "Nesta fase de choque, três coisas simples aceleram o desinchaço. Água ajuda o intestino a se mover e reduz a retenção (parece contraintuitivo, mas beber pouco faz o corpo segurar líquido). Gengibre estimula o esvaziamento do estômago — menos comida parada, menos gás. E caminhar move o intestino mecanicamente. Não é mágica, é fisiologia: hoje você sente a diferença.",
+      durationMin: 2,
+      body: "Três coisas simples aceleram o desinchaço: água, gengibre e movimento. Não é mágica, é fisiologia — e hoje você sente a diferença.",
+      cards: [
+        {
+          heading: "Água solta o que estava preso",
+          emoji: "💧",
+          body: "Parece contraintuitivo, mas beber POUCA água faz o corpo segurar líquido (retenção). Hidratar bem ajuda o intestino a se mover e o corpo a soltar o excesso.",
+        },
+        {
+          heading: "Gengibre acelera a digestão",
+          emoji: "🫚",
+          body: "O gengibre estimula o estômago a esvaziar mais rápido. Menos comida parada significa menos tempo pra fermentar — ou seja, menos gás.",
+        },
+        {
+          heading: "Movimento move o intestino",
+          emoji: "🚶‍♀️",
+          body: "Caminhar empurra o intestino mecanicamente e ajuda a liberar gases presos. 15 minutos depois de uma refeição maior já fazem diferença.",
+        },
+        {
+          heading: "Fim da Fase Choque",
+          emoji: "🔥",
+          body: "Hoje fecha os 3 dias de choque. Você tirou o pé do acelerador da fermentação. A partir de amanhã, a gente começa a descobrir os SEUS gatilhos.",
+        },
+      ],
+      quiz: [
+        {
+          question: "Por que beber água ajuda contra a retenção?",
+          options: [
+            "Porque enche o estômago",
+            "Porque beber pouco faz o corpo segurar líquido; hidratar solta o excesso",
+            "Porque substitui a comida",
+          ],
+          correctIndex: 1,
+          explain:
+            "Isso! Pouca água = corpo em modo “economia” segurando líquido. Hidratar reverte isso.",
+        },
+        {
+          question: "Caminhar depois de comer ajuda porque…",
+          options: [
+            "Queima a refeição",
+            "Move o intestino e ajuda a liberar gases",
+            "Tira a fome",
+          ],
+          correctIndex: 1,
+          explain:
+            "Exato. O movimento empurra o intestino e solta o gás preso.",
+        },
+      ],
     },
     checklist: [
       "Beba ~2L de água (deixe uma garrafa à vista)",

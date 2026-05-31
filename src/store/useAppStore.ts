@@ -58,6 +58,8 @@ interface AppState {
   /** Entra com a conta de demonstração já populada (modo mock). */
   enterDemo: () => Promise<void>;
   toggleChecklistItem: (day: number, index: number) => Promise<void>;
+  /** Conclui a aula do dia: marca como feita e dá +1 semente (uma vez). */
+  completeLesson: (day: number) => Promise<{ alreadyDone: boolean; seeds: number }>;
   completeDay: (day: number) => Promise<void>;
   addLog: (log: DailyLog) => Promise<void>;
   addPhoto: (dataUrl: string) => Promise<void>;
@@ -75,6 +77,9 @@ interface AppState {
   purchase: (planId: SubPackage["id"]) => Promise<void>;
   restorePurchases: () => Promise<void>;
 }
+
+/** Sementes ganhas ao concluir uma aula (gamificação — ver lib/garden na F3). */
+const SEEDS_PER_LESSON = 1;
 
 function clone<T>(v: T): T {
   return typeof structuredClone === "function"
@@ -266,6 +271,17 @@ export const useAppStore = create<AppState>((set, get) => {
           ? cur.filter((i) => i !== index)
           : [...cur, index];
       });
+    },
+
+    completeLesson: async (day) => {
+      const alreadyDone = !!get().data.lessonsDone[day];
+      await get().update((d) => {
+        if (!d.lessonsDone[day]) {
+          d.lessonsDone[day] = true;
+          d.seeds += SEEDS_PER_LESSON;
+        }
+      });
+      return { alreadyDone, seeds: alreadyDone ? 0 : SEEDS_PER_LESSON };
     },
 
     completeDay: async (day) => {

@@ -164,7 +164,7 @@ export default function Inicio() {
         <h2 className="mb-3 text-base font-semibold tracking-tight text-ink">
           Aula de hoje
         </h2>
-        <Link href={`/jornada/${day}`} className="block">
+        <Link href={`/jornada/${day}/aula`} className="block">
           <Card
             elevation="card"
             className="flex items-center gap-4 transition-transform active:scale-[0.99]"

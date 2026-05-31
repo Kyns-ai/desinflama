@@ -37,6 +37,7 @@ export function DayView({ day }: { day: number }) {
   const completeDay = useAppStore((s) => s.completeDay);
   const ready = useAppStore((s) => s.ready);
   const isPremium = useAppStore((s) => s.data.subscription.isPremium);
+  const lessonDone = useAppStore((s) => s.data.lessonsDone[day] ?? false);
   const FREE_DAYS = 3;
 
   const content = getDay(day);
@@ -133,18 +134,39 @@ export function DayView({ day }: { day: number }) {
         )}
       </header>
 
-      {/* Aula do dia */}
-      <Card elevation="card">
-        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-sage-deep">
-          <BookOpen className="size-4" /> Aula · leitura de 3 min
-        </div>
-        <h1 className="mt-2 font-display text-[1.4rem] font-semibold leading-snug tracking-tight text-ink">
-          {content.lesson.title}
-        </h1>
-        <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">
-          {content.lesson.body}
-        </p>
-      </Card>
+      {/* Aula do dia → leitor de cards + quiz */}
+      <button
+        onClick={() => router.push(`/jornada/${day}/aula`)}
+        className="block w-full text-left"
+      >
+        <Card
+          elevation="card"
+          className="flex items-center gap-4 transition-transform active:scale-[0.99]"
+        >
+          <span
+            className={cn(
+              "grid size-14 shrink-0 place-items-center rounded-2xl text-white",
+              lessonDone
+                ? "bg-sage"
+                : "bg-gradient-to-br from-sage-deep to-sage-dark"
+            )}
+          >
+            {lessonDone ? (
+              <Check className="size-6" strokeWidth={2.6} />
+            ) : (
+              <BookOpen className="size-6" strokeWidth={1.9} />
+            )}
+          </span>
+          <div className="min-w-0 flex-1">
+            <p className="text-xs font-semibold uppercase tracking-wide text-ink-faint">
+              {lessonDone ? "Aula concluída" : `Aula · ${content.lesson.durationMin ?? 2} min`}
+            </p>
+            <h1 className="mt-0.5 font-display text-[1.25rem] font-semibold leading-snug tracking-tight text-ink">
+              {content.lesson.title}
+            </h1>
+          </div>
+        </Card>
+      </button>
 
       {/* Checklist */}
       <section>
