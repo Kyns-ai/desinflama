@@ -16,6 +16,7 @@ import type {
 import { emptyAppData } from "@/types/domain";
 import { newJourney, phaseForDay, totalDays } from "@/lib/journey";
 import { buildDemoData } from "@/lib/demo";
+import { SEEDS } from "@/lib/garden";
 import { initialScore } from "@/lib/score";
 import { recomputedScores } from "@/lib/computeGutScore";
 import { bumpStreak } from "@/lib/streak";
@@ -77,9 +78,6 @@ interface AppState {
   purchase: (planId: SubPackage["id"]) => Promise<void>;
   restorePurchases: () => Promise<void>;
 }
-
-/** Sementes ganhas ao concluir uma aula (gamificação — ver lib/garden na F3). */
-const SEEDS_PER_LESSON = 1;
 
 function clone<T>(v: T): T {
   return typeof structuredClone === "function"
@@ -278,10 +276,10 @@ export const useAppStore = create<AppState>((set, get) => {
       await get().update((d) => {
         if (!d.lessonsDone[day]) {
           d.lessonsDone[day] = true;
-          d.seeds += SEEDS_PER_LESSON;
+          d.seeds += SEEDS.lesson;
         }
       });
-      return { alreadyDone, seeds: alreadyDone ? 0 : SEEDS_PER_LESSON };
+      return { alreadyDone, seeds: alreadyDone ? 0 : SEEDS.lesson };
     },
 
     completeDay: async (day) => {
@@ -292,6 +290,8 @@ export const useAppStore = create<AppState>((set, get) => {
         if (!d.progress.completedDays.includes(day)) {
           d.progress.completedDays.push(day);
           d.progress.completedAt[day] = today;
+          d.seeds += SEEDS.completeDay;
+          if (day === 7 || day === 14 || day === 21) d.seeds += SEEDS.milestone;
         }
         // avança para o próximo dia (se houver)
         const total = totalDays(d.progress.challengeType);
@@ -317,9 +317,12 @@ export const useAppStore = create<AppState>((set, get) => {
     addLog: async (log) => {
       let novas: AchievementDef[] = [];
       const today = todayKey();
+      const hadLog = get().data.logs.some((l) => l.date === log.date);
       await get().update((d) => {
         // substitui o registro do dia, se já existir
         d.logs = [...d.logs.filter((l) => l.date !== log.date), log];
+        // check-in dá semente uma vez por dia
+        if (!hadLog) d.seeds += SEEDS.checkin;
         // a ofensiva só conta atividade de HOJE — editar um dia passado não
         // deve regredir nem inflar a streak atual.
         if (log.date === today) d.streak = bumpStreak(d.streak, today);

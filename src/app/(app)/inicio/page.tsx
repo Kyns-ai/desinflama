@@ -19,8 +19,10 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { ScoreRing, Card, Badge, IconCircle, Button, buttonStyles } from "@/components/ui";
+import { SeedMeter } from "@/components/SeedMeter";
 import { useAppStore } from "@/store/useAppStore";
 import { currentScore, scoreMicrocopy, isScoreStalled } from "@/lib/score";
+import { leveledUp, type GardenLevel } from "@/lib/garden";
 import { phaseForDay, totalDays } from "@/lib/journey";
 import { getDay } from "@/content/journey";
 import { MONTHLY_CHALLENGES } from "@/content/challenges";
@@ -104,10 +106,14 @@ export default function Inicio() {
 
   const [celebrating, setCelebrating] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [levelUp, setLevelUp] = useState<GardenLevel | null>(null);
 
   async function concluirDia() {
     setBusy(true);
+    const before = useAppStore.getState().data.seeds;
     await completeDay(day);
+    const after = useAppStore.getState().data.seeds;
+    setLevelUp(leveledUp(before, after));
     setBusy(false);
     setCelebrating(true);
   }
@@ -123,8 +129,10 @@ export default function Inicio() {
       <DayCelebration
         message={content.completionMessage}
         milestone={content.milestone}
+        levelUp={levelUp}
         onDone={() => {
           setCelebrating(false);
+          setLevelUp(null);
           if (isFinal) router.replace("/concluir");
         }}
       />
@@ -142,9 +150,12 @@ export default function Inicio() {
           </h1>
         </div>
         <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-tint px-3 py-1.5 text-sm font-semibold text-sage-dark">
+          <Link
+            href="/jardim"
+            className="inline-flex items-center gap-1.5 rounded-full bg-sage-tint px-3 py-1.5 text-sm font-semibold text-sage-dark transition-transform active:scale-95"
+          >
             <Sprout className="size-4" /> {seeds}
-          </span>
+          </Link>
           <span className="inline-flex items-center gap-1.5 rounded-full bg-coral-tint px-3 py-1.5 text-sm font-semibold text-coral-dark">
             <Flame className="size-4" /> {streak.current}
           </span>
@@ -239,6 +250,9 @@ export default function Inicio() {
           {scoreMicrocopy(score.value, score.delta)}
         </p>
       </Card>
+
+      {/* Jardim / nível */}
+      <SeedMeter />
 
       {/* Refeições de hoje */}
       {content && (
@@ -404,10 +418,12 @@ function WeekStrip({
 function DayCelebration({
   message,
   milestone,
+  levelUp,
   onDone,
 }: {
   message: string;
   milestone?: string;
+  levelUp?: GardenLevel | null;
   onDone: () => void;
 }) {
   return (
@@ -441,10 +457,26 @@ function DayCelebration({
       >
         {message}
       </motion.h2>
+
+      {levelUp && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.7 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.5, type: "spring", stiffness: 240, damping: 15 }}
+          className="mt-5 rounded-2xl bg-sage-tint px-5 py-3 text-sage-dark"
+        >
+          <p className="text-3xl">{levelUp.emoji}</p>
+          <p className="mt-1 font-semibold">Subiu de nível: {levelUp.name}!</p>
+          {levelUp.unlock && (
+            <p className="text-sm">Desbloqueou: {levelUp.unlock}</p>
+          )}
+        </motion.div>
+      )}
+
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.6 }}
+        transition={{ delay: 0.7 }}
         className="mt-8 w-full max-w-xs"
       >
         <Button fullWidth size="lg" onClick={onDone}>
