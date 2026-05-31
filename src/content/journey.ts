@@ -348,7 +348,43 @@ export const DAYS: DayContent[] = [
     phase: "Remove",
     lesson: {
       title: "Agora a gente vira detetive do seu intestino",
-      body: "Nos 3 primeiros dias você acalmou tudo de uma vez. A partir de agora o objetivo muda: além de manter a calma, vamos começar a mapear o que é gatilho pra VOCÊ. Cada corpo é diferente — o que estufa sua amiga pode não te fazer nada. Por isso o registro diário é tão importante: ele cruza o que você comeu com como você se sentiu. Esse é o segredo que nenhuma dieta genérica te dá.",
+      durationMin: 2,
+      body: "Nos 3 primeiros dias você acalmou tudo. A partir de agora o objetivo muda: mapear o que é gatilho PRA VOCÊ. E o segredo disso é o registro diário.",
+      cards: [
+        {
+          heading: "Mudou o objetivo",
+          emoji: "🕵️‍♀️",
+          body: "A fase de choque acalmou seu intestino cortando tudo. Agora a gente entra na fase de descoberta: o que, especificamente, faz mal pra VOCÊ.",
+        },
+        {
+          heading: "Cada corpo é diferente",
+          emoji: "🧬",
+          body: "O que estufa sua amiga pode não te fazer nada — e vice-versa. Não existe lista universal. Existe a SUA lista, e a gente vai montá-la juntas.",
+        },
+        {
+          heading: "O registro é o segredo",
+          emoji: "📝",
+          body: "Cada registro cruza o que você comeu com como você se sentiu. Em poucos dias, padrões aparecem (“toda vez que como X, incho”). Isso nenhuma dieta genérica te dá.",
+        },
+        {
+          heading: "Por isso, registre sempre",
+          emoji: "🎯",
+          body: "Quanto mais você registra, mais preciso fica o seu mapa. É o trabalho mais importante das próximas semanas — e leva 30 segundos.",
+        },
+      ],
+      quiz: [
+        {
+          question: "Qual o objetivo da fase de Remoção (a partir de agora)?",
+          options: [
+            "Continuar cortando tudo pra sempre",
+            "Mapear quais alimentos são gatilho pra você",
+            "Perder peso rápido",
+          ],
+          correctIndex: 1,
+          explain:
+            "Isso! Agora é descobrir os SEUS gatilhos — por isso o registro diário é tão importante.",
+        },
+      ],
     },
     checklist: [
       "Mantenha a base sem trigo, leite comum, cebola, alho e leguminosas",
@@ -386,8 +422,44 @@ export const DAYS: DayContent[] = [
     day: 5,
     phase: "Remove",
     lesson: {
-      title: "Fibra boa x fibra que incha: nem toda fibra é amiga",
-      body: "“Coma mais fibra” é um conselho incompleto. Existem fibras que acalmam o intestino (as solúveis, da aveia, cenoura, chia, banana) e outras que fermentam e estufam quando o intestino está irritado (as de certos grãos, repolho, couve-flor). Na fase de remoção, a gente prioriza as fibras solúveis: elas regulam o intestino sem alimentar o gás. Quando seu intestino estiver calmo, a variedade volta.",
+      title: "Nem toda fibra é amiga",
+      durationMin: 2,
+      body: "“Coma mais fibra” é um conselho incompleto. Tem fibra que acalma e fibra que estufa quando o intestino está irritado. Hoje você aprende a diferença.",
+      cards: [
+        {
+          heading: "“Coma mais fibra” é incompleto",
+          emoji: "🌾",
+          body: "Fibra é importante, mas existem dois tipos — e eles agem de formas opostas no intestino irritado.",
+        },
+        {
+          heading: "Fibra que acalma (solúvel)",
+          emoji: "🥣",
+          body: "Aveia, cenoura, chia, banana. As solúveis formam um gel que regula o intestino sem alimentar o gás. São as suas aliadas nesta fase.",
+        },
+        {
+          heading: "Fibra que estufa (por enquanto)",
+          emoji: "🥦",
+          body: "Repolho cru, couve-flor, brócolis em excesso, certos grãos. Quando o intestino está sensível, elas fermentam e estufam. Não é pra sempre.",
+        },
+        {
+          heading: "A variedade volta",
+          emoji: "🌈",
+          body: "Na fase de remoção a gente prioriza as fibras suaves. Quando seu intestino estiver calmo, a variedade volta aos poucos.",
+        },
+      ],
+      quiz: [
+        {
+          question: "Qual fibra ACALMA o intestino irritado?",
+          options: [
+            "Repolho cru e couve-flor",
+            "As solúveis: aveia, cenoura, chia, banana",
+            "Nenhuma fibra é boa",
+          ],
+          correctIndex: 1,
+          explain:
+            "Isso! As solúveis regulam o intestino sem alimentar o gás.",
+        },
+      ],
     },
     checklist: [
       "Inclua 1 fonte de fibra solúvel (aveia, chia, cenoura ou banana)",
@@ -425,7 +497,43 @@ export const DAYS: DayContent[] = [
     phase: "Remove",
     lesson: {
       title: "Intestino e pele: por que sua pele melhora junto",
-      body: "Você pode começar a notar a pele mais viva nesses dias — e não é coincidência. Existe o eixo intestino-pele: quando o intestino está inflamado e fermentando, isso gera sinais inflamatórios que aparecem na pele (oleosidade, opacidade, espinhas). Ao acalmar o intestino, você reduz essa inflamação de baixo grau — e a pele agradece. Repare no espelho hoje.",
+      durationMin: 2,
+      body: "Você pode notar a pele mais viva nesses dias — e não é coincidência. Existe o eixo intestino-pele, e ele explica esse bônus.",
+      cards: [
+        {
+          heading: "Um bônus que aparece no espelho",
+          emoji: "✨",
+          body: "Muita gente repara a pele mais viva já na primeira semana. Não é acaso: seu intestino e sua pele conversam.",
+        },
+        {
+          heading: "O eixo intestino-pele",
+          emoji: "🔗",
+          body: "Quando o intestino está inflamado e fermentando, ele libera sinais inflamatórios que circulam pelo corpo e aparecem na pele: oleosidade, opacidade, espinhas.",
+        },
+        {
+          heading: "Acalmar o intestino acalma a pele",
+          emoji: "🌿",
+          body: "Ao reduzir a fermentação, você baixa essa inflamação de baixo grau. A pele responde — fica mais uniforme e com mais viço.",
+        },
+        {
+          heading: "Repare hoje",
+          emoji: "🪞",
+          body: "Dê uma olhada no espelho e compare com o Dia 1. Pequenas mudanças já contam — e são prova de que está funcionando por dentro.",
+        },
+      ],
+      quiz: [
+        {
+          question: "Por que a pele melhora ao cuidar do intestino?",
+          options: [
+            "Por causa de cremes",
+            "O intestino inflamado gera sinais que aparecem na pele; acalmá-lo reduz isso",
+            "É só impressão",
+          ],
+          correctIndex: 1,
+          explain:
+            "Isso! É o eixo intestino-pele: menos inflamação no intestino, pele mais viva.",
+        },
+      ],
     },
     checklist: [
       "Mantenha a base anti-inchaço",
@@ -464,7 +572,43 @@ export const DAYS: DayContent[] = [
     milestone: "1 semana completa",
     lesson: {
       title: "1 semana! Olha só o que você já conquistou",
-      body: "Sete dias atrás sua barriga vivia estufada e você não sabia por quê. Hoje você já tirou os maiores fermentadores, começou a mapear seus gatilhos e — muito provavelmente — sente a barriga mais baixa, principalmente à noite. Esse é o seu primeiro grande marco. Guarde essa sensação: ela é a prova de que não era “normal” viver inchada. Na próxima fase a gente descobre exatamente o que você pode voltar a comer.",
+      durationMin: 2,
+      body: "Sete dias atrás você vivia estufada e não sabia por quê. Hoje é diferente. Esse é o seu primeiro grande marco — vamos comemorar.",
+      cards: [
+        {
+          heading: "Há 7 dias…",
+          emoji: "📅",
+          body: "Sua barriga vivia estufada, principalmente à noite, e você não sabia o motivo. Parecia “normal”. Spoiler: não era.",
+        },
+        {
+          heading: "O que você já fez",
+          emoji: "💪",
+          body: "Tirou os maiores fermentadores, começou a mapear seus gatilhos e — muito provavelmente — já sente a barriga mais baixa. Em uma semana.",
+        },
+        {
+          heading: "Guarde essa sensação",
+          emoji: "💚",
+          body: "Esse é o seu primeiro grande marco. Ela é a prova de que viver inchada não era o seu normal — era um problema com solução.",
+        },
+        {
+          heading: "O que vem agora",
+          emoji: "🔍",
+          body: "Na próxima fase começa a melhor parte: descobrir exatamente o que você PODE voltar a comer. A reintrodução é o que te dá liberdade.",
+        },
+      ],
+      quiz: [
+        {
+          question: "O que vem na próxima fase (reintrodução)?",
+          options: [
+            "Cortar ainda mais alimentos",
+            "Descobrir o que você pode voltar a comer, testando um grupo por vez",
+            "Parar o programa",
+          ],
+          correctIndex: 1,
+          explain:
+            "Isso! A reintrodução devolve a liberdade: você testa e descobre o que tolera.",
+        },
+      ],
     },
     checklist: [
       "Releia seus registros da semana: vê algum padrão?",
