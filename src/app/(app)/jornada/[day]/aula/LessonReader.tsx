@@ -63,7 +63,6 @@ export function LessonReader({ day }: { day: number }) {
   if (done) {
     return (
       <LessonDone
-        day={day}
         seeds={reward?.seeds ?? 0}
         milestone={content.milestone}
         onClose={() => router.replace(`/jornada/${day}`)}
@@ -239,12 +238,10 @@ function QuizCard({
 }
 
 function LessonDone({
-  day,
   seeds,
   milestone,
   onClose,
 }: {
-  day: number;
   seeds: number;
   milestone?: string;
   onClose: () => void;
