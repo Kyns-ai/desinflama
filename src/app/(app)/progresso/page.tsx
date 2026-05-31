@@ -6,6 +6,8 @@ import { EmptyState, buttonStyles, Card, Badge } from "@/components/ui";
 import { isScoreStalled } from "@/lib/score";
 import { LineChart } from "@/components/charts/LineChart";
 import { PhotoGallery } from "@/components/PhotoGallery";
+import { SeedMeter } from "@/components/SeedMeter";
+import { gardenFor } from "@/lib/garden";
 import { useAppStore } from "@/store/useAppStore";
 import {
   scoreSeries,
@@ -55,6 +57,8 @@ export default function Progresso() {
   const marcos = milestones(logs, streak.longest);
   const hasData = logs.length > 0;
   const stalled = isScoreStalled(scores);
+  const garden = gardenFor(data.seeds);
+  const lastScore = score.length ? score[score.length - 1].value : 0;
 
   return (
     <div className="space-y-6">
@@ -66,6 +70,29 @@ export default function Progresso() {
           A prova de que está funcionando — no seu corpo.
         </p>
       </header>
+
+      {/* Resumo rápido */}
+      <div className="grid grid-cols-3 gap-3">
+        <Card elevation="soft" className="px-2 py-4 text-center">
+          <p className="font-display text-2xl font-semibold text-sage-deep">
+            {lastScore || "—"}
+          </p>
+          <p className="text-xs text-ink-soft">Índice hoje</p>
+        </Card>
+        <Card elevation="soft" className="px-2 py-4 text-center">
+          <p className="font-display text-2xl font-semibold text-coral-dark">
+            {streak.current}🔥
+          </p>
+          <p className="text-xs text-ink-soft">Ofensiva</p>
+        </Card>
+        <Card elevation="soft" className="px-2 py-4 text-center">
+          <p className="text-2xl">{garden.level.emoji}</p>
+          <p className="text-xs text-ink-soft">{garden.level.name}</p>
+        </Card>
+      </div>
+
+      {/* Jardim / nível */}
+      <SeedMeter />
 
       {/* Índice Intestinal no tempo */}
       {score.length >= 2 && (
