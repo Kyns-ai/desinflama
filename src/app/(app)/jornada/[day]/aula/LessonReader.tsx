@@ -6,8 +6,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowRight, Check, Sprout, Trophy } from "lucide-react";
 import { Button } from "@/components/ui";
 import { Confetti } from "@/components/Confetti";
+import { Art } from "@/components/Art";
 import { useAppStore } from "@/store/useAppStore";
 import { getDay, lessonCards, type QuizItem } from "@/content/journey";
+import { cardArtId } from "@/content/cardArt";
 import { haptic } from "@/lib/haptics";
 import { cn } from "@/lib/cn";
 
@@ -111,9 +113,16 @@ export function LessonReader({ day }: { day: number }) {
             transition={{ duration: 0.32, ease }}
             className="flex flex-1 flex-col justify-center py-8"
           >
-            {cards[step].emoji && (
-              <div className="text-6xl">{cards[step].emoji}</div>
-            )}
+            {cards[step].emoji &&
+              (cardArtId(cards[step].emoji) ? (
+                <Art
+                  id={cardArtId(cards[step].emoji)!}
+                  emoji={cards[step].emoji!}
+                  className="size-32 rounded-3xl text-6xl"
+                />
+              ) : (
+                <div className="text-6xl">{cards[step].emoji}</div>
+              ))}
             {cards[step].heading && (
               <h1 className="mt-5 font-display text-[2rem] font-semibold leading-tight tracking-tight text-ink">
                 {cards[step].heading}

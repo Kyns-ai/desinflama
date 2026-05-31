@@ -17,9 +17,14 @@ if (!KEY) {
 const FORCE = process.argv.includes("--force");
 const BASE = "https://api.muapi.ai/api/v1";
 const root = process.cwd();
-const manifest = JSON.parse(
-  fs.readFileSync(path.join(root, "scripts/art-manifest.json"), "utf8")
-);
+const DEFAULT_STYLE =
+  "Soft minimal flat vector illustration, single centered subject filling most of the frame, flat warm cream background color #FAF7F2, palette of sage green #4FB286, coral #F2856D and warm terracotta, gentle rounded organic shapes, smooth subtle shading, no text, no words, no letters, no border, no frame, calm premium wellness brand, modern app illustration";
+const manifestPath =
+  process.argv.find((a) => a.endsWith(".json")) || "scripts/art-manifest.json";
+const raw = JSON.parse(fs.readFileSync(path.join(root, manifestPath), "utf8"));
+const manifest = Array.isArray(raw)
+  ? { style: DEFAULT_STYLE, aspect_ratio: "1:1", items: raw }
+  : raw;
 const outDir = path.join(root, "public/img");
 fs.mkdirSync(outDir, { recursive: true });
 
