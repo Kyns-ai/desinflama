@@ -645,7 +645,43 @@ export const DAYS: DayContent[] = [
     phase: "Reintrodução",
     lesson: {
       title: "Reintrodução: a parte que te dá liberdade",
-      body: "Aqui muita gente erra: acha que precisa cortar tudo pra sempre. Errado. Agora que seu intestino acalmou, a gente devolve UM grupo de cada vez pra descobrir o que VOCÊ tolera. Hoje o teste é a lactose: coma uma porção de um derivado do leite (ex.: ½ copo de leite comum ou 1 pote pequeno de iogurte) e observe nas próximas horas. Se não inchar, ótimo — lactose não é seu problema. Se inchar, achamos um gatilho. Teste só um grupo por dia.",
+      durationMin: 2,
+      body: "A reintrodução é o que te devolve a comida sem medo. A regra de ouro: testar um grupo por vez. Hoje você testa a lactose.",
+      cards: [
+        {
+          heading: "O erro que quase todo mundo comete",
+          emoji: "🚫",
+          body: "Achar que precisa cortar tudo pra sempre. Errado! Agora que seu intestino acalmou, a gente DEVOLVE os alimentos, um grupo de cada vez.",
+        },
+        {
+          heading: "A regra de ouro",
+          emoji: "🔑",
+          body: "Teste UM grupo FODMAP por dia, em porção pequena, e observe. Se testar dois ao mesmo tempo, você não sabe quem foi o culpado.",
+        },
+        {
+          heading: "Hoje: teste da lactose",
+          emoji: "🥛",
+          body: "Coma uma porção de derivado do leite comum (½ copo de leite ou 1 potinho de iogurte) e observe por até 6h. Sem inchar? Lactose não é seu problema. Inchou? Achamos um gatilho.",
+        },
+        {
+          heading: "Anote a reação",
+          emoji: "📊",
+          body: "Registre a intensidade de 1 a 5 e a que horas começou. Cada teste é uma peça do seu mapa pessoal — o que nenhuma dieta genérica te dá.",
+        },
+      ],
+      quiz: [
+        {
+          question: "Qual a regra de ouro da reintrodução?",
+          options: [
+            "Testar vários grupos no mesmo dia pra ir mais rápido",
+            "Testar um grupo por vez, em porção pequena, observando",
+            "Voltar a comer tudo de uma vez",
+          ],
+          correctIndex: 1,
+          explain:
+            "Isso! Um grupo por vez — senão você não sabe qual causou a reação.",
+        },
+      ],
     },
     checklist: [
       "Mantenha o resto da base low FODMAP",
@@ -681,7 +717,43 @@ export const DAYS: DayContent[] = [
     phase: "Reintrodução",
     lesson: {
       title: "Teste da frutose: o açúcar das frutas",
-      body: "Algumas frutas e o mel têm frutose em excesso, que parte das pessoas absorve mal — e aí vem o inchaço. Hoje o teste é esse grupo. Se a lactose de ontem não te incomodou, siga; se incomodou, volte ao leite sem lactose e teste a frutose mesmo assim (são grupos diferentes). Coma uma porção de uma fruta rica em frutose (ex.: ½ manga ou 1 colher de mel) e observe. Repare: você está construindo a lista do que é SEU.",
+      durationMin: 2,
+      body: "Hoje o teste é a frutose — o açúcar de algumas frutas e do mel, que parte das pessoas absorve mal.",
+      cards: [
+        {
+          heading: "Nem toda fruta é leve",
+          emoji: "🍯",
+          body: "Algumas frutas e o mel têm frutose em excesso. Quem absorve mal sente o inchaço chegar logo depois. É o grupo de hoje.",
+        },
+        {
+          heading: "Um teste de cada vez",
+          emoji: "🔄",
+          body: "Se a lactose de ontem não te incomodou, ótimo — siga. Se incomodou, volte ao leite sem lactose e teste a frutose assim mesmo. São grupos diferentes, então o resultado de um não muda o outro.",
+        },
+        {
+          heading: "Como testar hoje",
+          emoji: "🥭",
+          body: "Coma uma porção rica em frutose (½ manga OU 1 colher de mel) e observe nas horas seguintes. Anote a intensidade de 1 a 5.",
+        },
+        {
+          heading: "Você está montando a SUA lista",
+          emoji: "📋",
+          body: "A cada teste, a sua lista pessoal fica mais clara: o que pode à vontade, o que com moderação, o que evitar. Isso é seu pra sempre.",
+        },
+      ],
+      quiz: [
+        {
+          question: "Onde a frutose “escondida” costuma aparecer?",
+          options: [
+            "Em carnes e ovos",
+            "Em algumas frutas (manga, melancia) e no mel",
+            "No arroz",
+          ],
+          correctIndex: 1,
+          explain:
+            "Isso! Frutose em excesso aparece em certas frutas e no mel — por isso o teste de hoje.",
+        },
+      ],
     },
     checklist: [
       "Volte os grupos que passaram (ex.: lactose, se tolerou)",
@@ -716,7 +788,43 @@ export const DAYS: DayContent[] = [
     phase: "Reintrodução",
     lesson: {
       title: "O grande teste: trigo, cebola e alho (frutanos)",
-      body: "Chegou o teste mais importante, porque frutano é o gatilho nº1 de inchaço da maioria das pessoas — e está no trigo, na cebola e no alho. Hoje você reintroduz com cuidado: escolha UMA fonte (ex.: uma fatia de pão de trigo OU um prato com cebola refogada) e observe bem. Muita gente descobre aqui que o “problema com glúten” era, na verdade, frutano. Seja honesta no registro: esse resultado vale ouro.",
+      durationMin: 2,
+      body: "Chegou o teste mais importante de todos. Frutano é o gatilho nº1 de inchaço — e está no trigo, na cebola e no alho.",
+      cards: [
+        {
+          heading: "O gatilho nº1",
+          emoji: "🏆",
+          body: "Frutano é o que mais incha gente no mundo. Por isso este é o teste mais valioso da reintrodução — o resultado de hoje vale ouro.",
+        },
+        {
+          heading: "Glúten ou frutano?",
+          emoji: "🍞",
+          body: "Muita gente acha que tem “problema com glúten”, mas descobre aqui que o vilão era o frutano do trigo. São coisas diferentes — e esse teste esclarece.",
+        },
+        {
+          heading: "Como testar com cuidado",
+          emoji: "🧪",
+          body: "Escolha UMA fonte: uma fatia de pão de trigo OU um prato com cebola refogada. Observe bem — o frutano costuma reagir mais forte e pode demorar mais.",
+        },
+        {
+          heading: "Seja honesta no registro",
+          emoji: "✍️",
+          body: "Anote a intensidade e a que horas começou. Se reagir forte, volte à base amanhã sem culpa. Saber disso muda completamente as suas escolhas.",
+        },
+      ],
+      quiz: [
+        {
+          question: "O “problema com glúten” de muita gente é, na verdade…",
+          options: [
+            "Falta de vitamina",
+            "Frutano — uma fibra do trigo que fermenta",
+            "Excesso de água",
+          ],
+          correctIndex: 1,
+          explain:
+            "Isso! Muita gente reage ao frutano do trigo, não ao glúten — por isso este teste vale ouro.",
+        },
+      ],
     },
     checklist: [
       "Mantenha os grupos que já passaram",
@@ -751,7 +859,43 @@ export const DAYS: DayContent[] = [
     phase: "Reintrodução",
     lesson: {
       title: "Leguminosas e polióis: os últimos testes",
-      body: "Faltam dois grupos pra fechar seu mapa. As leguminosas (feijão, grão-de-bico, lentilha) têm GOS, uma fibra que fermenta — mas existe um truque: bem cozidas e em porção pequena, muita gente tolera. E os polióis estão em frutas como maçã e pera e nos adoçantes “sem açúcar” (sorbitol, xilitol). Teste um por vez. Ao fim de hoje, você terá a lista completa do que pode voltar e do que vale evitar.",
+      durationMin: 2,
+      body: "Faltam dois grupos pra fechar seu mapa: leguminosas (GOS) e polióis. Hoje você completa a reintrodução.",
+      cards: [
+        {
+          heading: "Reta final da descoberta",
+          emoji: "🏁",
+          body: "Dois grupos e seu mapa fica completo. Teste um por vez, como nos dias anteriores.",
+        },
+        {
+          heading: "Leguminosas (GOS) — tem truque",
+          emoji: "🫘",
+          body: "Feijão, grão-de-bico e lentilha têm GOS, uma fibra que fermenta. Mas o segredo é a dose: bem cozidas e em porção pequena (2–3 colheres), muita gente tolera bem.",
+        },
+        {
+          heading: "Polióis — os “sem açúcar”",
+          emoji: "🍎",
+          body: "Polióis estão em frutas como maçã e pera e nos adoçantes diet (sorbitol, xilitol). São laxantes e gasosos pra quem é sensível.",
+        },
+        {
+          heading: "Seu mapa está pronto",
+          emoji: "🗺️",
+          body: "Ao fim de hoje você tem a lista completa: o que pode à vontade, o que com moderação, o que evitar. A descoberta acabou — agora é viver com leveza.",
+        },
+      ],
+      quiz: [
+        {
+          question: "Qual o truque pra tolerar melhor as leguminosas?",
+          options: [
+            "Comer cruas",
+            "Bem cozidas e em porção pequena",
+            "Comer em jejum",
+          ],
+          correctIndex: 1,
+          explain:
+            "Isso! Bem cozidas e em pouca quantidade, muita gente tolera o GOS sem inchar.",
+        },
+      ],
     },
     checklist: [
       "TESTE LEGUMINOSA: 2–3 colheres de feijão bem cozido OU",
@@ -788,7 +932,43 @@ export const DAYS: DayContent[] = [
     phase: "Repair",
     lesson: {
       title: "Reparar a parede do intestino",
-      body: "Depois de acalmar e mapear, entramos na fase de reparo. A parede do seu intestino é uma barreira que pode ficar irritada com o tempo. Alguns nutrientes ajudam a recompô-la: glutamina (presente em carnes, ovos e caldo de osso), zinco (carne, sementes de abóbora) e ômega-3 (peixes, chia, linhaça), que reduz inflamação. Não é sobre suplemento caro — é sobre colocar esses alimentos no prato com constância.",
+      durationMin: 2,
+      body: "Acalmou, mapeou — agora a gente repara. Alguns nutrientes ajudam a recompor a parede do seu intestino. E não é sobre suplemento caro.",
+      cards: [
+        {
+          heading: "A barreira do intestino",
+          emoji: "🧱",
+          body: "A parede do intestino é uma barreira que separa o que entra no corpo do que não deve entrar. Com o tempo e a irritação, ela pode ficar mais frágil. Agora a gente reforça.",
+        },
+        {
+          heading: "Glutamina e zinco",
+          emoji: "🥚",
+          body: "A glutamina (ovos, carnes, caldo de osso) é “combustível” pras células do intestino. O zinco (carne, sementes de abóbora) ajuda na regeneração. Coloque no prato com constância.",
+        },
+        {
+          heading: "Ômega-3 acalma",
+          emoji: "🐟",
+          body: "Peixes, chia e linhaça trazem ômega-3, que reduz inflamação. Menos inflamação = parede mais saudável e menos sintoma.",
+        },
+        {
+          heading: "Comida, não cápsula",
+          emoji: "🍽️",
+          body: "Não precisa de suplemento caro. O reparo vem de colocar esses alimentos no prato com regularidade — simples assim.",
+        },
+      ],
+      quiz: [
+        {
+          question: "Quais nutrientes ajudam a reparar a parede do intestino?",
+          options: [
+            "Açúcar e cafeína",
+            "Glutamina, zinco e ômega-3 (de comida comum)",
+            "Só suplementos caros",
+          ],
+          correctIndex: 1,
+          explain:
+            "Isso! E o melhor: vêm de ovos, carnes, sementes e peixes — comida de verdade.",
+        },
+      ],
     },
     checklist: [
       "Inclua uma fonte de glutamina (ovos, carne ou caldo de osso)",
@@ -822,7 +1002,43 @@ export const DAYS: DayContent[] = [
     phase: "Repair",
     lesson: {
       title: "Reequilibrar as bactérias boas",
-      body: "Seu intestino é morada de trilhões de bactérias — e as boas adoram dois tipos de comida: prebióticos (fibras que as alimentam) e probióticos/fermentados (que repõem bactérias boas). Como você está saindo de uma fase de baixo FODMAP, faça isso com calma: comece com porções pequenas de fermentados leves (iogurte tolerado, kefir em pouca quantidade, chucrute) e fibras suaves. Reequilibrar é construir aos poucos, não de uma vez.",
+      durationMin: 2,
+      body: "Seu intestino abriga trilhões de bactérias — e as boas adoram dois tipos de comida. Hoje você aprende a alimentar o time certo.",
+      cards: [
+        {
+          heading: "Um ecossistema vivo",
+          emoji: "🦠",
+          body: "Seu intestino é morada de trilhões de bactérias. Quando as boas estão fortes, a digestão flui e a imunidade agradece. Vamos cuidar delas.",
+        },
+        {
+          heading: "Prebióticos: a comida delas",
+          emoji: "🌾",
+          body: "Prebióticos são fibras que alimentam as bactérias boas (aveia, banana, um pouco de cebolinha). Pense neles como o adubo do seu jardim interno.",
+        },
+        {
+          heading: "Probióticos: reforços",
+          emoji: "🫙",
+          body: "Fermentados como iogurte tolerado, kefir e chucrute trazem bactérias boas de fora. Repõem o time.",
+        },
+        {
+          heading: "Devagar e sempre",
+          emoji: "🐢",
+          body: "Saindo de uma fase low FODMAP, comece com porções pequenas. Reequilibrar é construir aos poucos — exagerar de uma vez pode estufar de novo.",
+        },
+      ],
+      quiz: [
+        {
+          question: "Saindo da fase low FODMAP, como introduzir fermentados?",
+          options: [
+            "Tudo de uma vez pra acelerar",
+            "Aos poucos, em porções pequenas",
+            "Nunca mais comer fermentados",
+          ],
+          correctIndex: 1,
+          explain:
+            "Isso! Devagar — reequilibrar é construção, não choque.",
+        },
+      ],
     },
     checklist: [
       "Inclua um fermentado em porção pequena (iogurte/kefir tolerado)",
@@ -857,7 +1073,43 @@ export const DAYS: DayContent[] = [
     milestone: "Desafio concluído",
     lesson: {
       title: "Seu mapa pessoal está pronto 🗺️",
-      body: "Catorze dias atrás você não sabia por que vivia estufada. Agora você tem algo que nenhuma dieta genérica entrega: o SEU mapa. Você sabe o que acalma seu intestino, o que são seus gatilhos e o que pode voltar ao prato sem medo. A partir daqui não é sobre restrição — é sobre escolha consciente. Seu “cardápio de saída” é simples: base nos alimentos que caíram bem + os grupos que você tolerou + atenção (não proibição) nos seus gatilhos. Manutenção é o que impede de voltar a inchar.",
+      durationMin: 2,
+      body: "Catorze dias atrás você não sabia por que vivia estufada. Hoje você tem o SEU mapa — algo que nenhuma dieta genérica entrega.",
+      cards: [
+        {
+          heading: "Olha o quanto você andou",
+          emoji: "🗺️",
+          body: "Há 14 dias, viver inchada parecia normal e sem explicação. Agora você entende seu corpo: o que acalma, o que é gatilho, o que pode voltar sem medo.",
+        },
+        {
+          heading: "Não é mais restrição",
+          emoji: "🕊️",
+          body: "A partir daqui é escolha consciente, não proibição. Você não depende mais de adivinhação — tem informação sobre o SEU corpo.",
+        },
+        {
+          heading: "Seu cardápio de saída",
+          emoji: "🍽️",
+          body: "Simples: base nos alimentos que caíram bem + os grupos que você tolerou + atenção (não medo) nos seus gatilhos. Esse é o seu jeito de comer com leveza.",
+        },
+        {
+          heading: "Manutenção é o segredo",
+          emoji: "♾️",
+          body: "O que impede de voltar a inchar é manter o ritmo. A gente segue com você no Modo Manutenção — e nos desafios mensais. Parabéns: isso é pra vida.",
+        },
+      ],
+      quiz: [
+        {
+          question: "Depois dos 14 dias, o que impede de voltar a inchar?",
+          options: [
+            "Cortar tudo de novo",
+            "Manter o ritmo (manutenção) com escolhas conscientes",
+            "Nada, o problema sempre volta",
+          ],
+          correctIndex: 1,
+          explain:
+            "Isso! Manutenção é o que segura a leveza — e você não está sozinha nisso.",
+        },
+      ],
     },
     checklist: [
       "Liste seus 3 maiores gatilhos identificados",
@@ -894,7 +1146,38 @@ export const DAYS: DayContent[] = [
     phase: "Rebalance",
     lesson: {
       title: "Reset Profundo: agora a gente cuida do todo",
-      body: "Você já mapeou a comida. Mas o intestino também responde a sono, estresse e movimento — é o famoso eixo intestino-cérebro. Nestes 7 dias a gente afina esses pilares pra consolidar o que você conquistou. Pense no Reset como a diferença entre desinchar e ficar desinchada.",
+      durationMin: 2,
+      body: "Você mapeou a comida. Mas o intestino também responde a sono, estresse e movimento. Nestes 7 dias a gente afina esses pilares.",
+      cards: [
+        {
+          heading: "Comida é só metade",
+          emoji: "🧩",
+          body: "Você já sabe o que comer e o que evitar. Mas o intestino também responde a sono, estresse e movimento — o eixo intestino-cérebro.",
+        },
+        {
+          heading: "O ajuste fino",
+          emoji: "🎚️",
+          body: "Nestes 7 dias a gente afina esses três pilares pra consolidar tudo que você conquistou. É a diferença entre desinchar e FICAR desinchada.",
+        },
+        {
+          heading: "Pequenos hábitos, grande efeito",
+          emoji: "🌙",
+          body: "Não precisa virar atleta nem monge. Pequenos ajustes de sono, respiração e movimento já mudam muito como seu intestino funciona.",
+        },
+      ],
+      quiz: [
+        {
+          question: "Além da comida, o que mais afeta o intestino?",
+          options: [
+            "Nada, só comida importa",
+            "Sono, estresse e movimento (eixo intestino-cérebro)",
+            "A fase da lua",
+          ],
+          correctIndex: 1,
+          explain:
+            "Isso! Sono, estresse e movimento conversam direto com o intestino.",
+        },
+      ],
     },
     checklist: [
       "Mantenha sua base de alimentos tolerados",
@@ -915,7 +1198,38 @@ export const DAYS: DayContent[] = [
     phase: "Rebalance",
     lesson: {
       title: "Sono: a faxina noturna do intestino",
-      body: "Enquanto você dorme, o intestino faz movimentos de limpeza (o complexo motor migratório) que “varrem” restos e bactérias. Dormir mal trava essa faxina e favorece o inchaço. Hoje a meta é higiene do sono: menos tela à noite, quarto escuro e um ritmo regular.",
+      durationMin: 2,
+      body: "Enquanto você dorme, o intestino faz uma faxina. Dormir mal trava essa limpeza e favorece o inchaço.",
+      cards: [
+        {
+          heading: "A faxina da madrugada",
+          emoji: "🧹",
+          body: "Enquanto você dorme, o intestino faz movimentos de limpeza (o complexo motor migratório) que “varrem” restos e bactérias. É manutenção noturna.",
+        },
+        {
+          heading: "Sono ruim, faxina travada",
+          emoji: "😴",
+          body: "Dormir mal interrompe essa limpeza — e isso favorece o inchaço e o desconforto no dia seguinte. Sono é cuidado intestinal.",
+        },
+        {
+          heading: "Higiene do sono hoje",
+          emoji: "🌙",
+          body: "Menos tela à noite, quarto escuro, e um ritmo regular (dormir e acordar em horários parecidos). Pequenos ajustes, grande diferença.",
+        },
+      ],
+      quiz: [
+        {
+          question: "Por que o sono ajuda o intestino?",
+          options: [
+            "Não ajuda",
+            "Dormindo, o intestino faz uma “faxina” que varre restos",
+            "Porque você para de comer",
+          ],
+          correctIndex: 1,
+          explain:
+            "Isso! Dormir bem libera a limpeza noturna do intestino.",
+        },
+      ],
     },
     checklist: [
       "Desligue telas 30 min antes de dormir",
@@ -936,7 +1250,38 @@ export const DAYS: DayContent[] = [
     phase: "Rebalance",
     lesson: {
       title: "Estresse: respirar muda sua digestão",
-      body: "Em estresse, o corpo entra em “luta ou fuga” e a digestão simplesmente para — por isso a barriga estufa em dias tensos. A boa notícia: dá pra desligar isso conscientemente. A respiração lenta ativa o nervo vago, que liga o “modo digestão”. Hoje você testa 5 minutos disso antes de comer.",
+      durationMin: 2,
+      body: "Em dias tensos a barriga estufa — e tem explicação. A boa notícia: dá pra desligar isso conscientemente, com respiração.",
+      cards: [
+        {
+          heading: "Estresse desliga a digestão",
+          emoji: "🌪️",
+          body: "Sob estresse, o corpo entra em “luta ou fuga” e a digestão simplesmente para. Por isso a barriga estufa justo nos dias mais tensos.",
+        },
+        {
+          heading: "O nervo vago é o interruptor",
+          emoji: "🧘‍♀️",
+          body: "A respiração lenta ativa o nervo vago, que liga o “modo digestão” (descanso). Você consegue, conscientemente, tirar o corpo do modo alerta.",
+        },
+        {
+          heading: "5 minutos antes de comer",
+          emoji: "🫁",
+          body: "Hoje, antes de uma refeição, respire fundo e devagar por 5 minutos. Coma com calma, sem tela. Seu intestino digere muito melhor assim.",
+        },
+      ],
+      quiz: [
+        {
+          question: "Como a respiração lenta ajuda a digestão?",
+          options: [
+            "Não ajuda",
+            "Ativa o nervo vago e liga o “modo digestão”",
+            "Faz emagrecer",
+          ],
+          correctIndex: 1,
+          explain:
+            "Isso! Respirar devagar tira o corpo do alerta e liga a digestão.",
+        },
+      ],
     },
     checklist: [
       "Antes de uma refeição, respire fundo por 5 min",
@@ -957,7 +1302,38 @@ export const DAYS: DayContent[] = [
     phase: "Rebalance",
     lesson: {
       title: "Movimento: o empurrãozinho que o intestino ama",
-      body: "Não precisa de academia pesada — caminhar já estimula o intestino a se mover e libera gases presos. O movimento depois das refeições é especialmente bom contra o inchaço pós-comida. Hoje você inclui uma caminhada leve depois de uma refeição maior.",
+      durationMin: 2,
+      body: "Não precisa de academia. Caminhar já estimula o intestino e libera gases presos — principalmente depois de comer.",
+      cards: [
+        {
+          heading: "Esquece a academia pesada",
+          emoji: "🚶‍♀️",
+          body: "Caminhar já basta. O movimento estimula o intestino a se mexer e ajuda a liberar os gases que ficam presos.",
+        },
+        {
+          heading: "Depois de comer é ouro",
+          emoji: "🍽️",
+          body: "A caminhada logo após uma refeição maior é especialmente boa contra o inchaço pós-comida — empurra a digestão pra frente.",
+        },
+        {
+          heading: "10–15 min hoje",
+          emoji: "⏱️",
+          body: "Inclua uma caminhada leve depois do almoço ou jantar. Repare como a barriga responde. Constância vale mais que intensidade.",
+        },
+      ],
+      quiz: [
+        {
+          question: "Qual o melhor momento pra caminhar contra o inchaço?",
+          options: [
+            "Só em jejum",
+            "Logo depois de uma refeição maior",
+            "Só de manhã cedo",
+          ],
+          correctIndex: 1,
+          explain:
+            "Isso! Caminhar após comer empurra a digestão e reduz o inchaço pós-refeição.",
+        },
+      ],
     },
     checklist: [
       "Caminhe 10–15 min após o almoço ou jantar",
@@ -978,7 +1354,38 @@ export const DAYS: DayContent[] = [
     phase: "Rebalance",
     lesson: {
       title: "Reforçando o que você tolera",
-      body: "A esta altura você já sabe muito sobre o seu corpo. Hoje a gente reforça a variedade DENTRO do que cai bem — porque variar alimentos tolerados alimenta uma microbiota diversa e forte. Não é sobre comer pouco; é sobre comer bem e variado dentro do seu mapa.",
+      durationMin: 2,
+      body: "Você já sabe muito sobre o seu corpo. Hoje a gente reforça a variedade DENTRO do que cai bem — porque variar fortalece a microbiota.",
+      cards: [
+        {
+          heading: "Variedade é força",
+          emoji: "🌈",
+          body: "Quanto mais variados forem os alimentos que você tolera, mais diversa e forte fica a sua microbiota. Diversidade é sinônimo de intestino saudável.",
+        },
+        {
+          heading: "Não é comer pouco",
+          emoji: "🍲",
+          body: "Manutenção nunca foi sobre restringir. É sobre comer bem e variado DENTRO do seu mapa — explorando tudo que cai bem com você.",
+        },
+        {
+          heading: "Inclua algo novo hoje",
+          emoji: "✨",
+          body: "Coloque no prato um alimento tolerado que você não come há dias. Capriche nas cores. Seu jardim interno agradece a variedade.",
+        },
+      ],
+      quiz: [
+        {
+          question: "Por que variar os alimentos tolerados é bom?",
+          options: [
+            "Pra comer menos",
+            "Porque a variedade fortalece e diversifica a microbiota",
+            "Não faz diferença",
+          ],
+          correctIndex: 1,
+          explain:
+            "Isso! Microbiota diversa = intestino mais forte.",
+        },
+      ],
     },
     checklist: [
       "Inclua um alimento tolerado que você não come há dias",
@@ -999,7 +1406,38 @@ export const DAYS: DayContent[] = [
     phase: "Rebalance",
     lesson: {
       title: "Montando sua rotina de manutenção",
-      body: "Amanhã o Reset acaba — mas a leveza fica, se você tiver uma rotina simples. Manutenção não é dieta: é uma base de alimentos que caem bem + os grupos que você tolera + atenção (não proibição) nos gatilhos + sono, movimento e calma. Hoje você desenha essa rotina do seu jeito.",
+      durationMin: 2,
+      body: "Amanhã o Reset acaba — mas a leveza fica, se você tiver uma rotina simples. Hoje você desenha a sua.",
+      cards: [
+        {
+          heading: "A leveza precisa de rotina",
+          emoji: "📿",
+          body: "Não é mágica nem força de vontade infinita. O que mantém a barriga leve é uma rotina simples, do seu jeito.",
+        },
+        {
+          heading: "A receita da manutenção",
+          emoji: "🧾",
+          body: "Base de alimentos que caem bem + os grupos que você tolera + atenção (não proibição) nos gatilhos + sono, movimento e calma. Só isso.",
+        },
+        {
+          heading: "Desenhe a SUA hoje",
+          emoji: "✍️",
+          body: "Liste 3 refeições-curinga que sempre caem bem, 1 hábito de sono e 1 de movimento pra manter. Tenha seus gatilhos anotados pra consultar quando precisar.",
+        },
+      ],
+      quiz: [
+        {
+          question: "Manutenção é…",
+          options: [
+            "Uma dieta restritiva pra sempre",
+            "Uma rotina simples: o que cai bem + sono, movimento e calma",
+            "Parar de se cuidar",
+          ],
+          correctIndex: 1,
+          explain:
+            "Isso! Manutenção é rotina leve e consciente — não restrição.",
+        },
+      ],
     },
     checklist: [
       "Liste 3 refeições-curinga que sempre caem bem",
@@ -1021,7 +1459,38 @@ export const DAYS: DayContent[] = [
     milestone: "Reset Profundo concluído",
     lesson: {
       title: "21 dias: você se transformou 🌟",
-      body: "Três semanas atrás, viver estufada parecia normal. Hoje você tem um mapa, uma rotina e — o mais importante — entende o seu corpo. Daqui pra frente é manutenção: a leveza que você conquistou se mantém com pequenas escolhas conscientes, não com restrição. Você não depende mais de adivinhação. Parabéns: isso é pra vida.",
+      durationMin: 2,
+      body: "Três semanas atrás, viver estufada parecia normal. Hoje você tem mapa, rotina e — o mais importante — entende o seu corpo.",
+      cards: [
+        {
+          heading: "Olha de onde você veio",
+          emoji: "🌅",
+          body: "Três semanas atrás, a barriga inchada parecia destino. Hoje você sabe que não era — era um problema com solução, e você resolveu.",
+        },
+        {
+          heading: "O que você carrega daqui",
+          emoji: "🎒",
+          body: "Um mapa do seu corpo, uma rotina que funciona e a certeza de que leveza não depende de adivinhação. Isso ninguém tira de você.",
+        },
+        {
+          heading: "Pra vida",
+          emoji: "🌟",
+          body: "Daqui pra frente é manutenção: pequenas escolhas conscientes, não restrição. A gente segue do seu lado — nos check-ins diários e nos desafios mensais. Parabéns. Você se transformou.",
+        },
+      ],
+      quiz: [
+        {
+          question: "O que muda depois dos 21 dias?",
+          options: [
+            "Volta tudo ao normal antigo",
+            "Vira manutenção: leveza por escolha consciente, pra vida",
+            "Precisa recomeçar do zero",
+          ],
+          correctIndex: 1,
+          explain:
+            "Isso! Você sai com método e autonomia — manutenção é pra vida.",
+        },
+      ],
     },
     checklist: [
       "Compare sua barriga, energia e pele com o Dia 1",
