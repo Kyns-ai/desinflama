@@ -18,6 +18,8 @@ import {
   type SeriesPoint,
 } from "@/lib/analytics";
 import type { SymptomKey } from "@/types/domain";
+import { Art } from "@/components/Art";
+import { artId } from "@/content/cardArt";
 
 const SYMPTOM_CARDS: {
   key: SymptomKey;
@@ -86,7 +88,11 @@ export default function Progresso() {
           <p className="text-xs text-ink-soft">Ofensiva</p>
         </Card>
         <Card elevation="soft" className="px-2 py-4 text-center">
-          <p className="text-2xl">{garden.level.emoji}</p>
+          <Art
+            id={garden.level.art}
+            emoji={garden.level.emoji}
+            className="mx-auto size-9 rounded-xl text-2xl"
+          />
           <p className="text-xs text-ink-soft">{garden.level.name}</p>
         </Card>
       </div>
@@ -138,7 +144,12 @@ export default function Progresso() {
               <Card key={s.key} elevation="soft">
                 <div className="mb-1 flex items-center justify-between">
                   <span className="flex items-center gap-2 font-semibold tracking-tight text-ink">
-                    <span className="text-lg">{s.emoji}</span> {s.label}
+                    <Art
+                      id={artId(s.emoji) ?? ""}
+                      emoji={s.emoji}
+                      className="size-6 rounded-md text-lg"
+                    />{" "}
+                    {s.label}
                   </span>
                   {t && (
                     <span

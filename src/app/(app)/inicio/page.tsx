@@ -22,6 +22,7 @@ import { ScoreRing, Card, Badge, IconCircle, Button, buttonStyles } from "@/comp
 import { SeedMeter } from "@/components/SeedMeter";
 import { Confetti } from "@/components/Confetti";
 import { Art } from "@/components/Art";
+import { artId } from "@/content/cardArt";
 import { haptic } from "@/lib/haptics";
 import { useAppStore } from "@/store/useAppStore";
 import { currentScore, scoreMicrocopy, isScoreStalled } from "@/lib/score";
@@ -562,7 +563,11 @@ function MaintenanceHome({
             return (
               <Link key={c.id} href={`/desafios/${c.id}`} className="block">
                 <Card elevation="soft" className="flex items-center gap-4 transition-transform active:scale-[0.99]">
-                  <span className="text-3xl">{c.emoji}</span>
+                  <Art
+                    id={artId(c.emoji) ?? ""}
+                    emoji={c.emoji}
+                    className="size-12 shrink-0 rounded-2xl bg-cream-deep text-3xl"
+                  />
                   <div className="min-w-0 flex-1">
                     <h3 className="font-semibold tracking-tight text-ink">{c.nome}</h3>
                     <p className="truncate text-sm text-ink-soft">

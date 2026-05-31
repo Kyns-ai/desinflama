@@ -8,6 +8,8 @@ import { useAppStore } from "@/store/useAppStore";
 import { todayKey } from "@/lib/date";
 import { logInsight } from "@/lib/insight";
 import { getDay } from "@/content/journey";
+import { Art } from "@/components/Art";
+import { artId } from "@/content/cardArt";
 import type { DailyLog, MealEntry, Mood, SymptomKey } from "@/types/domain";
 import { cn } from "@/lib/cn";
 
@@ -223,7 +225,11 @@ export default function Registrar() {
           {SINTOMAS.map((s) => (
             <div key={s.key}>
               <div className="mb-2 flex items-center gap-2">
-                <span className="text-xl">{s.emoji}</span>
+                <Art
+                  id={artId(s.emoji) ?? ""}
+                  emoji={s.emoji}
+                  className="size-7 rounded-lg text-xl"
+                />
                 <span className="font-semibold tracking-tight text-ink">
                   {s.label}
                 </span>
@@ -270,7 +276,11 @@ export default function Registrar() {
                 )}
                 aria-pressed={active}
               >
-                <span className="text-3xl">{h.emoji}</span>
+                <Art
+                  id={artId(h.emoji) ?? ""}
+                  emoji={h.emoji}
+                  className="size-11 rounded-2xl text-3xl"
+                />
                 <span className="text-xs font-medium text-ink-soft">{h.label}</span>
               </button>
             );

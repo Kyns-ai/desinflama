@@ -16,6 +16,8 @@ import { TRIGGER_FOODS } from "@/content/foods";
 import { SWAPS } from "@/content/swaps";
 import { RECIPES, type Recipe } from "@/content/recipes";
 import { cn } from "@/lib/cn";
+import { Art } from "@/components/Art";
+import { artId } from "@/content/cardArt";
 
 const TABS = ["Aulas", "Gatilhos", "Trocas", "Receitas"] as const;
 type Tab = (typeof TABS)[number];
@@ -225,7 +227,12 @@ function RecipeCard({ recipe }: { recipe: Recipe }) {
         onClick={() => setOpen((o) => !o)}
         className="flex w-full items-center gap-3 p-4 text-left"
       >
-        <span className="text-3xl">{recipe.emoji}</span>
+        <Art
+          id={artId(recipe.emoji) ?? ""}
+          emoji={recipe.emoji}
+          className="size-12 shrink-0 rounded-2xl bg-cream-deep text-3xl"
+        />
+
         <span className="min-w-0 flex-1">
           <span className="block font-semibold leading-snug tracking-tight text-ink">
             {recipe.nome}

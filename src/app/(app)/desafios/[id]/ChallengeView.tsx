@@ -8,6 +8,8 @@ import { Card, Button, ProgressBar, Badge } from "@/components/ui";
 import { useAppStore } from "@/store/useAppStore";
 import { getChallenge } from "@/content/challenges";
 import { cn } from "@/lib/cn";
+import { Art } from "@/components/Art";
+import { artId } from "@/content/cardArt";
 
 export function ChallengeView({ id }: { id: string }) {
   const router = useRouter();
@@ -51,7 +53,11 @@ export function ChallengeView({ id }: { id: string }) {
         >
           <ArrowLeft className="size-5" />
         </button>
-        <span className="text-3xl">{challenge.emoji}</span>
+        <Art
+          id={artId(challenge.emoji) ?? ""}
+          emoji={challenge.emoji}
+          className="size-11 shrink-0 rounded-2xl text-3xl"
+        />
         <div className="min-w-0 flex-1">
           <h1 className="font-display text-xl font-semibold tracking-tight text-ink">
             {challenge.nome}

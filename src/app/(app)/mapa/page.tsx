@@ -5,6 +5,7 @@ import { ArrowLeft, Sparkles, Quote } from "lucide-react";
 import { Card, Badge } from "@/components/ui";
 import { Art } from "@/components/Art";
 import { useAppStore } from "@/store/useAppStore";
+import { artId } from "@/content/cardArt";
 import { BLOAT_PROFILES, WELCOME_VIDEO } from "@/content/onboarding";
 import type { BloatType, SymptomKey } from "@/types/domain";
 
@@ -90,7 +91,12 @@ export default function MapaPage() {
                 key={s}
                 className="inline-flex items-center gap-1.5 rounded-full bg-cream-deep px-3 py-1.5 text-sm text-ink"
               >
-                <span>{m?.emoji}</span> {m?.label}
+                <Art
+                  id={artId(m?.emoji) ?? ""}
+                  emoji={m?.emoji}
+                  className="size-5 rounded-md text-sm"
+                />{" "}
+                {m?.label}
               </span>
             );
           })}

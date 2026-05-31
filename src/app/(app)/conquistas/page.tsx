@@ -7,6 +7,8 @@ import { useAppStore } from "@/store/useAppStore";
 import { ACHIEVEMENTS, reconcileAchievements } from "@/lib/achievements";
 import { todayKey } from "@/lib/date";
 import { cn } from "@/lib/cn";
+import { Art } from "@/components/Art";
+import { artId } from "@/content/cardArt";
 
 export default function Conquistas() {
   const router = useRouter();
@@ -66,7 +68,15 @@ export default function Conquistas() {
                   unlocked ? "bg-white shadow-[var(--shadow-soft)]" : "bg-cream-deep"
                 )}
               >
-                {unlocked ? def.emoji : <Lock className="size-5 text-ink-faint" />}
+                {unlocked ? (
+                  <Art
+                    id={artId(def.emoji) ?? ""}
+                    emoji={def.emoji}
+                    className="size-9 rounded-full text-2xl"
+                  />
+                ) : (
+                  <Lock className="size-5 text-ink-faint" />
+                )}
               </span>
               <p
                 className={cn(
