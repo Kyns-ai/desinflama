@@ -21,6 +21,7 @@ import {
 import { ScoreRing, Card, Badge, IconCircle, Button, buttonStyles } from "@/components/ui";
 import { SeedMeter } from "@/components/SeedMeter";
 import { Confetti } from "@/components/Confetti";
+import { Art } from "@/components/Art";
 import { haptic } from "@/lib/haptics";
 import { useAppStore } from "@/store/useAppStore";
 import { currentScore, scoreMicrocopy, isScoreStalled } from "@/lib/score";
@@ -267,13 +268,13 @@ export default function Inicio() {
             <Card elevation="soft" className="space-y-2.5 transition-transform active:scale-[0.99]">
               {(
                 [
-                  ["☕", "Café", content.meals.cafe[0]],
-                  ["☀️", "Almoço", content.meals.almoco[0]],
-                  ["🌙", "Jantar", content.meals.jantar[0]],
+                  ["meal-cafe", "☕", "Café", content.meals.cafe[0]],
+                  ["meal-almoco", "🍽️", "Almoço", content.meals.almoco[0]],
+                  ["meal-jantar", "🌙", "Jantar", content.meals.jantar[0]],
                 ] as const
-              ).map(([emoji, label, meal]) => (
+              ).map(([id, emoji, label, meal]) => (
                 <div key={label} className="flex items-center gap-3 text-[15px]">
-                  <span className="text-lg">{emoji}</span>
+                  <Art id={id} emoji={emoji} className="size-8 shrink-0 rounded-lg text-lg" />
                   <span className="w-16 shrink-0 text-sm font-medium text-ink-faint">
                     {label}
                   </span>
@@ -469,7 +470,11 @@ function DayCelebration({
           transition={{ delay: 0.5, type: "spring", stiffness: 240, damping: 15 }}
           className="mt-5 rounded-2xl bg-sage-tint px-5 py-3 text-sage-dark"
         >
-          <p className="text-3xl">{levelUp.emoji}</p>
+          <Art
+            id={levelUp.art}
+            emoji={levelUp.emoji}
+            className="mx-auto size-16 rounded-2xl text-3xl"
+          />
           <p className="mt-1 font-semibold">Subiu de nível: {levelUp.name}!</p>
           {levelUp.unlock && (
             <p className="text-sm">Desbloqueou: {levelUp.unlock}</p>

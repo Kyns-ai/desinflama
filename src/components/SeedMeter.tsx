@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { Card, ProgressBar } from "@/components/ui";
+import { Art } from "@/components/Art";
 import { useAppStore } from "@/store/useAppStore";
 import { gardenFor } from "@/lib/garden";
 
@@ -15,9 +16,11 @@ export function SeedMeter() {
     <Link href="/jardim" className="block">
       <Card elevation="soft" className="transition-transform active:scale-[0.99]">
         <div className="flex items-center gap-3.5">
-          <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-sage-tint text-2xl">
-            {g.level.emoji}
-          </span>
+          <Art
+            id={g.level.art}
+            emoji={g.level.emoji}
+            className="size-12 shrink-0 rounded-2xl bg-sage-tint text-2xl"
+          />
           <div className="min-w-0 flex-1">
             <div className="flex items-center justify-between">
               <p className="font-semibold tracking-tight text-ink">

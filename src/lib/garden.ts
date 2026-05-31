@@ -8,6 +8,8 @@ export interface GardenLevel {
   id: number;
   name: string;
   emoji: string;
+  /** id da ilustração em public/img (ver Art). */
+  art: string;
   /** Sementes necessárias para ALCANÇAR este nível. */
   threshold: number;
   /** O que sobe de nível desbloqueia (texto curto). */
@@ -15,10 +17,10 @@ export interface GardenLevel {
 }
 
 export const LEVELS: GardenLevel[] = [
-  { id: 0, name: "Semente", emoji: "🌱", threshold: 0 },
-  { id: 1, name: "Broto", emoji: "🌿", threshold: 10, unlock: "3 receitas bônus" },
-  { id: 2, name: "Florescendo", emoji: "🌸", threshold: 25, unlock: "Dia de Troca 🍫" },
-  { id: 3, name: "Jardim", emoji: "🪴", threshold: 50, unlock: "Desafio bônus" },
+  { id: 0, name: "Semente", emoji: "🌱", art: "garden-semente", threshold: 0 },
+  { id: 1, name: "Broto", emoji: "🌿", art: "garden-broto", threshold: 10, unlock: "3 receitas bônus" },
+  { id: 2, name: "Florescendo", emoji: "🌸", art: "garden-florescendo", threshold: 25, unlock: "Dia de Troca 🍫" },
+  { id: 3, name: "Jardim", emoji: "🪴", art: "garden-jardim", threshold: 50, unlock: "Desafio bônus" },
 ];
 
 /** Sementes ganhas por ação (centralizado). */

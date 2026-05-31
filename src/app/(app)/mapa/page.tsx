@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Sparkles, Quote } from "lucide-react";
 import { Card, Badge } from "@/components/ui";
+import { Art } from "@/components/Art";
 import { useAppStore } from "@/store/useAppStore";
 import { BLOAT_PROFILES, WELCOME_VIDEO } from "@/content/onboarding";
 import type { BloatType, SymptomKey } from "@/types/domain";
@@ -64,7 +65,11 @@ export default function MapaPage() {
         <Badge tone="sage">
           <Sparkles className="size-3.5" /> Perfil identificado
         </Badge>
-        <div className="mt-3 text-4xl">{p.emoji}</div>
+        <Art
+          id={`mapa-${bloatType}`}
+          emoji={p.emoji}
+          className="mt-3 size-20 rounded-2xl text-4xl"
+        />
         <h2 className="mt-2 font-display text-2xl font-semibold tracking-tight text-ink">
           {p.name}
         </h2>

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ArrowLeft, Lock, Check, Sprout } from "lucide-react";
 import { Card, ProgressBar } from "@/components/ui";
+import { Art } from "@/components/Art";
 import { useAppStore } from "@/store/useAppStore";
 import { gardenFor, LEVELS, REWARDS, SEEDS, rewardUnlocked } from "@/lib/garden";
 import { cn } from "@/lib/cn";
@@ -34,9 +35,12 @@ export default function Jardim() {
           initial={{ scale: 0.7, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ type: "spring", stiffness: 200, damping: 14 }}
-          className="text-7xl"
         >
-          {g.level.emoji}
+          <Art
+            id={g.level.art}
+            emoji={g.level.emoji}
+            className="size-36 rounded-3xl text-7xl"
+          />
         </motion.div>
         <h2 className="mt-3 font-display text-2xl font-semibold tracking-tight text-ink">
           {g.level.name}
