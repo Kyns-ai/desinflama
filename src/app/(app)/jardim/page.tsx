@@ -2,16 +2,19 @@
 
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { ArrowLeft, Lock, Check, Sprout } from "lucide-react";
+import { ArrowLeft, Lock, Check, Sprout, Shield } from "lucide-react";
 import { Card, ProgressBar } from "@/components/ui";
 import { Art } from "@/components/Art";
+import { artId } from "@/content/cardArt";
 import { useAppStore } from "@/store/useAppStore";
 import { gardenFor, LEVELS, REWARDS, SEEDS, rewardUnlocked } from "@/lib/garden";
+import { MAX_SHIELDS } from "@/types/domain";
 import { cn } from "@/lib/cn";
 
 export default function Jardim() {
   const router = useRouter();
   const seeds = useAppStore((s) => s.data.seeds);
+  const shields = useAppStore((s) => s.data.streak.shields ?? MAX_SHIELDS);
   const g = gardenFor(seeds);
 
   return (
@@ -85,6 +88,27 @@ export default function Jardim() {
         </ul>
       </Card>
 
+      {/* Escudos — sequência perdoável */}
+      <Card elevation="soft">
+        <div className="flex items-center gap-3.5">
+          <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-sage-tint">
+            <Shield className="size-6 text-sage-deep" />
+          </span>
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center justify-between">
+              <p className="font-semibold tracking-tight text-ink">Escudos</p>
+              <span className="text-sm font-semibold text-sage-deep">
+                {shields} de {MAX_SHIELDS}
+              </span>
+            </div>
+            <p className="text-sm text-ink-soft">
+              Faltou um dia? Um escudo guarda sua sequência. Você ganha mais a
+              cada marco (Dia 7, 14, 21). Aqui um deslize não te faz recomeçar.
+            </p>
+          </div>
+        </div>
+      </Card>
+
       {/* Recompensas */}
       <section>
         <h3 className="mb-3 text-base font-semibold tracking-tight text-ink">
@@ -103,14 +127,17 @@ export default function Jardim() {
                   !unlocked && "opacity-70"
                 )}
               >
-                <span
-                  className={cn(
-                    "grid size-12 shrink-0 place-items-center rounded-2xl text-2xl",
-                    unlocked ? "bg-gold-tint" : "bg-cream-deep"
-                  )}
-                >
-                  {unlocked ? r.emoji : <Lock className="size-5 text-ink-faint" />}
-                </span>
+                {unlocked ? (
+                  <Art
+                    id={artId(r.emoji) ?? ""}
+                    emoji={r.emoji}
+                    className="size-12 shrink-0 rounded-2xl bg-gold-tint text-2xl"
+                  />
+                ) : (
+                  <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-cream-deep">
+                    <Lock className="size-5 text-ink-faint" />
+                  </span>
+                )}
                 <div className="min-w-0 flex-1">
                   <p className="font-semibold tracking-tight text-ink">{r.title}</p>
                   <p className="text-sm text-ink-soft">{r.desc}</p>

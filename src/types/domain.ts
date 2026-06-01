@@ -121,6 +121,10 @@ export interface Streak {
   current: number;
   longest: number;
   lastActiveDate: string | null; // YYYY-MM-DD
+  /** Escudos que perdoam UM dia perdido sem zerar a sequência (estilo "streak
+   *  freeze"). Evidência: perder 1 dia não quebra a formação de hábito
+   *  (Lally 2010) e o perdão aumenta retenção (dados do Duolingo). */
+  shields: number;
 }
 
 /* ------------------------------ Fotos / Conquistas ------------------------------ */
@@ -177,10 +181,14 @@ export const FREE_SUBSCRIPTION: Subscription = {
   managementUrl: null,
 };
 
+/** Escudos máximos acumuláveis (Duolingo usa até 2 equipados). */
+export const MAX_SHIELDS = 2;
+
 export const EMPTY_STREAK: Streak = {
   current: 0,
   longest: 0,
   lastActiveDate: null,
+  shields: MAX_SHIELDS, // começa abastecida — perdão desde o dia 1
 };
 
 /** Estado inicial limpo (usuário novo, sem dados). */

@@ -19,7 +19,7 @@ import { buildDemoData } from "@/lib/demo";
 import { SEEDS } from "@/lib/garden";
 import { initialScore } from "@/lib/score";
 import { recomputedScores } from "@/lib/computeGutScore";
-import { bumpStreak } from "@/lib/streak";
+import { applyStreak, grantShield } from "@/lib/streak";
 import {
   reconcileAchievements,
   type AchievementDef,
@@ -302,8 +302,12 @@ export const useAppStore = create<AppState>((set, get) => {
             d.progress.challengeType
           ).phase;
         }
-        // ofensiva
-        d.streak = bumpStreak(d.streak, today);
+        // ofensiva (perdoável: escudo cobre 1 dia perdido)
+        const sr = applyStreak(d.streak, today);
+        d.streak = sr.streak;
+        if (sr.shieldUsed) d.flags.shieldJustUsed = true;
+        // marcos repõem um escudo
+        if (day === 7 || day === 14 || day === 21) d.streak = grantShield(d.streak, 1);
         // Índice Intestinal: recomputa o ponto do dia (motor da Fase 8)
         d.scores = recomputedScores(d, today);
         // conquistas
@@ -325,7 +329,11 @@ export const useAppStore = create<AppState>((set, get) => {
         if (!hadLog) d.seeds += SEEDS.checkin;
         // a ofensiva só conta atividade de HOJE — editar um dia passado não
         // deve regredir nem inflar a streak atual.
-        if (log.date === today) d.streak = bumpStreak(d.streak, today);
+        if (log.date === today) {
+          const sr = applyStreak(d.streak, today);
+          d.streak = sr.streak;
+          if (sr.shieldUsed) d.flags.shieldJustUsed = true;
+        }
         // Índice Intestinal: recomputa o ponto do dia (motor da Fase 8)
         d.scores = recomputedScores(d, log.date);
         const { list, newlyUnlocked } = reconcileAchievements(d, today);
@@ -398,7 +406,9 @@ export const useAppStore = create<AppState>((set, get) => {
       const today = todayKey();
       await get().update((d) => {
         d.flags[`mc:${challengeId}:${day}`] = true;
-        d.streak = bumpStreak(d.streak, today);
+        const sr = applyStreak(d.streak, today);
+        d.streak = sr.streak;
+        if (sr.shieldUsed) d.flags.shieldJustUsed = true;
         // concluir um dia de desafio mensal conta como atividade do dia.
         d.scores = recomputedScores(d, today, { otherActivity: true });
         const { list, newlyUnlocked } = reconcileAchievements(d, today);

@@ -7,6 +7,8 @@ import { motion } from "framer-motion";
 import {
   Flame,
   Sprout,
+  Shield,
+  ShieldCheck,
   BookOpen,
   HeartPulse,
   ListChecks,
@@ -16,6 +18,7 @@ import {
   Sparkles,
   UtensilsCrossed,
   Trophy,
+  X,
   type LucideIcon,
 } from "lucide-react";
 import { ScoreRing, Card, Badge, IconCircle, Button, buttonStyles } from "@/components/ui";
@@ -31,6 +34,7 @@ import { phaseForDay, totalDays } from "@/lib/journey";
 import { getDay } from "@/content/journey";
 import { MONTHLY_CHALLENGES } from "@/content/challenges";
 import { todayKey } from "@/lib/date";
+import { MAX_SHIELDS } from "@/types/domain";
 import { cn } from "@/lib/cn";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -164,11 +168,20 @@ export default function Inicio() {
           <span className="inline-flex items-center gap-1.5 rounded-full bg-coral-tint px-3 py-1.5 text-sm font-semibold text-coral-dark">
             <Flame className="size-4" /> {streak.current}
           </span>
+          <Link
+            href="/jardim"
+            title="Escudos: cada um perdoa um dia perdido sem zerar sua sequência"
+            className="inline-flex items-center gap-1.5 rounded-full bg-cream-deep px-3 py-1.5 text-sm font-semibold text-ink-soft transition-transform active:scale-95"
+          >
+            <Shield className="size-4 text-sage-deep" /> {streak.shields ?? MAX_SHIELDS}
+          </Link>
         </div>
       </header>
 
       {/* Faixa da semana */}
       <WeekStrip day={day} total={totalLabel} completed={progress?.completedDays ?? []} />
+
+      <ShieldSavedBanner />
 
       {/* Seu dia de hoje — o ritual */}
       <motion.div
@@ -325,6 +338,37 @@ export default function Inicio() {
 }
 
 /* ----------------------------- subcomponentes ----------------------------- */
+
+/** Aviso gentil e dispensável quando um escudo cobriu um dia perdido. Reforça
+ *  que um deslize não quebra o progresso (anti-vergonha, pró-retenção). */
+function ShieldSavedBanner() {
+  const shown = useAppStore((s) => s.data.flags.shieldJustUsed);
+  const update = useAppStore((s) => s.update);
+  if (!shown) return null;
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="flex items-start gap-3 rounded-2xl border border-sage/30 bg-sage-tint/60 px-4 py-3"
+    >
+      <ShieldCheck className="mt-0.5 size-5 shrink-0 text-sage-deep" />
+      <div className="min-w-0 flex-1">
+        <p className="text-sm font-semibold text-ink">Seu escudo salvou a sequência 🛡️</p>
+        <p className="text-sm text-ink-soft">
+          Você faltou um dia — e tudo bem. Um deslize não apaga seu progresso.
+          Bora de novo hoje.
+        </p>
+      </div>
+      <button
+        aria-label="Dispensar"
+        onClick={() => void update((d) => { d.flags.shieldJustUsed = false; })}
+        className="shrink-0 rounded-full p-1 text-ink-faint transition-colors active:bg-black/5"
+      >
+        <X className="size-4" />
+      </button>
+    </motion.div>
+  );
+}
 
 function StepIcon({
   icon: Icon,
