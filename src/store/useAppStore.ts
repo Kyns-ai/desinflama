@@ -61,6 +61,9 @@ interface AppState {
   toggleChecklistItem: (day: number, index: number) => Promise<void>;
   /** Conclui a aula do dia: marca como feita e dá +1 semente (uma vez). */
   completeLesson: (day: number) => Promise<{ alreadyDone: boolean; seeds: number }>;
+  /** Conclui a Calmaria (respiração guiada) do dia: +1 semente uma vez por dia,
+   *  conta como atividade (ofensiva/score). */
+  completeCalmaria: () => Promise<{ alreadyDone: boolean }>;
   completeDay: (day: number) => Promise<void>;
   addLog: (log: DailyLog) => Promise<void>;
   addPhoto: (dataUrl: string) => Promise<void>;
@@ -280,6 +283,28 @@ export const useAppStore = create<AppState>((set, get) => {
         }
       });
       return { alreadyDone, seeds: alreadyDone ? 0 : SEEDS.lesson };
+    },
+
+    completeCalmaria: async () => {
+      const today = todayKey();
+      const key = `calmaria:${today}`;
+      const alreadyDone = !!get().data.flags[key];
+      let novas: AchievementDef[] = [];
+      await get().update((d) => {
+        if (d.flags[key]) return;
+        d.flags[key] = true;
+        d.seeds += SEEDS.calmaria;
+        // conta como atividade do dia (ofensiva perdoável + score)
+        const sr = applyStreak(d.streak, today);
+        d.streak = sr.streak;
+        if (sr.shieldUsed) d.flags.shieldJustUsed = true;
+        d.scores = recomputedScores(d, today, { otherActivity: true });
+        const { list, newlyUnlocked } = reconcileAchievements(d, today);
+        d.achievements = list;
+        novas = newlyUnlocked;
+      });
+      notifyAchievements(novas);
+      return { alreadyDone };
     },
 
     completeDay: async (day) => {

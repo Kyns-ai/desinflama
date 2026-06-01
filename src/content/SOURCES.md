@@ -90,6 +90,28 @@ Fontes:
 - The gut-skin-brain axis in human health and disease (PMC): https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9979212/
 - Microbiota gut-brain axis and innate immunity (Frontiers): https://www.frontiersin.org/journals/cellular-and-infection-microbiology/articles/10.3389/fcimb.2023.1282431/full
 
+## 4b. Mente-Intestino — respiração/relaxamento (Calmaria)
+
+Embasam o pilar **Calmaria** (`content/calmaria.ts`): respiração guiada com
+expiração prolongada + microeducação intestino-cérebro.
+- Terapias dirigidas ao eixo intestino-cérebro (hipnoterapia, CBT) reduzem
+  sintomas de SII **tanto quanto a dieta**, e a **AGA** as recomenda como parte
+  do cuidado baseado em evidência. RCT do app de hipnoterapia (Nerva): ~81% com
+  redução clinicamente significativa, mantida em 6 meses.
+- Estresse/ansiedade amplificam a **sensibilidade visceral** (hipervigilância);
+  acalmar o sistema nervoso reduz o desconforto real.
+- Expiração mais longa que a inspiração aumenta o tônus **parassimpático/vagal**
+  (efeito calmante).
+- Enquadramento honesto e esperançoso importa: no SII o efeito **placebo ~40%** e
+  o **nocebo ~32%** — medo piora, acolhimento melhora o desfecho.
+
+Fontes:
+- Digital gut-directed hypnotherapy RCT — Am J Gastroenterol (2024): https://doi.org/10.14309/ajg.0000000000002921
+- Hypnotherapy vs low-FODMAP (equivalência) — PubMed 27397586: https://pubmed.ncbi.nlm.nih.gov/27397586/
+- AGA / brain-gut behavioral therapies; ACG Clinical Guideline IBS (2021): https://journals.lww.com/ajg/fulltext/2021/01000/acg_clinical_guideline__management_of_irritable.11.aspx
+- CBT for IBS (revisão de >30 RCTs, eixo cérebro-intestino-microbioma) — PMC8630837: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8630837/
+- Placebo response in IBS (meta-análise) — Lancet Gastroenterol Hepatol: https://www.thelancet.com/journals/langas/article/PIIS2468-1253(21)00023-6/abstract
+
 ## 5. Hidratação, retenção e movimento
 
 Apoiam as aulas de hábitos e os checklists (água ~2L, caminhada, sono).

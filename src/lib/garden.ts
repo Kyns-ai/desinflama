@@ -27,6 +27,7 @@ export const LEVELS: GardenLevel[] = [
 export const SEEDS = {
   lesson: 1,
   checkin: 1,
+  calmaria: 1,
   completeDay: 2,
   milestone: 3,
 } as const;

@@ -9,6 +9,7 @@ import {
   Sprout,
   Shield,
   ShieldCheck,
+  Wind,
   BookOpen,
   HeartPulse,
   ListChecks,
@@ -64,6 +65,7 @@ export default function Inicio() {
   const content = getDay(day);
   const today = todayKey();
   const aulaDone = !!data.lessonsDone[day];
+  const calmariaDone = !!data.flags[`calmaria:${today}`];
   const checkinDone = data.logs.some((l) => l.date === today);
   const checklistTotal = content?.checklist.length ?? 0;
   const checklistChecked = data.checklists[day]?.length ?? 0;
@@ -254,6 +256,43 @@ export default function Inicio() {
           )}
         </Card>
       </motion.div>
+
+      {/* Calmaria — pilar Mente-Intestino (alívio sentido na hora) */}
+      <Link href="/calmaria" className="block">
+        <Card
+          elevation="soft"
+          className={cn(
+            "flex items-center gap-4 transition-transform active:scale-[0.99]",
+            calmariaDone
+              ? "bg-sage-tint/40"
+              : "border border-sage/25 bg-gradient-to-br from-sage-tint/50 to-cream"
+          )}
+        >
+          <span
+            className={cn(
+              "grid size-12 shrink-0 place-items-center rounded-2xl",
+              calmariaDone ? "bg-sage text-white" : "bg-sage-tint text-sage-deep"
+            )}
+          >
+            {calmariaDone ? (
+              <Check className="size-6" strokeWidth={3} />
+            ) : (
+              <Wind className="size-6" />
+            )}
+          </span>
+          <div className="min-w-0 flex-1">
+            <h3 className="font-semibold tracking-tight text-ink">
+              Calmaria de hoje
+            </h3>
+            <p className="text-sm text-ink-soft">
+              {calmariaDone
+                ? "Feita — seu intestino agradece 💚"
+                : "1 min de respiração que acalma o intestino"}
+            </p>
+          </div>
+          <ChevronRight className="size-5 shrink-0 text-ink-faint" />
+        </Card>
+      </Link>
 
       {/* Índice Intestinal */}
       <Card className="flex flex-col items-center py-6" elevation="card">
