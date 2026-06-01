@@ -169,6 +169,12 @@ export interface AppData {
   seeds: number;
   /** Aulas concluídas por dia (dia → true). */
   lessonsDone: Record<number, boolean>;
+  /** Plano "se-então" (implementation intention): âncora escolhida pela usuária,
+   *  ex. "Depois do café da manhã". Vira o gatilho do ritual e a cópia do
+   *  lembrete. Maior efeito por feature na adesão (Gollwitzer & Sheeran 2006). */
+  ritualAnchor?: string;
+  /** Data de início do último ciclo menstrual (YYYY-MM-DD), opcional. */
+  cycleStart?: string;
   /** chaves de notificações/flags simples. */
   flags: Record<string, boolean>;
 }

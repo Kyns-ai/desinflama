@@ -10,6 +10,8 @@ import {
   Shield,
   ShieldCheck,
   Wind,
+  Anchor,
+  Moon,
   BookOpen,
   HeartPulse,
   ListChecks,
@@ -35,6 +37,7 @@ import { phaseForDay, totalDays } from "@/lib/journey";
 import { getDay } from "@/content/journey";
 import { MONTHLY_CHALLENGES } from "@/content/challenges";
 import { todayKey } from "@/lib/date";
+import { cycleInfo, RITUAL_ANCHORS } from "@/lib/cycle";
 import { MAX_SHIELDS } from "@/types/domain";
 import { cn } from "@/lib/cn";
 
@@ -185,6 +188,7 @@ export default function Inicio() {
 
       <ShieldSavedBanner />
       <HonestWelcome />
+      <RitualCard />
 
       {/* Seu dia de hoje — o ritual */}
       <motion.div
@@ -294,6 +298,8 @@ export default function Inicio() {
           <ChevronRight className="size-5 shrink-0 text-ink-faint" />
         </Card>
       </Link>
+
+      <CicloCard />
 
       {/* Índice Intestinal */}
       <Card className="flex flex-col items-center py-6" elevation="card">
@@ -450,6 +456,117 @@ function HonestWelcome() {
         </div>
       </div>
     </motion.div>
+  );
+}
+
+/** Ritual "se-então" (implementation intention): a usuária ancora o hábito a um
+ *  momento que já existe. Maior efeito por feature na adesão (Gollwitzer 2006). */
+function RitualCard() {
+  const anchor = useAppStore((s) => s.data.ritualAnchor);
+  const setRitual = useAppStore((s) => s.setRitual);
+
+  if (anchor) {
+    return (
+      <Card elevation="soft" className="flex items-center gap-3 bg-sage-tint/30">
+        <Anchor className="size-5 shrink-0 text-sage-deep" />
+        <p className="min-w-0 flex-1 text-[15px] text-ink">
+          <span className="font-semibold">{anchor}</span>, eu cuido do meu
+          intestino.
+        </p>
+        <button
+          onClick={() => void setRitual("")}
+          className="shrink-0 text-sm font-semibold text-ink-faint underline-offset-4 active:underline"
+        >
+          Mudar
+        </button>
+      </Card>
+    );
+  }
+
+  return (
+    <Card elevation="soft" className="border border-sage/20">
+      <div className="flex items-start gap-3">
+        <Anchor className="mt-0.5 size-5 shrink-0 text-sage-deep" />
+        <div className="min-w-0 flex-1">
+          <p className="font-semibold tracking-tight text-ink">Crie seu gatilho</p>
+          <p className="mt-0.5 text-sm text-ink-soft">
+            Quem ancora o hábito a um momento que já existe tem muito mais chance
+            de manter. Escolha o seu:
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {RITUAL_ANCHORS.map((a) => (
+              <button
+                key={a}
+                onClick={() => void setRitual(a)}
+                className="rounded-full bg-cream-deep px-3 py-1.5 text-sm font-medium text-ink-soft transition-colors active:bg-sage-tint"
+              >
+                {a}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </Card>
+  );
+}
+
+/** Ciclo × inchaço: normaliza a oscilação hormonal (diferencial feminino). */
+function CicloCard() {
+  const cycleStart = useAppStore((s) => s.data.cycleStart);
+  const setCycleStart = useAppStore((s) => s.setCycleStart);
+  const [open, setOpen] = useState(false);
+  const info = cycleStart ? cycleInfo(cycleStart) : null;
+
+  return (
+    <Card elevation="soft" className="border border-coral/15 bg-coral-tint/20">
+      <div className="flex items-start gap-3">
+        <Moon className="mt-0.5 size-5 shrink-0 text-coral-dark" />
+        <div className="min-w-0 flex-1">
+          {info ? (
+            <>
+              <p className="font-semibold tracking-tight text-ink">
+                Ciclo · fase {info.label} (dia {info.dayOfCycle})
+              </p>
+              <p className="mt-0.5 text-sm leading-relaxed text-ink-soft">
+                {info.note}
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="font-semibold tracking-tight text-ink">
+                Seu inchaço acompanha o ciclo?
+              </p>
+              <p className="mt-0.5 text-sm leading-relaxed text-ink-soft">
+                Diga quando começou sua última menstruação e a gente te avisa
+                quando o inchaço for hormonal — pra você não achar que é recaída.
+              </p>
+            </>
+          )}
+          <div className="mt-2.5 flex items-center gap-3">
+            <button
+              onClick={() => setOpen((o) => !o)}
+              className="text-sm font-semibold text-coral-dark underline-offset-4 active:underline"
+            >
+              {info ? "Atualizar data" : "Registrar minha menstruação"}
+            </button>
+            {open && (
+              <input
+                type="date"
+                max={todayKey()}
+                defaultValue={cycleStart ?? ""}
+                onChange={(e) => {
+                  if (e.target.value) {
+                    void setCycleStart(e.target.value);
+                    setOpen(false);
+                  }
+                }}
+                className="rounded-xl border border-line bg-cream px-3 py-1.5 text-sm text-ink"
+              />
+            )}
+          </div>
+        </div>
+      </div>
+    </Card>
   );
 }
 

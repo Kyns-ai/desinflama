@@ -20,5 +20,18 @@
   { "emoji": "😐", "id": "card-humor-ok", "prompt": "a simple round face with a neutral calm expression" },
   { "emoji": "😌", "id": "card-humor-leve", "prompt": "a simple round face with a relieved peaceful smile, eyes closed" },
   { "emoji": "🎉", "id": "card-festa", "prompt": "a soft party popper with gentle confetti, celebration" },
-  { "emoji": "🍃", "id": "card-folhinha", "prompt": "two soft light green leaves floating, lightness" }
+  { "emoji": "🍃", "id": "card-folhinha", "prompt": "two soft light green leaves floating, lightness" },
+  { "emoji": "🍚", "id": "card-arroz", "prompt": "a small bowl of cooked white rice" },
+  { "emoji": "🥒", "id": "card-abobrinha", "prompt": "a fresh green zucchini" },
+  { "emoji": "🍌", "id": "card-banana", "prompt": "a single banana" },
+  { "emoji": "🧡", "id": "card-mamao", "prompt": "a slice of ripe orange papaya" },
+  { "emoji": "🍓", "id": "card-morango", "prompt": "a fresh strawberry" },
+  { "emoji": "🥑", "id": "card-abacate", "prompt": "half an avocado" },
+  { "emoji": "🍠", "id": "card-batata-doce", "prompt": "a baked sweet potato" },
+  { "emoji": "🌽", "id": "card-milho", "prompt": "an ear of corn" },
+  { "emoji": "🍫", "id": "card-chocolate", "prompt": "a few squares of dark chocolate" },
+  { "emoji": "🍐", "id": "card-pera", "prompt": "a fresh green pear" },
+  { "emoji": "🍉", "id": "card-melancia", "prompt": "a slice of watermelon" },
+  { "emoji": "☕", "id": "meal-cafe", "prompt": "a cup of coffee, breakfast" },
+  { "emoji": "🧄", "id": "card-cebola-alho", "prompt": "a single onion next to a garlic bulb" }
 ]

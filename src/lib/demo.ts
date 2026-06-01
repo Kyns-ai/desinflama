@@ -84,7 +84,9 @@ export function buildDemoData(user: { id: string; name: string; email: string })
     streak: { current: 5, longest: 5, lastActiveDate: day(1), shields: 2 }, // ativa até ontem
     seeds: 11, // aulas dos dias 1-5 + check-ins
     lessonsDone: { 1: true, 2: true, 3: true, 4: true, 5: true },
-    flags: { notifications: false },
+    ritualAnchor: "Depois do café da manhã",
+    cycleStart: day(20), // ~fase lútea, mostra a normalização hormonal
+    flags: { notifications: false, honestoVisto: true },
   };
 
   const { list } = reconcileAchievements(data, today);

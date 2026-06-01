@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowLeft,
   ChevronDown,
+  ChevronRight,
   BookOpen,
   ArrowLeftRight,
   Clock,
@@ -151,10 +153,33 @@ function Gatilhos() {
         Alimentos que parecem saudáveis e te incham. Não é proibição — é saber o
         que observar.
       </p>
+      <Link href="/semaforo" className="block">
+        <Card
+          elevation="soft"
+          className="flex items-center gap-3 border border-sage/20 bg-sage-tint/30 transition-transform active:scale-[0.99]"
+        >
+          <div className="flex shrink-0 gap-1">
+            <span className="size-3 rounded-full bg-sage" />
+            <span className="size-3 rounded-full bg-gold" />
+            <span className="size-3 rounded-full bg-coral" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <h3 className="font-semibold tracking-tight text-ink">
+              Semáforo dos alimentos
+            </h3>
+            <p className="text-sm text-ink-soft">Calma · Atenção · Inflama num olhar</p>
+          </div>
+          <ChevronRight className="size-5 shrink-0 text-ink-faint" />
+        </Card>
+      </Link>
       {TRIGGER_FOODS.map((f) => (
         <Card key={f.nome} elevation="soft">
           <div className="flex items-start gap-3">
-            <span className="text-2xl">{f.emoji}</span>
+            <Art
+              id={artId(f.emoji) ?? ""}
+              emoji={f.emoji}
+              className="size-10 shrink-0 rounded-xl text-2xl"
+            />
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2">
                 <h3 className="font-semibold tracking-tight text-ink">

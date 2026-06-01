@@ -55,6 +55,9 @@ interface AppState {
   deleteAccount: () => Promise<void>;
 
   setOnboarding: (onboarding: OnboardingData) => Promise<void>;
+  /** Define o ritual "se-então" (âncora) e o ciclo, opcionalmente. */
+  setRitual: (anchor: string) => Promise<void>;
+  setCycleStart: (dateKey: string) => Promise<void>;
   startJourney: (challenge?: ChallengeType) => Promise<void>;
   /** Entra com a conta de demonstração já populada (modo mock). */
   enterDemo: () => Promise<void>;
@@ -248,6 +251,18 @@ export const useAppStore = create<AppState>((set, get) => {
     setOnboarding: async (onboarding) => {
       await get().update((d) => {
         if (d.user) d.user.onboarding = onboarding;
+      });
+    },
+
+    setRitual: async (anchor) => {
+      await get().update((d) => {
+        d.ritualAnchor = anchor;
+      });
+    },
+
+    setCycleStart: async (dateKey) => {
+      await get().update((d) => {
+        d.cycleStart = dateKey;
       });
     },
 
