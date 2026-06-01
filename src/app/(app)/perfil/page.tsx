@@ -14,6 +14,7 @@ import {
   ChevronRight,
   LogOut,
   BookOpen,
+  HeartHandshake,
   type LucideIcon,
 } from "lucide-react";
 import { Card, IconCircle, Badge } from "@/components/ui";
@@ -33,6 +34,13 @@ const GRUPOS: { titulo: string; rows: Row[] }[] = [
     titulo: "Você",
     rows: [
       { icon: Map, label: "Meu Mapa de Inchaço", href: "/mapa", tone: "sage" },
+      {
+        icon: HeartHandshake,
+        label: "Confiança e ciência",
+        caption: "O que podemos e o que não podemos prometer",
+        href: "/ciencia",
+        tone: "coral",
+      },
       { icon: BookOpen, label: "Biblioteca da nutri", href: "/aprender", tone: "plum" },
       { icon: Award, label: "Conquistas e níveis", href: "/conquistas", tone: "gold" },
     ],

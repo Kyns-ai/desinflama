@@ -184,6 +184,7 @@ export default function Inicio() {
       <WeekStrip day={day} total={totalLabel} completed={progress?.completedDays ?? []} />
 
       <ShieldSavedBanner />
+      <HonestWelcome />
 
       {/* Seu dia de hoje — o ritual */}
       <motion.div
@@ -405,6 +406,49 @@ function ShieldSavedBanner() {
       >
         <X className="size-4" />
       </button>
+    </motion.div>
+  );
+}
+
+/** Boas-vindas honestas (uma vez): valida a usuária e define expectativas reais
+ *  antes de prometer demais — o maior gesto anti-"furada"/anti-reembolso. */
+function HonestWelcome() {
+  const seen = useAppStore((s) => !!s.data.flags.honestoVisto);
+  const update = useAppStore((s) => s.update);
+  if (seen) return null;
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="overflow-hidden rounded-2xl border border-coral/20 bg-gradient-to-br from-coral-tint/40 to-cream"
+    >
+      <div className="flex items-start gap-3 p-4">
+        <HeartPulse className="mt-0.5 size-5 shrink-0 text-coral-dark" />
+        <div className="min-w-0 flex-1">
+          <p className="font-semibold tracking-tight text-ink">
+            Seus sintomas são reais — e a gente é honesto com você
+          </p>
+          <p className="mt-1 text-sm leading-relaxed text-ink-soft">
+            Sem detox milagroso, sem “barriga chapada em 14 dias”. Veja o que
+            estes dias podem e o que não podem fazer, com as fontes.
+          </p>
+          <div className="mt-3 flex gap-2">
+            <Link
+              href="/ciencia"
+              className={buttonStyles({ size: "sm" })}
+              onClick={() => void update((d) => { d.flags.honestoVisto = true; })}
+            >
+              Ver a verdade
+            </Link>
+            <button
+              onClick={() => void update((d) => { d.flags.honestoVisto = true; })}
+              className="rounded-xl px-3 py-2 text-sm font-semibold text-ink-faint transition-colors active:bg-black/5"
+            >
+              Depois
+            </button>
+          </div>
+        </div>
+      </div>
     </motion.div>
   );
 }
