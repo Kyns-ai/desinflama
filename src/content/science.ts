@@ -42,8 +42,8 @@ export const SCIENCE_SOURCES: ScienceSource[] = [
     url: "https://www.monashfodmap.com/blog/3-phases-low-fodmap-diet/",
   },
   {
-    claim: "A maioria reage só a 1–3 grupos de alimentos, não a todos — RCT de reintrodução, Gastroenterology 2024.",
-    url: "https://www.gastrojournal.org/article/S0016-5085(24)00170-7/fulltext",
+    claim: "A maioria reage só a 1–3 grupos de alimentos, não a todos — RCT de reintrodução (Eswaran et al.), Clin Gastroenterol Hepatol 2024.",
+    url: "https://doi.org/10.1016/j.cgh.2024.03.047",
   },
   {
     claim: "Terapias intestino-cérebro (hipnoterapia/CBT) ajudam tanto quanto a dieta e são recomendadas pela AGA — RCT, Am J Gastroenterol 2024.",

@@ -121,6 +121,11 @@
       "id": "ciclo-lua",
       "emoji": "🌙",
       "prompt": "a soft crescent moon cradling a single gentle water drop, calm night feeling"
+    },
+    {
+      "id": "card-tapioca",
+      "emoji": "🫓",
+      "prompt": "a round white tapioca flatbread folded in half on a small plate"
     }
   ]
 }

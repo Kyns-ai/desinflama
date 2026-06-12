@@ -65,6 +65,18 @@
     {
       "id": "recipe-pure-mandioquinha",
       "prompt": "a creamy yellow mandioquinha (peruvian carrot) puree in a ceramic bowl, olive oil drizzle and chives"
+    },
+    {
+      "id": "recipe-overnight-oats-morango",
+      "prompt": "overnight oats in a glass jar with chia seeds, fresh strawberry slices on top and a dusting of cinnamon"
+    },
+    {
+      "id": "recipe-escondidinho-mandioquinha",
+      "prompt": "brazilian shepherd's pie (escondidinho) with golden mashed peruvian carrot topping over seasoned ground beef in a ceramic baking dish, one portion scooped"
+    },
+    {
+      "id": "recipe-salmao-quinoa-vagem",
+      "prompt": "grilled salmon fillet over fluffy quinoa with sauteed green beans, lemon wedge, fresh herbs"
     }
   ]
 }

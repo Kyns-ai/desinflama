@@ -345,7 +345,7 @@ export const DAYS: DayContent[] = [
   /* --------------------------- REMOVE (4–7) --------------------------- */
   {
     day: 4,
-    phase: "Remove",
+    phase: "Remoção",
     lesson: {
       title: "Agora a gente vira detetive do seu intestino",
       durationMin: 2,
@@ -420,7 +420,7 @@ export const DAYS: DayContent[] = [
   },
   {
     day: 5,
-    phase: "Remove",
+    phase: "Remoção",
     lesson: {
       title: "Nem toda fibra é amiga",
       durationMin: 2,
@@ -494,7 +494,7 @@ export const DAYS: DayContent[] = [
   },
   {
     day: 6,
-    phase: "Remove",
+    phase: "Remoção",
     lesson: {
       title: "Intestino e pele: por que sua pele melhora junto",
       durationMin: 2,
@@ -568,7 +568,7 @@ export const DAYS: DayContent[] = [
   },
   {
     day: 7,
-    phase: "Remove",
+    phase: "Remoção",
     milestone: "1 semana completa",
     lesson: {
       title: "1 semana! Olha só o que você já conquistou",
@@ -928,7 +928,7 @@ export const DAYS: DayContent[] = [
   /* ----------------------------- REPAIR (12–14) ----------------------------- */
   {
     day: 12,
-    phase: "Repair",
+    phase: "Reparo",
     lesson: {
       title: "Reparar a parede do intestino",
       durationMin: 2,
@@ -998,7 +998,7 @@ export const DAYS: DayContent[] = [
   },
   {
     day: 13,
-    phase: "Repair",
+    phase: "Reparo",
     lesson: {
       title: "Reequilibrar as bactérias boas",
       durationMin: 2,
@@ -1068,7 +1068,7 @@ export const DAYS: DayContent[] = [
   },
   {
     day: 14,
-    phase: "Repair",
+    phase: "Reparo",
     milestone: "Desafio concluído",
     lesson: {
       title: "Seu mapa pessoal está pronto 🗺️",
@@ -1142,7 +1142,7 @@ export const DAYS: DayContent[] = [
   /* ------------------- RESET PROFUNDO · Rebalance (15–21) ------------------- */
   {
     day: 15,
-    phase: "Rebalance",
+    phase: "Reequilíbrio",
     lesson: {
       title: "Reset Profundo: agora a gente cuida do todo",
       durationMin: 2,
@@ -1194,7 +1194,7 @@ export const DAYS: DayContent[] = [
   },
   {
     day: 16,
-    phase: "Rebalance",
+    phase: "Reequilíbrio",
     lesson: {
       title: "Sono: a faxina noturna do intestino",
       durationMin: 2,
@@ -1246,7 +1246,7 @@ export const DAYS: DayContent[] = [
   },
   {
     day: 17,
-    phase: "Rebalance",
+    phase: "Reequilíbrio",
     lesson: {
       title: "Estresse: respirar muda sua digestão",
       durationMin: 2,
@@ -1298,7 +1298,7 @@ export const DAYS: DayContent[] = [
   },
   {
     day: 18,
-    phase: "Rebalance",
+    phase: "Reequilíbrio",
     lesson: {
       title: "Movimento: o empurrãozinho que o intestino ama",
       durationMin: 2,
@@ -1350,7 +1350,7 @@ export const DAYS: DayContent[] = [
   },
   {
     day: 19,
-    phase: "Rebalance",
+    phase: "Reequilíbrio",
     lesson: {
       title: "Reforçando o que você tolera",
       durationMin: 2,
@@ -1402,7 +1402,7 @@ export const DAYS: DayContent[] = [
   },
   {
     day: 20,
-    phase: "Rebalance",
+    phase: "Reequilíbrio",
     lesson: {
       title: "Montando sua rotina de manutenção",
       durationMin: 2,
@@ -1454,7 +1454,7 @@ export const DAYS: DayContent[] = [
   },
   {
     day: 21,
-    phase: "Rebalance",
+    phase: "Reequilíbrio",
     milestone: "Reset Profundo concluído",
     lesson: {
       title: "21 dias: você se transformou 🌟",

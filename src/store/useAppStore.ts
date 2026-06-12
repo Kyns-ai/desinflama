@@ -480,6 +480,11 @@ export const useAppStore = create<AppState>((set, get) => {
     enterMaintenance: async () => {
       await get().update((d) => {
         if (d.progress) {
+          // guarda o programa fechado — a Manutenção não pode ser sem volta
+          if (d.progress.challengeType !== "maintenance") {
+            d.progress.completedChallenge =
+              d.progress.challengeType === "reset21" ? "reset21" : "main14";
+          }
           d.progress.challengeType = "maintenance";
           d.progress.phase = "Manutenção";
         }
@@ -491,7 +496,7 @@ export const useAppStore = create<AppState>((set, get) => {
         if (d.progress) {
           d.progress.challengeType = "reset21";
           d.progress.currentDay = Math.max(15, d.progress.currentDay);
-          d.progress.phase = "Rebalance";
+          d.progress.phase = "Reequilíbrio";
         }
       });
     },

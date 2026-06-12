@@ -17,15 +17,15 @@ export interface PhaseRange {
 /** Desafio principal de 14 dias (framework 5R). */
 export const MAIN14_PHASES: PhaseRange[] = [
   { phase: "Choque", start: 1, end: 3, focus: "Desinchar rápido", tone: "coral" },
-  { phase: "Remove", start: 4, end: 7, focus: "Mapear seu gatilho", tone: "sage" },
+  { phase: "Remoção", start: 4, end: 7, focus: "Mapear seu gatilho", tone: "sage" },
   { phase: "Reintrodução", start: 8, end: 11, focus: "Testar tolerância", tone: "sky" },
-  { phase: "Repair", start: 12, end: 14, focus: "Reparar e fechar", tone: "plum" },
+  { phase: "Reparo", start: 12, end: 14, focus: "Reparar e fechar", tone: "plum" },
 ];
 
 /** Extensão Reset Profundo (dias 15–21). */
 export const RESET21_PHASES: PhaseRange[] = [
   ...MAIN14_PHASES,
-  { phase: "Rebalance", start: 15, end: 21, focus: "Sono, estresse, movimento", tone: "gold" },
+  { phase: "Reequilíbrio", start: 15, end: 21, focus: "Sono, estresse, movimento", tone: "gold" },
 ];
 
 export function totalDays(challenge: ChallengeType): number {

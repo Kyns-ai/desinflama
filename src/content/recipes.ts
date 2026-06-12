@@ -58,7 +58,7 @@ export const RECIPES: Recipe[] = [
   {
     id: "frango-arroz-abobrinha",
     nome: "Frango grelhado com arroz e abobrinha",
-    phase: "Remove",
+    phase: "Remoção",
     tipo: "Almoço",
     tempo: "25 min",
     emoji: "🍗",
@@ -77,7 +77,7 @@ export const RECIPES: Recipe[] = [
   {
     id: "panqueca-banana",
     nome: "Panqueca de banana e ovo",
-    phase: "Remove",
+    phase: "Remoção",
     tipo: "Café",
     tempo: "10 min",
     emoji: "🥞",
@@ -96,7 +96,7 @@ export const RECIPES: Recipe[] = [
   {
     id: "salmao-pure-batata",
     nome: "Salmão com purê de batata",
-    phase: "Repair",
+    phase: "Reparo",
     tipo: "Jantar",
     tempo: "30 min",
     emoji: "🐟",
@@ -115,7 +115,7 @@ export const RECIPES: Recipe[] = [
   {
     id: "caldo-de-osso",
     nome: "Caldo de osso reparador",
-    phase: "Repair",
+    phase: "Reparo",
     tipo: "Jantar",
     tempo: "3 h (fogo baixo)",
     emoji: "🍲",
@@ -153,7 +153,7 @@ export const RECIPES: Recipe[] = [
   {
     id: "creme-cenoura",
     nome: "Creme de cenoura e gengibre",
-    phase: "Remove",
+    phase: "Remoção",
     tipo: "Jantar",
     tempo: "25 min",
     emoji: "🥕",
@@ -171,7 +171,7 @@ export const RECIPES: Recipe[] = [
   {
     id: "iogurte-fermentado",
     nome: "Bowl de iogurte e fermentados",
-    phase: "Repair",
+    phase: "Reparo",
     tipo: "Café",
     tempo: "5 min",
     emoji: "🥣",
@@ -223,7 +223,7 @@ export const RECIPES: Recipe[] = [
   {
     id: "wrap-tapioca",
     nome: "Wrap de tapioca com frango",
-    phase: "Remove",
+    phase: "Remoção",
     tipo: "Almoço",
     tempo: "15 min",
     emoji: "🌯",
@@ -241,7 +241,7 @@ export const RECIPES: Recipe[] = [
   {
     id: "salada-quinoa",
     nome: "Salada morna de quinoa",
-    phase: "Remove",
+    phase: "Remoção",
     tipo: "Almoço",
     tempo: "20 min",
     emoji: "🥗",
@@ -259,7 +259,7 @@ export const RECIPES: Recipe[] = [
   {
     id: "smoothie-mamao",
     nome: "Smoothie de mamão e chia",
-    phase: "Repair",
+    phase: "Reparo",
     tipo: "Café",
     tempo: "5 min",
     emoji: "🥤",
@@ -293,7 +293,7 @@ export const RECIPES: Recipe[] = [
   {
     id: "pure-mandioquinha",
     nome: "Purê de mandioquinha",
-    phase: "Repair",
+    phase: "Reparo",
     tipo: "Jantar",
     tempo: "25 min",
     emoji: "🥔",
@@ -302,6 +302,68 @@ export const RECIPES: Recipe[] = [
       "Cozinhe a mandioquinha até ficar macia.",
       "Amasse com azeite e um pouco de leite sem lactose.",
       "Finalize com cebolinha.",
+    ],
+  },
+
+  /* ----------------------- REEQUILÍBRIO (dias 15–21) ----------------------- */
+  {
+    id: "overnight-oats-morango",
+    nome: "Overnight oats de chia e morango",
+    phase: "Reequilíbrio",
+    tipo: "Café",
+    tempo: "5 min (+ geladeira)",
+    emoji: "🥣",
+    ingredientes: [
+      "4 colheres (sopa) de aveia sem glúten",
+      "1 colher (sopa) de chia",
+      "150 ml de leite sem lactose ou bebida de arroz",
+      "Morangos picados",
+      "Canela a gosto",
+    ],
+    modo: [
+      "Misture a aveia, a chia e o leite num pote com tampa.",
+      "Deixe na geladeira de um dia pro outro.",
+      "Sirva com os morangos e a canela por cima.",
+    ],
+  },
+  {
+    id: "escondidinho-mandioquinha",
+    nome: "Escondidinho de mandioquinha com carne",
+    phase: "Reequilíbrio",
+    tipo: "Almoço",
+    tempo: "40 min",
+    emoji: "🥧",
+    ingredientes: [
+      "3 mandioquinhas cozidas e amassadas",
+      "300 g de carne moída magra",
+      "Azeite aromatizado (sem o alho)",
+      "Tomate picado, sal e cebolinha (parte verde)",
+      "Parmesão ralado para gratinar (opcional)",
+    ],
+    modo: [
+      "Refogue a carne no azeite aromatizado com o tomate e o sal.",
+      "Monte numa travessa: carne embaixo, purê de mandioquinha por cima.",
+      "Polvilhe o parmesão e leve ao forno a 200°C por ~15 min.",
+      "Finalize com cebolinha.",
+    ],
+  },
+  {
+    id: "salmao-quinoa-vagem",
+    nome: "Salmão grelhado com quinoa e vagem",
+    phase: "Reequilíbrio",
+    tipo: "Jantar",
+    tempo: "30 min",
+    emoji: "🐟",
+    ingredientes: [
+      "1 posta de salmão",
+      "½ xícara de quinoa",
+      "1 xícara de vagem",
+      "Azeite, limão, sal e ervas",
+    ],
+    modo: [
+      "Cozinhe a quinoa (2 partes de água para 1 de quinoa).",
+      "Grelhe o salmão temperado com sal, limão e ervas.",
+      "Salteie a vagem no azeite e monte o prato.",
     ],
   },
 ];

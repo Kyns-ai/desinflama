@@ -873,6 +873,21 @@ function MaintenanceHome({
   score: { value: number; delta: number };
 }) {
   const calmariaDone = !!flags[`calmaria:${todayKey()}`];
+  const completedChallenge = useAppStore(
+    (s) => s.data.progress?.completedChallenge
+  );
+  const startResetProfundo = useAppStore((s) => s.startResetProfundo);
+  const router = useRouter();
+  const [resetBusy, setResetBusy] = useState(false);
+  // quem fechou só o main14 ainda pode aprofundar com o Reset (+7 dias)
+  const canStillReset = completedChallenge === "main14";
+
+  async function irParaReset() {
+    setResetBusy(true);
+    await startResetProfundo();
+    router.replace("/jornada");
+  }
+
   return (
     <div className="space-y-5">
       <header className="flex items-center justify-between pt-5">
@@ -988,6 +1003,27 @@ function MaintenanceHome({
           })}
         </div>
       </div>
+
+      {canStillReset && (
+        <Card elevation="soft" className="border border-sage/25">
+          <h3 className="font-semibold tracking-tight text-ink">
+            Reset Profundo · +7 dias
+          </h3>
+          <p className="mt-1 text-sm leading-relaxed text-ink-soft">
+            Aprofunda a reintrodução (incluindo o grupo que ficou de fora) e
+            ajusta sono, estresse e movimento.
+          </p>
+          <Button
+            variant="secondary"
+            size="md"
+            className="mt-3"
+            loading={resetBusy}
+            onClick={irParaReset}
+          >
+            Começar o Reset <ArrowRight className="size-4" />
+          </Button>
+        </Card>
+      )}
 
       <Link href="/aprender" className={buttonStyles({ variant: "secondary", size: "lg", fullWidth: true })}>
         Biblioteca da nutri

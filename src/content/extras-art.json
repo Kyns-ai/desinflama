@@ -213,5 +213,15 @@
     "emoji": "🏆",
     "id": "empty-conquistas",
     "prompt": "trophy flower"
+  },
+  {
+    "emoji": "🍈",
+    "id": "card-mamao",
+    "prompt": "papaya"
+  },
+  {
+    "emoji": "🫓",
+    "id": "card-tapioca",
+    "prompt": "tapioca flatbread"
   }
 ]

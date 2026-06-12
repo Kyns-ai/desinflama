@@ -63,10 +63,10 @@ export interface Subscription {
 
 export type JourneyPhase =
   | "Choque"
-  | "Remove"
+  | "Remoção"
   | "Reintrodução"
-  | "Repair"
-  | "Rebalance"
+  | "Reparo"
+  | "Reequilíbrio"
   | "Manutenção";
 
 /** main14 = desafio principal; reset21 = extensão; monthly:<id> = desafio
@@ -82,6 +82,8 @@ export interface JourneyProgress {
   phase: JourneyPhase;
   completedDays: number[];
   challengeType: ChallengeType;
+  /** Programa fechado antes de entrar na Manutenção (permite voltar ao Reset). */
+  completedChallenge?: "main14" | "reset21";
   /** Data (YYYY-MM-DD) em que cada dia foi concluído. */
   completedAt: Record<number, string>;
   startedAt: string; // ISO

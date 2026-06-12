@@ -75,7 +75,7 @@ export function buildDemoData(user: { id: string; name: string; email: string })
     },
     progress: {
       currentDay: 6,
-      phase: "Remove",
+      phase: "Remoção",
       challengeType: "main14",
       completedDays: [1, 2, 3, 4, 5],
       completedAt,
