@@ -2,19 +2,125 @@
   "style": "Soft minimal flat vector illustration, single centered subject filling most of the frame, flat warm cream background color #FAF7F2, palette of sage green #4FB286, coral #F2856D and warm terracotta, gentle rounded organic shapes, smooth subtle shading, no text, no words, no letters, no border, no frame, calm premium wellness brand, modern app illustration",
   "aspect_ratio": "1:1",
   "items": [
-    { "id": "garden-semente", "emoji": "🌱", "prompt": "a single small seed just starting to sprout, a tiny green tip emerging from rich soil" },
-    { "id": "garden-broto", "emoji": "🌿", "prompt": "a young green sprout with two fresh leaves growing from a small mound of soil" },
-    { "id": "garden-florescendo", "emoji": "🌸", "prompt": "a small healthy plant with green leaves and one soft coral-pink flower blooming" },
-    { "id": "garden-jardim", "emoji": "🪴", "prompt": "a lush little potted plant overflowing with leaves and small flowers, thriving" },
-
-    { "id": "mapa-fermentacao", "emoji": "🎈", "prompt": "a soft round balloon shape with gentle air bubbles around it, representing a bloated belly with gas" },
-    { "id": "mapa-retencao", "emoji": "💧", "prompt": "a single soft water drop with gentle ripples, representing fluid retention" },
-    { "id": "mapa-lentidao", "emoji": "🐌", "prompt": "a cute calm snail moving slowly, representing a slow gut" },
-    { "id": "mapa-estresse", "emoji": "🌪️", "prompt": "a gentle soft spiral swirl of air, representing stress and tension" },
-
-    { "id": "meal-cafe", "emoji": "☕", "prompt": "a warm cup of tea or coffee with gentle steam, breakfast" },
-    { "id": "meal-almoco", "emoji": "🍽️", "prompt": "a balanced healthy plate of food seen from above, lunch" },
-    { "id": "meal-jantar", "emoji": "🌙", "prompt": "a warm bowl of soup with a small crescent moon, light dinner" },
-    { "id": "meal-lanche", "emoji": "🍎", "prompt": "a fresh apple and a few nuts, a healthy snack" }
+    {
+      "id": "garden-semente",
+      "emoji": "🌱",
+      "prompt": "a single small seed just starting to sprout, a tiny green tip emerging from rich soil"
+    },
+    {
+      "id": "garden-broto",
+      "emoji": "🌿",
+      "prompt": "a young green sprout with two fresh leaves growing from a small mound of soil"
+    },
+    {
+      "id": "garden-florescendo",
+      "emoji": "🌸",
+      "prompt": "a small healthy plant with green leaves and one soft coral-pink flower blooming"
+    },
+    {
+      "id": "garden-jardim",
+      "emoji": "🪴",
+      "prompt": "a lush little potted plant overflowing with leaves and small flowers, thriving"
+    },
+    {
+      "id": "mapa-fermentacao",
+      "emoji": "🎈",
+      "prompt": "a soft round balloon shape with gentle air bubbles around it, representing a bloated belly with gas"
+    },
+    {
+      "id": "mapa-retencao",
+      "emoji": "💧",
+      "prompt": "a single soft water drop with gentle ripples, representing fluid retention"
+    },
+    {
+      "id": "mapa-lentidao",
+      "emoji": "🐌",
+      "prompt": "a cute calm snail moving slowly, representing a slow gut"
+    },
+    {
+      "id": "mapa-estresse",
+      "emoji": "🌪️",
+      "prompt": "a gentle soft spiral swirl of air, representing stress and tension"
+    },
+    {
+      "id": "meal-cafe",
+      "emoji": "☕",
+      "prompt": "a warm cup of tea or coffee with gentle steam, breakfast"
+    },
+    {
+      "id": "meal-almoco",
+      "emoji": "🍽️",
+      "prompt": "a balanced healthy plate of food seen from above, lunch"
+    },
+    {
+      "id": "meal-jantar",
+      "emoji": "🌙",
+      "prompt": "a warm bowl of soup with a small crescent moon, light dinner"
+    },
+    {
+      "id": "meal-lanche",
+      "emoji": "🍎",
+      "prompt": "a fresh apple and a few nuts, a healthy snack"
+    },
+    {
+      "id": "card-fodmap",
+      "emoji": "🔤",
+      "prompt": "a gentle cluster of foods — a wheat stalk, an onion, an apple and a milk glass — connected by soft dotted curved lines, like a friendly diagram"
+    },
+    {
+      "id": "card-suco-verde",
+      "emoji": "🧃",
+      "prompt": "a tall glass of green juice with a leaf garnish and soft rising bubbles, slightly tilted"
+    },
+    {
+      "id": "card-cerebro-intestino",
+      "emoji": "🧠",
+      "prompt": "a soft rounded brain shape and a gut intestine shape side by side, connected by a gentle wavy line, friendly conversation between them"
+    },
+    {
+      "id": "card-fermentado",
+      "emoji": "🫧",
+      "prompt": "a glass fermentation jar with soft bubbles rising inside, a small cloth cover on top"
+    },
+    {
+      "id": "empty-grafico",
+      "emoji": "📈",
+      "prompt": "a tiny green sprout with two leaves growing out of a soft rising chart line"
+    },
+    {
+      "id": "empty-fotos",
+      "emoji": "📷",
+      "prompt": "a simple rounded photo frame with soft green leaves growing around its corners"
+    },
+    {
+      "id": "empty-conquistas",
+      "emoji": "🏆",
+      "prompt": "a golden trophy cup shaped like a flower bud about to bloom, small leaves at its base"
+    },
+    {
+      "id": "celebra-dia",
+      "emoji": "🌅",
+      "prompt": "a warm coral sun rising over soft rolling green hills, rays of gentle light"
+    },
+    {
+      "id": "celebra-semana1",
+      "emoji": "📅",
+      "prompt": "a rounded calendar page with seven small fresh green leaves arranged in a row"
+    },
+    {
+      "id": "celebra-programa",
+      "emoji": "🌸",
+      "prompt": "a celebratory arch made of blooming coral and sage flowers, festive but calm"
+    },
+    {
+      "id": "recap-semana",
+      "emoji": "💌",
+      "prompt": "a soft open envelope with a letter and a small green sprout growing from it"
+    },
+    {
+      "id": "ciclo-lua",
+      "emoji": "🌙",
+      "prompt": "a soft crescent moon cradling a single gentle water drop, calm night feeling"
+    }
   ]
 }

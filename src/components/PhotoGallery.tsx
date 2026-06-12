@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Camera, Lock, Plus, Trash2 } from "lucide-react";
 import { blobStore } from "@/data/storage";
+import { shortDate } from "@/lib/date";
 import { useAppStore } from "@/store/useAppStore";
 import { takePhoto } from "@/lib/camera";
 import type { Photo } from "@/types/domain";
@@ -75,7 +76,7 @@ function PhotoThumb({ photo }: { photo: Photo }) {
         <div className="size-full [animation:var(--animate-shimmer)]" />
       )}
       <span className="absolute bottom-1.5 left-1.5 rounded-full bg-black/45 px-2 py-0.5 text-[10px] font-medium text-white backdrop-blur">
-        {formatShort(photo.date)}
+        {shortDate(photo.date)}
       </span>
       <button
         onClick={() => removePhoto(photo.id)}
@@ -88,7 +89,3 @@ function PhotoThumb({ photo }: { photo: Photo }) {
   );
 }
 
-function formatShort(date: string): string {
-  const [, m, d] = date.split("-");
-  return `${d}/${m}`;
-}

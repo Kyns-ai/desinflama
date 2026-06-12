@@ -4,9 +4,11 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Sparkles, Quote } from "lucide-react";
 import { Card, Badge } from "@/components/ui";
 import { Art } from "@/components/Art";
+import { BloatWindowCard } from "@/components/BloatWindowCard";
 import { useAppStore } from "@/store/useAppStore";
 import { artId } from "@/content/cardArt";
 import { BLOAT_PROFILES, WELCOME_VIDEO } from "@/content/onboarding";
+import { PROJECTION, PROJECTION_NOTE } from "@/content/promise";
 import type { BloatType, SymptomKey } from "@/types/domain";
 
 const SYMPTOM_LABEL: Record<SymptomKey, { label: string; emoji: string }> = {
@@ -32,15 +34,10 @@ const WHEN_LABEL: Record<string, string> = {
   refeicoes: "logo depois de comer",
 };
 
-const projection = [
-  { when: "72h", label: "barriga mais baixa" },
-  { when: "7 dias", label: "1ª vitória visível" },
-  { when: "14 dias", label: "intestino reparado" },
-];
-
 export default function MapaPage() {
   const router = useRouter();
   const onboarding = useAppStore((s) => s.data.user?.onboarding ?? null);
+  const cycleStart = useAppStore((s) => s.data.cycleStart ?? null);
 
   const bloatType = (onboarding?.bloatType ?? "fermentacao") as BloatType;
   const p = BLOAT_PROFILES[bloatType];
@@ -124,7 +121,7 @@ export default function MapaPage() {
         <h3 className="font-semibold tracking-tight text-ink">Seu plano</h3>
         <p className="mt-1.5 text-[15px] leading-relaxed text-ink-soft">{p.plan}</p>
         <div className="mt-4 flex items-stretch gap-2">
-          {projection.map((x) => (
+          {PROJECTION.map((x) => (
             <div
               key={x.when}
               className="flex-1 rounded-2xl bg-surface px-3 py-3 text-center"
@@ -138,7 +135,13 @@ export default function MapaPage() {
             </div>
           ))}
         </div>
+        <p className="mt-2 text-xs leading-relaxed text-ink-faint">
+          {PROJECTION_NOTE}
+        </p>
       </Card>
+
+      {/* Janela de inchaço hormonal */}
+      <BloatWindowCard cycleStart={cycleStart} />
 
       {/* Mensagem da nutri */}
       <Card elevation="soft">

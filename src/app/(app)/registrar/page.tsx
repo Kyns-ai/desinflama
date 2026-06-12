@@ -1,12 +1,14 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Check, TrendingUp, Plus, X, Coffee, Sun, Moon, Apple } from "lucide-react";
 import { Button, Card } from "@/components/ui";
 import { useAppStore } from "@/store/useAppStore";
 import { todayKey } from "@/lib/date";
 import { logInsight } from "@/lib/insight";
+import { foodFeedback, type FoodFeedback } from "@/lib/foodFeedback";
+import { TIER_STYLE } from "@/content/semaforo";
 import { getDay } from "@/content/journey";
 import { Art } from "@/components/Art";
 import { artId } from "@/content/cardArt";
@@ -56,6 +58,15 @@ export default function Registrar() {
   const [humor, setHumor] = useState<number | null>(null);
   const [salvo, setSalvo] = useState(false);
   const [insight, setInsight] = useState("");
+  const [feedback, setFeedback] = useState<FoodFeedback | null>(null);
+  const feedbackTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(
+    () => () => {
+      if (feedbackTimer.current) clearTimeout(feedbackTimer.current);
+    },
+    []
+  );
 
   const suggestions = useMemo(() => {
     const d = getDay(currentDay);
@@ -69,6 +80,10 @@ export default function Registrar() {
     if (!text) return;
     setMeals((m) => [...m, { refeicao: mealType, descricao: text }]);
     setMealText("");
+    // feedback imediato: o registro responde na hora (anti-culpa, pró-mapa)
+    setFeedback(foodFeedback(text));
+    if (feedbackTimer.current) clearTimeout(feedbackTimer.current);
+    feedbackTimer.current = setTimeout(() => setFeedback(null), 3500);
   }
 
   async function salvar() {
@@ -189,6 +204,26 @@ export default function Registrar() {
             <Plus className="size-5" />
           </button>
         </div>
+
+        <AnimatePresence>
+          {feedback && (
+            <motion.p
+              key={feedback.message}
+              initial={{ opacity: 0, y: 6, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ type: "spring", stiffness: 320, damping: 22 }}
+              className={cn(
+                "mt-3 inline-flex items-start gap-1.5 rounded-2xl px-3.5 py-2 text-sm font-medium leading-snug",
+                feedback.tier === "neutro"
+                  ? "bg-cream-deep text-ink-soft"
+                  : TIER_STYLE[feedback.tier].chip
+              )}
+            >
+              {feedback.message}
+            </motion.p>
+          )}
+        </AnimatePresence>
 
         {meals.length > 0 && (
           <ul className="mt-3 space-y-1.5">

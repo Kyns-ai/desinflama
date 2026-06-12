@@ -1,10 +1,14 @@
 "use client";
 
+import { useMemo } from "react";
 import Link from "next/link";
 import { LineChart as LineChartIcon, TrendingDown, TrendingUp, AlertCircle, Trophy, UserCheck, ChevronRight } from "lucide-react";
 import { EmptyState, buttonStyles, Card, Badge } from "@/components/ui";
 import { isScoreStalled } from "@/lib/score";
 import { LineChart } from "@/components/charts/LineChart";
+import { PixelGrid } from "@/components/charts/PixelGrid";
+import { WeeklyRecap } from "@/components/WeeklyRecap";
+import { latestRecap } from "@/lib/recap";
 import { PhotoGallery } from "@/components/PhotoGallery";
 import { SeedMeter } from "@/components/SeedMeter";
 import { gardenFor } from "@/lib/garden";
@@ -51,7 +55,12 @@ const avg = (xs: SeriesPoint[]) =>
 
 export default function Progresso() {
   const data = useAppStore((s) => s.data);
-  const { logs, scores, streak } = data;
+  const { logs, scores, streak, progress } = data;
+  const startedAt = progress?.startedAt ?? null;
+  const recap = useMemo(
+    () => (startedAt ? latestRecap(logs, scores, startedAt) : null),
+    [logs, scores, startedAt]
+  );
 
   const score = scoreSeries(scores);
   const { best, worst } = bestWorstDays(logs);
@@ -100,6 +109,12 @@ export default function Progresso() {
       {/* Jardim / nível */}
       <SeedMeter />
 
+      {/* Mosaico de dias — quantos dias bons você já teve, de relance */}
+      {hasData && <PixelGrid logs={logs} />}
+
+      {/* Relatório da última semana fechada */}
+      {recap && <WeeklyRecap recap={recap} />}
+
       {/* Índice Intestinal no tempo */}
       {score.length >= 2 && (
         <Card elevation="card">
@@ -119,6 +134,8 @@ export default function Progresso() {
         <Card elevation="card" className="px-0">
           <EmptyState
             icon={LineChartIcon}
+            art="empty-grafico"
+            artEmoji="📈"
             title="Seus gráficos aparecem aqui"
             description="Assim que você fizer alguns registros, mostramos seu Índice Intestinal no tempo, a queda do inchaço e seus melhores e piores dias."
             action={

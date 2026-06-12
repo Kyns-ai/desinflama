@@ -15,7 +15,7 @@ import type {
 } from "@/types/domain";
 import { emptyAppData } from "@/types/domain";
 import { newJourney, phaseForDay, totalDays } from "@/lib/journey";
-import { buildDemoData } from "@/lib/demo";
+import { buildDemoData, DEMO_EMAIL } from "@/lib/demo";
 import { SEEDS } from "@/lib/garden";
 import { initialScore } from "@/lib/score";
 import { recomputedScores } from "@/lib/computeGutScore";
@@ -117,8 +117,23 @@ function notifyAchievements(novas: AchievementDef[]) {
 }
 
 export const useAppStore = create<AppState>((set, get) => {
+  // Evita hidratação dupla: signIn/signUp chamam hydrateUser diretamente e o
+  // onAuthChange pode disparar pro MESMO usuário antes do set() — a segunda
+  // hidratação carregaria dados velhos e sobrescreveria escritas recentes.
+  let hydratingId: string | null = null;
+
   /** Após autenticar: troca o namespace, carrega os dados do usuário e hidrata. */
   async function hydrateUser(user: AuthUser) {
+    if (hydratingId === user.id) return;
+    hydratingId = user.id;
+    try {
+      await doHydrate(user);
+    } finally {
+      hydratingId = null;
+    }
+  }
+
+  async function doHydrate(user: AuthUser) {
     repository.setNamespace(user.id);
     const data = await loadOrInit(repository);
     data.user = data.user ?? {
@@ -175,6 +190,9 @@ export const useAppStore = create<AppState>((set, get) => {
         unsubscribeAuth?.();
         unsubscribeAuth = authService.onAuthChange((u) => {
           const current = get().user;
+          // A demo se hidrata sozinha em enterDemo — re-hidratar aqui faria o
+          // load (vazio) sobrescrever os dados semeados (race).
+          if (u?.email === DEMO_EMAIL) return;
           if (u && u.id !== current?.id) {
             void hydrateUser(u);
           } else if (!u && current) {
@@ -214,12 +232,11 @@ export const useAppStore = create<AppState>((set, get) => {
     },
 
     enterDemo: async () => {
-      const user = await authService.signInWithEmail(
-        "demo@desinflama.app",
-        "demo1234"
-      );
+      const user = await authService.signInWithEmail(DEMO_EMAIL, "demo1234");
       repository.setNamespace(user.id);
       const data = buildDemoData(user);
+      // save ANTES do set: a UI só fica interativa com a semente persistida,
+      // senão a 1ª ação da usuária pode ser sobrescrita pelo save atrasado.
       await repository.save(data);
       set({ user, data, ready: true });
     },

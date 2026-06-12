@@ -9,12 +9,7 @@ import { ArrowRight, Sparkles, PlayCircle } from "lucide-react";
 import { buttonStyles } from "@/components/ui";
 import { useAppStore } from "@/store/useAppStore";
 import { isFullyMocked } from "@/lib/env";
-
-const projection = [
-  { when: "72h", label: "barriga mais baixa" },
-  { when: "7 dias", label: "1ª vitória visível" },
-  { when: "14 dias", label: "intestino reparado" },
-];
+import { PROJECTION, PROJECTION_NOTE } from "@/content/promise";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -85,7 +80,8 @@ export default function Welcome() {
           className="mt-4 max-w-sm text-[17px] leading-relaxed text-ink-soft"
         >
           Descubra o que te incha e desinflame de verdade — sem contar caloria,
-          sem dieta da moda. Só você, sua digestão e um plano que funciona.
+          sem dieta da moda. Só você, sua digestão e um plano que te mostra o
+          que funciona pra você.
         </motion.p>
 
         <motion.div
@@ -94,7 +90,7 @@ export default function Welcome() {
           transition={{ duration: 0.6, delay: 0.34, ease }}
           className="mt-8 flex items-stretch gap-2"
         >
-          {projection.map((p) => (
+          {PROJECTION.map((p) => (
             <div
               key={p.when}
               className="flex-1 rounded-2xl border border-line bg-surface/70 px-3 py-3 text-center"
@@ -108,6 +104,15 @@ export default function Welcome() {
             </div>
           ))}
         </motion.div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.42, ease }}
+          className="mt-3 text-xs leading-relaxed text-ink-faint"
+        >
+          {PROJECTION_NOTE}
+        </motion.p>
       </div>
 
       <motion.div

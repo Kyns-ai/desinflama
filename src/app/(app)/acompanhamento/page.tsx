@@ -100,11 +100,12 @@ export default function Acompanhamento() {
       </div>
 
       <Card elevation="soft" className="bg-sage-tint/40 text-center">
-        <p className="font-display text-2xl font-semibold text-sage-dark">
-          ~3,5×
+        <p className="font-display text-lg font-semibold leading-snug text-sage-dark">
+          Quando o padrão trava sozinho, um olhar profissional costuma
+          destravar
         </p>
-        <p className="text-sm text-ink-soft">
-          mais resultado com acompanhamento profissional do que sozinha
+        <p className="mt-1 text-sm text-ink-soft">
+          com um plano feito pro SEU caso, a partir dos seus registros
         </p>
       </Card>
 

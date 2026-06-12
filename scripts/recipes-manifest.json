@@ -1,0 +1,70 @@
+{
+  "style": "Appetizing overhead food photography, soft natural window light, warm cream linen tablecloth, rustic handmade ceramic dishware, fresh ingredients, warm inviting tones, shallow depth of field, photorealistic, no text, no hands, no people",
+  "aspect_ratio": "16:9",
+  "items": [
+    {
+      "id": "recipe-sopa-abobora-gengibre",
+      "prompt": "creamy kabocha pumpkin and ginger soup in a rustic ceramic bowl, garnished with chopped chives"
+    },
+    {
+      "id": "recipe-omelete-espinafre",
+      "prompt": "a folded spinach omelette on a ceramic plate, golden surface, fresh chives on top"
+    },
+    {
+      "id": "recipe-frango-arroz-abobrinha",
+      "prompt": "grilled chicken fillet with white rice and sauteed zucchini slices on a ceramic plate, lemon wedge"
+    },
+    {
+      "id": "recipe-panqueca-banana",
+      "prompt": "a small stack of golden banana-egg pancakes with banana slices and a dusting of cinnamon"
+    },
+    {
+      "id": "recipe-salmao-pure-batata",
+      "prompt": "a seared salmon fillet over creamy mashed potatoes with steamed green beans, chives"
+    },
+    {
+      "id": "recipe-caldo-de-osso",
+      "prompt": "a clear golden bone broth in a rustic mug, carrot and celery pieces, fresh herbs"
+    },
+    {
+      "id": "recipe-bowl-reintroducao",
+      "prompt": "a colorful balanced bowl with white rice, fresh greens, shredded carrot, grilled chicken and a small portion of beans"
+    },
+    {
+      "id": "recipe-creme-cenoura",
+      "prompt": "a smooth carrot and ginger cream soup in a ceramic bowl, olive oil drizzle"
+    },
+    {
+      "id": "recipe-iogurte-fermentado",
+      "prompt": "a yogurt bowl topped with gluten-free oats, chia seeds, pumpkin seeds and fresh strawberries and kiwi"
+    },
+    {
+      "id": "recipe-cha-gengibre-limao",
+      "prompt": "a glass cup of warm ginger lemon tea with fresh ginger slices and half a lime beside it"
+    },
+    {
+      "id": "recipe-arroz-frango-cenoura",
+      "prompt": "a light brazilian chicken and rice soup (canja) with carrot rounds in a ceramic bowl, chives"
+    },
+    {
+      "id": "recipe-wrap-tapioca",
+      "prompt": "a brazilian tapioca wrap filled with shredded chicken, greens, tomato and grated carrot, folded on a plate"
+    },
+    {
+      "id": "recipe-salada-quinoa",
+      "prompt": "a warm quinoa salad with diced zucchini, carrot, fresh greens and pumpkin seeds in a ceramic bowl"
+    },
+    {
+      "id": "recipe-smoothie-mamao",
+      "prompt": "a papaya and chia smoothie in a tall glass, creamy orange color, chia seeds on top, papaya slice beside"
+    },
+    {
+      "id": "recipe-omelete-forno",
+      "prompt": "a baked frittata with zucchini, spinach and tomato in a ceramic baking dish, golden top with parmesan"
+    },
+    {
+      "id": "recipe-pure-mandioquinha",
+      "prompt": "a creamy yellow mandioquinha (peruvian carrot) puree in a ceramic bowl, olive oil drizzle and chives"
+    }
+  ]
+}

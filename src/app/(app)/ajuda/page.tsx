@@ -18,7 +18,7 @@ const FAQ = [
   },
   {
     q: "Em quanto tempo vejo resultado?",
-    a: "A maioria sente a barriga mais baixa em 72h e a primeira vitória clara em 7 dias. Cada corpo é diferente — por isso o registro diário é tão importante.",
+    a: "Cada corpo tem um ritmo: muitas sentem a barriga menos estufada nos primeiros dias, e a maioria nota diferença clara entre a 1ª e a 2ª semana. O registro diário é o que mostra o SEU ritmo.",
   },
   {
     q: "Substitui acompanhamento médico?",

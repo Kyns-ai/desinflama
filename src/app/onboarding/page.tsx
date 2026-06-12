@@ -3,9 +3,12 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Check, Quote, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Moon, Quote, Sparkles } from "lucide-react";
 import { Button, ProgressBar } from "@/components/ui";
+import { Art } from "@/components/Art";
 import { useAppStore } from "@/store/useAppStore";
+import { todayKey } from "@/lib/date";
+import { BloatWindowCard } from "@/components/BloatWindowCard";
 import {
   QUESTIONS,
   BLOAT_PROFILES,
@@ -13,19 +16,22 @@ import {
   type AnswerMap,
 } from "@/content/onboarding";
 import type { BloatType, Goal, SymptomKey } from "@/types/domain";
+import { PROJECTION, PROJECTION_NOTE } from "@/content/promise";
 import { cn } from "@/lib/cn";
 
-type Phase = "quiz" | "loading" | "mapa";
+type Phase = "quiz" | "ciclo" | "loading" | "mapa";
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function Onboarding() {
   const router = useRouter();
   const setOnboarding = useAppStore((s) => s.setOnboarding);
+  const setCycleStart = useAppStore((s) => s.setCycleStart);
   const startJourney = useAppStore((s) => s.startJourney);
 
   const [phase, setPhase] = useState<Phase>("quiz");
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<AnswerMap>({});
+  const [cycleStart, setCycleStartLocal] = useState<string | null>(null);
 
   const q = QUESTIONS[step];
   const isLast = step === QUESTIONS.length - 1;
@@ -37,7 +43,7 @@ export default function Onboarding() {
   }
 
   function advance() {
-    if (isLast) setPhase("loading");
+    if (isLast) setPhase("ciclo");
     else setStep((s) => s + 1);
   }
 
@@ -68,14 +74,30 @@ export default function Onboarding() {
       goal: (answers.goal ?? "desinchar") as Goal,
       worstTime: answers.worstTime,
     });
+    if (cycleStart) await setCycleStart(cycleStart);
     await startJourney("main14");
     router.replace("/inicio");
   }
 
+  if (phase === "ciclo")
+    return (
+      <CicloStep
+        onContinue={(date) => {
+          setCycleStartLocal(date);
+          setPhase("loading");
+        }}
+      />
+    );
   if (phase === "loading")
     return <MapaLoader onDone={() => setPhase("mapa")} />;
   if (phase === "mapa")
-    return <Mapa bloatType={(answers.bloatType ?? "fermentacao") as BloatType} onStart={finish} />;
+    return (
+      <Mapa
+        bloatType={(answers.bloatType ?? "fermentacao") as BloatType}
+        cycleStart={cycleStart}
+        onStart={finish}
+      />
+    );
 
   const selected = valueFor(q.id);
   const canContinue = selected.length > 0;
@@ -173,6 +195,67 @@ export default function Onboarding() {
   );
 }
 
+/* ------------------------------ Ciclo ------------------------------ */
+
+/** Pergunta opcional de ciclo: destrava a previsão de janela de inchaço
+ *  hormonal — o "uau" da 1ª sessão. Sempre pulável, sem culpa. */
+function CicloStep({ onContinue }: { onContinue: (date: string | null) => void }) {
+  const [date, setDate] = useState("");
+  const today = todayKey();
+
+  return (
+    <div className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col bg-cream px-6 pt-safe pb-safe">
+      <motion.div
+        initial={{ opacity: 0, x: 24 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.32, ease }}
+        className="flex flex-1 flex-col py-12"
+      >
+        <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-plum-tint px-3 py-1 text-xs font-semibold text-plum">
+          <Moon className="size-3.5" /> Opcional — mas vale ouro
+        </span>
+        <Art
+          id="ciclo-lua"
+          emoji="🌙"
+          className="mt-5 size-20 rounded-2xl text-4xl"
+        />
+        <h1 className="mt-4 font-display text-[1.85rem] font-semibold leading-tight tracking-tight text-ink">
+          Quando começou sua última menstruação?
+        </h1>
+        <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
+          Seu ciclo mexe no inchaço. Com essa data, a gente te avisa quando o
+          inchaço for hormonal — pra você saber que é fase, não recaída.
+        </p>
+
+        <input
+          type="date"
+          value={date}
+          max={today}
+          onChange={(e) => setDate(e.target.value)}
+          className="mt-7 w-full rounded-2xl border border-line bg-surface p-4 text-base text-ink outline-none focus:border-sage"
+        />
+
+        <div className="mt-auto space-y-3 pt-8">
+          <Button
+            fullWidth
+            size="lg"
+            disabled={!date}
+            onClick={() => onContinue(date || null)}
+          >
+            Continuar <ArrowRight className="size-5" />
+          </Button>
+          <button
+            onClick={() => onContinue(null)}
+            className="w-full py-2 text-sm font-medium text-ink-faint"
+          >
+            Pular — não menstruo / prefiro não dizer
+          </button>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
 /* --------------------------- Loader (serif) --------------------------- */
 
 function MapaLoader({ onDone }: { onDone: () => void }) {
@@ -225,17 +308,14 @@ function MapaLoader({ onDone }: { onDone: () => void }) {
 
 function Mapa({
   bloatType,
+  cycleStart,
   onStart,
 }: {
   bloatType: BloatType;
+  cycleStart: string | null;
   onStart: () => void;
 }) {
   const p = BLOAT_PROFILES[bloatType];
-  const projection = [
-    { when: "72h", label: "barriga mais baixa" },
-    { when: "7 dias", label: "1ª vitória visível" },
-    { when: "14 dias", label: "intestino reparado" },
-  ];
   const [busy, setBusy] = useState(false);
 
   return (
@@ -253,7 +333,11 @@ function Mapa({
         </Reveal>
 
         <Reveal>
-          <div className="mt-5 text-5xl">{p.emoji}</div>
+          <Art
+            id={`mapa-${bloatType}`}
+            emoji={p.emoji}
+            className="mt-5 size-20 rounded-2xl text-4xl"
+          />
         </Reveal>
         <Reveal>
           <h1 className="mt-3 font-display text-[2rem] font-semibold leading-tight tracking-tight text-ink">
@@ -277,7 +361,7 @@ function Mapa({
 
         <Reveal>
           <div className="mt-3 flex items-stretch gap-2">
-            {projection.map((x) => (
+            {PROJECTION.map((x) => (
               <div
                 key={x.when}
                 className="flex-1 rounded-2xl bg-cream-deep/60 px-3 py-3 text-center"
@@ -292,6 +376,20 @@ function Mapa({
             ))}
           </div>
         </Reveal>
+
+        <Reveal>
+          <p className="mt-2 text-xs leading-relaxed text-ink-faint">
+            {PROJECTION_NOTE}
+          </p>
+        </Reveal>
+
+        {cycleStart && (
+          <Reveal>
+            <div className="mt-3">
+              <BloatWindowCard cycleStart={cycleStart} />
+            </div>
+          </Reveal>
+        )}
 
         {/* Mensagem de boas-vindas da nutri */}
         <Reveal>

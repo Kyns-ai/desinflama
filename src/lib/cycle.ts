@@ -5,7 +5,7 @@
  * todas as fases — é comum e não é fracasso. Estimativa simples (ciclo padrão
  * de 28 dias); não é método contraceptivo nem diagnóstico.
  */
-import { diffDays, todayKey } from "./date";
+import { addDays, diffDays, todayKey } from "./date";
 
 export type CyclePhase = "menstrual" | "folicular" | "ovulacao" | "lutea";
 
@@ -53,6 +53,39 @@ export function cycleInfo(
   else phase = "lutea";
 
   return { phase, dayOfCycle, label: PHASE[phase].label, note: PHASE[phase].note };
+}
+
+export interface BloatWindow {
+  /** YYYY-MM-DD do início da janela (fase lútea tardia / TPM). */
+  start: string;
+  /** YYYY-MM-DD do fim da janela. */
+  end: string;
+  /** True se hoje já está dentro da janela. */
+  active: boolean;
+}
+
+/**
+ * Próxima janela de inchaço hormonal: a fase lútea tardia (dias 22–28 do
+ * ciclo), quando retenção e inchaço aumentam pra maioria. Saber a data
+ * transforma "recaída" em "fase prevista" — o wow da 1ª sessão.
+ */
+export function nextBloatWindow(
+  cycleStart: string,
+  today: string = todayKey(),
+  cycleLength = 28
+): BloatWindow {
+  const elapsed = diffDays(today, cycleStart);
+  const cyclesPassed = Math.floor(elapsed / cycleLength);
+  // janela do ciclo atual: dias 22–28 → offsets 21–27 a partir do início
+  let start = addDays(cycleStart, cyclesPassed * cycleLength + 21);
+  let end = addDays(cycleStart, cyclesPassed * cycleLength + 27);
+  if (diffDays(today, end) > 0) {
+    // janela deste ciclo já passou — projeta a do próximo
+    start = addDays(start, cycleLength);
+    end = addDays(end, cycleLength);
+  }
+  const active = diffDays(today, start) >= 0 && diffDays(today, end) <= 0;
+  return { start, end, active };
 }
 
 /** Âncoras "se-então" sugeridas (implementation intentions). */

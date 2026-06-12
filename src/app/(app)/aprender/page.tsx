@@ -8,7 +8,6 @@ import {
   ArrowLeft,
   ChevronDown,
   ChevronRight,
-  BookOpen,
   ArrowLeftRight,
   Clock,
 } from "lucide-react";
@@ -18,6 +17,7 @@ import { TRIGGER_FOODS } from "@/content/foods";
 import { SWAPS } from "@/content/swaps";
 import { RECIPES, type Recipe } from "@/content/recipes";
 import { cn } from "@/lib/cn";
+import { stripAccents } from "@/lib/text";
 import { Art } from "@/components/Art";
 import { artId } from "@/content/cardArt";
 
@@ -109,9 +109,11 @@ function LessonCard({ lesson }: { lesson: Lesson }) {
         onClick={() => setOpen((o) => !o)}
         className="flex w-full items-center gap-3 p-4 text-left"
       >
-        <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-sage-deep to-sage-dark text-white">
-          <BookOpen className="size-6" strokeWidth={1.8} />
-        </span>
+        <Art
+          id={artId(lesson.emoji) ?? ""}
+          emoji={lesson.emoji}
+          className="size-12 shrink-0 rounded-2xl bg-cream-deep text-2xl"
+        />
         <span className="min-w-0 flex-1">
           <span className="block font-semibold leading-snug tracking-tight text-ink">
             {lesson.title}
@@ -134,9 +136,16 @@ function LessonCard({ lesson }: { lesson: Lesson }) {
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden"
           >
-            <p className="px-4 pb-4 text-[15px] leading-relaxed text-ink-soft">
-              {lesson.body}
-            </p>
+            <div className="space-y-3 px-4 pb-4">
+              {lesson.body.map((par, i) => (
+                <p
+                  key={i}
+                  className="text-[15px] leading-relaxed text-ink-soft"
+                >
+                  {par}
+                </p>
+              ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -209,7 +218,12 @@ function Trocas() {
       {SWAPS.map((cat) => (
         <section key={cat.categoria}>
           <h2 className="mb-2 flex items-center gap-2 text-sm font-semibold tracking-tight text-ink">
-            <span className="text-lg">{cat.emoji}</span> {cat.categoria}
+            <Art
+              id={artId(cat.emoji) ?? ""}
+              emoji={cat.emoji}
+              className="size-6 rounded-md text-lg"
+            />{" "}
+            {cat.categoria}
           </h2>
           <Card elevation="soft" className="space-y-3">
             {cat.itens.map((s, i) => (
@@ -244,19 +258,35 @@ function Receitas() {
   );
 }
 
+/** id do arquivo de foto da receita (sem acentos, padrão dos assets gerados). */
+function recipePhotoSrc(id: string): string {
+  return `/img/recipe-${stripAccents(id)}.jpg`;
+}
+
 function RecipeCard({ recipe }: { recipe: Recipe }) {
   const [open, setOpen] = useState(false);
+  const [photoFailed, setPhotoFailed] = useState(false);
   return (
     <Card elevation="soft" className="overflow-hidden p-0">
       <button
         onClick={() => setOpen((o) => !o)}
         className="flex w-full items-center gap-3 p-4 text-left"
       >
-        <Art
-          id={artId(recipe.emoji) ?? ""}
-          emoji={recipe.emoji}
-          className="size-12 shrink-0 rounded-2xl bg-cream-deep text-3xl"
-        />
+        {photoFailed ? (
+          <Art
+            id={artId(recipe.emoji) ?? ""}
+            emoji={recipe.emoji}
+            className="size-12 shrink-0 rounded-2xl bg-cream-deep text-3xl"
+          />
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={recipePhotoSrc(recipe.id)}
+            alt=""
+            onError={() => setPhotoFailed(true)}
+            className="size-12 shrink-0 rounded-2xl bg-cream-deep object-cover"
+          />
+        )}
 
         <span className="min-w-0 flex-1">
           <span className="block font-semibold leading-snug tracking-tight text-ink">
@@ -286,6 +316,15 @@ function RecipeCard({ recipe }: { recipe: Recipe }) {
             className="overflow-hidden"
           >
             <div className="space-y-3 px-4 pb-4">
+              {!photoFailed && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={recipePhotoSrc(recipe.id)}
+                  alt={recipe.nome}
+                  onError={() => setPhotoFailed(true)}
+                  className="aspect-[16/9] w-full rounded-2xl bg-cream-deep object-cover"
+                />
+              )}
               <div>
                 <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-ink-faint">
                   Ingredientes

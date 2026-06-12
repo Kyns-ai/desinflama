@@ -76,13 +76,15 @@ export function bestWorstDays(logs: DailyLog[]): {
 
 /* ----------------------------- Gatilhos ----------------------------- */
 
-interface FoodGroup {
+export interface FoodGroup {
   label: string;
   test: RegExp;
 }
 
 // Heurística por palavra-chave (refinada na Fase 11 com listas FODMAP completas).
-const FOOD_GROUPS: FoodGroup[] = [
+// Exportada: o micro-feedback do registro (foodFeedback.ts) usa a MESMA lista,
+// senão o chip e o "suspeito da semana" se contradizem.
+export const FOOD_GROUPS: FoodGroup[] = [
   { label: "laticínio", test: /\bleite\b|iogurte|queijo|requeij|nata\b/i },
   { label: "trigo/glúten", test: /p[ãa]o|trigo|macarr|massa|biscoito|bolacha/i },
   { label: "cebola ou alho", test: /cebola|alho/i },

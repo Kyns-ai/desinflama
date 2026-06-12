@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   Flame,
   Sprout,
@@ -11,21 +11,22 @@ import {
   ShieldCheck,
   Wind,
   Anchor,
-  Moon,
   BookOpen,
   HeartPulse,
+  Info,
   ListChecks,
   Check,
   ChevronRight,
   ArrowRight,
   Sparkles,
   UtensilsCrossed,
-  Trophy,
   X,
   type LucideIcon,
 } from "lucide-react";
 import { ScoreRing, Card, Badge, IconCircle, Button, buttonStyles } from "@/components/ui";
 import { SeedMeter } from "@/components/SeedMeter";
+import { WeeklyRecap } from "@/components/WeeklyRecap";
+import { weeklyRecap, closedWeeks } from "@/lib/recap";
 import { Confetti } from "@/components/Confetti";
 import { Art } from "@/components/Art";
 import { artId } from "@/content/cardArt";
@@ -188,6 +189,7 @@ export default function Inicio() {
 
       <ShieldSavedBanner />
       <HonestWelcome />
+      <WeeklyRecapBanner />
       <RitualCard />
 
       {/* Seu dia de hoje — o ritual */}
@@ -302,18 +304,7 @@ export default function Inicio() {
       <CicloCard />
 
       {/* Índice Intestinal */}
-      <Card className="flex flex-col items-center py-6" elevation="card">
-        <ScoreRing
-          value={score.value}
-          from={Math.max(0, score.value - score.delta)}
-          delta={score.delta}
-          size={180}
-          label="Índice Intestinal"
-        />
-        <p className="mt-3 max-w-[16rem] text-center text-[15px] leading-relaxed text-ink-soft">
-          {scoreMicrocopy(score.value, score.delta)}
-        </p>
-      </Card>
+      <ScoreCard score={score} />
 
       {/* Jardim / nível */}
       <SeedMeter />
@@ -384,6 +375,86 @@ export default function Inicio() {
 }
 
 /* ----------------------------- subcomponentes ----------------------------- */
+
+/** Relatório da Semana na home: aparece uma vez quando a semana fecha
+ *  (dia 8, 15…) — a vitória tangível que preenche o vale das semanas 1–3. */
+function WeeklyRecapBanner() {
+  const data = useAppStore((s) => s.data);
+  const update = useAppStore((s) => s.update);
+  const { progress, logs, scores } = data;
+
+  const startedAt = progress?.startedAt ?? null;
+  const week = startedAt ? closedWeeks(startedAt) : 0;
+  const dismissed = !!data.flags[`recapVisto:${week}`];
+  const recap = useMemo(
+    () =>
+      startedAt && week >= 1 && !dismissed
+        ? weeklyRecap(logs, scores, startedAt, week)
+        : null,
+    [logs, scores, startedAt, week, dismissed]
+  );
+  if (!recap) return null;
+
+  return (
+    <div className="relative">
+      <WeeklyRecap recap={recap} />
+      <button
+        aria-label="Dispensar relatório"
+        onClick={() =>
+          void update((d) => {
+            d.flags[`recapVisto:${week}`] = true;
+          })
+        }
+        className="absolute right-3 top-3 rounded-full bg-cream-deep/80 p-1.5 text-ink-faint transition-colors active:bg-black/5"
+      >
+        <X className="size-4" />
+      </button>
+    </div>
+  );
+}
+
+/** Anel do Índice + explicador honesto: deixa claro que o número é um placar
+ *  pessoal de progresso, não um exame clínico. */
+function ScoreCard({ score }: { score: { value: number; delta: number } }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <Card className="flex flex-col items-center py-6" elevation="card">
+      <ScoreRing
+        value={score.value}
+        from={Math.max(0, score.value - score.delta)}
+        delta={score.delta}
+        size={180}
+        label="Índice Intestinal"
+      />
+      <p className="mt-3 max-w-[16rem] text-center text-[15px] leading-relaxed text-ink-soft">
+        {scoreMicrocopy(score.value, score.delta)}
+      </p>
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-ink-faint transition-colors active:text-ink-soft"
+      >
+        <Info className="size-3.5" /> O que é esse número?
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease }}
+            className="overflow-hidden"
+          >
+            <p className="mt-2 max-w-[18rem] rounded-2xl bg-cream-deep/60 px-4 py-3 text-center text-[13px] leading-relaxed text-ink-soft">
+              Seu placar pessoal: combina seus hábitos no app com a evolução
+              dos seus sintomas. Não é um exame — é o termômetro do seu
+              progresso aqui dentro.
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </Card>
+  );
+}
 
 /** Aviso gentil e dispensável quando um escudo cobriu um dia perdido. Reforça
  *  que um deslize não quebra o progresso (anti-vergonha, pró-retenção). */
@@ -520,7 +591,11 @@ function CicloCard() {
   return (
     <Card elevation="soft" className="border border-coral/15 bg-coral-tint/20">
       <div className="flex items-start gap-3">
-        <Moon className="mt-0.5 size-5 shrink-0 text-coral-dark" />
+        <Art
+          id="ciclo-lua"
+          emoji="🌙"
+          className="mt-0.5 size-10 shrink-0 rounded-xl text-xl"
+        />
         <div className="min-w-0 flex-1">
           {info ? (
             <>
@@ -682,12 +757,12 @@ function DayCelebration({
         initial={{ scale: 0.5, opacity: 0, rotate: -8 }}
         animate={{ scale: 1, opacity: 1, rotate: 0 }}
         transition={{ type: "spring", stiffness: 220, damping: 14 }}
-        className={cn(
-          "grid size-24 place-items-center rounded-full text-white shadow-[var(--shadow-sage)]",
-          milestone ? "bg-gold" : "bg-sage"
-        )}
       >
-        {milestone ? <Trophy className="size-12" /> : <Check className="size-12" strokeWidth={3} />}
+        <Art
+          id={milestone ? "celebra-semana1" : "celebra-dia"}
+          emoji={milestone ? "🏆" : "🌅"}
+          className="size-32 rounded-[2rem] text-6xl shadow-[var(--shadow-soft)]"
+        />
       </motion.div>
       {milestone && (
         <motion.p

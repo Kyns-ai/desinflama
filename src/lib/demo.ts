@@ -10,6 +10,8 @@ import { emptyAppData } from "@/types/domain";
 import { todayKey, addDays } from "./date";
 import { reconcileAchievements } from "./achievements";
 
+export const DEMO_EMAIL = "demo@desinflama.app";
+
 export function buildDemoData(user: { id: string; name: string; email: string }): AppData {
   const base = emptyAppData();
   const today = todayKey();

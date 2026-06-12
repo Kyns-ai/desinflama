@@ -33,3 +33,15 @@ const DIAS = [
 export function humanDate(d: Date = new Date()): string {
   return `${DIAS[d.getDay()]}, ${d.getDate()} de ${MESES[d.getMonth()]}`;
 }
+
+/** Ex.: "30 de maio", a partir de uma chave YYYY-MM-DD. */
+export function humanDayMonth(key: string): string {
+  const [, m, d] = key.split("-").map(Number);
+  return `${d} de ${MESES[m - 1]}`;
+}
+
+/** Ex.: "30/05", a partir de uma chave YYYY-MM-DD. */
+export function shortDate(key: string): string {
+  const [, m, d] = key.split("-");
+  return `${d}/${m}`;
+}

@@ -104,7 +104,7 @@ export const DAYS: DayContent[] = [
         {
           heading: "Seu primeiro passo é hoje",
           emoji: "🎯",
-          body: "Tirando o combustível, o intestino para de produzir tanto gás. Muita gente já sente a barriga mais baixa em 72h. Bora começar.",
+          body: "Tirando o combustível, o intestino para de produzir tanto gás. Muita gente sente a barriga menos estufada já nos primeiros dias. Se o seu corpo demorar mais, tá tudo certo — o mapa continua valendo. Bora começar.",
         },
       ],
       quiz: [
@@ -583,7 +583,7 @@ export const DAYS: DayContent[] = [
         {
           heading: "O que você já fez",
           emoji: "💪",
-          body: "Tirou os maiores fermentadores, começou a mapear seus gatilhos e — muito provavelmente — já sente a barriga mais baixa. Em uma semana.",
+          body: "Tirou os maiores fermentadores e começou a mapear seus gatilhos. Se a barriga já está mais leve, ótimo. Se ainda não, seus registros desta semana são exatamente o que vai revelar o porquê.",
         },
         {
           heading: "Guarde essa sensação",
