@@ -29,10 +29,14 @@ const MEAL_META = [
   { key: "lanche", label: "Lanches", icon: Apple },
 ] as const;
 
+// Referência estável: `?? []` dentro do selector cria um array NOVO a cada
+// snapshot, o que faz o zustand re-renderizar para sempre (React #185).
+const NO_CHECKS: number[] = [];
+
 export function DayView({ day }: { day: number }) {
   const router = useRouter();
   const progress = useAppStore((s) => s.data.progress);
-  const checked = useAppStore((s) => s.data.checklists[day] ?? []);
+  const checked = useAppStore((s) => s.data.checklists[day] ?? NO_CHECKS);
   const toggleItem = useAppStore((s) => s.toggleChecklistItem);
   const completeDay = useAppStore((s) => s.completeDay);
   const ready = useAppStore((s) => s.ready);

@@ -235,6 +235,10 @@ export const useAppStore = create<AppState>((set, get) => {
       const user = await authService.signInWithEmail(DEMO_EMAIL, "demo1234");
       repository.setNamespace(user.id);
       const data = buildDemoData(user);
+      // o premium da demo precisa viver no serviço de assinatura (mock),
+      // senão o próximo bootstrap lê "free" de lá e rebaixa a demo no reload
+      await subscriptionService.init(user.id);
+      data.subscription = await subscriptionService.purchase("annual");
       // save ANTES do set: a UI só fica interativa com a semente persistida,
       // senão a 1ª ação da usuária pode ser sobrescrita pelo save atrasado.
       await repository.save(data);
