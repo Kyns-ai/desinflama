@@ -32,7 +32,9 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function gen(item) {
   const file = path.join(outDir, `${item.id}.png`);
-  if (fs.existsSync(file) && !FORCE) {
+  // fotos são pós-processadas para .jpg — não regerar se a versão final existe
+  const jpg = path.join(outDir, `${item.id}.jpg`);
+  if ((fs.existsSync(file) || fs.existsSync(jpg)) && !FORCE) {
     console.log("skip ", item.id);
     return true;
   }
