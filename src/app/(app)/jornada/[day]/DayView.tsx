@@ -16,10 +16,10 @@ import {
   Sparkles,
 } from "lucide-react";
 import { Button, Badge, Card } from "@/components/ui";
-import { Paywall } from "@/components/Paywall";
 import { useAppStore } from "@/store/useAppStore";
 import { getDay } from "@/content/journey";
 import { phaseForDay, totalDays } from "@/lib/journey";
+import { todayKey } from "@/lib/date";
 import { cn } from "@/lib/cn";
 
 const MEAL_META = [
@@ -40,9 +40,7 @@ export function DayView({ day }: { day: number }) {
   const toggleItem = useAppStore((s) => s.toggleChecklistItem);
   const completeDay = useAppStore((s) => s.completeDay);
   const ready = useAppStore((s) => s.ready);
-  const isPremium = useAppStore((s) => s.data.subscription.isPremium);
   const lessonDone = useAppStore((s) => s.data.lessonsDone[day] ?? false);
-  const FREE_DAYS = 3;
 
   const content = getDay(day);
   const challenge = progress?.challengeType ?? "main14";
@@ -59,17 +57,6 @@ export function DayView({ day }: { day: number }) {
   useEffect(() => {
     if (isLocked) router.replace("/jornada");
   }, [isLocked, router]);
-
-  // Tier grátis: dias 1–3 abertos; o programa completo é premium (não-paywall-morto).
-  if (!isPremium && day > FREE_DAYS) {
-    return (
-      <Paywall
-        reason={`O Dia ${day} faz parte do programa completo. Continue de onde parou.`}
-        onClose={() => router.push("/jornada")}
-        onPurchased={() => router.replace(`/jornada/${day}`)}
-      />
-    );
-  }
 
   if (!content) {
     return (
@@ -90,11 +77,17 @@ export function DayView({ day }: { day: number }) {
 
   const allChecked = checked.length >= content.checklist.length;
 
+  // 1 conclusão por dia-calendário (mesma regra da home)
+  const today = todayKey();
+  const closedTodayAlready = Object.entries(
+    progress?.completedAt ?? {}
+  ).some(([k, date]) => Number(k) !== day && date === today);
+
   async function concluir() {
     setBusy(true);
-    await completeDay(day);
+    const { blocked } = await completeDay(day);
     setBusy(false);
-    setCelebrating(true);
+    if (!blocked) setCelebrating(true);
   }
 
   const isFinalDay =
@@ -273,7 +266,12 @@ export function DayView({ day }: { day: number }) {
       )}
 
       {/* Concluir */}
-      {!isDone ? (
+      {!isDone && closedTodayAlready ? (
+        <p className="rounded-2xl bg-cream-deep/60 px-4 py-3 text-center text-sm text-ink-soft">
+          Um dia por dia 💛 O Dia {day} abre pra concluir amanhã — hoje você já
+          fechou o seu.
+        </p>
+      ) : !isDone ? (
         <div className="sticky bottom-24 z-10">
           <Button fullWidth size="lg" loading={busy} onClick={concluir}>
             Concluir Dia {day}

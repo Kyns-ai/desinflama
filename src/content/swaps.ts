@@ -113,7 +113,7 @@ export const SWAPS: SwapCategory[] = [
       {
         de: "Suco verde com maçã e couve",
         para: "Água de gengibre e limão",
-        motivo: "Detox de verdade é hidratar, não fermentar.",
+        motivo: "Hidratar ajuda mais que qualquer “detox” — e sem fermentar.",
       },
     ],
   },

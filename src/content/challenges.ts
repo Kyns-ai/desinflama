@@ -67,7 +67,7 @@ export const MONTHLY_CHALLENGES: MonthlyChallenge[] = [
       {
         day: 7,
         title: "Você voltou à leveza 🎯",
-        body: "Em uma semana você desfez o estrago sem sofrimento. Esse é o poder de ter o seu mapa: você sabe exatamente como voltar.",
+        body: "Em uma semana você voltou ao seu eixo, sem sofrimento. Esse é o poder de ter o seu mapa: você sabe exatamente como voltar.",
         checklist: ["Compare com o Dia 1", "Defina o que manter da semana", "Comemore (sem ser comida)", "Registre"],
       },
     ],
@@ -106,7 +106,7 @@ export const MONTHLY_CHALLENGES: MonthlyChallenge[] = [
       {
         day: 5,
         title: "Pele e açúcar",
-        body: "Açúcar em excesso alimenta inflamação que aparece na pele. Cinco dias sem ele já podem deixar a pele mais viva.",
+        body: "Açúcar em excesso alimenta inflamação de baixo grau que aparece na pele. Menos açúcar — e a pele costuma agradecer com o tempo.",
         checklist: ["Repare na sua pele hoje", "Mantenha o corte de açúcar", "Ômega-3 no prato (peixe/chia)", "Registre pele"],
       },
       {

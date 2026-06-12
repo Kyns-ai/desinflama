@@ -111,11 +111,11 @@ export const DAYS: DayContent[] = [
         {
           question: "Na maioria das vezes, o inchaço à noite é causado por…",
           options: [
-            "Gordura acumulada na barriga",
             "Gás da fermentação de certos carboidratos",
+            "Gordura acumulada na barriga",
             "Beber água demais",
           ],
-          correctIndex: 1,
+          correctIndex: 0,
           explain:
             "Isso! Certos carboidratos viram comida pras bactérias, que produzem gás — e o gás estufa a barriga.",
         },
@@ -123,10 +123,10 @@ export const DAYS: DayContent[] = [
           question: "Cortar os fermentadores nos primeiros dias é…",
           options: [
             "Pra sempre",
-            "Temporário — pra acalmar e depois achar seus gatilhos",
             "Só pra perder peso",
+            "Temporário — pra acalmar e depois achar seus gatilhos",
           ],
-          correctIndex: 1,
+          correctIndex: 2,
           explain:
             "Exato. É pra acalmar agora; depois você reintroduz pra descobrir o que TE faz mal.",
         },
@@ -134,14 +134,14 @@ export const DAYS: DayContent[] = [
     },
     checklist: [
       "Beba ~2L de água ao longo do dia",
-      "Corte hoje: pão e trigo, leite e derivados, cebola e alho, refrigerante e adoçante, feijão e grão de bico",
+      "Corte hoje: pão e trigo, leite e iogurte comuns (os sem lactose podem!), cebola e alho, refrigerante e adoçante, feijão e grão de bico",
       "Tempere com gengibre, limão e ervas",
       "Caminhe 15 min (movimenta o intestino)",
       "À noite, registre como se sentiu",
     ],
     meals: {
       cafe: [
-        "Ovos mexidos + abacate (½) + chá de gengibre",
+        "Ovos mexidos + abacate (¼ pequeno) + chá de gengibre",
         "Mamão + aveia sem glúten + chia",
         "Omelete de espinafre + café",
       ],
@@ -167,7 +167,7 @@ export const DAYS: DayContent[] = [
       { de: "pão de trigo", para: "tapioca ou pão sem glúten" },
     ],
     completionMessage:
-      "Dia 1 feito 🎉 Amanhã seu intestino já começa a desinflamar.",
+      "Dia 1 feito 🎉 Você tirou o combustível da fermentação — agora é o corpo responder, no ritmo dele.",
   },
   {
     day: 2,
@@ -214,10 +214,10 @@ export const DAYS: DayContent[] = [
           question: "Como manter o sabor do alho sem o frutano?",
           options: [
             "Usar o dobro de alho",
-            "Dourar o alho no azeite e usar só o óleo",
             "Comer cru",
+            "Dourar o alho no azeite e usar só o óleo",
           ],
-          correctIndex: 1,
+          correctIndex: 2,
           explain:
             "Exato. O frutano não passa pro óleo — fica o sabor, sai o gás.",
         },
@@ -239,14 +239,14 @@ export const DAYS: DayContent[] = [
       almoco: [
         "Frango ao azeite aromatizado + arroz + cenoura",
         "Filé de peixe + purê de batata + vagem",
-        "Quibe assado de carne + salada de pepino e tomate",
+        "Bolinho de carne assado com ervas (sem trigo, sem cebola) + salada de pepino e tomate",
       ],
       jantar: [
         "Caldo de legumes (abóbora, cenoura, chuchu) com gengibre",
         "Omelete de espinafre + arroz",
         "Frango desfiado + abobrinha refogada",
       ],
-      lanche: ["Banana (não muito madura)", "Mix de castanhas (até 10)", "Gelatina sem açúcar"],
+      lanche: ["Banana (não muito madura)", "Mix de castanhas (até 10)", "Chá gelado de hortelã"],
     },
     swaps: [
       { de: "tempero pronto / caldo em cubo", para: "sal, ervas e azeite aromatizado" },
@@ -266,7 +266,7 @@ export const DAYS: DayContent[] = [
         {
           heading: "Água solta o que estava preso",
           emoji: "💧",
-          body: "Parece contraintuitivo, mas beber POUCA água faz o corpo segurar líquido (retenção). Hidratar bem ajuda o intestino a se mover e o corpo a soltar o excesso.",
+          body: "Hidratar pouco pode favorecer a retenção e deixa o intestino mais lento — e fibra sem água prende. Beber bem ao longo do dia ajuda o intestino a se mover e reduz a sensação de peso.",
         },
         {
           heading: "Gengibre acelera a digestão",
@@ -288,11 +288,11 @@ export const DAYS: DayContent[] = [
         {
           question: "Por que beber água ajuda contra a retenção?",
           options: [
-            "Porque enche o estômago",
             "Porque beber pouco faz o corpo segurar líquido; hidratar solta o excesso",
+            "Porque enche o estômago",
             "Porque substitui a comida",
           ],
-          correctIndex: 1,
+          correctIndex: 0,
           explain:
             "Isso! Pouca água = corpo em modo “economia” segurando líquido. Hidratar reverte isso.",
         },
@@ -324,7 +324,7 @@ export const DAYS: DayContent[] = [
       ],
       almoco: [
         "Peixe grelhado + arroz + abóbora assada",
-        "Frango + batata-doce + salada verde",
+        "Frango + batata-doce (½ xícara) + salada verde",
         "Carne + arroz + cenoura e vagem no vapor",
       ],
       jantar: [
@@ -376,11 +376,11 @@ export const DAYS: DayContent[] = [
         {
           question: "Qual o objetivo da fase de Remoção (a partir de agora)?",
           options: [
-            "Continuar cortando tudo pra sempre",
             "Mapear quais alimentos são gatilho pra você",
+            "Continuar cortando tudo pra sempre",
             "Perder peso rápido",
           ],
-          correctIndex: 1,
+          correctIndex: 0,
           explain:
             "Isso! Agora é descobrir os SEUS gatilhos — por isso o registro diário é tão importante.",
         },
@@ -406,8 +406,8 @@ export const DAYS: DayContent[] = [
       ],
       jantar: [
         "Sopa de abóbora com gengibre + frango desfiado",
-        "Omelete recheado de espinafre + arroz",
-        "Salmão + purê de batata-doce",
+        "Omelete recheada de espinafre + arroz",
+        "Salmão + purê de batata",
       ],
       lanche: ["Banana com pasta de amendoim sem açúcar", "Kiwi", "Castanha-do-pará (2–3)"],
     },
@@ -452,10 +452,10 @@ export const DAYS: DayContent[] = [
           question: "Qual fibra ACALMA o intestino irritado?",
           options: [
             "Repolho cru e couve-flor",
-            "As solúveis: aveia, cenoura, chia, banana",
             "Nenhuma fibra é boa",
+            "As solúveis: aveia, cenoura, chia, banana",
           ],
-          correctIndex: 1,
+          correctIndex: 2,
           explain:
             "Isso! As solúveis regulam o intestino sem alimentar o gás.",
         },
@@ -463,7 +463,7 @@ export const DAYS: DayContent[] = [
     },
     checklist: [
       "Inclua 1 fonte de fibra solúvel (aveia, chia, cenoura ou banana)",
-      "Evite hoje: couve-flor, repolho cru, brócolis em excesso",
+      "Evite hoje: couve-flor, cogumelos, brócolis em excesso e leguminosas mal cozidas",
       "Continue registrando refeições e sintomas",
       "Beba água (fibra sem água prende mais ainda)",
       "Caminhe 15–20 min",
@@ -503,7 +503,7 @@ export const DAYS: DayContent[] = [
         {
           heading: "Um bônus que aparece no espelho",
           emoji: "✨",
-          body: "Muita gente repara a pele mais viva já na primeira semana. Não é acaso: seu intestino e sua pele conversam.",
+          body: "Muita gente repara a pele mais viva nas primeiras semanas. Faz sentido: seu intestino e sua pele conversam.",
         },
         {
           heading: "O eixo intestino-pele",
@@ -518,7 +518,7 @@ export const DAYS: DayContent[] = [
         {
           heading: "Repare hoje",
           emoji: "🪞",
-          body: "Dê uma olhada no espelho e compare com o Dia 1. Pequenas mudanças já contam — e são prova de que está funcionando por dentro.",
+          body: "Dê uma olhada no espelho e compare com o Dia 1. Pode ser sutil — e tudo bem: pele responde no ritmo dela. O que importa é o que está mudando por dentro.",
         },
       ],
       quiz: [
@@ -544,13 +544,13 @@ export const DAYS: DayContent[] = [
     ],
     meals: {
       cafe: [
-        "Ovos + abacate (½) + chá verde",
+        "Ovos + abacate (¼ pequeno) + chá verde",
         "Vitamina de mamão com leite sem lactose e linhaça",
         "Crepioca + chá de hortelã",
       ],
       almoco: [
         "Sardinha ou salmão + arroz + salada de folhas",
-        "Frango + batata-doce + abobrinha",
+        "Frango + batata-doce (½ xícara) + abobrinha",
         "Carne + arroz + cenoura no vapor",
       ],
       jantar: [
@@ -601,10 +601,10 @@ export const DAYS: DayContent[] = [
           question: "O que vem na próxima fase (reintrodução)?",
           options: [
             "Cortar ainda mais alimentos",
-            "Descobrir o que você pode voltar a comer, testando um grupo por vez",
             "Parar o programa",
+            "Descobrir o que você pode voltar a comer, testando um grupo por vez",
           ],
-          correctIndex: 1,
+          correctIndex: 2,
           explain:
             "Isso! A reintrodução devolve a liberdade: você testa e descobre o que tolera.",
         },
@@ -633,10 +633,10 @@ export const DAYS: DayContent[] = [
         "Omelete + salada verde",
         "Frango + abobrinha",
       ],
-      lanche: ["Fruta da estação (low FODMAP)", "Castanhas", "Gelatina sem açúcar"],
+      lanche: ["Fruta da estação (low FODMAP)", "Castanhas", "Gelatina incolor com suco de uva natural"],
     },
     completionMessage:
-      "1 SEMANA 🏆 Seu inchaço já caiu de forma visível. Esse é só o começo do seu mapa.",
+      "1 SEMANA 🏆 Você cortou os maiores fermentadores e começou seu mapa. Se o inchaço já caiu, comemora; se ainda não, seus registros são o caminho.",
   },
 
   /* ------------------------ REINTRODUÇÃO (8–11) ------------------------ */
@@ -673,11 +673,11 @@ export const DAYS: DayContent[] = [
         {
           question: "Qual a regra de ouro da reintrodução?",
           options: [
-            "Testar vários grupos no mesmo dia pra ir mais rápido",
             "Testar um grupo por vez, em porção pequena, observando",
+            "Testar vários grupos no mesmo dia pra ir mais rápido",
             "Voltar a comer tudo de uma vez",
           ],
-          correctIndex: 1,
+          correctIndex: 0,
           explain:
             "Isso! Um grupo por vez — senão você não sabe qual causou a reação.",
         },
@@ -708,7 +708,6 @@ export const DAYS: DayContent[] = [
       ],
       lanche: ["Banana", "Castanhas", "Laranja"],
     },
-    swaps: [{ de: "leite sem lactose (só hoje)", para: "leite comum, para o teste" }],
     completionMessage:
       "Dia 8 ✅ Primeiro grupo testado! Seu mapa está ficando pessoal de verdade.",
   },
@@ -756,7 +755,7 @@ export const DAYS: DayContent[] = [
       ],
     },
     checklist: [
-      "Volte os grupos que passaram (ex.: lactose, se tolerou)",
+      "Mantenha fora até os grupos que passaram — eles voltam de vez no fim dos testes",
       "TESTE FRUTOSE: ½ manga OU 1 colher de mel hoje",
       "Observe a reação por algumas horas",
       "Registre a intensidade (1 a 5)",
@@ -770,7 +769,7 @@ export const DAYS: DayContent[] = [
       ],
       almoco: [
         "Frango + arroz + abobrinha",
-        "Peixe + batata-doce + salada",
+        "Peixe + batata-doce (½ xícara) + salada",
         "Carne + quinoa + cenoura",
       ],
       jantar: [
@@ -816,11 +815,11 @@ export const DAYS: DayContent[] = [
         {
           question: "O “problema com glúten” de muita gente é, na verdade…",
           options: [
-            "Falta de vitamina",
             "Frutano — uma fibra do trigo que fermenta",
+            "Falta de vitamina",
             "Excesso de água",
           ],
-          correctIndex: 1,
+          correctIndex: 0,
           explain:
             "Isso! Muita gente reage ao frutano do trigo, não ao glúten — por isso este teste vale ouro.",
         },
@@ -865,7 +864,7 @@ export const DAYS: DayContent[] = [
         {
           heading: "Reta final da descoberta",
           emoji: "🏁",
-          body: "Dois grupos e seu mapa fica completo. Teste um por vez, como nos dias anteriores.",
+          body: "Hoje você escolhe UM dos dois últimos grupos — o que mais aparece na sua rotina. O outro você testa na Manutenção. Um por vez, como nos dias anteriores.",
         },
         {
           heading: "Leguminosas (GOS) — tem truque",
@@ -875,12 +874,12 @@ export const DAYS: DayContent[] = [
         {
           heading: "Polióis — os “sem açúcar”",
           emoji: "🍎",
-          body: "Polióis estão em frutas como maçã e pera e nos adoçantes diet (sorbitol, xilitol). São laxantes e gasosos pra quem é sensível.",
+          body: "Polióis estão em frutas como maçã e pera e nos adoçantes diet (sorbitol, xilitol). Pra testar sem confundir com frutose, use couve-flor ou cogumelos — manitol puro.",
         },
         {
           heading: "Seu mapa está pronto",
           emoji: "🗺️",
-          body: "Ao fim de hoje você tem a lista completa: o que pode à vontade, o que com moderação, o que evitar. A descoberta acabou — agora é viver com leveza.",
+          body: "Ao fim de hoje, a primeira versão do seu mapa está pronta: você testou os grupos mais comuns. O que ficou de fora (e doses maiores dos outros) você testa na Manutenção, com calma — o mapa é vivo, não definitivo.",
         },
       ],
       quiz: [
@@ -888,18 +887,18 @@ export const DAYS: DayContent[] = [
           question: "Qual o truque pra tolerar melhor as leguminosas?",
           options: [
             "Comer cruas",
-            "Bem cozidas e em porção pequena",
             "Comer em jejum",
+            "Bem cozidas e em porção pequena",
           ],
-          correctIndex: 1,
+          correctIndex: 2,
           explain:
             "Isso! Bem cozidas e em pouca quantidade, muita gente tolera o GOS sem inchar.",
         },
       ],
     },
     checklist: [
-      "TESTE LEGUMINOSA: 2–3 colheres de feijão bem cozido OU",
-      "TESTE POLIÓIS: ½ maçã ou pera (escolha um teste hoje)",
+      "Escolha UM teste hoje — LEGUMINOSA: 2–3 colheres de feijão bem cozido; ou POLIÓIS: 1 xícara de couve-flor cozida ou cogumelos refogados",
+      "Se ontem você reagiu forte, espere 1 dia com a base calma antes deste teste",
       "Observe e registre a reação (1 a 5)",
       "Reúna seus resultados da semana de reintrodução",
       "Beba água e caminhe",
@@ -923,7 +922,7 @@ export const DAYS: DayContent[] = [
       lanche: ["½ maçã (se for o teste de polióis)", "Castanhas", "Kiwi"],
     },
     completionMessage:
-      "Dia 11 ✅ Reintrodução completa! Agora você tem o seu mapa de tolerância.",
+      "Dia 11 ✅ Primeira rodada de testes completa! Seu mapa de tolerância já começou — e segue ficando mais preciso.",
   },
 
   /* ----------------------------- REPAIR (12–14) ----------------------------- */
@@ -979,7 +978,7 @@ export const DAYS: DayContent[] = [
     ],
     meals: {
       cafe: [
-        "Ovos + abacate (½) + chá",
+        "Ovos + abacate (¼ pequeno) + chá",
         "Iogurte (tolerado) + chia + morango",
         "Crepioca + sementes de abóbora",
       ],
@@ -990,7 +989,7 @@ export const DAYS: DayContent[] = [
       ],
       jantar: [
         "Sopa nutritiva de legumes com frango desfiado",
-        "Peixe + purê de batata-doce",
+        "Peixe + purê de batata-doce (porção pequena)",
         "Omelete + salada verde + azeite",
       ],
       lanche: ["Sementes de abóbora", "Castanha-do-pará (2–3)", "Iogurte (tolerado)"],
@@ -1031,10 +1030,10 @@ export const DAYS: DayContent[] = [
           question: "Saindo da fase low FODMAP, como introduzir fermentados?",
           options: [
             "Tudo de uma vez pra acelerar",
-            "Aos poucos, em porções pequenas",
             "Nunca mais comer fermentados",
+            "Aos poucos, em porções pequenas",
           ],
-          correctIndex: 1,
+          correctIndex: 2,
           explain:
             "Isso! Devagar — reequilibrar é construção, não choque.",
         },
@@ -1061,7 +1060,7 @@ export const DAYS: DayContent[] = [
       jantar: [
         "Sopa de abóbora + frango",
         "Omelete + salada verde",
-        "Salmão + purê de batata-doce",
+        "Salmão + purê de batata-doce (porção pequena)",
       ],
       lanche: ["Banana com chia", "Castanhas", "Iogurte tolerado"],
     },
@@ -1101,11 +1100,11 @@ export const DAYS: DayContent[] = [
         {
           question: "Depois dos 14 dias, o que impede de voltar a inchar?",
           options: [
-            "Cortar tudo de novo",
             "Manter o ritmo (manutenção) com escolhas conscientes",
+            "Cortar tudo de novo",
             "Nada, o problema sempre volta",
           ],
-          correctIndex: 1,
+          correctIndex: 0,
           explain:
             "Isso! Manutenção é o que segura a leveza — e você não está sozinha nisso.",
         },
@@ -1134,7 +1133,7 @@ export const DAYS: DayContent[] = [
         "Sopa de legumes + proteína",
         "Omelete + salada verde",
       ],
-      lanche: ["Suas frutas e castanhas toleradas", "Iogurte tolerado", "Gelatina sem açúcar"],
+      lanche: ["Suas frutas e castanhas toleradas", "Iogurte tolerado", "Gelatina incolor com suco de uva natural"],
     },
     completionMessage:
       "DESAFIO CONCLUÍDO 🏆🗺️ Você tem seu mapa. Agora é manter a leveza — e a gente segue com você.",
@@ -1186,9 +1185,9 @@ export const DAYS: DayContent[] = [
       "Registre sono e estresse hoje",
     ],
     meals: {
-      cafe: ["Ovos + abacate (⅛) + chá", "Iogurte tolerado + aveia + frutas low FODMAP", "Crepioca + chá de hortelã"],
+      cafe: ["Ovos + abacate (¼ pequeno) + chá", "Iogurte tolerado + aveia + frutas low FODMAP", "Crepioca + chá de hortelã"],
       almoco: ["Proteína + arroz + legumes tolerados", "Peixe + batata + salada", "Frango + quinoa + abobrinha"],
-      jantar: ["Sopa leve de legumes + proteína", "Salmão + purê de batata-doce", "Omelete + salada verde"],
+      jantar: ["Sopa leve de legumes + proteína", "Salmão + purê de batata-doce (porção pequena)", "Omelete + salada verde"],
       lanche: ["Frutas toleradas", "Castanhas", "Iogurte tolerado"],
     },
     completionMessage: "Dia 15 ✅ Começou o ajuste fino do seu corpo todo.",
@@ -1204,7 +1203,7 @@ export const DAYS: DayContent[] = [
         {
           heading: "A faxina da madrugada",
           emoji: "🧹",
-          body: "Enquanto você dorme, o intestino faz movimentos de limpeza (o complexo motor migratório) que “varrem” restos e bactérias. É manutenção noturna.",
+          body: "Entre as refeições — e principalmente na madrugada, quando você fica horas sem comer — o intestino liga um modo faxina (o complexo motor migratório) que varre restos e bactérias. Dormir bem e jantar cedo dão espaço pra essa limpeza acontecer.",
         },
         {
           heading: "Sono ruim, faxina travada",
@@ -1221,11 +1220,11 @@ export const DAYS: DayContent[] = [
         {
           question: "Por que o sono ajuda o intestino?",
           options: [
-            "Não ajuda",
             "Dormindo, o intestino faz uma “faxina” que varre restos",
+            "Não ajuda",
             "Porque você para de comer",
           ],
-          correctIndex: 1,
+          correctIndex: 0,
           explain:
             "Isso! Dormir bem libera a limpeza noturna do intestino.",
         },
@@ -1274,10 +1273,10 @@ export const DAYS: DayContent[] = [
           question: "Como a respiração lenta ajuda a digestão?",
           options: [
             "Não ajuda",
-            "Ativa o nervo vago e liga o “modo digestão”",
             "Faz emagrecer",
+            "Ativa o nervo vago e liga o “modo digestão”",
           ],
-          correctIndex: 1,
+          correctIndex: 2,
           explain:
             "Isso! Respirar devagar tira o corpo do alerta e liga a digestão.",
         },
@@ -1343,7 +1342,7 @@ export const DAYS: DayContent[] = [
     ],
     meals: {
       cafe: ["Panqueca de banana + ovo", "Ovos + tapioca + mamão", "Iogurte tolerado + aveia"],
-      almoco: ["Frango + arroz + abobrinha", "Peixe + batata-doce + salada", "Carne + quinoa + cenoura"],
+      almoco: ["Frango + arroz + abobrinha", "Peixe + batata-doce (½ xícara) + salada", "Carne + quinoa + cenoura"],
       jantar: ["Sopa + proteína", "Omelete + salada", "Peixe + legumes"],
       lanche: ["Banana", "Castanhas", "Kiwi"],
     },
@@ -1378,10 +1377,10 @@ export const DAYS: DayContent[] = [
           question: "Por que variar os alimentos tolerados é bom?",
           options: [
             "Pra comer menos",
-            "Porque a variedade fortalece e diversifica a microbiota",
             "Não faz diferença",
+            "Porque a variedade fortalece e diversifica a microbiota",
           ],
-          correctIndex: 1,
+          correctIndex: 2,
           explain:
             "Isso! Microbiota diversa = intestino mais forte.",
         },
@@ -1429,11 +1428,11 @@ export const DAYS: DayContent[] = [
         {
           question: "Manutenção é…",
           options: [
-            "Uma dieta restritiva pra sempre",
             "Uma rotina simples: o que cai bem + sono, movimento e calma",
+            "Uma dieta restritiva pra sempre",
             "Parar de se cuidar",
           ],
-          correctIndex: 1,
+          correctIndex: 0,
           explain:
             "Isso! Manutenção é rotina leve e consciente — não restrição.",
         },
@@ -1502,7 +1501,7 @@ export const DAYS: DayContent[] = [
       cafe: ["Seu café da manhã favorito do programa", "Ovos + tapioca + fruta", "Iogurte tolerado + aveia"],
       almoco: ["Seu prato-base de manutenção", "Peixe + batata + salada", "Frango + quinoa + legumes"],
       jantar: ["Algo leve que você ama", "Sopa + proteína", "Omelete + salada"],
-      lanche: ["Suas frutas e castanhas toleradas", "Iogurte tolerado", "Gelatina sem açúcar"],
+      lanche: ["Suas frutas e castanhas toleradas", "Iogurte tolerado", "Gelatina incolor com suco de uva natural"],
     },
     completionMessage:
       "21 DIAS 🌟 Você se transformou. Agora é manutenção — e a gente segue do seu lado.",

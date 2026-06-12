@@ -41,13 +41,20 @@ const TIER_KEYWORDS: Array<{ tier: Tier; test: RegExp; nome: string }> =
     )
   );
 
-// Versões seguras de gatilhos clássicos — não acusar a troca recomendada.
+// Versões seguras de gatilhos clássicos — não acusar a troca que o próprio
+// app recomenda (parmesão, pão de fermentação natural, pasta de amendoim…).
 const SAFE_EXCEPTIONS =
-  /(leite|iogurte|queijo|pao|p[ãa]o) (sem lactose|sem gluten|sem glúten|de coco|de amendoa|de amendoas|de amêndoas|de aveia|de arroz|de castanha|vegetal)/;
+  /(leite|iogurte|queijo|pao) (sem lactose|sem gluten|de coco|de amendoa|de amendoas|de aveia|de arroz|de castanha|vegetal)|parmesao|queijo curado|fermentacao natural|amendoim sem acucar/;
+
+// Itens "Calma" que viram gatilho em outra condição (ressalva do semáforo).
+const ATTENTION_EXCEPTIONS: Array<{ test: RegExp; nome: string }> = [
+  { test: /banana (bem )?madura/, nome: "Banana madura" },
+];
 
 // Gatilhos clássicos além do semáforo/analytics (testados no texto normalizado).
 const EXTRA_INFLAMA: Array<{ test: RegExp; nome: string }> = [
   { test: /pizza|salgado|refrigerante|cerveja|chiclete/, nome: "Esse item" },
+  { test: /gelatina (diet|zero|sem acucar)|adocante/, nome: "Adoçante" },
 ];
 
 /** Avalia o texto de uma refeição e devolve o feedback do chip. */
@@ -56,7 +63,9 @@ export function foodFeedback(descricao: string): FoodFeedback {
   const safe = SAFE_EXCEPTIONS.test(text);
 
   const hits = TIER_KEYWORDS.filter((k) => k.test.test(text));
-  const atencao = hits.find((h) => h.tier === "atencao");
+  const atencao =
+    hits.find((h) => h.tier === "atencao") ??
+    ATTENTION_EXCEPTIONS.find((e) => e.test.test(text));
   const calma = hits.find((h) => h.tier === "calma");
   // o semáforo (lista curada) tem precedência; FOOD_GROUPS/extras só entram
   // quando o semáforo não reconheceu nada — senão "iogurte" (Atenção) viraria

@@ -67,7 +67,7 @@ interface AppState {
   /** Conclui a Calmaria (respiração guiada) do dia: +1 semente uma vez por dia,
    *  conta como atividade (ofensiva/score). */
   completeCalmaria: () => Promise<{ alreadyDone: boolean }>;
-  completeDay: (day: number) => Promise<void>;
+  completeDay: (day: number) => Promise<{ blocked: boolean }>;
   addLog: (log: DailyLog) => Promise<void>;
   addPhoto: (dataUrl: string) => Promise<void>;
   removePhoto: (id: string) => Promise<void>;
@@ -102,6 +102,22 @@ let unsubscribeAuth: (() => void) | null = null;
 function uid(): string {
   if (typeof crypto !== "undefined" && crypto.randomUUID) return crypto.randomUUID();
   return `id_${Math.abs((Date.now() ^ (Math.floor(performance.now?.() ?? 0))) >>> 0)}`;
+}
+
+/** Aplica atividade na ofensiva + repõe 1 escudo a cada 7 dias seguidos (senão,
+ *  na Manutenção — o "para sempre" do app — escudo gasto nunca voltaria). */
+function touchStreak(d: AppData, today: string) {
+  const before = d.streak.current;
+  const sr = applyStreak(d.streak, today);
+  d.streak = sr.streak;
+  if (sr.shieldUsed) d.flags.shieldJustUsed = true;
+  if (
+    d.streak.current !== before &&
+    d.streak.current > 0 &&
+    d.streak.current % 7 === 0
+  ) {
+    d.streak = grantShield(d.streak, 1);
+  }
 }
 
 /** Dispara notificação local para conquistas recém-desbloqueadas (se ativadas). */
@@ -256,6 +272,8 @@ export const useAppStore = create<AppState>((set, get) => {
       // reescrever a assinatura na conta anon.
       unsubscribeStatus?.();
       unsubscribeStatus = null;
+      // o device não pode continuar disparando nudges da conta que saiu
+      await cancelAllNudges();
       await authService.signOut();
       await subscriptionService.signOut();
       repository.setNamespace("anon");
@@ -263,6 +281,7 @@ export const useAppStore = create<AppState>((set, get) => {
     },
 
     deleteAccount: async () => {
+      await cancelAllNudges();
       await authService.deleteAccount();
       await repository.clear();
       repository.setNamespace("anon");
@@ -316,6 +335,8 @@ export const useAppStore = create<AppState>((set, get) => {
         if (!d.lessonsDone[day]) {
           d.lessonsDone[day] = true;
           d.seeds += SEEDS.lesson;
+          // a aula é 1 dos 3 passos do dia — conta como atividade da ofensiva
+          touchStreak(d, todayKey());
         }
       });
       return { alreadyDone, seeds: alreadyDone ? 0 : SEEDS.lesson };
@@ -331,9 +352,7 @@ export const useAppStore = create<AppState>((set, get) => {
         d.flags[key] = true;
         d.seeds += SEEDS.calmaria;
         // conta como atividade do dia (ofensiva perdoável + score)
-        const sr = applyStreak(d.streak, today);
-        d.streak = sr.streak;
-        if (sr.shieldUsed) d.flags.shieldJustUsed = true;
+        touchStreak(d, today);
         d.scores = recomputedScores(d, today, { otherActivity: true });
         const { list, newlyUnlocked } = reconcileAchievements(d, today);
         d.achievements = list;
@@ -345,14 +364,29 @@ export const useAppStore = create<AppState>((set, get) => {
 
     completeDay: async (day) => {
       let novas: AchievementDef[] = [];
+      let blocked = false;
       await get().update((d) => {
         if (!d.progress) return;
         const today = todayKey();
-        if (!d.progress.completedDays.includes(day)) {
+        const isNew = !d.progress.completedDays.includes(day);
+        // 1 conclusão por dia-calendário: o programa é diário de verdade —
+        // sem isso, dá pra "fechar" os 14 dias em 2 minutos de cliques.
+        const otherDayClosedToday = Object.entries(
+          d.progress.completedAt
+        ).some(([k, date]) => Number(k) !== day && date === today);
+        if (isNew && otherDayClosedToday) {
+          blocked = true;
+          return;
+        }
+        if (isNew) {
           d.progress.completedDays.push(day);
           d.progress.completedAt[day] = today;
           d.seeds += SEEDS.completeDay;
-          if (day === 7 || day === 14 || day === 21) d.seeds += SEEDS.milestone;
+          if (day === 7 || day === 14 || day === 21) {
+            d.seeds += SEEDS.milestone;
+            // marcos repõem um escudo (só na 1ª conclusão)
+            d.streak = grantShield(d.streak, 1);
+          }
         }
         // avança para o próximo dia (se houver)
         const total = totalDays(d.progress.challengeType);
@@ -364,11 +398,7 @@ export const useAppStore = create<AppState>((set, get) => {
           ).phase;
         }
         // ofensiva (perdoável: escudo cobre 1 dia perdido)
-        const sr = applyStreak(d.streak, today);
-        d.streak = sr.streak;
-        if (sr.shieldUsed) d.flags.shieldJustUsed = true;
-        // marcos repõem um escudo
-        if (day === 7 || day === 14 || day === 21) d.streak = grantShield(d.streak, 1);
+        touchStreak(d, today);
         // Índice Intestinal: recomputa o ponto do dia (motor da Fase 8)
         d.scores = recomputedScores(d, today);
         // conquistas
@@ -377,13 +407,19 @@ export const useAppStore = create<AppState>((set, get) => {
         novas = newlyUnlocked;
       });
       notifyAchievements(novas);
+      // nudges falam "Seu Dia N te espera" — reagenda com o dia novo
+      if (!blocked && get().data.flags.notifications) {
+        await scheduleRetentionNudges(get().data.progress?.currentDay ?? 1);
+      }
+      return { blocked };
     },
 
     addLog: async (log) => {
       let novas: AchievementDef[] = [];
       const today = todayKey();
-      const hadLog = get().data.logs.some((l) => l.date === log.date);
       await get().update((d) => {
+        // hadLog DENTRO do mutator: toque duplo no salvar não pode dar 2 sementes
+        const hadLog = d.logs.some((l) => l.date === log.date);
         // substitui o registro do dia, se já existir
         d.logs = [...d.logs.filter((l) => l.date !== log.date), log];
         // check-in dá semente uma vez por dia
@@ -391,9 +427,7 @@ export const useAppStore = create<AppState>((set, get) => {
         // a ofensiva só conta atividade de HOJE — editar um dia passado não
         // deve regredir nem inflar a streak atual.
         if (log.date === today) {
-          const sr = applyStreak(d.streak, today);
-          d.streak = sr.streak;
-          if (sr.shieldUsed) d.flags.shieldJustUsed = true;
+          touchStreak(d, today);
         }
         // Índice Intestinal: recomputa o ponto do dia (motor da Fase 8)
         d.scores = recomputedScores(d, log.date);
@@ -467,9 +501,7 @@ export const useAppStore = create<AppState>((set, get) => {
       const today = todayKey();
       await get().update((d) => {
         d.flags[`mc:${challengeId}:${day}`] = true;
-        const sr = applyStreak(d.streak, today);
-        d.streak = sr.streak;
-        if (sr.shieldUsed) d.flags.shieldJustUsed = true;
+        touchStreak(d, today);
         // concluir um dia de desafio mensal conta como atividade do dia.
         d.scores = recomputedScores(d, today, { otherActivity: true });
         const { list, newlyUnlocked } = reconcileAchievements(d, today);

@@ -121,9 +121,9 @@ export const RECIPES: Recipe[] = [
     emoji: "🍲",
     ingredientes: [
       "Ossos com cartilagem (boi ou frango)",
-      "1 cenoura e 1 talo de salsão",
+      "1 cenoura e ½ talo de salsão (opcional)",
       "Gengibre, sal e ervas",
-      "Splash de vinagre (ajuda a extrair os nutrientes)",
+      "Um fio de vinagre (ajuda a extrair os nutrientes)",
     ],
     modo: [
       "Cubra os ossos com água, junte o vinagre e os vegetais.",
@@ -291,7 +291,7 @@ export const RECIPES: Recipe[] = [
     ],
   },
   {
-    id: "purê-mandioquinha",
+    id: "pure-mandioquinha",
     nome: "Purê de mandioquinha",
     phase: "Repair",
     tipo: "Jantar",

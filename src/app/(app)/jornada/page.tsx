@@ -1,21 +1,27 @@
 "use client";
 
 import Link from "next/link";
-import { Lock, Check, Sparkles, Trophy, Crown } from "lucide-react";
+import { Lock, Check, Sparkles, Trophy } from "lucide-react";
 import { Badge, ProgressBar } from "@/components/ui";
 import { useAppStore } from "@/store/useAppStore";
 import { phasesFor, totalDays } from "@/lib/journey";
 import { cn } from "@/lib/cn";
 
-const FREE_DAYS = 3;
-
 export default function Jornada() {
   const progress = useAppStore((s) => s.data.progress);
-  const isPremium = useAppStore((s) => s.data.subscription.isPremium);
 
-  const challenge = progress?.challengeType ?? "main14";
-  const current = progress?.currentDay ?? 1;
   const completed = progress?.completedDays ?? [];
+  // Na Manutenção mostramos o programa que ela DE FATO fez (senão a página
+  // exibiria "14 de 21 · 67%" para sempre, com challengeType sobrescrito).
+  const maintenance = progress?.challengeType === "maintenance";
+  const challenge = maintenance
+    ? Math.max(0, ...completed) > 14
+      ? "reset21"
+      : "main14"
+    : (progress?.challengeType ?? "main14");
+  const current = maintenance
+    ? Math.max(1, ...completed)
+    : (progress?.currentDay ?? 1);
   const total = totalDays(challenge);
   const totalLabel = Number.isFinite(total) ? total : 21;
   const phases = phasesFor(challenge);
@@ -25,7 +31,11 @@ export default function Jornada() {
     <div className="space-y-6">
       <header className="pt-5">
         <p className="text-xs font-semibold uppercase tracking-wide text-ink-faint">
-          {challenge === "reset21" ? "Reset Profundo" : "Desafio Desincha"}
+          {maintenance
+            ? "Programa concluído · Modo Manutenção"
+            : challenge === "reset21"
+              ? "Reset Profundo"
+              : "Desafio Desincha"}
         </p>
         <h1 className="font-display text-[1.75rem] font-semibold tracking-tight text-ink">
           Sua jornada de {totalLabel} dias
@@ -55,9 +65,7 @@ export default function Jornada() {
               const done = completed.includes(d);
               const isCurrent = d === current && !done;
               const locked = d > current;
-              // dias do programa completo são premium para quem não assinou
-              const premiumLocked = !isPremium && d > FREE_DAYS && !done;
-              const accessible = !locked; // dia premium acessível abre o paywall
+              const accessible = !locked;
               const milestone = d === 7 || d === 14 || d === 21;
 
               const inner = (
@@ -83,8 +91,6 @@ export default function Jornada() {
                       <Check className="size-5" strokeWidth={2.6} />
                     ) : locked ? (
                       <Lock className="size-4" />
-                    ) : premiumLocked ? (
-                      <Crown className="size-4 text-gold" />
                     ) : (
                       d
                     )}
@@ -104,13 +110,11 @@ export default function Jornada() {
                     <p className="truncate text-sm text-ink-soft">
                       {done
                         ? "Concluído"
-                        : premiumLocked
-                          ? "Conteúdo premium · assine para abrir"
-                          : isCurrent
-                            ? "Seu dia de hoje · toque para abrir"
-                            : milestone
-                              ? "Marco a desbloquear"
-                              : "A desbloquear"}
+                        : isCurrent
+                          ? "Seu dia de hoje · toque para abrir"
+                          : milestone
+                            ? "Marco a desbloquear"
+                            : "A desbloquear"}
                     </p>
                   </div>
                   {isCurrent && (

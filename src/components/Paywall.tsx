@@ -90,7 +90,7 @@ export function Paywall({
           <Crown className="size-7" />
         </div>
         <h1 className="mt-5 font-display text-[2rem] font-semibold leading-tight tracking-tight text-ink">
-          Desbloqueie sua leveza
+          Sua assinatura Desinflama
         </h1>
         <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
           {reason ??

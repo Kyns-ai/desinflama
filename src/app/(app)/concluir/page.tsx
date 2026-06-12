@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, Infinity as InfinityIcon, Rocket } from "lucide-react";
@@ -11,10 +11,25 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function Concluir() {
   const router = useRouter();
+  const ready = useAppStore((s) => s.ready);
   const challenge = useAppStore((s) => s.data.progress?.challengeType);
+  const completedDays = useAppStore(
+    (s) => s.data.progress?.completedDays ?? null
+  );
   const startResetProfundo = useAppStore((s) => s.startResetProfundo);
   const enterMaintenance = useAppStore((s) => s.enterMaintenance);
   const [busy, setBusy] = useState<string | null>(null);
+
+  // Esta tela é só para quem FECHOU o programa — aberta antes da hora, ela
+  // afirmaria uma conclusão falsa e a Manutenção (irreversível) abandonaria
+  // a jornada no meio.
+  const earned =
+    (challenge === "main14" && (completedDays?.includes(14) ?? false)) ||
+    (challenge === "reset21" && (completedDays?.includes(21) ?? false));
+  useEffect(() => {
+    if (ready && !earned && !busy) router.replace("/inicio");
+  }, [ready, earned, busy, router]);
+  if (!earned) return null;
 
   const canReset = challenge === "main14";
 

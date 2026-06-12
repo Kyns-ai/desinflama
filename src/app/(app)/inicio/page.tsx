@@ -20,6 +20,7 @@ import {
   ArrowRight,
   Sparkles,
   UtensilsCrossed,
+  Trophy,
   X,
   type LucideIcon,
 } from "lucide-react";
@@ -122,14 +123,26 @@ export default function Inicio() {
   const [busy, setBusy] = useState(false);
   const [levelUp, setLevelUp] = useState<GardenLevel | null>(null);
 
+  // 1 conclusão por dia-calendário: se outro dia já foi fechado hoje, o
+  // próximo abre amanhã (sem isso, o programa de 14 dias vira 14 cliques)
+  const closedTodayAlready = Object.entries(
+    progress?.completedAt ?? {}
+  ).some(([k, date]) => Number(k) !== day && date === today);
+
+  // fim do programa sem próximo passo escolhido → não pode virar beco sem saída
+  const programDone =
+    (challenge === "main14" || challenge === "reset21") &&
+    (progress?.completedDays.includes(totalLabel) ?? false);
+
   async function concluirDia() {
     setBusy(true);
     const before = useAppStore.getState().data.seeds;
-    await completeDay(day);
+    const { blocked } = await completeDay(day);
+    setBusy(false);
+    if (blocked) return;
     const after = useAppStore.getState().data.seeds;
     setLevelUp(leveledUp(before, after));
     void haptic("success");
-    setBusy(false);
     setCelebrating(true);
   }
 
@@ -187,6 +200,30 @@ export default function Inicio() {
       {/* Faixa da semana */}
       <WeekStrip day={day} total={totalLabel} completed={progress?.completedDays ?? []} />
 
+      {/* Programa fechado sem próximo passo escolhido → caminho pra /concluir
+          (sem isso, quem sai da celebração nunca mais acha Reset/Manutenção) */}
+      {programDone && (
+        <Link href="/concluir" className="block">
+          <Card
+            elevation="lift"
+            className="flex items-center gap-4 border border-gold/30 bg-gold-tint/40 transition-transform active:scale-[0.99]"
+          >
+            <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-gold text-white">
+              <Trophy className="size-6" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <h3 className="font-semibold tracking-tight text-ink">
+                Você fechou o programa 🎉
+              </h3>
+              <p className="text-sm text-ink-soft">
+                Escolha seu próximo passo: Reset Profundo ou Manutenção
+              </p>
+            </div>
+            <ChevronRight className="size-5 shrink-0 text-ink-faint" />
+          </Card>
+        </Link>
+      )}
+
       <ShieldSavedBanner />
       <HonestWelcome />
       <WeeklyRecapBanner />
@@ -236,7 +273,13 @@ export default function Inicio() {
             ))}
           </ul>
 
-          {!dayCompleted && (
+          {!dayCompleted && closedTodayAlready && (
+            <div className="flex items-center justify-center gap-2 p-4 text-center text-sm text-ink-soft">
+              Um dia por dia 💛 O Dia {day} abre pra concluir amanhã — hoje
+              você já fechou o seu.
+            </div>
+          )}
+          {!dayCompleted && !closedTodayAlready && (
             <div className="p-4">
               <Button
                 fullWidth
@@ -829,6 +872,7 @@ function MaintenanceHome({
   flags: Record<string, boolean>;
   score: { value: number; delta: number };
 }) {
+  const calmariaDone = !!flags[`calmaria:${todayKey()}`];
   return (
     <div className="space-y-5">
       <header className="flex items-center justify-between pt-5">
@@ -847,6 +891,9 @@ function MaintenanceHome({
           </span>
         </div>
       </header>
+
+      <ShieldSavedBanner />
+      <WeeklyRecapBanner />
 
       <Card elevation="card" className="bg-gradient-to-br from-sage-deep to-sage-dark text-white">
         <Badge tone="gold" className="bg-white/20 text-white">
@@ -871,6 +918,47 @@ function MaintenanceHome({
           <ChevronRight className="size-5 shrink-0 text-ink-faint" />
         </Card>
       </Link>
+
+      {/* Calmaria continua existindo na Manutenção (era o único link do app) */}
+      <Link href="/calmaria" className="block">
+        <Card
+          elevation="soft"
+          className={cn(
+            "flex items-center gap-4 transition-transform active:scale-[0.99]",
+            calmariaDone
+              ? "bg-sage-tint/40"
+              : "border border-sage/25 bg-gradient-to-br from-sage-tint/50 to-cream"
+          )}
+        >
+          <span
+            className={cn(
+              "grid size-12 shrink-0 place-items-center rounded-2xl",
+              calmariaDone ? "bg-sage text-white" : "bg-sage-tint text-sage-deep"
+            )}
+          >
+            {calmariaDone ? (
+              <Check className="size-6" strokeWidth={3} />
+            ) : (
+              <Wind className="size-6" />
+            )}
+          </span>
+          <div className="min-w-0 flex-1">
+            <h3 className="font-semibold tracking-tight text-ink">
+              Calmaria de hoje
+            </h3>
+            <p className="text-sm text-ink-soft">
+              {calmariaDone
+                ? "Feita — seu intestino agradece 💚"
+                : "1 min de respiração que acalma o intestino"}
+            </p>
+          </div>
+          <ChevronRight className="size-5 shrink-0 text-ink-faint" />
+        </Card>
+      </Link>
+
+      <CicloCard />
+
+      <ScoreCard score={score} />
 
       <div>
         <h2 className="mb-3 text-base font-semibold tracking-tight text-ink">

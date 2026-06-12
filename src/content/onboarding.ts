@@ -114,7 +114,7 @@ export const BLOAT_PROFILES: Record<BloatType, BloatProfile> = {
     tagline: "Seu corpo está segurando líquido.",
     cause:
       "Excesso de sódio, oscilações hormonais e um intestino irritado fazem o corpo reter água. A barriga incha e fica com aquela sensação pesada.",
-    plan: "Vamos reduzir os alimentos que prendem líquido, hidratar do jeito certo e reequilibrar — você sente a leveza já nos primeiros dias.",
+    plan: "Vamos reduzir os alimentos que prendem líquido, hidratar do jeito certo e reequilibrar — muita gente sente a diferença já na primeira semana.",
     tone: "sky",
     emoji: "💧",
   },

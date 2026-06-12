@@ -82,6 +82,10 @@ export default function Jardim() {
             <span className="font-semibold text-sage-deep">+{SEEDS.completeDay} 🌱</span>
           </li>
           <li className="flex justify-between">
+            <span>🌬️ Calmaria do dia</span>
+            <span className="font-semibold text-sage-deep">+{SEEDS.calmaria} 🌱</span>
+          </li>
+          <li className="flex justify-between">
             <span>🏆 Bater um marco (Dia 7, 14, 21)</span>
             <span className="font-semibold text-sage-deep">+{SEEDS.milestone} 🌱</span>
           </li>

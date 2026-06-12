@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Check, Lock, ChevronDown } from "lucide-react";
+import { ArrowLeft, Check, Lock, ChevronDown, RotateCcw, Trophy } from "lucide-react";
 import { Card, Button, ProgressBar, Badge } from "@/components/ui";
 import { useAppStore } from "@/store/useAppStore";
 import { getChallenge } from "@/content/challenges";
@@ -15,6 +15,7 @@ export function ChallengeView({ id }: { id: string }) {
   const router = useRouter();
   const flags = useAppStore((s) => s.data.flags);
   const completeChallengeDay = useAppStore((s) => s.completeChallengeDay);
+  const update = useAppStore((s) => s.update);
 
   const challenge = getChallenge(id);
   const [open, setOpen] = useState<number | null>(null);
@@ -33,6 +34,7 @@ export function ChallengeView({ id }: { id: string }) {
 
   const isDone = (day: number) => !!flags[`mc:${challenge.id}:${day}`];
   const doneCount = challenge.dias.filter((d) => isDone(d.day)).length;
+  const allDone = doneCount === challenge.dias.length;
   const nextDay =
     challenge.dias.find((d) => !isDone(d.day))?.day ?? challenge.dias.length;
 
@@ -41,6 +43,12 @@ export function ChallengeView({ id }: { id: string }) {
     await completeChallengeDay(challenge!.id, day);
     setBusy(null);
     setOpen(null);
+  }
+
+  async function refazer() {
+    await update((d) => {
+      for (const dia of challenge!.dias) delete d.flags[`mc:${challenge!.id}:${dia.day}`];
+    });
   }
 
   return (
@@ -79,6 +87,29 @@ export function ChallengeView({ id }: { id: string }) {
           <ProgressBar value={doneCount / challenge.dias.length} tone="coral" />
         </div>
       </Card>
+
+      {/* Desafio fechado merece celebração — e pode ser refeito */}
+      {allDone && (
+        <Card
+          elevation="lift"
+          className="flex items-center gap-4 border border-gold/30 bg-gold-tint/40"
+        >
+          <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-gold text-white">
+            <Trophy className="size-6" />
+          </span>
+          <div className="min-w-0 flex-1">
+            <h3 className="font-semibold tracking-tight text-ink">
+              Desafio concluído 🎉
+            </h3>
+            <p className="text-sm text-ink-soft">
+              {challenge.dias.length} dias fechados. Quer rodar de novo?
+            </p>
+          </div>
+          <Button variant="secondary" size="sm" onClick={refazer}>
+            <RotateCcw className="size-4" /> Refazer
+          </Button>
+        </Card>
+      )}
 
       <div className="space-y-2">
         {challenge.dias.map((d) => {

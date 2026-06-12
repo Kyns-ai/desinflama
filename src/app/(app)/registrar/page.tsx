@@ -51,11 +51,19 @@ export default function Registrar() {
   const logs = useAppStore((s) => s.data.logs);
   const currentDay = useAppStore((s) => s.data.progress?.currentDay ?? 1);
 
-  const [meals, setMeals] = useState<MealEntry[]>([]);
+  // registrar de novo EDITA o dia (addLog substitui o log da data) — sem
+  // pré-carregar, o segundo registro apagaria as refeições da manhã.
+  const todayLog = logs.find((l) => l.date === todayKey()) ?? null;
+  const [meals, setMeals] = useState<MealEntry[]>(() => todayLog?.meals ?? []);
   const [mealType, setMealType] = useState<MealType>(defaultMeal);
   const [mealText, setMealText] = useState("");
-  const [valores, setValores] = useState<Record<string, number>>({});
-  const [humor, setHumor] = useState<number | null>(null);
+  const [valores, setValores] = useState<Record<string, number>>(
+    () => ({ ...(todayLog?.symptoms ?? {}) }) as Record<string, number>
+  );
+  const [humor, setHumor] = useState<number | null>(() => todayLog?.mood ?? null);
+  const [hidratacao, setHidratacao] = useState<boolean>(
+    () => todayLog?.hydrationOk ?? false
+  );
   const [salvo, setSalvo] = useState(false);
   const [insight, setInsight] = useState("");
   const [feedback, setFeedback] = useState<FoodFeedback | null>(null);
@@ -94,6 +102,7 @@ export default function Registrar() {
       meals,
       symptoms: valores as Partial<Record<SymptomKey, number>>,
       mood: (humor as Mood) ?? null,
+      hydrationOk: hidratacao,
       createdAt: new Date().toISOString(),
     };
     const msg = logInsight([...logs.filter((l) => l.date !== hoje), log], log);
@@ -123,14 +132,9 @@ export default function Registrar() {
         <Button
           variant="secondary"
           className="mt-8"
-          onClick={() => {
-            setSalvo(false);
-            setMeals([]);
-            setValores({});
-            setHumor(null);
-          }}
+          onClick={() => setSalvo(false)}
         >
-          Registrar de novo
+          Completar o registro de hoje
         </Button>
       </div>
     );
@@ -293,6 +297,32 @@ export default function Registrar() {
             </div>
           ))}
         </div>
+      </Card>
+
+      {/* Hidratação */}
+      <Card elevation="card">
+        <button
+          onClick={() => setHidratacao((v) => !v)}
+          className="flex w-full items-center gap-3 text-left"
+          aria-pressed={hidratacao}
+        >
+          <span
+            className={cn(
+              "grid size-7 shrink-0 place-items-center rounded-lg border-2 transition-all",
+              hidratacao ? "border-sage bg-sage text-white" : "border-line"
+            )}
+          >
+            {hidratacao && <Check className="size-4" strokeWidth={3} />}
+          </span>
+          <span className="flex-1">
+            <span className="block font-semibold tracking-tight text-ink">
+              Bebi ~2L de água hoje
+            </span>
+            <span className="text-sm text-ink-soft">
+              Hidratação conta pro seu Índice 💧
+            </span>
+          </span>
+        </button>
       </Card>
 
       {/* Humor */}

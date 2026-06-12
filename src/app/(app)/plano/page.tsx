@@ -75,7 +75,7 @@ export default function Plano() {
             </span>
           </div>
           <Badge tone={subscription.isPremium ? "sage" : "neutral"}>
-            {subscription.isPremium ? "Ativo" : "Grátis"}
+            {subscription.isPremium ? "Ativo" : "Sem assinatura ativa"}
           </Badge>
         </div>
         {renew && (

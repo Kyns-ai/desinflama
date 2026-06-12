@@ -41,6 +41,7 @@ export const SEMAFORO: SemaforoTier[] = [
       { nome: "Aveia sem glúten", emoji: "🥣" },
       { nome: "Espinafre", emoji: "🌿" },
       { nome: "Queijo curado", emoji: "🧀" },
+      { nome: "Iogurte sem lactose", emoji: "🥛" },
       { nome: "Azeite", emoji: "🫒" },
     ],
   },
@@ -53,7 +54,6 @@ export const SEMAFORO: SemaforoTier[] = [
       { nome: "Brócolis", emoji: "🥦" },
       { nome: "Batata-doce", emoji: "🍠" },
       { nome: "Milho", emoji: "🌽" },
-      { nome: "Iogurte", emoji: "🥛" },
       { nome: "Café", emoji: "☕" },
       { nome: "Chocolate amargo", emoji: "🍫" },
       { nome: "Grão-de-bico (lavado)", emoji: "🫘" },
@@ -62,7 +62,7 @@ export const SEMAFORO: SemaforoTier[] = [
   {
     tier: "inflama",
     label: "Inflama",
-    desc: "Alto FODMAP — gatilhos comuns. Pausar agora ajuda a observar; voltam na reintrodução.",
+    desc: "Alto FODMAP — fermentam forte e estufam a maioria. Pausar agora ajuda a observar; voltam na reintrodução.",
     foods: [
       { nome: "Cebola", emoji: "🧅" },
       { nome: "Alho", emoji: "🧄" },
@@ -71,7 +71,7 @@ export const SEMAFORO: SemaforoTier[] = [
       { nome: "Pera", emoji: "🍐" },
       { nome: "Mel", emoji: "🍯" },
       { nome: "Feijão/lentilha", emoji: "🫘" },
-      { nome: "Leite", emoji: "🥛" },
+      { nome: "Leite/iogurte comum", emoji: "🥛" },
       { nome: "Melancia", emoji: "🍉" },
       { nome: "Manga", emoji: "🥭" },
       { nome: "Adoçante poliól", emoji: "🚫" },

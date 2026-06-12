@@ -75,7 +75,7 @@ export default function Perfil() {
       : subscription.plan === "monthly"
         ? "Mensal"
         : "Premium"
-    : "Avaliação";
+    : "Sem plano ativo";
 
   async function handleSignOut() {
     await signOut();
@@ -102,23 +102,6 @@ export default function Perfil() {
         </div>
         <Badge tone="gold">{planoLabel}</Badge>
       </Card>
-
-      {/* Ancoragem do anual */}
-      <Link href="/paywall" className="block">
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-sage-deep to-sage-dark p-5 text-white shadow-[var(--shadow-sage)] transition-transform active:scale-[0.99]">
-          <div className="flex items-center gap-2">
-            <Crown className="size-5" />
-            <span className="font-semibold">Desinflama Anual</span>
-          </div>
-          <p className="mt-1.5 text-[15px] text-white/85">
-            Manutenção é o que impede de voltar a inchar. Garanta seu plano
-            anual e economize.
-          </p>
-          <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold">
-            Ver planos <ChevronRight className="size-4" />
-          </span>
-        </div>
-      </Link>
 
       {GRUPOS.map((g) => (
         <section key={g.titulo}>

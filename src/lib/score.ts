@@ -37,12 +37,14 @@ export function currentScore(data: AppData): { value: number; delta: number } {
   );
 }
 
-/** Score estacionado/caindo por 3+ dias → dispara o slot de upsell (Acompanhamento).
- *  Ver Fase 9/10. */
+/** Score estacionado/caindo por 4+ pontos → dispara o slot de upsell
+ *  (Acompanhamento). Score no teto NÃO é estagnação — sem isso, a usuária
+ *  mais engajada (100 cravado) veria "seu padrão pede um olhar de perto". */
 export function isScoreStalled(scores: GutScorePoint[]): boolean {
-  if (scores.length < 3) return false;
-  const last3 = scores.slice(-3);
-  return last3.every((p) => p.delta <= 0);
+  if (scores.length < 4) return false;
+  const last = scores.slice(-4);
+  if (last[last.length - 1].value >= 90) return false;
+  return last.every((p) => p.delta <= 0);
 }
 
 /** Microcopy que varia com o estado do score (acolhedora, sempre próximo passo). */

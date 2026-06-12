@@ -9,7 +9,8 @@ export type FodmapGroup =
   | "GOS"
   | "Lactose"
   | "Frutose"
-  | "Polióis";
+  | "Polióis"
+  | "Frutose e polióis";
 
 export interface TriggerFood {
   nome: string;
@@ -40,7 +41,7 @@ export const TRIGGER_FOODS: TriggerFood[] = [
   },
   {
     nome: "Maçã e pera",
-    grupo: "Frutose",
+    grupo: "Frutose e polióis",
     porque:
       "Frutas saudáveis, sim — mas ricas em frutose e sorbitol, que boa parte das pessoas absorve mal e fermenta.",
     troca: "Mamão, kiwi, laranja, morango, uva",
@@ -80,9 +81,9 @@ export const TRIGGER_FOODS: TriggerFood[] = [
   },
   {
     nome: "Suco verde com maçã e couve",
-    grupo: "Frutanos",
+    grupo: "Frutose",
     porque:
-      "Vendido como detox, mas concentra frutose (maçã) e frutanos (couve/folhas) sem a fibra mastigada que ajuda a tolerar.",
+      "Vendido como “detox”, mas concentra a frutose e o sorbitol da maçã em forma líquida, que chega rápido ao intestino — a couve não é o problema.",
     troca: "Água com gengibre e limão, ou suco de fruta low FODMAP coado",
     emoji: "🥬",
   },
@@ -115,7 +116,7 @@ export const TRIGGER_FOODS: TriggerFood[] = [
     grupo: "Polióis",
     porque:
       "Em pouca quantidade é tranquilo, mas meio abacate ou mais traz sorbitol suficiente pra estufar quem é sensível.",
-    troca: "Até ⅛ de abacate por vez; azeite e castanhas como gordura boa",
+    troca: "Até ¼ de abacate pequeno por vez; azeite e castanhas como gordura boa",
     emoji: "🥑",
   },
 ];

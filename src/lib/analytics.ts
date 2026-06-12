@@ -89,7 +89,8 @@ export const FOOD_GROUPS: FoodGroup[] = [
   { label: "trigo/glúten", test: /p[ãa]o|trigo|macarr|massa|biscoito|bolacha/i },
   { label: "cebola ou alho", test: /cebola|alho/i },
   { label: "leguminosa", test: /feij[ãa]o|gr[ãa]o[- ]?de[- ]?bico|lentilha|soja/i },
-  { label: "adoçante/diet", test: /adoçante|diet|sem açúcar|light/i },
+  // "sem açúcar" genérico acusaria a pasta de amendoim que o app sugere
+  { label: "adoçante/diet", test: /adoçante|\bdiet\b|\blight\b|\bzero\b/i },
 ];
 
 export interface TriggerCorrelation {
