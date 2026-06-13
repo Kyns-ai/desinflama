@@ -5,6 +5,19 @@
  */
 import type { JourneyPhase } from "@/types/domain";
 
+export type ShoppingCategory =
+  | "hortifruti"
+  | "proteina"
+  | "mercearia"
+  | "laticinio"
+  | "tempero";
+
+export interface RecipeIngredient {
+  item: string;
+  qty?: string;
+  categoria: ShoppingCategory;
+}
+
 export interface Recipe {
   id: string;
   nome: string;
@@ -13,6 +26,9 @@ export interface Recipe {
   tempo: string;
   emoji: string;
   ingredientes: string[];
+  /** Ingredientes estruturados (opcional) — se ausente, a lista de compras é
+   *  derivada de `ingredientes` por parser. A nutri pode preencher pra refinar. */
+  itens?: RecipeIngredient[];
   modo: string[];
 }
 

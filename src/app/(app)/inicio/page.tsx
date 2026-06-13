@@ -465,6 +465,25 @@ export default function Inicio() {
           <ChevronRight className="size-5 shrink-0 text-ink-faint" />
         </Card>
       </Link>
+
+      {/* Cardápio + lista de compras */}
+      <Link href="/cardapio" className="block">
+        <Card
+          elevation="soft"
+          className="flex items-center gap-4 transition-transform active:scale-[0.99]"
+        >
+          <IconCircle icon={UtensilsCrossed} tone="sage" size="lg" />
+          <div className="min-w-0 flex-1">
+            <h3 className="font-semibold tracking-tight text-ink">
+              Cardápio da semana
+            </h3>
+            <p className="text-sm text-ink-soft">
+              Seu menu seg–dom + lista de compras
+            </p>
+          </div>
+          <ChevronRight className="size-5 shrink-0 text-ink-faint" />
+        </Card>
+      </Link>
     </div>
   );
 }

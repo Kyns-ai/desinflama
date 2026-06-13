@@ -10,6 +10,7 @@ import {
   ChevronRight,
   ArrowLeftRight,
   Clock,
+  UtensilsCrossed,
 } from "lucide-react";
 import { Card, Badge } from "@/components/ui";
 import { lessonsByTheme, type Lesson } from "@/content/library";
@@ -251,6 +252,23 @@ function Trocas() {
 function Receitas() {
   return (
     <div className="space-y-3">
+      <Link href="/cardapio" className="block">
+        <Card
+          elevation="soft"
+          className="flex items-center gap-3 border border-sage/20 bg-sage-tint/30 transition-transform active:scale-[0.99]"
+        >
+          <UtensilsCrossed className="size-6 shrink-0 text-sage-deep" />
+          <div className="min-w-0 flex-1">
+            <h3 className="font-semibold tracking-tight text-ink">
+              Cardápio da semana
+            </h3>
+            <p className="text-sm text-ink-soft">
+              Menu seg–dom montado + lista de compras
+            </p>
+          </div>
+          <ChevronRight className="size-5 shrink-0 text-ink-faint" />
+        </Card>
+      </Link>
       {RECIPES.map((r) => (
         <RecipeCard key={r.id} recipe={r} />
       ))}
