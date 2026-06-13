@@ -24,7 +24,7 @@ export const CAN_DO: string[] = [
 
 /** O que estes 14 dias NÃO podem fazer (honestidade que constrói confiança). */
 export const CANNOT_DO: string[] = [
-  "Curar SII ou “consertar” seu intestino em 14 dias — isso não existe, e quem promete está te enganando.",
+  "Curar SII ou “consertar” seu intestino tão rápido — isso não existe, e quem promete está te enganando.",
   "Descobrir TODOS os seus gatilhos: a reintrodução de alimentos leva semanas e vem depois.",
   "Prometer “barriga chapada” — inchaço não é gordura, e esse não é o nosso objetivo.",
   "Substituir uma avaliação médica.",

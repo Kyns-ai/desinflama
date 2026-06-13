@@ -63,8 +63,9 @@ const UNIT =
 function parseIngredient(raw: string): RecipeIngredient {
   // tira parênteses ("(parte verde)", "(sem o alho)")
   let s = raw.replace(/\([^)]*\)/g, "").trim();
-  // "Suco de ½ limão" → o que se compra é "limão"
+  // "Suco de ½ limão" → o que se compra é "limão"; "Um fio de azeite" → "azeite"
   s = s.replace(/^suco\s+de\s+/i, "");
+  s = s.replace(/^um\s+fio\s+de\s+/i, "");
   // quantidade no começo: número/fração (+ unidade opcional)
   let qty = "";
   const m = s.match(
@@ -86,7 +87,7 @@ function parseIngredient(raw: string): RecipeIngredient {
   // tira preparos no fim que não importam pra compra
   s = s
     .replace(
-      /\s+(?:em \w+|ralad[oa]|picad[oa]s?|fatiad[oa]s?|cozid[oa]s?|grelhad[oa]s?|assad[oa]s?|refogad[oa]s?|aromatizad[oa]s?|m[ée]dia|pequen[oa]|grande|desfiad[oa]s?|a gosto|fresc[oa]s?)\b/gi,
+      /\s+(?:em \w+|ralad[oa]|picad[oa]s?|fatiad[oa]s?|cozid[oa]s?|grelhad[oa]s?|assad[oa]s?|refogad[oa]s?|aromatizad[oa]s?|amassad[oa]s?|para servir|para gratinar|m[ée]dia|pequen[oa]|grande|desfiad[oa]s?|a gosto|fresc[oa]s?)\b/gi,
       ""
     )
     .trim();
@@ -107,7 +108,13 @@ function ingredientsOf(recipe: Recipe): RecipeIngredient[] {
   // separa linhas compostas ("Azeite, sal e cebolinha" → 3 itens; só a 1ª peça
   // leva a quantidade) e parseia cada peça
   return recipe.ingredientes.flatMap((raw) => {
-    const pieces = raw.split(/,| e (?=[a-zà-ú])/i).map((p) => p.trim()).filter(Boolean);
+    // remove parênteses ANTES de dividir — senão uma vírgula dentro de
+    // "(banana, morango)" quebra a linha no lugar errado
+    const semParens = raw.replace(/\([^)]*\)/g, "").trim();
+    const pieces = semParens
+      .split(/,| e (?=[a-zà-ú])/i)
+      .map((p) => p.trim())
+      .filter(Boolean);
     return pieces.map(parseIngredient).filter((i) => i.item.length > 1);
   });
 }

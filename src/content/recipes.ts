@@ -137,7 +137,7 @@ export const RECIPES: Recipe[] = [
     emoji: "🍲",
     ingredientes: [
       "Ossos com cartilagem (boi ou frango)",
-      "1 cenoura e ½ talo de salsão (opcional)",
+      "1 cenoura, ½ talo de salsão (opcional)",
       "Gengibre, sal e ervas",
       "Um fio de vinagre (ajuda a extrair os nutrientes)",
     ],
@@ -159,6 +159,14 @@ export const RECIPES: Recipe[] = [
       "Proteína à escolha (frango/peixe/ovo)",
       "O grupo que você vai testar hoje (ex.: 2 col. de feijão)",
       "Azeite e limão",
+    ],
+    itens: [
+      { item: "Arroz", categoria: "mercearia" },
+      { item: "Folhas verdes", categoria: "hortifruti" },
+      { item: "Cenoura", categoria: "hortifruti" },
+      { item: "Proteína (frango, peixe ou ovo)", categoria: "proteina" },
+      { item: "Azeite", categoria: "tempero" },
+      { item: "Limão", categoria: "tempero" },
     ],
     modo: [
       "Monte o bowl com a base que você já tolera.",
@@ -290,7 +298,7 @@ export const RECIPES: Recipe[] = [
   {
     id: "omelete-forno",
     nome: "Omelete de forno com legumes",
-    phase: "Reintrodução",
+    phase: "Reequilíbrio",
     tipo: "Jantar",
     tempo: "30 min",
     emoji: "🧀",
@@ -335,13 +343,13 @@ export const RECIPES: Recipe[] = [
     ingredientes: [
       "1 fatia de pão de trigo (o grupo do teste: frutanos)",
       "1 ovo",
-      "¼ de abacate pequeno",
+      "2 colheres (sopa) de abacate (porção que você já tolera)",
       "Azeite, sal e cebolinha",
     ],
     modo: [
       "Toste a fatia de pão de trigo — a porção do teste de frutanos.",
       "Frite ou mexa o ovo e amasse o abacate com sal por cima.",
-      "Monte na torrada e registre a reação no seu Mapa.",
+      "Monte na torrada e registre a reação no seu Mapa. Hoje o único teste é o pão.",
     ],
   },
   {
@@ -355,6 +363,12 @@ export const RECIPES: Recipe[] = [
       "½ manga ou 1 colher (chá) de mel (o grupo do teste: frutose)",
       "Frutas que você já tolera (banana, morango)",
       "1 colher (sopa) de sementes de chia",
+    ],
+    itens: [
+      { item: "Manga (ou mel para o teste)", qty: "½", categoria: "hortifruti" },
+      { item: "Banana", categoria: "hortifruti" },
+      { item: "Morango", categoria: "hortifruti" },
+      { item: "Sementes de chia", qty: "1 col (sopa)", categoria: "mercearia" },
     ],
     modo: [
       "Pique as frutas que você já tolera numa tigela.",
@@ -406,7 +420,7 @@ export const RECIPES: Recipe[] = [
     tempo: "40 min",
     emoji: "🥧",
     ingredientes: [
-      "3 mandioquinhas cozidas e amassadas",
+      "3 mandioquinhas (cozidas e amassadas)",
       "300 g de carne moída magra",
       "Azeite aromatizado (sem o alho)",
       "Tomate picado, sal e cebolinha (parte verde)",
@@ -447,7 +461,7 @@ export const RECIPES: Recipe[] = [
     emoji: "🍗",
     ingredientes: [
       "2 filés de frango",
-      "1 abobrinha e 1 cenoura em cubos",
+      "1 abobrinha em cubos, 1 cenoura em cubos",
       "1 batata-doce em cubos",
       "Azeite, sal, alecrim e limão",
     ],

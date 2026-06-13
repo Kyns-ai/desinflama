@@ -35,7 +35,7 @@ export const REINTRO_GROUPS: ReintroGroupDef[] = [
     nome: "Frutose",
     emoji: "🍯",
     resumo: "O açúcar de algumas frutas e do mel.",
-    exemplos: "mel, manga, melancia, maçã",
+    exemplos: "mel, manga, maçã, figo",
     defaultDay: 9,
   },
   {

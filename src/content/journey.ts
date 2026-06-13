@@ -745,7 +745,7 @@ export const DAYS: DayContent[] = [
           question: "Onde a frutose “escondida” costuma aparecer?",
           options: [
             "Em carnes e ovos",
-            "Em algumas frutas (manga, melancia) e no mel",
+            "Em algumas frutas (manga, figo) e no mel",
             "No arroz",
           ],
           correctIndex: 1,
