@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Capacitor } from "@capacitor/core";
 import { cn } from "@/lib/cn";
 import {
   Crown,
@@ -150,6 +151,12 @@ function NotifToggle({ row }: { row: Row }) {
   const enable = useAppStore((s) => s.enableNotifications);
   const disable = useAppStore((s) => s.disableNotifications);
   const [busy, setBusy] = useState(false);
+  // No navegador (sem app instalado) o agendamento offline não funciona —
+  // ser honesto em vez de prometer lembrete que não dispara.
+  const [native, setNative] = useState(true);
+  useEffect(() => {
+    setNative(Capacitor.isNativePlatform());
+  }, []);
 
   async function toggle() {
     setBusy(true);
@@ -164,24 +171,27 @@ function NotifToggle({ row }: { row: Row }) {
       <div className="min-w-0 flex-1">
         <p className="font-medium tracking-tight text-ink">{row.label}</p>
         <p className="text-sm text-ink-soft">
-          Lembretes do seu dia e da ofensiva
+          {native
+            ? "Lembretes do seu dia e da ofensiva"
+            : "Instale o app na tela inicial pra receber lembretes"}
         </p>
       </div>
       <button
         onClick={toggle}
-        disabled={busy}
+        disabled={busy || !native}
         role="switch"
         aria-checked={enabled}
         aria-label="Ativar notificações"
         className={cn(
           "relative h-7 w-12 shrink-0 rounded-full transition-colors",
-          enabled ? "bg-sage" : "bg-cream-deep"
+          !native && "opacity-40",
+          enabled && native ? "bg-sage" : "bg-cream-deep"
         )}
       >
         <span
           className={cn(
             "absolute top-1 size-5 rounded-full bg-white shadow transition-all",
-            enabled ? "left-6" : "left-1"
+            enabled && native ? "left-6" : "left-1"
           )}
         />
       </button>

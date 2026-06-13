@@ -18,9 +18,9 @@ export interface GardenLevel {
 
 export const LEVELS: GardenLevel[] = [
   { id: 0, name: "Semente", emoji: "🌱", art: "garden-semente", threshold: 0 },
-  { id: 1, name: "Broto", emoji: "🌿", art: "garden-broto", threshold: 10, unlock: "3 receitas bônus" },
-  { id: 2, name: "Florescendo", emoji: "🌸", art: "garden-florescendo", threshold: 25, unlock: "Dia de Troca 🍫" },
-  { id: 3, name: "Jardim", emoji: "🪴", art: "garden-jardim", threshold: 50, unlock: "Desafio bônus" },
+  { id: 1, name: "Broto", emoji: "🌿", art: "garden-broto", threshold: 10, unlock: "Receitas da nutri" },
+  { id: 2, name: "Florescendo", emoji: "🌸", art: "garden-florescendo", threshold: 25, unlock: "Cardápio + lista de compras" },
+  { id: 3, name: "Jardim", emoji: "🪴", art: "garden-jardim", threshold: 50, unlock: "Comer fora sem inchar" },
 ];
 
 /** Sementes ganhas por ação (centralizado). */
@@ -73,19 +73,21 @@ export function leveledUp(before: number, after: number): GardenLevel | null {
   return b > a ? gardenFor(after).level : null;
 }
 
-/** Recompensas desbloqueadas por nível (para a tela de jardim/progresso). */
+/** Recompensas desbloqueadas por nível. Cada uma leva a conteúdo REAL
+ *  (sem rótulo morto): quando liberada, o card vira link pro `href`. */
 export interface Reward {
   id: string;
   title: string;
   desc: string;
   emoji: string;
   levelNeeded: number;
+  href: string;
 }
 
 export const REWARDS: Reward[] = [
-  { id: "recipes", title: "3 receitas bônus", desc: "Receitas extras da nutri", emoji: "🍲", levelNeeded: 1 },
-  { id: "treat", title: "Dia de Troca", desc: "Um dia livre planejado, sem culpa", emoji: "🍫", levelNeeded: 2 },
-  { id: "challenge", title: "Desafio bônus", desc: "Um mini-desafio extra de 3 dias", emoji: "🎯", levelNeeded: 3 },
+  { id: "recipes", title: "Receitas da nutri", desc: "Biblioteca de receitas low FODMAP", emoji: "🍲", levelNeeded: 1, href: "/aprender" },
+  { id: "cardapio", title: "Cardápio + lista de compras", desc: "Seu menu da semana, pronto pra seguir", emoji: "🛒", levelNeeded: 2, href: "/cardapio" },
+  { id: "comerfora", title: "Comer fora sem inchar", desc: "Restaurante, churrasco, pizza e bar", emoji: "🍽️", levelNeeded: 3, href: "/bonus" },
 ];
 
 export function rewardUnlocked(reward: Reward, seeds: number): boolean {

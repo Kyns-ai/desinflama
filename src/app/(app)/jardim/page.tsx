@@ -1,8 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { ArrowLeft, Lock, Check, Sprout, Shield } from "lucide-react";
+import { ArrowLeft, Lock, ChevronRight, Sprout, Shield } from "lucide-react";
 import { Card, ProgressBar } from "@/components/ui";
 import { Art } from "@/components/Art";
 import { artId } from "@/content/cardArt";
@@ -122,13 +123,14 @@ export default function Jardim() {
           {REWARDS.map((r) => {
             const unlocked = rewardUnlocked(r, seeds);
             const level = LEVELS.find((l) => l.id === r.levelNeeded);
-            return (
+            const inner = (
               <Card
-                key={r.id}
                 elevation="soft"
                 className={cn(
                   "flex items-center gap-3.5",
-                  !unlocked && "opacity-70"
+                  unlocked
+                    ? "transition-transform active:scale-[0.99]"
+                    : "opacity-70"
                 )}
               >
                 {unlocked ? (
@@ -147,15 +149,20 @@ export default function Jardim() {
                   <p className="text-sm text-ink-soft">{r.desc}</p>
                 </div>
                 {unlocked ? (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-sage-tint px-2.5 py-1 text-xs font-semibold text-sage-dark">
-                    <Check className="size-3.5" strokeWidth={3} /> Liberado
-                  </span>
+                  <ChevronRight className="size-5 shrink-0 text-ink-faint" />
                 ) : (
                   <span className="text-xs font-medium text-ink-faint">
                     {level?.name} {level?.emoji}
                   </span>
                 )}
               </Card>
+            );
+            return unlocked ? (
+              <Link key={r.id} href={r.href} className="block">
+                {inner}
+              </Link>
+            ) : (
+              <div key={r.id}>{inner}</div>
             );
           })}
         </div>

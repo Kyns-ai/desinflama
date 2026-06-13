@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, ChevronDown, MessageCircle, Mail } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Card } from "@/components/ui";
+import { SUPPORT, whatsappUrl } from "@/content/support";
 import { cn } from "@/lib/cn";
 
 const FAQ = [
@@ -104,18 +105,24 @@ export default function Ajuda() {
           A gente responde rápido. Fale com o suporte.
         </p>
         <div className="mt-3 flex gap-2">
-          <a
-            href="https://wa.me/5500000000000"
-            className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-sage py-2.5 text-sm font-semibold text-white transition-colors hover:bg-sage-deep"
-          >
-            <MessageCircle className="size-4" /> WhatsApp
-          </a>
-          <a
-            href="mailto:suporte@desinflama.app"
-            className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-line bg-surface py-2.5 text-sm font-semibold text-ink transition-colors active:bg-cream-deep"
-          >
-            <Mail className="size-4" /> E-mail
-          </a>
+          {whatsappUrl() && (
+            <a
+              href={whatsappUrl()!}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-sage py-2.5 text-sm font-semibold text-white transition-colors hover:bg-sage-deep"
+            >
+              <MessageCircle className="size-4" /> WhatsApp
+            </a>
+          )}
+          {SUPPORT.email && (
+            <a
+              href={`mailto:${SUPPORT.email}`}
+              className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-line bg-surface py-2.5 text-sm font-semibold text-ink transition-colors active:bg-cream-deep"
+            >
+              <Mail className="size-4" /> E-mail
+            </a>
+          )}
         </div>
       </Card>
     </div>
