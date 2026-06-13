@@ -6,6 +6,7 @@ import { Card, Badge } from "@/components/ui";
 import { Art } from "@/components/Art";
 import { BloatWindowCard } from "@/components/BloatWindowCard";
 import { ProtocoloCard } from "@/components/ProtocoloCard";
+import { ToleranceMapCard } from "@/components/ToleranceMapCard";
 import { useAppStore } from "@/store/useAppStore";
 import { artId } from "@/content/cardArt";
 import { BLOAT_PROFILES, WELCOME_VIDEO } from "@/content/onboarding";
@@ -140,6 +141,9 @@ export default function MapaPage() {
           {PROJECTION_NOTE}
         </p>
       </Card>
+
+      {/* Mapa de Tolerância — construído pela reintrodução (o payoff do 5R) */}
+      <ToleranceMapCard />
 
       {/* Janela de inchaço hormonal */}
       <BloatWindowCard cycleStart={cycleStart} />

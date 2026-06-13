@@ -62,6 +62,13 @@ export const ACHIEVEMENTS: AchievementDef[] = [
     check: (d) => d.scores.some((s) => s.value >= 70),
   },
   {
+    id: "primeiro-teste",
+    title: "Primeiro teste",
+    description: "Testou seu 1º grupo na reintrodução",
+    emoji: "🧪",
+    check: (d) => d.tolerance.length >= 1,
+  },
+  {
     id: "reintroducao",
     title: "Detetive do intestino",
     description: "Completou a fase de reintrodução",

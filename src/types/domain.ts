@@ -153,6 +153,30 @@ export interface TriggerInsight {
   occurrences: number;
 }
 
+/* --------------------------- Mapa de Tolerância --------------------------- */
+
+/** Os 5 grupos FODMAP testáveis na reintrodução (dias 8–11). */
+export type ReintroGroup =
+  | "lactose"
+  | "frutose"
+  | "frutanos"
+  | "gos"
+  | "polioles";
+
+/** Nível de reação a um teste de reintrodução (0 = tolerou … 3 = forte). */
+export type ReactionLevel = 0 | 1 | 2 | 3;
+
+/** Resultado de UM teste de reintrodução — uma peça do mapa pessoal. */
+export interface ToleranceResult {
+  group: ReintroGroup;
+  /** YYYY-MM-DD em que testou. */
+  dateTested: string;
+  reaction: ReactionLevel;
+  notes?: string;
+  /** Dia da jornada em que foi testado (8–11 ou na Manutenção). */
+  day?: number;
+}
+
 /* ------------------------------ Estado persistido ------------------------------ */
 
 /** Tudo que o app guarda localmente e sincroniza (quando houver backend). */
@@ -183,6 +207,8 @@ export interface AppData {
   commitmentDays?: number;
   /** ISO de quando o compromisso foi assumido. */
   commitmentAt?: string;
+  /** Testes de reintrodução registrados — viram o Mapa de Tolerância pessoal. */
+  tolerance: ToleranceResult[];
   /** chaves de notificações/flags simples. */
   flags: Record<string, boolean>;
 }
@@ -219,6 +245,7 @@ export function emptyAppData(): AppData {
     checklists: {},
     seeds: 0,
     lessonsDone: {},
+    tolerance: [],
     flags: {},
   };
 }

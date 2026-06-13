@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, Infinity as InfinityIcon, Rocket } from "lucide-react";
 import { Card, Button } from "@/components/ui";
+import { ToleranceMapCard } from "@/components/ToleranceMapCard";
 import { useAppStore } from "@/store/useAppStore";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -63,6 +64,11 @@ export default function Concluir() {
           até onde ir.
         </p>
       </motion.div>
+
+      {/* O payoff tangível: o mapa pessoal que ela construiu */}
+      <div className="mt-6">
+        <ToleranceMapCard />
+      </div>
 
       <div className="mt-8 space-y-4">
         {canReset && (

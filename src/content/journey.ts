@@ -666,7 +666,7 @@ export const DAYS: DayContent[] = [
         {
           heading: "Anote a reação",
           emoji: "📊",
-          body: "Registre a intensidade de 1 a 5 e a que horas começou. Cada teste é uma peça do seu mapa pessoal — o que nenhuma dieta genérica te dá.",
+          body: "No card \u201cTeste de hoje\u201d você registra como o corpo reagiu (de tolerei bem a forte). Cada teste é uma peça do seu Mapa de Tolerância — o que nenhuma dieta genérica te dá.",
         },
       ],
       quiz: [
@@ -687,7 +687,7 @@ export const DAYS: DayContent[] = [
       "Mantenha o resto da base low FODMAP",
       "TESTE LACTOSE: 1 porção de leite ou iogurte comum hoje",
       "Observe a barriga, gases e intestino por até 6h",
-      "Registre a intensidade da reação (de 1 a 5)",
+      "Registre no card \u201cTeste de hoje\u201d como seu corpo reagiu",
       "Não teste mais nenhum grupo novo hoje",
     ],
     meals: {
@@ -732,7 +732,7 @@ export const DAYS: DayContent[] = [
         {
           heading: "Como testar hoje",
           emoji: "🥭",
-          body: "Coma uma porção rica em frutose (½ manga OU 1 colher de mel) e observe nas horas seguintes. Anote a intensidade de 1 a 5.",
+          body: "Coma uma porção rica em frutose (½ manga OU 1 colher de mel) e observe nas horas seguintes. Registre a reação no card \u201cTeste de hoje\u201d.",
         },
         {
           heading: "Você está montando a SUA lista",
@@ -758,7 +758,7 @@ export const DAYS: DayContent[] = [
       "Mantenha fora até os grupos que passaram — eles voltam de vez no fim dos testes",
       "TESTE FRUTOSE: ½ manga OU 1 colher de mel hoje",
       "Observe a reação por algumas horas",
-      "Registre a intensidade (1 a 5)",
+      "Registre a reação no card \u201cTeste de hoje\u201d",
       "Beba água e caminhe",
     ],
     meals: {
@@ -808,7 +808,7 @@ export const DAYS: DayContent[] = [
         {
           heading: "Seja honesta no registro",
           emoji: "✍️",
-          body: "Anote a intensidade e a que horas começou. Se reagir forte, volte à base amanhã sem culpa. Saber disso muda completamente as suas escolhas.",
+          body: "Registre a reação no card \u201cTeste de hoje\u201d. Se reagir forte, volte à base amanhã sem culpa. Saber disso muda completamente as suas escolhas.",
         },
       ],
       quiz: [
@@ -829,7 +829,7 @@ export const DAYS: DayContent[] = [
       "Mantenha os grupos que já passaram",
       "TESTE FRUTANO: 1 fatia de pão de trigo OU cebola refogada (escolha um)",
       "Observe com atenção (frutano costuma reagir mais)",
-      "Registre a intensidade (1 a 5) e a que horas começou",
+      "Registre a reação no card \u201cTeste de hoje\u201d",
       "Se reagir forte, volte à base e siga amanhã sem culpa",
     ],
     meals: {

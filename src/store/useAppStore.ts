@@ -12,6 +12,7 @@ import type {
   DailyLog,
   OnboardingData,
   Subscription,
+  ToleranceResult,
 } from "@/types/domain";
 import { emptyAppData } from "@/types/domain";
 import { newJourney, phaseForDay, totalDays } from "@/lib/journey";
@@ -70,6 +71,8 @@ interface AppState {
    *  conta como atividade (ofensiva/score). */
   completeCalmaria: () => Promise<{ alreadyDone: boolean }>;
   completeDay: (day: number) => Promise<{ blocked: boolean }>;
+  /** Registra o resultado de um teste de reintrodução (Mapa de Tolerância). */
+  addToleranceResult: (result: ToleranceResult) => Promise<void>;
   addLog: (log: DailyLog) => Promise<void>;
   addPhoto: (dataUrl: string) => Promise<void>;
   removePhoto: (id: string) => Promise<void>;
@@ -451,6 +454,28 @@ export const useAppStore = create<AppState>((set, get) => {
         }
         // Índice Intestinal: recomputa o ponto do dia (motor da Fase 8)
         d.scores = recomputedScores(d, log.date);
+        const { list, newlyUnlocked } = reconcileAchievements(d, today);
+        d.achievements = list;
+        novas = newlyUnlocked;
+      });
+      notifyAchievements(novas);
+    },
+
+    addToleranceResult: async (result) => {
+      let novas: AchievementDef[] = [];
+      const today = todayKey();
+      await get().update((d) => {
+        // re-tocar o mesmo grupo no mesmo dia substitui (não duplica)
+        const firstForGroup = !d.tolerance.some((t) => t.group === result.group);
+        d.tolerance = [
+          ...d.tolerance.filter(
+            (t) =>
+              !(t.group === result.group && t.dateTested === result.dateTested)
+          ),
+          result,
+        ];
+        // +1 semente uma vez por grupo testado
+        if (firstForGroup) d.seeds += SEEDS.checkin;
         const { list, newlyUnlocked } = reconcileAchievements(d, today);
         d.achievements = list;
         novas = newlyUnlocked;

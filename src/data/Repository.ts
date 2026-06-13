@@ -72,6 +72,7 @@ function normalize(d: Partial<AppData>): AppData {
     checklists: d.checklists ?? {},
     seeds: d.seeds ?? 0,
     lessonsDone: d.lessonsDone ?? {},
+    tolerance: d.tolerance ?? [],
     flags: d.flags ?? {},
   };
 }

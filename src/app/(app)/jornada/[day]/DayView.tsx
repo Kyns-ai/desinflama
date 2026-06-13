@@ -16,6 +16,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { Button, Badge, Card } from "@/components/ui";
+import { ToleranceTestCard } from "@/components/ToleranceTestCard";
 import { useAppStore } from "@/store/useAppStore";
 import { getDay } from "@/content/journey";
 import { phaseForDay, totalDays } from "@/lib/journey";
@@ -164,6 +165,9 @@ export function DayView({ day }: { day: number }) {
           </div>
         </Card>
       </button>
+
+      {/* Teste de reintrodução (dias 8–11) — constrói o Mapa de Tolerância */}
+      <ToleranceTestCard day={day} />
 
       {/* Checklist */}
       <section>
