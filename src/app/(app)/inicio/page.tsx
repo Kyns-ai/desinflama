@@ -120,7 +120,7 @@ export default function Inicio() {
   const doneCount = steps.filter((s) => s.done).length;
   const allDone = doneCount === steps.length;
 
-  const [celebrating, setCelebrating] = useState(false);
+  const [celebratingDay, setCelebratingDay] = useState<number | null>(null);
   const [busy, setBusy] = useState(false);
   const [levelUp, setLevelUp] = useState<GardenLevel | null>(null);
 
@@ -140,13 +140,16 @@ export default function Inicio() {
   async function concluirDia() {
     setBusy(true);
     const before = useAppStore.getState().data.seeds;
-    const { blocked } = await completeDay(day);
+    // congela o dia ANTES de concluir: completeDay avança currentDay e a
+    // celebração re-renderizaria com a mensagem do dia SEGUINTE (off-by-one)
+    const concluded = day;
+    const { blocked } = await completeDay(concluded);
     setBusy(false);
     if (blocked) return;
     const after = useAppStore.getState().data.seeds;
     setLevelUp(leveledUp(before, after));
     void haptic("success");
-    setCelebrating(true);
+    setCelebratingDay(concluded);
   }
 
   // Modo Manutenção tem seu próprio fluxo
@@ -154,15 +157,17 @@ export default function Inicio() {
     return <MaintenanceHome firstName={firstName} streak={streak.current} seeds={seeds} flags={data.flags} score={score} />;
   }
 
-  if (celebrating && content) {
-    const isFinal = day >= totalLabel;
+  const celebratedContent =
+    celebratingDay !== null ? getDay(celebratingDay) : null;
+  if (celebratingDay !== null && celebratedContent) {
+    const isFinal = celebratingDay >= totalLabel;
     return (
       <DayCelebration
-        message={content.completionMessage}
-        milestone={content.milestone}
+        message={celebratedContent.completionMessage}
+        milestone={celebratedContent.milestone}
         levelUp={levelUp}
         onDone={() => {
-          setCelebrating(false);
+          setCelebratingDay(null);
           setLevelUp(null);
           if (isFinal) router.replace("/concluir");
         }}
