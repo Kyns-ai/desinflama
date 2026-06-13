@@ -77,6 +77,34 @@
     {
       "id": "recipe-salmao-quinoa-vagem",
       "prompt": "grilled salmon fillet over fluffy quinoa with sauteed green beans, lemon wedge, fresh herbs"
+    },
+    {
+      "id": "recipe-vitamina-mamao-iogurte",
+      "prompt": "a glass of creamy papaya smoothie topped with gluten-free oats and a dusting of cinnamon, fresh papaya slice beside it"
+    },
+    {
+      "id": "recipe-torrada-ovo-abacate",
+      "prompt": "a slice of toasted wheat bread topped with a fried egg and mashed avocado, sprinkled with chives, on a ceramic plate"
+    },
+    {
+      "id": "recipe-salada-frutas-teste",
+      "prompt": "a small bowl of fresh fruit salad with mango, banana and strawberries, sprinkled with chia seeds"
+    },
+    {
+      "id": "recipe-frango-legumes-assados",
+      "prompt": "roasted chicken fillets with cubes of zucchini, carrot and sweet potato on a rustic baking tray, rosemary sprigs"
+    },
+    {
+      "id": "recipe-omelete-tomate-queijo",
+      "prompt": "a folded omelette with tomato and melted cheese on a ceramic plate, fresh basil leaves on top"
+    },
+    {
+      "id": "recipe-peixe-batata-doce",
+      "prompt": "a grilled white fish fillet with roasted sweet potato rounds and green leaves on a ceramic plate, lemon wedge"
+    },
+    {
+      "id": "recipe-panqueca-aveia-frutas",
+      "prompt": "a stack of oat banana pancakes topped with strawberries and kiwi slices, dusting of cinnamon"
     }
   ]
 }

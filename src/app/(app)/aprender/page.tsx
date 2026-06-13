@@ -21,6 +21,7 @@ import { cn } from "@/lib/cn";
 import { stripAccents } from "@/lib/text";
 import { Art } from "@/components/Art";
 import { artId } from "@/content/cardArt";
+import { NutriWelcome } from "@/components/NutriWelcome";
 
 const TABS = ["Aulas", "Gatilhos", "Trocas", "Receitas"] as const;
 type Tab = (typeof TABS)[number];
@@ -86,6 +87,7 @@ function Aulas() {
   const byTheme = lessonsByTheme();
   return (
     <div className="space-y-6">
+      <NutriWelcome />
       {Object.entries(byTheme).map(([tema, lessons]) => (
         <section key={tema}>
           <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink-faint">
