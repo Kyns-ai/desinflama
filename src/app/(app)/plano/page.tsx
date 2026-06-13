@@ -6,7 +6,17 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Crown, RotateCcw, ExternalLink, Trash2, Check } from "lucide-react";
 import { Card, Button, Badge } from "@/components/ui";
 import { useAppStore } from "@/store/useAppStore";
-import { storeLabel, canShowExternalPurchase } from "@/lib/platform";
+import { platform, canShowExternalPurchase } from "@/lib/platform";
+
+/** Instrução de cancelamento correta por plataforma (a maioria compra no web). */
+function cancelInstrucao(): string {
+  const p = platform();
+  if (p === "ios")
+    return "Para cancelar, abra Ajustes › sua conta (Apple ID) › Assinaturas.";
+  if (p === "android")
+    return "Para cancelar, abra a Google Play › menu › Pagamentos e assinaturas.";
+  return "Para cancelar, use o link no seu e-mail de compra ou fale com o suporte — a gente resolve rápido.";
+}
 
 function planNome(plan: string) {
   if (plan === "annual") return "Anual";
@@ -124,9 +134,8 @@ export default function Plano() {
               Gerenciar assinatura <ExternalLink className="size-4" />
             </a>
           ) : (
-            <p className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-ink-soft">
-              Gerencie ou cancele em Ajustes › sua conta › Assinaturas na{" "}
-              {storeLabel()}.
+            <p className="mt-3 text-sm font-medium text-ink-soft">
+              {cancelInstrucao()}
             </p>
           )}
         </Card>
