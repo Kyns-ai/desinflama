@@ -99,7 +99,7 @@ export default function AuthPage() {
         </h1>
         <p className="mt-1.5 text-[15px] text-ink-soft">
           {mode === "signup"
-            ? "Leva 20 segundos. Seu progresso fica salvo em qualquer aparelho."
+            ? "Leva 20 segundos e seu plano já fica pronto, com seu nome."
             : "Entre para continuar seu desafio de onde parou."}
         </p>
 
