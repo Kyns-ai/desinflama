@@ -20,13 +20,18 @@ export function buildDemoData(user: { id: string; name: string; email: string })
   // 6 dias de registros (5 atrás → ontem); hoje ainda sem registro
   const dates = [5, 4, 3, 2, 1].map(day);
   const logs = dates.map((date, i) => {
-    const ruim = i === 1; // um dia pior, com laticínio (gera o insight de gatilho)
+    // os 2 primeiros dias (mais antigos) foram os piores e tiveram laticínio →
+    // a correlação 24–72h acende o "suspeito da semana"; depois a pessoa melhora
+    const ruim = i <= 1;
     return {
       id: `${date}-demo`,
       date,
       meals: ruim
         ? [
-            { refeicao: "cafe" as const, descricao: "Iogurte com granola e leite" },
+            {
+              refeicao: "cafe" as const,
+              descricao: i === 0 ? "Café com leite e pão" : "Iogurte com granola e leite",
+            },
             { refeicao: "almoco" as const, descricao: "Frango com arroz" },
           ]
         : [

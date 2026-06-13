@@ -12,8 +12,8 @@ import { Art } from "@/components/Art";
 import { useAppStore } from "@/store/useAppStore";
 import { BLOAT_PROFILES } from "@/content/onboarding";
 import { SEMAFORO } from "@/content/semaforo";
-import { PROJECTION } from "@/content/promise";
 import { nextBloatWindow } from "@/lib/cycle";
+import { projectionTimeline } from "@/lib/projection";
 import { humanDayMonth, todayKey } from "@/lib/date";
 import type { BloatType } from "@/types/domain";
 
@@ -35,12 +35,14 @@ export function ProtocoloCard({
   cycleStart: string | null;
 }) {
   const user = useAppStore((s) => s.user);
+  const startedAt = useAppStore((s) => s.data.progress?.startedAt);
   const firstName = (user?.name ?? "você").split(" ")[0];
   const cardRef = useRef<HTMLDivElement>(null);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState(false);
 
   const p = BLOAT_PROFILES[bloatType];
+  const timeline = projectionTimeline(startedAt ?? new Date().toISOString());
   const win = cycleStart ? nextBloatWindow(cycleStart) : null;
 
   const inflamaFoods = SEMAFORO.find((t) => t.tier === "inflama")?.foods ?? [];
@@ -148,10 +150,13 @@ export function ProtocoloCard({
         )}
 
         <div className="mt-3 flex items-stretch gap-2">
-          {PROJECTION.map((x) => (
+          {timeline.map((x) => (
             <div key={x.when} className="flex-1 rounded-xl bg-cream-deep/60 px-2 py-2 text-center">
               <div className="font-display text-sm font-semibold text-sage-deep">
                 {x.when}
+              </div>
+              <div className="text-[10px] font-semibold text-sage-deep/80">
+                {x.dateLabel}
               </div>
               <div className="mt-0.5 text-[10px] leading-tight text-ink-soft">
                 {x.label}

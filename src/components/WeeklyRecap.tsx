@@ -183,7 +183,7 @@ export function WeeklyRecap({
                     Suspeito da semana: {recap.suspect.food}.
                   </strong>{" "}
                   <span className="text-ink-soft">
-                    Apareceu em {Math.round(recap.suspect.correlationStrength * 100)}%
+                    Apareceu nas 72h antes de {Math.round(recap.suspect.correlationStrength * 100)}%
                     dos seus dias mais difíceis. O mapa está se formando.
                   </span>
                 </p>

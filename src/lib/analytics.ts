@@ -4,6 +4,7 @@
  * correlação de gatilhos e marcos de melhora.
  */
 import type { DailyLog, GutScorePoint, SymptomKey } from "@/types/domain";
+import { addDays } from "./date";
 
 export interface SeriesPoint {
   date: string;
@@ -100,10 +101,28 @@ export interface TriggerCorrelation {
   occurrences: number;
 }
 
-/** Correlaciona alimentos com os piores dias (acima da mediana de desconforto). */
+/**
+ * Correlaciona alimentos com os piores dias (acima da mediana de desconforto),
+ * considerando a JANELA DE REAÇÃO de até ~72h: a reação intestinal costuma
+ * atrasar 1–3 dias, então olhar só o mesmo dia perde o padrão (consenso de apps
+ * de gut health / diários de SII). Para cada dia ruim, contamos o que foi comido
+ * naquele dia E nos 2 dias anteriores.
+ */
 export function triggerInsights(logs: DailyLog[]): TriggerCorrelation[] {
   const withSymptoms = logs.filter((l) => Object.keys(l.symptoms).length > 0);
   if (withSymptoms.length < 4) return [];
+
+  // refeições por data, de TODOS os logs (a comida-gatilho pode estar num dia
+  // que ela registrou comida mas não sintoma)
+  const mealsByDate = new Map<string, string>();
+  for (const l of logs) {
+    const txt = l.meals.map((m) => m.descricao).join(" • ");
+    const prev = mealsByDate.get(l.date);
+    mealsByDate.set(l.date, prev ? `${prev} • ${txt}` : txt);
+  }
+  // texto das refeições na janela de 72h: o dia + os 2 anteriores
+  const windowText = (dateKey: string): string =>
+    [0, 1, 2].map((back) => mealsByDate.get(addDays(dateKey, -back)) ?? "").join(" • ");
 
   const discomforts = withSymptoms
     .map(dayDiscomfort)
@@ -114,11 +133,9 @@ export function triggerInsights(logs: DailyLog[]): TriggerCorrelation[] {
 
   const results: TriggerCorrelation[] = [];
   for (const group of FOOD_GROUPS) {
-    const inBad = badDays.filter((l) =>
-      l.meals.some((m) => group.test.test(m.descricao))
-    ).length;
+    const inBad = badDays.filter((l) => group.test.test(windowText(l.date))).length;
     const totalWith = withSymptoms.filter((l) =>
-      l.meals.some((m) => group.test.test(m.descricao))
+      group.test.test(windowText(l.date))
     ).length;
     if (totalWith >= 2 && inBad >= 2) {
       results.push({

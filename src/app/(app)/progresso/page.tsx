@@ -223,14 +223,16 @@ export default function Progresso() {
           <ul className="mt-2 space-y-1.5">
             {triggers.slice(0, 2).map((t) => (
               <li key={t.food} className="text-[15px] text-ink">
-                Seus piores dias tiveram{" "}
+                Seus piores dias vieram depois de{" "}
                 <strong className="text-coral-dark">{t.food}</strong> em{" "}
                 {Math.round(t.correlationStrength * 100)}% das vezes.
               </li>
             ))}
           </ul>
           <p className="mt-2 text-sm text-ink-soft">
-            Não é proibição — é informação. Teste reduzir e observe.
+            A reação pode atrasar até uns 3 dias — por isso olhamos o que você
+            comeu nas 72h antes. Não é proibição, é informação: teste reduzir e
+            observe.
           </p>
         </Card>
       )}

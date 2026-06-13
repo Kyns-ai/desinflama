@@ -29,6 +29,7 @@ import { ScoreRing, Card, Badge, IconCircle, Button, buttonStyles } from "@/comp
 import { SeedMeter } from "@/components/SeedMeter";
 import { WeeklyRecap } from "@/components/WeeklyRecap";
 import { Tracker72h, CommitmentStrip } from "@/components/Tracker72h";
+import { ProjectionTimeline } from "@/components/ProjectionTimeline";
 import { weeklyRecap, closedWeeks } from "@/lib/recap";
 import { Confetti } from "@/components/Confetti";
 import { Art } from "@/components/Art";
@@ -40,6 +41,7 @@ import { leveledUp, type GardenLevel } from "@/lib/garden";
 import { phaseForDay, totalDays } from "@/lib/journey";
 import { getDay } from "@/content/journey";
 import { MONTHLY_CHALLENGES } from "@/content/challenges";
+import { BLOAT_PROFILES } from "@/content/onboarding";
 import { todayKey, diffDays } from "@/lib/date";
 import { cycleInfo, RITUAL_ANCHORS } from "@/lib/cycle";
 import { MAX_SHIELDS } from "@/types/domain";
@@ -184,6 +186,15 @@ export default function Inicio() {
           <h1 className="font-display text-2xl font-semibold tracking-tight text-ink">
             {firstName}
           </h1>
+          {user?.onboarding?.bloatType && (
+            <Link
+              href="/mapa"
+              className="mt-1.5 inline-flex items-center gap-1.5 rounded-full bg-cream-deep px-2.5 py-1 text-xs font-semibold text-ink-soft transition-transform active:scale-95"
+            >
+              <span>{BLOAT_PROFILES[user.onboarding.bloatType].emoji}</span>
+              {BLOAT_PROFILES[user.onboarding.bloatType].name}
+            </Link>
+          )}
         </div>
         <div className="flex items-center gap-2">
           <Link
@@ -235,6 +246,7 @@ export default function Inicio() {
       <ShieldSavedBanner />
       <HonestWelcome />
       <WeeklyRecapBanner />
+      <ProjectionTimeline />
 
       <CommitmentStrip />
 
