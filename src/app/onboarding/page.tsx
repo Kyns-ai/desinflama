@@ -9,6 +9,7 @@ import { Art } from "@/components/Art";
 import { useAppStore } from "@/store/useAppStore";
 import { todayKey } from "@/lib/date";
 import { BloatWindowCard } from "@/components/BloatWindowCard";
+import { ProtocoloCard } from "@/components/ProtocoloCard";
 import {
   QUESTIONS,
   BLOAT_PROFILES,
@@ -19,13 +20,14 @@ import type { BloatType, Goal, SymptomKey } from "@/types/domain";
 import { PROJECTION, PROJECTION_NOTE } from "@/content/promise";
 import { cn } from "@/lib/cn";
 
-type Phase = "quiz" | "ciclo" | "loading" | "mapa";
+type Phase = "quiz" | "ciclo" | "loading" | "mapa" | "compromisso";
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function Onboarding() {
   const router = useRouter();
   const setOnboarding = useAppStore((s) => s.setOnboarding);
   const setCycleStart = useAppStore((s) => s.setCycleStart);
+  const setCommitment = useAppStore((s) => s.setCommitment);
   const startJourney = useAppStore((s) => s.startJourney);
 
   const [phase, setPhase] = useState<Phase>("quiz");
@@ -67,7 +69,7 @@ export default function Onboarding() {
     else setStep((s) => s - 1);
   }
 
-  async function finish() {
+  async function finish(commitmentDays: number) {
     await setOnboarding({
       bloatType: (answers.bloatType ?? "fermentacao") as BloatType,
       symptoms: (answers.symptoms ?? []) as SymptomKey[],
@@ -76,7 +78,10 @@ export default function Onboarding() {
     });
     if (cycleStart) await setCycleStart(cycleStart);
     await startJourney("main14");
-    router.replace("/inicio");
+    await setCommitment(commitmentDays);
+    // o Dia 0 termina numa vitória SENTIDA, não num dashboard:
+    // a Calmaria (1 min de respiração) é o alívio imediato do primeiro login
+    router.replace("/calmaria");
   }
 
   if (phase === "ciclo")
@@ -95,9 +100,10 @@ export default function Onboarding() {
       <Mapa
         bloatType={(answers.bloatType ?? "fermentacao") as BloatType}
         cycleStart={cycleStart}
-        onStart={finish}
+        onStart={() => setPhase("compromisso")}
       />
     );
+  if (phase === "compromisso") return <CompromissoStep onConfirm={finish} />;
 
   const selected = valueFor(q.id);
   const canContinue = selected.length > 0;
@@ -191,6 +197,144 @@ export default function Onboarding() {
           )}
         </motion.div>
       </AnimatePresence>
+    </div>
+  );
+}
+
+/* --------------------------- Compromisso --------------------------- */
+
+const COMMITMENT_OPTIONS = [
+  {
+    days: 7,
+    label: "7 check-ins",
+    desc: "1 semana de constância — o mínimo pro seu corpo mostrar o padrão",
+    badge: "mais escolhido",
+  },
+  {
+    days: 14,
+    label: "14 check-ins",
+    desc: "o programa inteiro, mapeado de ponta a ponta",
+  },
+  {
+    days: 21,
+    label: "21 check-ins",
+    desc: "modo determinada: programa + reset profundo",
+  },
+] as const;
+
+/** Ritual de compromisso (commitment device, padrão Simple/Noom): meta de
+ *  check-ins escolhida POR ELA + confirmação nominal. Sem botão de pular —
+ *  a opção de 7 já é a válvula. */
+function CompromissoStep({
+  onConfirm,
+}: {
+  onConfirm: (days: number) => Promise<void>;
+}) {
+  const user = useAppStore((s) => s.user);
+  const firstName = (user?.name ?? "eu").split(" ")[0];
+  const [days, setDays] = useState<number | null>(null);
+  const [busy, setBusy] = useState(false);
+
+  return (
+    <div className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col bg-cream px-6 pt-safe pb-safe">
+      <motion.div
+        initial={{ opacity: 0, x: 24 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.32, ease }}
+        className="flex flex-1 flex-col py-12"
+      >
+        <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-sage-tint px-3 py-1 text-xs font-semibold text-sage-dark">
+          🤝 Seu compromisso
+        </span>
+        <Art
+          id="compromisso-pacto"
+          emoji="🤝"
+          className="mt-5 size-20 rounded-2xl text-4xl"
+        />
+        <h1 className="mt-4 font-display text-[1.85rem] font-semibold leading-tight tracking-tight text-ink">
+          Quantos check-ins você se compromete a fazer?
+        </h1>
+        <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
+          Quem assume um compromisso com nome e número cumpre muito mais.
+          Escolha a meta que parece alcançável — dá pra aumentar depois.
+        </p>
+
+        <div className="mt-6 space-y-3">
+          {COMMITMENT_OPTIONS.map((opt) => {
+            const active = days === opt.days;
+            return (
+              <button
+                key={opt.days}
+                onClick={() => setDays(opt.days)}
+                className={cn(
+                  "flex w-full items-center gap-3.5 rounded-2xl border p-4 text-left transition-all active:scale-[0.99]",
+                  active
+                    ? "border-sage bg-sage-tint/60 shadow-[var(--shadow-soft)]"
+                    : "border-line bg-surface"
+                )}
+              >
+                <span className="min-w-0 flex-1">
+                  <span className="flex items-center gap-2">
+                    <span className="font-display text-lg font-semibold tracking-tight text-ink">
+                      {opt.label}
+                    </span>
+                    {"badge" in opt && opt.badge && (
+                      <span className="rounded-full bg-coral-tint px-2 py-0.5 text-[11px] font-semibold text-coral-dark">
+                        {opt.badge}
+                      </span>
+                    )}
+                  </span>
+                  <span className="mt-0.5 block text-sm leading-snug text-ink-soft">
+                    {opt.desc}
+                  </span>
+                </span>
+                <span
+                  className={cn(
+                    "grid size-6 shrink-0 place-items-center rounded-full border-2 transition-colors",
+                    active ? "border-sage bg-sage text-white" : "border-line"
+                  )}
+                >
+                  {active && <Check className="size-3.5" strokeWidth={3} />}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        <AnimatePresence>
+          {days !== null && (
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-5 rounded-2xl bg-cream-deep/60 px-4 py-3 text-center font-display text-lg font-semibold leading-snug text-ink"
+            >
+              “Eu, {firstName}, vou fazer {days} check-ins — um por dia, no meu
+              ritmo.”
+            </motion.p>
+          )}
+        </AnimatePresence>
+
+        <div className="mt-auto space-y-3 pt-8">
+          <Button
+            fullWidth
+            size="lg"
+            disabled={days === null}
+            loading={busy}
+            onClick={async () => {
+              if (days === null) return;
+              setBusy(true);
+              await onConfirm(days);
+            }}
+          >
+            Assumo esse compromisso <ArrowRight className="size-5" />
+          </Button>
+          <p className="text-center text-xs leading-relaxed text-ink-faint">
+            E te pedimos só isso: faça 7 check-ins antes de decidir se isso
+            funciona pra você — é o tempo que o corpo leva pra mostrar o
+            padrão.
+          </p>
+        </div>
+      </motion.div>
     </div>
   );
 }
@@ -316,7 +460,6 @@ function Mapa({
   onStart: () => void;
 }) {
   const p = BLOAT_PROFILES[bloatType];
-  const [busy, setBusy] = useState(false);
 
   return (
     <div className="mx-auto min-h-dvh w-full max-w-md bg-cream px-6 pt-safe pb-safe">
@@ -391,6 +534,13 @@ function Mapa({
           </Reveal>
         )}
 
+        {/* Artefato do Dia 0: ela já sai do reveal com algo DELA pra guardar */}
+        <Reveal>
+          <div className="mt-3">
+            <ProtocoloCard bloatType={bloatType} cycleStart={cycleStart} />
+          </div>
+        </Reveal>
+
         {/* Mensagem de boas-vindas da nutri */}
         <Reveal>
           <div className="mt-5 rounded-2xl border border-line bg-surface p-4">
@@ -411,17 +561,8 @@ function Mapa({
         </Reveal>
 
         <Reveal>
-          <Button
-            fullWidth
-            size="lg"
-            loading={busy}
-            className="mt-5"
-            onClick={() => {
-              setBusy(true);
-              onStart();
-            }}
-          >
-            Começar meu Dia 1 <ArrowRight className="size-5" />
+          <Button fullWidth size="lg" className="mt-5" onClick={onStart}>
+            Continuar <ArrowRight className="size-5" />
           </Button>
         </Reveal>
       </motion.div>

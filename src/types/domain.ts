@@ -177,6 +177,12 @@ export interface AppData {
   ritualAnchor?: string;
   /** Data de início do último ciclo menstrual (YYYY-MM-DD), opcional. */
   cycleStart?: string;
+  /** Compromisso de check-ins assumido no ritual pós-Mapa (7|14|21).
+   *  Commitment device (Cialdini): meta escolhida POR ELA, com nome e número —
+   *  cobre exatamente a janela de reembolso. */
+  commitmentDays?: number;
+  /** ISO de quando o compromisso foi assumido. */
+  commitmentAt?: string;
   /** chaves de notificações/flags simples. */
   flags: Record<string, boolean>;
 }

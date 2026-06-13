@@ -5,6 +5,7 @@ import { ArrowLeft, Sparkles, Quote } from "lucide-react";
 import { Card, Badge } from "@/components/ui";
 import { Art } from "@/components/Art";
 import { BloatWindowCard } from "@/components/BloatWindowCard";
+import { ProtocoloCard } from "@/components/ProtocoloCard";
 import { useAppStore } from "@/store/useAppStore";
 import { artId } from "@/content/cardArt";
 import { BLOAT_PROFILES, WELCOME_VIDEO } from "@/content/onboarding";
@@ -142,6 +143,9 @@ export default function MapaPage() {
 
       {/* Janela de inchaço hormonal */}
       <BloatWindowCard cycleStart={cycleStart} />
+
+      {/* Protocolo personalizado — baixável sempre */}
+      <ProtocoloCard bloatType={bloatType} cycleStart={cycleStart} />
 
       {/* Mensagem da nutri */}
       <Card elevation="soft">

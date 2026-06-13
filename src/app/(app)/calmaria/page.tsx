@@ -50,6 +50,11 @@ export default function Calmaria() {
   const [stage, setStage] = useState<"intro" | "breathing" | "done">("intro");
   const [segIdx, setSegIdx] = useState(0);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Capturada no mount: completeCalmaria seta a flag no meio da sessão, e a
+  // experiência de "primeira vez" precisa valer até a tela final.
+  const [primeiraVez] = useState(
+    () => !useAppStore.getState().data.flags.primeiroAlivio
+  );
 
   const seg = segments[segIdx];
   const cycleNum = Math.floor(segIdx / (session.pattern.hold > 0 ? 3 : 2)) + 1;
@@ -117,18 +122,24 @@ export default function Calmaria() {
             className="flex flex-1 flex-col"
           >
             <div className="flex flex-1 flex-col justify-center gap-5 py-6">
+              {primeiraVez && (
+                <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-coral-tint px-3 py-1 text-xs font-semibold text-coral-dark">
+                  ✨ Sua primeira vitória
+                </span>
+              )}
               <div className="grid size-16 place-items-center rounded-3xl bg-sage-tint">
                 <Wind className="size-8 text-sage-deep" />
               </div>
               <div>
                 <h2 className="font-display text-2xl font-semibold tracking-tight text-ink">
-                  Um minuto pra acalmar seu intestino
+                  {primeiraVez
+                    ? "Sinta a diferença AGORA — antes de qualquer dieta"
+                    : "Um minuto pra acalmar seu intestino"}
                 </h2>
                 <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
-                  Intestino e cérebro conversam. Quando você desacelera a
-                  respiração — soltando o ar mais devagar do que puxa — o corpo
-                  sai do modo de alerta e o intestino relaxa junto. É a alavanca
-                  com mais evidência da jornada, e a mais gentil.
+                  {primeiraVez
+                    ? "Seu intestino e seu cérebro conversam o tempo todo. Nesta respiração de ~1 minuto, você vai sentir seu corpo sair do modo alerta — hoje, não na semana que vem. É a prova de que isso funciona no SEU corpo."
+                    : "Intestino e cérebro conversam. Quando você desacelera a respiração — soltando o ar mais devagar do que puxa — o corpo sai do modo de alerta e o intestino relaxa junto. É a alavanca com mais evidência da jornada, e a mais gentil."}
                 </p>
               </div>
 
@@ -143,7 +154,12 @@ export default function Calmaria() {
 
             <div className="space-y-2 pb-6">
               <Button fullWidth size="lg" onClick={start}>
-                {doneToday ? "Fazer de novo" : "Começar"} · ~{Math.round(totalSec / 60) || 1} min
+                {primeiraVez
+                  ? "Sentir agora"
+                  : doneToday
+                    ? "Fazer de novo"
+                    : "Começar"}{" "}
+                · ~{Math.round(totalSec / 60) || 1} min
               </Button>
               {doneToday && (
                 <p className="text-center text-sm text-sage-deep">
@@ -228,11 +244,16 @@ export default function Calmaria() {
                 <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
                   {session.reframe.body}
                 </p>
+                {primeiraVez && (
+                  <p className="mt-4 rounded-2xl bg-sage-tint/50 px-4 py-3 text-[15px] font-medium leading-relaxed text-sage-dark">
+                    Primeira vitória registrada ✅ Esse alívio foi você que fez.
+                  </p>
+                )}
               </div>
             </div>
             <div className="pb-6">
               <Button fullWidth size="lg" onClick={() => router.push("/inicio")}>
-                Pronto
+                {primeiraVez ? "Ir pro meu Dia 1" : "Pronto"}
               </Button>
             </div>
           </motion.div>

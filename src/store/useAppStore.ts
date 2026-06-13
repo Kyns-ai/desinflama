@@ -57,6 +57,8 @@ interface AppState {
   setOnboarding: (onboarding: OnboardingData) => Promise<void>;
   /** Define o ritual "se-então" (âncora) e o ciclo, opcionalmente. */
   setRitual: (anchor: string) => Promise<void>;
+  /** Compromisso de check-ins (7|14|21) assumido no ritual pós-Mapa. */
+  setCommitment: (days: number) => Promise<void>;
   setCycleStart: (dateKey: string) => Promise<void>;
   startJourney: (challenge?: ChallengeType) => Promise<void>;
   /** Entra com a conta de demonstração já populada (modo mock). */
@@ -300,6 +302,19 @@ export const useAppStore = create<AppState>((set, get) => {
       });
     },
 
+    setCommitment: async (days) => {
+      let novas: AchievementDef[] = [];
+      await get().update((d) => {
+        d.commitmentDays = days;
+        d.commitmentAt = new Date().toISOString();
+        // destrava "Primeiro passo" na hora — 1ª conquista da sessão
+        const { list, newlyUnlocked } = reconcileAchievements(d, todayKey());
+        d.achievements = list;
+        novas = newlyUnlocked;
+      });
+      notifyAchievements(novas);
+    },
+
     setCycleStart: async (dateKey) => {
       await get().update((d) => {
         d.cycleStart = dateKey;
@@ -350,6 +365,8 @@ export const useAppStore = create<AppState>((set, get) => {
       await get().update((d) => {
         if (d.flags[key]) return;
         d.flags[key] = true;
+        // primeira Calmaria = a vitória sentida do Dia 0 (conquista + tracker)
+        if (!d.flags.primeiroAlivio) d.flags.primeiroAlivio = true;
         d.seeds += SEEDS.calmaria;
         // conta como atividade do dia (ofensiva perdoável + score)
         touchStreak(d, today);
@@ -409,7 +426,10 @@ export const useAppStore = create<AppState>((set, get) => {
       notifyAchievements(novas);
       // nudges falam "Seu Dia N te espera" — reagenda com o dia novo
       if (!blocked && get().data.flags.notifications) {
-        await scheduleRetentionNudges(get().data.progress?.currentDay ?? 1);
+        await scheduleRetentionNudges(
+          get().data.progress?.currentDay ?? 1,
+          get().data.user?.name?.split(" ")[0]
+        );
       }
       return { blocked };
     },
@@ -462,7 +482,10 @@ export const useAppStore = create<AppState>((set, get) => {
     enableNotifications: async () => {
       const granted = await requestNotifPermission();
       if (granted) {
-        await scheduleRetentionNudges(get().data.progress?.currentDay ?? 1);
+        await scheduleRetentionNudges(
+          get().data.progress?.currentDay ?? 1,
+          get().data.user?.name?.split(" ")[0]
+        );
       }
       await get().update((d) => {
         d.flags.notifications = granted;

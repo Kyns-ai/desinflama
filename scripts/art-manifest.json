@@ -126,6 +126,26 @@
       "id": "card-tapioca",
       "emoji": "🫓",
       "prompt": "a round white tapioca flatbread folded in half on a small plate"
+    },
+    {
+      "id": "compromisso-pacto",
+      "emoji": "🤝",
+      "prompt": "two hands gently linking pinky fingers in a soft promise gesture, warm and intimate"
+    },
+    {
+      "id": "tracker-72h",
+      "emoji": "⏱️",
+      "prompt": "a soft sunrise over three small stepping stones on a path, first steps of a journey"
+    },
+    {
+      "id": "bonus-comerfora",
+      "emoji": "🍽️",
+      "prompt": "a friendly restaurant table setting with a plate, glass and napkin, calm and inviting"
+    },
+    {
+      "id": "protocolo-selo",
+      "emoji": "📜",
+      "prompt": "a soft paper scroll with a sage green leaf wax seal, a personal plan document"
     }
   ]
 }

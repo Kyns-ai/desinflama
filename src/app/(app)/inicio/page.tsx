@@ -15,6 +15,7 @@ import {
   HeartPulse,
   Info,
   ListChecks,
+  Lock,
   Check,
   ChevronRight,
   ArrowRight,
@@ -27,18 +28,19 @@ import {
 import { ScoreRing, Card, Badge, IconCircle, Button, buttonStyles } from "@/components/ui";
 import { SeedMeter } from "@/components/SeedMeter";
 import { WeeklyRecap } from "@/components/WeeklyRecap";
+import { Tracker72h, CommitmentStrip } from "@/components/Tracker72h";
 import { weeklyRecap, closedWeeks } from "@/lib/recap";
 import { Confetti } from "@/components/Confetti";
 import { Art } from "@/components/Art";
 import { artId } from "@/content/cardArt";
 import { haptic } from "@/lib/haptics";
 import { useAppStore } from "@/store/useAppStore";
-import { currentScore, scoreMicrocopy, isScoreStalled } from "@/lib/score";
+import { currentScore, scoreMicrocopy } from "@/lib/score";
 import { leveledUp, type GardenLevel } from "@/lib/garden";
 import { phaseForDay, totalDays } from "@/lib/journey";
 import { getDay } from "@/content/journey";
 import { MONTHLY_CHALLENGES } from "@/content/challenges";
-import { todayKey } from "@/lib/date";
+import { todayKey, diffDays } from "@/lib/date";
 import { cycleInfo, RITUAL_ANCHORS } from "@/lib/cycle";
 import { MAX_SHIELDS } from "@/types/domain";
 import { cn } from "@/lib/cn";
@@ -56,7 +58,7 @@ export default function Inicio() {
   const router = useRouter();
   const data = useAppStore((s) => s.data);
   const completeDay = useAppStore((s) => s.completeDay);
-  const { user, progress, streak, scores, seeds } = data;
+  const { user, progress, streak, seeds } = data;
 
   const score = currentScore(data);
   const day = progress?.currentDay ?? 1;
@@ -65,7 +67,6 @@ export default function Inicio() {
   const total = totalDays(challenge);
   const totalLabel = Number.isFinite(total) ? total : 21;
   const firstName = (user?.name ?? "você").split(" ")[0];
-  const stalled = isScoreStalled(scores);
 
   const content = getDay(day);
   const today = todayKey();
@@ -133,6 +134,8 @@ export default function Inicio() {
   const programDone =
     (challenge === "main14" || challenge === "reset21") &&
     (progress?.completedDays.includes(totalLabel) ?? false);
+
+  const bonusUnlocked = progress?.completedDays.includes(7) ?? false;
 
   async function concluirDia() {
     setBusy(true);
@@ -227,6 +230,36 @@ export default function Inicio() {
       <ShieldSavedBanner />
       <HonestWelcome />
       <WeeklyRecapBanner />
+
+      <CommitmentStrip />
+
+      {/* Quem fechou o app antes da 1ª Calmaria: o Dia 0 recomeça pelo alívio */}
+      {!data.flags.primeiroAlivio &&
+        progress?.startedAt &&
+        diffDays(today, todayKey(new Date(progress.startedAt))) <= 2 && (
+          <Link href="/calmaria" className="block">
+            <Card
+              elevation="lift"
+              className="flex items-center gap-4 border border-sage/30 bg-gradient-to-br from-sage-tint/60 to-cream transition-transform active:scale-[0.99]"
+            >
+              <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-sage text-white shadow-[var(--shadow-sage)]">
+                <Wind className="size-6" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <h3 className="font-semibold tracking-tight text-ink">
+                  Comece pelo alívio, não pela dieta
+                </h3>
+                <p className="text-sm text-ink-soft">
+                  1 minuto de respiração guiada pra sentir a diferença agora
+                </p>
+              </div>
+              <ChevronRight className="size-5 shrink-0 text-ink-faint" />
+            </Card>
+          </Link>
+        )}
+
+      <Tracker72h />
+
       <RitualCard />
 
       {/* Seu dia de hoje — o ritual */}
@@ -380,22 +413,36 @@ export default function Inicio() {
         </section>
       )}
 
-      {/* Upsell quando o score trava */}
-      {stalled && (
-        <Link href="/acompanhamento" className="block">
-          <div className="rounded-2xl border border-gold/30 bg-gold-tint/60 p-5 transition-transform active:scale-[0.99]">
-            <div className="flex items-center gap-2">
-              <Sparkles className="size-5 text-[#9a7322]" />
-              <span className="font-semibold text-[#7c5d18]">
-                Seu padrão pede um olhar de perto
-              </span>
-            </div>
-            <p className="mt-1.5 text-[15px] text-[#7c5d18]/85">
-              Quando o índice trava, uma avaliação individual costuma destravar.
+      {/* Bônus do Dia 7 — âncora de futuro visível desde o Dia 0 */}
+      <Link href="/bonus" className="block">
+        <Card
+          elevation="soft"
+          className={cn(
+            "flex items-center gap-4 transition-transform active:scale-[0.99]",
+            bonusUnlocked
+              ? "border border-gold/30 bg-gold-tint/30"
+              : "border border-line"
+          )}
+        >
+          <Art
+            id="bonus-comerfora"
+            emoji="🍽️"
+            className="size-12 shrink-0 rounded-2xl text-2xl"
+          />
+          <div className="min-w-0 flex-1">
+            <h3 className="flex items-center gap-1.5 font-semibold tracking-tight text-ink">
+              Bônus do Dia 7
+              {!bonusUnlocked && <Lock className="size-3.5 text-ink-faint" />}
+            </h3>
+            <p className="text-sm text-ink-soft">
+              {bonusUnlocked
+                ? "Comer fora sem inchar — desbloqueado 🎉"
+                : "Comer fora sem inchar: restaurante, churrasco, pizza e bar. Desbloqueia quando você fechar o Dia 7."}
             </p>
           </div>
-        </Link>
-      )}
+          <ChevronRight className="size-5 shrink-0 text-ink-faint" />
+        </Card>
+      </Link>
 
       {/* Biblioteca */}
       <Link href="/aprender" className="block">
@@ -550,7 +597,12 @@ function HonestWelcome() {
           </p>
           <p className="mt-1 text-sm leading-relaxed text-ink-soft">
             Sem detox milagroso, sem “barriga chapada em 14 dias”. Veja o que
-            estes dias podem e o que não podem fazer, com as fontes.
+            estes dias podem e o que não podem fazer, com as fontes. E a gente
+            só te pede uma coisa:{" "}
+            <strong className="font-semibold text-ink">
+              faça 7 check-ins antes de decidir se isso funciona pra você
+            </strong>
+            .
           </p>
           <div className="mt-3 flex gap-2">
             <Link

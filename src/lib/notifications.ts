@@ -35,16 +35,46 @@ export async function requestNotifPermission(): Promise<boolean> {
   return res.display === "granted";
 }
 
-export async function scheduleRetentionNudges(currentDay: number): Promise<void> {
+/** Copy da manhã por dia — as primeiras 72h falam com ELA, não com "usuária".
+ *  (O dado de ontem não entra: o agendamento é antecipado e só é reescrito em
+ *  completeDay; embutir score exigiria reagendar em todo addLog.) */
+function morningCopy(day: number, nome?: string): { title: string; body: string } {
+  const oi = nome ? `${nome}, ` : "";
+  if (day === 1)
+    return {
+      title: "Seu Dia 1 te espera 🌱",
+      body: "Começa leve: 1 respiração, 1 check-in. 3 minutos.",
+    };
+  if (day === 2)
+    return {
+      title: "Bom dia 🌱",
+      body: `${oi}sua barriga já deve reclamar menos hoje. Registra pra gente comparar?`,
+    };
+  if (day === 3)
+    return {
+      title: "Último dia da fase Choque 🔥",
+      body: `${oi}feche as 72h e veja seu índice subir.`,
+    };
+  return {
+    title: "Bom dia 🌱",
+    body: `Seu Dia ${day} te espera. Bora desinchar?`,
+  };
+}
+
+export async function scheduleRetentionNudges(
+  currentDay: number,
+  firstName?: string
+): Promise<void> {
   const LN = await plugin();
   if (!LN) return;
+  const manha = morningCopy(currentDay, firstName);
   try {
     await LN.schedule({
       notifications: [
         {
           id: IDS.morning,
-          title: "Bom dia 🌱",
-          body: `Seu Dia ${currentDay} te espera. Bora desinchar?`,
+          title: manha.title,
+          body: manha.body,
           schedule: { on: { hour: 9, minute: 0 }, allowWhileIdle: true },
         },
         {

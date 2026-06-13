@@ -10,10 +10,26 @@ export interface AchievementDef {
 }
 
 export const ACHIEVEMENTS: AchievementDef[] = [
+  // Conquistas do Dia 0 — destravam na primeira sessão (a tela de conquistas
+  // não pode ser um muro de cadeados na janela de reembolso).
+  {
+    id: "primeiro-passo",
+    title: "Primeiro passo",
+    description: "Assumiu seu compromisso de check-ins",
+    emoji: "🤝",
+    check: (d) => !!d.commitmentAt,
+  },
+  {
+    id: "primeiro-alivio",
+    title: "Primeiro alívio",
+    description: "Sentiu a primeira Calmaria no corpo",
+    emoji: "🌬️",
+    check: (d) => !!d.flags.primeiroAlivio,
+  },
   {
     id: "primeiro-registro",
-    title: "Primeiro passo",
-    description: "Você fez seu primeiro registro",
+    title: "Primeiro registro",
+    description: "Você fez seu primeiro check-in",
     emoji: "🌱",
     check: (d) => d.logs.length >= 1,
   },
