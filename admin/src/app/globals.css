@@ -1,46 +1,79 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------ *
- *  Desinflama Admin — tokens (mesma marca, layout de dashboard)
+ *  Desinflama Admin — MESMOS tokens do app, layout de painel.
+ *
+ *  Os valores aqui são cópia literal de `src/app/globals.css`. Painel com
+ *  paleta própria é como o admin acaba parecendo outro produto — e, pior,
+ *  é como a gente perde a régua: se o rosa daqui não é o rosa de lá, ninguém
+ *  percebe quando o de lá muda.
+ *
+ *  Ao mexer na paleta: mexer nos DOIS arquivos, sempre.
  * ------------------------------------------------------------------ */
 @theme {
-  --color-cream: #faf7f2;
-  --color-canvas: #f4f1ea;
-  --color-surface: #ffffff;
+  /* base bege rosada quente */
+  --color-cream: #f5ece8;
+  --color-canvas: #f0e6e1; /* fundo do painel, um degrau abaixo do app */
+  --color-cream-deep: #ebdfd9;
+  --color-surface: #fdf9f7;
+  --color-surface-warm: #f3e9e4;
 
-  --color-ink: #232220;
-  --color-ink-soft: #5c5953;
-  --color-ink-faint: #9a958c;
+  --color-ink: #26191b;
+  --color-ink-soft: #5b4a49;
+  --color-ink-faint: #786563;
 
-  --color-rose: #4fb286;
-  --color-rose-deep: #3c9a71;
-  --color-rose-dark: #2f7657;
-  --color-rose-tint: #e7f3ec;
+  /* rosa amora — a marca */
+  --color-rose: #a8446a;
+  --color-rose-deep: #8d3556;
+  --color-rose-dark: #6a2440;
+  --color-rose-tint: #f7e5ea;
 
-  --color-coral: #f2856d;
-  --color-coral-deep: #e66b52;
-  --color-coral-dark: #b9482f;
-  --color-coral-tint: #fce9e3;
+  /* terracota — acento raro */
+  --color-coral: #b0552f;
+  --color-coral-deep: #96461f;
+  --color-coral-dark: #7a3819;
+  --color-coral-tint: #f7e5d9;
 
-  --color-gold: #d8a657;
-  --color-gold-tint: #f6ecd8;
-  --color-sky: #6aa6c4;
-  --color-sky-tint: #e4f0f5;
-  --color-plum: #9b7aa6;
-  --color-plum-tint: #efe7f2;
-  --color-danger: #d9694f;
-  --color-danger-tint: #f8e6e1;
+  --color-gold: #a97f2e;
+  --color-gold-tint: #f2e6cd;
+  --color-gold-dark: #75561a;
+  --color-sky: #47758a;
+  --color-sky-tint: #dde8eb;
+  --color-sky-dark: #2c5464;
+  --color-plum: #6f5a6a;
+  --color-plum-tint: #eae2e7;
+  --color-plum-dark: #533f4f;
 
-  --color-line: #ece6db;
-  --color-line-soft: #f2ede4;
+  /* semânticas da Nota Desinflama (iguais às do app) */
+  --color-nota-boa: #4f7a52;
+  --color-nota-boa-tint: #e2ebe0;
+  --color-nota-media: #b98a2e;
+  --color-nota-media-tint: #f3e7cd;
+  --color-nota-ruim: #b0552f;
+  --color-nota-ruim-tint: #f7e5d9;
+
+  --color-danger: #a03024;
+  --color-danger-tint: #f6ddd9;
+
+  --color-line: #e5d7d1;
+  --color-line-soft: #eee3de;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
 
-  --shadow-soft: 0 1px 2px rgba(67, 56, 38, 0.04),
-    0 8px 24px -14px rgba(67, 56, 38, 0.1);
-  --shadow-card: 0 1px 3px rgba(67, 56, 38, 0.05),
-    0 12px 32px -18px rgba(67, 56, 38, 0.14);
+  --text-h1: 2rem;
+  --text-h1--line-height: 1.12;
+  --text-h1--letter-spacing: -0.022em;
+  --text-h2: 1.4rem;
+  --text-h2--line-height: 1.2;
+  --text-h3: 1.125rem;
+  --text-label: 0.75rem;
+  --text-label--letter-spacing: 0.06em;
+
+  --shadow-soft: 0 1px 2px rgba(58, 32, 38, 0.04),
+    0 8px 24px -14px rgba(58, 32, 38, 0.1);
+  --shadow-card: 0 1px 3px rgba(58, 32, 38, 0.05),
+    0 12px 32px -18px rgba(58, 32, 38, 0.14);
 }
 
 :root {
@@ -57,7 +90,22 @@ body {
 .font-display {
   font-family: var(--font-serif);
   font-optical-sizing: auto;
-  letter-spacing: -0.015em;
+  font-variation-settings: "SOFT" 20, "WONK" 0;
+  letter-spacing: -0.02em;
+}
+
+.eyebrow {
+  font-size: var(--text-label);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-ink-faint);
+}
+
+.numeral {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+  font-weight: 600;
 }
 
 .no-scrollbar::-webkit-scrollbar {
