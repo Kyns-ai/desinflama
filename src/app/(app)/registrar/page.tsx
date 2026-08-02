@@ -219,9 +219,12 @@ export default function Registrar() {
             <Plus className="size-5" />
           </button>
         </div>
+        {/* O app não é "uma nutricionista de IA" — a copy antiga dizia que "a
+            nutri olha a foto e responde". Agora fala do que a tela faz: dá uma
+            nota calculada com o mapa DELA. */}
         <p className="mt-2 text-[13px] leading-relaxed text-ink-faint">
-          Na dúvida se o prato cai bem, toque na câmera: a nutri olha a foto e
-          responde antes de você comer.
+          Na dúvida se o prato cai bem, toque na câmera: você vê a Nota
+          Desinflama dele antes de comer.
         </p>
 
         <AnimatePresence>

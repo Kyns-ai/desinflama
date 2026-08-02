@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Capacitor } from "@capacitor/core";
@@ -153,10 +153,14 @@ function NotifToggle({ row }: { row: Row }) {
   const [busy, setBusy] = useState(false);
   // No navegador (sem app instalado) o agendamento offline não funciona —
   // ser honesto em vez de prometer lembrete que não dispara.
-  const [native, setNative] = useState(true);
-  useEffect(() => {
-    setNative(Capacitor.isNativePlatform());
-  }, []);
+  //
+  // Lido por `useState` com inicializador preguiçoso, não em `useEffect`:
+  // é um valor do ambiente, estável durante toda a vida da tela. Setar estado
+  // dentro do efeito só pra ler isso provoca um render extra à toa (e o lint
+  // reclama com razão). O `typeof window` protege o passe do servidor.
+  const [native] = useState(
+    () => typeof window === "undefined" || Capacitor.isNativePlatform()
+  );
 
   async function toggle() {
     setBusy(true);

@@ -18,6 +18,7 @@ import { latestRecap } from "@/lib/recap";
 import { PhotoGallery } from "@/components/PhotoGallery";
 import { SeedMeter } from "@/components/SeedMeter";
 import { gardenFor } from "@/lib/garden";
+import { CardsParaPostar } from "@/components/compartilhar/CardsParaPostar";
 import { useAppStore } from "@/store/useAppStore";
 import {
   scoreSeries,
@@ -79,13 +80,17 @@ export default function Progresso() {
   return (
     <div className="space-y-6">
       <header className="pt-5">
-        <h1 className="font-display text-[1.75rem] font-semibold tracking-tight text-ink">
+        <h1 className="font-display text-h1 font-semibold text-ink">
           Seu progresso
         </h1>
         <p className="mt-1 text-[15px] text-ink-soft">
           A prova de que está funcionando — no seu corpo.
         </p>
       </header>
+
+      {/* Os cards de conquista vêm ANTES dos gráficos: gráfico é pra ela
+          entender, card é pra ela mostrar — e mostrar é o que traz gente nova. */}
+      <CardsParaPostar />
 
       {/* Resumo rápido */}
       <div className="grid grid-cols-3 gap-3">

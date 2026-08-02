@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 /**
  * /zerar — ferramenta de teste: apaga TODOS os dados locais (conta mock,
  * progresso, flags) e volta pro início, como uma compradora nova.
@@ -62,9 +64,9 @@ export default function Zerar() {
       >
         Zerar e recomeçar do início
       </Button>
-      <a href="/" className="mt-4 text-sm font-medium text-ink-faint">
+      <Link href="/" className="mt-4 text-sm font-medium text-ink-faint">
         Cancelar — voltar sem apagar
-      </a>
+      </Link>
     </div>
   );
 }
