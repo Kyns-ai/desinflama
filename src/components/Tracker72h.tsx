@@ -70,10 +70,10 @@ export function Tracker72h() {
 
   if (allDone && flags.tracker72hCelebrado) {
     return (
-      <Card elevation="soft" className="flex items-center gap-3 bg-sage-tint/40">
-        <Art id="tracker-72h" emoji="🌅" className="size-10 shrink-0 rounded-xl text-xl" />
+      <Card elevation="soft" className="flex items-center gap-3 bg-rose-tint/40">
+ <Art id="tracker-72h" className="size-10 shrink-0 rounded-xl text-xl" />
         <p className="text-sm leading-snug text-ink">
-          <strong className="font-semibold">72h bem começadas ✅</strong>{" "}
+ <strong className="font-semibold">72h bem começadas </strong>{""}
           <span className="text-ink-soft">
             O desinchaço de hoje você sente hoje — a transformação aparece na
             semana 2–3.
@@ -88,7 +88,7 @@ export function Tracker72h() {
       {justCelebrated && <Confetti />}
       <div className="flex items-center justify-between border-b border-line px-5 py-4">
         <div className="flex items-center gap-3">
-          <Art id="tracker-72h" emoji="🌅" className="size-10 shrink-0 rounded-xl text-xl" />
+ <Art id="tracker-72h" className="size-10 shrink-0 rounded-xl text-xl" />
           <div>
             <h2 className="font-display text-lg font-semibold tracking-tight text-ink">
               Suas primeiras 72h
@@ -98,7 +98,7 @@ export function Tracker72h() {
             </p>
           </div>
         </div>
-        <span className="shrink-0 text-sm font-semibold text-sage-deep">
+        <span className="shrink-0 text-sm font-semibold text-rose-deep">
           {doneCount}/3
         </span>
       </div>
@@ -111,7 +111,7 @@ export function Tracker72h() {
               <span
                 className={cn(
                   "grid size-10 shrink-0 place-items-center rounded-xl transition-colors",
-                  v.done ? "bg-sage text-white" : "bg-cream-deep text-ink-soft"
+                  v.done ? "bg-rose text-white" : "bg-cream-deep text-ink-soft"
                 )}
               >
                 {v.done ? (
@@ -158,9 +158,9 @@ export function Tracker72h() {
                 <span className="flex shrink-0 flex-col items-end gap-1">
                   <button
                     onClick={marcarTroca}
-                    className="rounded-full bg-sage px-3 py-1.5 text-xs font-semibold text-white transition-transform active:scale-95"
+                    className="rounded-full bg-rose px-3 py-1.5 text-xs font-semibold text-white transition-transform active:scale-95"
                   >
-                    Fiz uma troca ✓
+ Fiz uma troca
                   </button>
                   <Link href={v.href} className="text-[11px] font-medium text-ink-faint">
                     ver o semáforo
@@ -190,9 +190,9 @@ export function Tracker72h() {
             animate={{ opacity: 1, height: "auto" }}
             className="overflow-hidden"
           >
-            <div className="border-t border-line bg-sage-tint/40 px-5 py-4">
+            <div className="border-t border-line bg-rose-tint/40 px-5 py-4">
               <p className="font-display text-lg font-semibold tracking-tight text-ink">
-                🎉 72h bem começadas!
+ 72h bem começadas!
               </p>
               <p className="mt-1 text-sm leading-relaxed text-ink-soft">
                 Verdade de nutri: o desinchaço de hoje você sente hoje — a
@@ -201,9 +201,9 @@ export function Tracker72h() {
               </p>
               <button
                 onClick={celebrar}
-                className="mt-3 text-sm font-semibold text-sage-deep"
+                className="mt-3 text-sm font-semibold text-rose-deep"
               >
-                Bora 💚
+ Bora
               </button>
             </div>
           </motion.div>
@@ -229,8 +229,8 @@ export function CommitmentStrip() {
   return (
     <div className="rounded-2xl bg-cream-deep/50 px-4 py-2.5">
       {done ? (
-        <p className="text-sm font-medium text-sage-dark">
-          Compromisso cumprido, {firstName} 🏅 — agora você já sabe que consegue.
+        <p className="text-sm font-medium text-rose-dark">
+ Compromisso cumprido, {firstName} — agora você já sabe que consegue.
         </p>
       ) : (
         <>
@@ -239,13 +239,13 @@ export function CommitmentStrip() {
               Check-in {Math.min(n + 1, commitmentDays)} de {commitmentDays} do
               seu compromisso
             </span>
-            <span className="font-semibold text-sage-deep">
+            <span className="font-semibold text-rose-deep">
               {n}/{commitmentDays}
             </span>
           </div>
           <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-cream-deep">
             <motion.div
-              className="h-full rounded-full bg-sage"
+              className="h-full rounded-full bg-rose"
               initial={false}
               animate={{ width: `${Math.min(100, (n / commitmentDays) * 100)}%` }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}

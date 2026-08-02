@@ -7,7 +7,7 @@ import { Art } from "@/components/Art";
 export default function NotFound() {
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col items-center justify-center bg-cream px-8 text-center">
-      <Art id="card-erva" emoji="🌿" className="size-20 rounded-3xl text-5xl" />
+ <Art id="card-erva" className="size-20 rounded-3xl text-5xl" />
       <h1 className="mt-5 font-display text-2xl font-semibold tracking-tight text-ink">
         Não encontramos esta página
       </h1>

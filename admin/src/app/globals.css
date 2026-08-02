@@ -12,10 +12,10 @@
   --color-ink-soft: #5c5953;
   --color-ink-faint: #9a958c;
 
-  --color-sage: #4fb286;
-  --color-sage-deep: #3c9a71;
-  --color-sage-dark: #2f7657;
-  --color-sage-tint: #e7f3ec;
+  --color-rose: #4fb286;
+  --color-rose-deep: #3c9a71;
+  --color-rose-dark: #2f7657;
+  --color-rose-tint: #e7f3ec;
 
   --color-coral: #f2856d;
   --color-coral-deep: #e66b52;
@@ -68,7 +68,7 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-sage);
+  outline: 2px solid var(--color-rose);
   outline-offset: 2px;
   border-radius: 6px;
 }

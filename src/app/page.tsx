@@ -35,7 +35,7 @@ export default function Welcome() {
   return (
     <div className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col overflow-hidden bg-cream px-7 pt-safe pb-safe">
       {/* atmosfera: halos suaves de sálvia e coral */}
-      <div className="pointer-events-none absolute -left-24 -top-24 size-72 rounded-full bg-sage-tint/70 blur-3xl" />
+      <div className="pointer-events-none absolute -left-24 -top-24 size-72 rounded-full bg-rose-tint/70 blur-3xl" />
       <div className="pointer-events-none absolute -right-20 top-40 size-64 rounded-full bg-coral-tint/60 blur-3xl" />
 
       <div className="relative flex flex-1 flex-col justify-center py-12">
@@ -57,7 +57,7 @@ export default function Welcome() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1, ease }}
-          className="mb-4 inline-flex w-fit items-center gap-1.5 rounded-full bg-sage-tint px-3 py-1 text-xs font-semibold text-sage-dark"
+          className="mb-4 inline-flex w-fit items-center gap-1.5 rounded-full bg-rose-tint px-3 py-1 text-xs font-semibold text-rose-dark"
         >
           <Sparkles className="size-3.5" /> Desafio Desincha · 14 dias
         </motion.span>
@@ -95,7 +95,7 @@ export default function Welcome() {
               key={p.when}
               className="flex-1 rounded-2xl border border-line bg-surface/70 px-3 py-3 text-center"
             >
-              <div className="font-display text-lg font-semibold text-sage-deep">
+              <div className="font-display text-lg font-semibold text-rose-deep">
                 {p.when}
               </div>
               <div className="mt-0.5 text-[11px] leading-tight text-ink-soft">
@@ -142,7 +142,7 @@ export default function Welcome() {
           <button
             onClick={verDemo}
             disabled={demoLoading}
-            className="flex w-full items-center justify-center gap-1.5 pt-1 text-sm font-medium text-sage-deep disabled:opacity-50"
+            className="flex w-full items-center justify-center gap-1.5 pt-1 text-sm font-medium text-rose-deep disabled:opacity-50"
           >
             <PlayCircle className="size-4" />
             {demoLoading ? "Abrindo demonstração…" : "Ver demonstração"}

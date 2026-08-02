@@ -88,7 +88,7 @@ export default function Inicio() {
     sub: string;
     done: boolean;
     href: string;
-    tone: "sage" | "coral" | "sky";
+    tone: "rose" | "coral" | "sky";
   }[] = [
     {
       icon: BookOpen,
@@ -98,7 +98,7 @@ export default function Inicio() {
         : `${content?.lesson.durationMin ?? 2} min · ${content?.lesson.title ?? ""}`,
       done: aulaDone,
       href: `/jornada/${day}/aula`,
-      tone: "sage",
+      tone: "rose",
     },
     {
       icon: HeartPulse,
@@ -187,7 +187,7 @@ export default function Inicio() {
           primário aparece em força total num campo que sangra até o topo, e o
           conteúdo sobe por cima numa folha creme. É o esqueleto de Reverse
           Health (campo colorido + folha branca) com a cor que já é nossa. */}
-      <div className="-mx-5 -mt-safe bg-sage-dark px-5 pt-safe">
+      <div className="-mx-5 -mt-safe bg-rose-dark px-5 pt-safe">
         <div className="pb-14 pt-5">
           <header className="flex items-start justify-between">
             <div>
@@ -264,7 +264,7 @@ export default function Inicio() {
             </span>
             <div className="min-w-0 flex-1">
               <h3 className="font-semibold tracking-tight text-ink">
-                Você fechou o programa 🎉
+ Você fechou o programa
               </h3>
               <p className="text-sm text-ink-soft">
                 Escolha seu próximo passo: Reset Profundo ou Manutenção
@@ -289,9 +289,9 @@ export default function Inicio() {
           <Link href="/calmaria" className="block">
             <Card
               elevation="lift"
-              className="flex items-center gap-4 border border-sage/30 bg-gradient-to-br from-sage-tint/60 to-cream transition-transform active:scale-[0.99]"
+              className="flex items-center gap-4 border border-rose/30 bg-gradient-to-br from-rose-tint/60 to-cream transition-transform active:scale-[0.99]"
             >
-              <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-sage text-white shadow-[var(--shadow-sage)]">
+              <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-rose text-white shadow-[var(--shadow-rose)]">
                 <Wind className="size-6" />
               </span>
               <div className="min-w-0 flex-1">
@@ -353,7 +353,7 @@ export default function Inicio() {
 
           {!dayCompleted && closedTodayAlready && (
             <div className="flex items-center justify-center gap-2 p-4 text-center text-sm text-ink-soft">
-              Um dia por dia 💛 O Dia {day} abre pra concluir amanhã — hoje
+ Um dia por dia O Dia {day} abre pra concluir amanhã — hoje
               você já fechou o seu.
             </div>
           )}
@@ -366,19 +366,19 @@ export default function Inicio() {
                 variant={allDone ? "primary" : "secondary"}
                 onClick={concluirDia}
               >
-                {allDone ? `Concluir Dia ${day} 🎉` : `Fechar o dia mesmo assim`}
+ {allDone?`Concluir Dia ${day}`:`Fechar o dia mesmo assim`}
                 {allDone && <ArrowRight className="size-5" />}
               </Button>
               {!allDone && (
                 <p className="mt-2 text-center text-xs text-ink-faint">
                   Faltam {steps.length - doneCount} de {steps.length} — mas pode
-                  fechar sem culpa 💛
+ fechar sem culpa
                 </p>
               )}
             </div>
           )}
           {dayCompleted && (
-            <div className="flex items-center justify-center gap-2 p-4 text-sm font-semibold text-sage-dark">
+            <div className="flex items-center justify-center gap-2 p-4 text-sm font-semibold text-rose-dark">
               <Check className="size-4" strokeWidth={3} /> Dia {day} concluído
             </div>
           )}
@@ -397,14 +397,14 @@ export default function Inicio() {
           className={cn(
             "flex items-center gap-4 transition-transform active:scale-[0.99]",
             calmariaDone
-              ? "bg-sage-tint/40"
-              : "border border-sage/25 bg-gradient-to-br from-sage-tint/50 to-cream"
+              ? "bg-rose-tint/40"
+              : "border border-rose/25 bg-gradient-to-br from-rose-tint/50 to-cream"
           )}
         >
           <span
             className={cn(
               "grid size-12 shrink-0 place-items-center rounded-2xl",
-              calmariaDone ? "bg-sage text-white" : "bg-sage-tint text-sage-deep"
+              calmariaDone ? "bg-rose text-white" : "bg-rose-tint text-rose-deep"
             )}
           >
             {calmariaDone ? (
@@ -419,7 +419,7 @@ export default function Inicio() {
             </h3>
             <p className="text-sm text-ink-soft">
               {calmariaDone
-                ? "Feita — seu intestino agradece 💚"
+?"Feita — seu intestino agradece"
                 : "1 min de respiração que acalma o intestino"}
             </p>
           </div>
@@ -440,15 +440,15 @@ export default function Inicio() {
       {content && (
         <section>
           <h2 className="mb-3 flex items-center gap-2 text-base font-semibold tracking-tight text-ink">
-            <UtensilsCrossed className="size-4 text-sage-deep" /> Refeições de hoje
+            <UtensilsCrossed className="size-4 text-rose-deep" /> Refeições de hoje
           </h2>
           <Link href={`/jornada/${day}`} className="block">
             <Card elevation="soft" className="space-y-2.5 transition-transform active:scale-[0.99]">
               {(
                 [
-                  ["meal-cafe", "☕", "Café", content.meals.cafe[0]],
-                  ["meal-almoco", "🍽️", "Almoço", content.meals.almoco[0]],
-                  ["meal-jantar", "🌙", "Jantar", content.meals.jantar[0]],
+ ["meal-cafe","","Café", content.meals.cafe[0]],
+ ["meal-almoco","","Almoço", content.meals.almoco[0]],
+ ["meal-jantar","","Jantar", content.meals.jantar[0]],
                 ] as const
               ).map(([id, emoji, label, meal]) => (
                 <div key={label} className="flex items-center gap-3 text-[15px]">
@@ -477,7 +477,6 @@ export default function Inicio() {
         >
           <Art
             id="bonus-comerfora"
-            emoji="🍽️"
             className="size-12 shrink-0 rounded-2xl text-2xl"
           />
           <div className="min-w-0 flex-1">
@@ -487,7 +486,7 @@ export default function Inicio() {
             </h3>
             <p className="text-sm text-ink-soft">
               {bonusUnlocked
-                ? "Comer fora sem inchar — desbloqueado 🎉"
+?"Comer fora sem inchar — desbloqueado"
                 : "Comer fora sem inchar: restaurante, churrasco, pizza e bar. Desbloqueia quando você fechar o Dia 7."}
             </p>
           </div>
@@ -518,7 +517,7 @@ export default function Inicio() {
           elevation="soft"
           className="flex items-center gap-4 transition-transform active:scale-[0.99]"
         >
-          <IconCircle icon={UtensilsCrossed} tone="sage" size="lg" />
+          <IconCircle icon={UtensilsCrossed} tone="rose" size="lg" />
           <div className="min-w-0 flex-1">
             <h3 className="font-semibold tracking-tight text-ink">
               Cardápio da semana
@@ -635,9 +634,9 @@ function NutriProativa({ dia, fase }: { dia: number; fase: string }) {
   };
 
   return (
-    <Card elevation="soft" className="border border-sage/20 p-0">
+    <Card elevation="soft" className="border border-rose/20 p-0">
       <div className="flex items-start gap-3 p-4">
-        <span className="mt-0.5 grid size-10 shrink-0 place-items-center rounded-2xl bg-sage-tint text-sage-dark">
+        <span className="mt-0.5 grid size-10 shrink-0 place-items-center rounded-2xl bg-rose-tint text-rose-dark">
           <Sparkles className="size-5" />
         </span>
         <div className="min-w-0 flex-1">
@@ -653,13 +652,13 @@ function NutriProativa({ dia, fase }: { dia: number; fase: string }) {
       <div className="grid grid-cols-2 gap-px overflow-hidden rounded-b-2xl border-t border-line bg-line">
         <Link
           href="/nutri"
-          className="flex items-center justify-center gap-2 bg-surface py-3 text-sm font-semibold text-sage-dark transition-colors active:bg-sage-tint/40"
+          className="flex items-center justify-center gap-2 bg-surface py-3 text-sm font-semibold text-rose-dark transition-colors active:bg-rose-tint/40"
         >
           <MessageCircle className="size-4" /> Falar com ela
         </Link>
         <Link
           href="/nutri?camera=1"
-          className="flex items-center justify-center gap-2 bg-surface py-3 text-sm font-semibold text-sage-dark transition-colors active:bg-sage-tint/40"
+          className="flex items-center justify-center gap-2 bg-surface py-3 text-sm font-semibold text-rose-dark transition-colors active:bg-rose-tint/40"
         >
           <Camera className="size-4" /> Analisar meu prato
         </Link>
@@ -678,11 +677,11 @@ function ShieldSavedBanner() {
     <motion.div
       initial={{ opacity: 0, y: -8 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex items-start gap-3 rounded-2xl border border-sage/30 bg-sage-tint/60 px-4 py-3"
+      className="flex items-start gap-3 rounded-2xl border border-rose/30 bg-rose-tint/60 px-4 py-3"
     >
-      <ShieldCheck className="mt-0.5 size-5 shrink-0 text-sage-deep" />
+      <ShieldCheck className="mt-0.5 size-5 shrink-0 text-rose-deep" />
       <div className="min-w-0 flex-1">
-        <p className="text-sm font-semibold text-ink">Seu escudo salvou a sequência 🛡️</p>
+ <p className="text-sm font-semibold text-ink">Seu escudo salvou a sequência </p>
         <p className="text-sm text-ink-soft">
           Você faltou um dia — e tudo bem. Um deslize não apaga seu progresso.
           Bora de novo hoje.
@@ -755,8 +754,8 @@ function RitualCard() {
 
   if (anchor) {
     return (
-      <Card elevation="soft" className="flex items-center gap-3 bg-sage-tint/30">
-        <Anchor className="size-5 shrink-0 text-sage-deep" />
+      <Card elevation="soft" className="flex items-center gap-3 bg-rose-tint/30">
+        <Anchor className="size-5 shrink-0 text-rose-deep" />
         <p className="min-w-0 flex-1 text-[15px] text-ink">
           <span className="font-semibold">{anchor}</span>, eu cuido do meu
           intestino.
@@ -772,9 +771,9 @@ function RitualCard() {
   }
 
   return (
-    <Card elevation="soft" className="border border-sage/20">
+    <Card elevation="soft" className="border border-rose/20">
       <div className="flex items-start gap-3">
-        <Anchor className="mt-0.5 size-5 shrink-0 text-sage-deep" />
+        <Anchor className="mt-0.5 size-5 shrink-0 text-rose-deep" />
         <div className="min-w-0 flex-1">
           <p className="font-semibold tracking-tight text-ink">Crie seu gatilho</p>
           <p className="mt-0.5 text-sm text-ink-soft">
@@ -786,7 +785,7 @@ function RitualCard() {
               <button
                 key={a}
                 onClick={() => void setRitual(a)}
-                className="rounded-full bg-cream-deep px-3 py-1.5 text-sm font-medium text-ink-soft transition-colors active:bg-sage-tint"
+                className="rounded-full bg-cream-deep px-3 py-1.5 text-sm font-medium text-ink-soft transition-colors active:bg-rose-tint"
               >
                 {a}
               </button>
@@ -810,7 +809,6 @@ function CicloCard() {
       <div className="flex items-start gap-3">
         <Art
           id="ciclo-lua"
-          emoji="🌙"
           className="mt-0.5 size-10 shrink-0 rounded-xl text-xl"
         />
         <div className="min-w-0 flex-1">
@@ -869,18 +867,18 @@ function StepIcon({
 }: {
   icon: LucideIcon;
   done: boolean;
-  tone: "sage" | "coral" | "sky";
+  tone: "rose" | "coral" | "sky";
 }) {
   const tones = {
-    sage: "bg-sage-tint text-sage-dark",
+    rose: "bg-rose-tint text-rose-dark",
     coral: "bg-coral-tint text-coral-dark",
-    sky: "bg-sky-tint text-[#3d6f88]",
+    sky: "bg-sky-tint text-sky-dark",
   };
   return (
     <span
       className={cn(
         "grid size-11 shrink-0 place-items-center rounded-2xl transition-colors",
-        done ? "bg-sage text-white" : tones[tone]
+        done ? "bg-rose text-white" : tones[tone]
       )}
     >
       {done ? <Check className="size-5" strokeWidth={2.8} /> : <Icon className="size-5" />}
@@ -902,7 +900,7 @@ function DayRing({ done, total }: { done: number; total: number }) {
           cy={size / 2}
           r={r}
           fill="none"
-          stroke="var(--color-sage)"
+          stroke="var(--color-rose)"
           strokeWidth="5"
           strokeLinecap="round"
           strokeDasharray={c}
@@ -942,7 +940,7 @@ function WeekStrip({
             <span
               className={cn(
                 "grid size-9 place-items-center rounded-full text-sm font-semibold transition-colors",
-                done && "bg-sage text-white",
+                done && "bg-rose text-white",
                 isCurrent && !done && "bg-coral text-white ring-4 ring-coral-tint",
                 future && "bg-cream-deep text-ink-faint"
               )}
@@ -977,7 +975,7 @@ function DayCelebration({
       >
         <Art
           id={milestone ? "celebra-semana1" : "celebra-dia"}
-          emoji={milestone ? "🏆" : "🌅"}
+ emoji={milestone?"":""}
           className="size-32 rounded-[2rem] text-6xl shadow-[var(--shadow-soft)]"
         />
       </motion.div>
@@ -986,7 +984,7 @@ function DayCelebration({
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25 }}
-          className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-gold-tint px-3 py-1 text-sm font-semibold text-[#9a7322]"
+          className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-gold-tint px-3 py-1 text-sm font-semibold text-gold-dark"
         >
           <Sparkles className="size-4" /> {milestone}
         </motion.p>
@@ -1005,7 +1003,7 @@ function DayCelebration({
           initial={{ opacity: 0, scale: 0.7 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.5, type: "spring", stiffness: 240, damping: 15 }}
-          className="mt-5 rounded-2xl bg-sage-tint px-5 py-3 text-sage-dark"
+          className="mt-5 rounded-2xl bg-rose-tint px-5 py-3 text-rose-dark"
         >
           <Art
             id={levelUp.art}
@@ -1072,7 +1070,7 @@ function MaintenanceHome({
           </h1>
         </div>
         <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-tint px-3 py-1.5 text-sm font-semibold text-sage-dark">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-rose-tint px-3 py-1.5 text-sm font-semibold text-rose-dark">
             <Sprout className="size-4" /> {seeds}
           </span>
           <span className="inline-flex items-center gap-1.5 rounded-full bg-coral-tint px-3 py-1.5 text-sm font-semibold text-coral-dark">
@@ -1084,7 +1082,7 @@ function MaintenanceHome({
       <ShieldSavedBanner />
       <WeeklyRecapBanner />
 
-      <Card elevation="card" className="bg-gradient-to-br from-sage-deep to-sage-dark text-white">
+      <Card elevation="card" className="bg-gradient-to-br from-rose-deep to-rose-dark text-white">
         <Badge tone="gold" className="bg-white/20 text-white">
           Modo Manutenção
         </Badge>
@@ -1099,7 +1097,7 @@ function MaintenanceHome({
 
       <Link href="/registrar" className="block">
         <Card elevation="soft" className="flex items-center gap-4 transition-transform active:scale-[0.99]">
-          <IconCircle icon={HeartPulse} tone="sage" size="lg" />
+          <IconCircle icon={HeartPulse} tone="rose" size="lg" />
           <div className="min-w-0 flex-1">
             <h3 className="font-semibold tracking-tight text-ink">Check-in de hoje</h3>
             <p className="text-sm text-ink-soft">30 segundos · mantém seu índice ({score.value})</p>
@@ -1115,14 +1113,14 @@ function MaintenanceHome({
           className={cn(
             "flex items-center gap-4 transition-transform active:scale-[0.99]",
             calmariaDone
-              ? "bg-sage-tint/40"
-              : "border border-sage/25 bg-gradient-to-br from-sage-tint/50 to-cream"
+              ? "bg-rose-tint/40"
+              : "border border-rose/25 bg-gradient-to-br from-rose-tint/50 to-cream"
           )}
         >
           <span
             className={cn(
               "grid size-12 shrink-0 place-items-center rounded-2xl",
-              calmariaDone ? "bg-sage text-white" : "bg-sage-tint text-sage-deep"
+              calmariaDone ? "bg-rose text-white" : "bg-rose-tint text-rose-deep"
             )}
           >
             {calmariaDone ? (
@@ -1137,7 +1135,7 @@ function MaintenanceHome({
             </h3>
             <p className="text-sm text-ink-soft">
               {calmariaDone
-                ? "Feita — seu intestino agradece 💚"
+?"Feita — seu intestino agradece"
                 : "1 min de respiração que acalma o intestino"}
             </p>
           </div>
@@ -1179,7 +1177,7 @@ function MaintenanceHome({
       </div>
 
       {canStillReset && (
-        <Card elevation="soft" className="border border-sage/25">
+        <Card elevation="soft" className="border border-rose/25">
           <h3 className="font-semibold tracking-tight text-ink">
             Reset Profundo · +7 dias
           </h3>

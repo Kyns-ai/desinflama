@@ -62,7 +62,7 @@ export function DayView({ day }: { day: number }) {
   if (!content) {
     return (
       <div className="flex min-h-[70vh] flex-col items-center justify-center px-8 text-center">
-        <Sparkles className="size-10 text-sage-deep" />
+        <Sparkles className="size-10 text-rose-deep" />
         <h2 className="mt-4 font-display text-xl font-semibold text-ink">
           Conteúdo a caminho
         </h2>
@@ -126,7 +126,7 @@ export function DayView({ day }: { day: number }) {
           </div>
         </div>
         {isDone && (
-          <span className="inline-flex items-center gap-1 rounded-full bg-sage-tint px-2.5 py-1 text-xs font-semibold text-sage-dark">
+          <span className="inline-flex items-center gap-1 rounded-full bg-rose-tint px-2.5 py-1 text-xs font-semibold text-rose-dark">
             <Check className="size-3.5" strokeWidth={3} /> Concluído
           </span>
         )}
@@ -145,8 +145,8 @@ export function DayView({ day }: { day: number }) {
             className={cn(
               "grid size-14 shrink-0 place-items-center rounded-2xl text-white",
               lessonDone
-                ? "bg-sage"
-                : "bg-gradient-to-br from-sage-deep to-sage-dark"
+                ? "bg-rose"
+                : "bg-gradient-to-br from-rose-deep to-rose-dark"
             )}
           >
             {lessonDone ? (
@@ -186,7 +186,7 @@ export function DayView({ day }: { day: number }) {
                 <span
                   className={cn(
                     "grid size-6 shrink-0 place-items-center rounded-md border-2 transition-all",
-                    on ? "border-sage bg-sage" : "border-line"
+                    on ? "border-rose bg-rose" : "border-line"
                   )}
                 >
                   <AnimatePresence>
@@ -229,7 +229,7 @@ export function DayView({ day }: { day: number }) {
             return (
               <Card key={m.key} elevation="soft">
                 <div className="mb-2.5 flex items-center gap-2">
-                  <Icon className="size-4.5 text-sage-deep" />
+                  <Icon className="size-4.5 text-rose-deep" />
                   <h3 className="font-semibold tracking-tight text-ink">
                     {m.label}
                   </h3>
@@ -240,7 +240,7 @@ export function DayView({ day }: { day: number }) {
                       key={i}
                       className="flex gap-2.5 text-[15px] leading-snug text-ink-soft"
                     >
-                      <span className="mt-2 size-1.5 shrink-0 rounded-full bg-sage/60" />
+                      <span className="mt-2 size-1.5 shrink-0 rounded-full bg-rose/60" />
                       {opt}
                     </li>
                   ))}
@@ -272,7 +272,7 @@ export function DayView({ day }: { day: number }) {
       {/* Concluir */}
       {!isDone && closedTodayAlready ? (
         <p className="rounded-2xl bg-cream-deep/60 px-4 py-3 text-center text-sm text-ink-soft">
-          Um dia por dia 💛 O Dia {day} abre pra concluir amanhã — hoje você já
+ Um dia por dia O Dia {day} abre pra concluir amanhã — hoje você já
           fechou o seu.
         </p>
       ) : !isDone ? (
@@ -283,7 +283,7 @@ export function DayView({ day }: { day: number }) {
           </Button>
           {!allChecked && (
             <p className="mt-2 text-center text-xs text-ink-faint">
-              Você pode concluir mesmo sem marcar tudo — sem culpa 💛
+ Você pode concluir mesmo sem marcar tudo — sem culpa
             </p>
           )}
         </div>
@@ -319,8 +319,8 @@ function Celebration({
         animate={{ scale: 1, opacity: 1, rotate: 0 }}
         transition={{ type: "spring", stiffness: 220, damping: 14 }}
         className={cn(
-          "grid size-24 place-items-center rounded-full text-white shadow-[var(--shadow-sage)]",
-          milestone ? "bg-gold" : "bg-sage"
+          "grid size-24 place-items-center rounded-full text-white shadow-[var(--shadow-rose)]",
+          milestone ? "bg-gold" : "bg-rose"
         )}
       >
         {milestone ? (
@@ -335,7 +335,7 @@ function Celebration({
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25 }}
-          className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-gold-tint px-3 py-1 text-sm font-semibold text-[#9a7322]"
+          className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-gold-tint px-3 py-1 text-sm font-semibold text-gold-dark"
         >
           <Sparkles className="size-4" /> {milestone}
         </motion.p>

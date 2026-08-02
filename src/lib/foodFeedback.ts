@@ -82,7 +82,7 @@ export function foodFeedback(descricao: string): FoodFeedback {
   if (inflama)
     return {
       tier: "inflama",
-      message: `Anotado — ${inflama.nome.toLowerCase()} é um dos suspeitos clássicos. Seu mapa agradece 🔍`,
+ message:`Anotado — ${inflama.nome.toLowerCase()} é um dos suspeitos clássicos. Seu mapa agradece`,
     };
   if (atencao && !safe)
     return {
@@ -92,7 +92,7 @@ export function foodFeedback(descricao: string): FoodFeedback {
   if (calma || safe)
     return {
       tier: "calma",
-      message: "Boost anti-inflamatório! Escolha que costuma cair bem 💚",
+ message:"Boost anti-inflamatório! Escolha que costuma cair bem",
     };
   return { tier: "neutro", message: "Anotado!" };
 }

@@ -62,7 +62,7 @@ export default function MapaPage() {
 
       {/* Perfil */}
       <Card elevation="lift">
-        <Badge tone="sage">
+        <Badge tone="rose">
           <Sparkles className="size-3.5" /> Perfil identificado
         </Badge>
         <Art
@@ -73,7 +73,7 @@ export default function MapaPage() {
         <h2 className="mt-2 font-display text-2xl font-semibold tracking-tight text-ink">
           {p.name}
         </h2>
-        <p className="mt-1 text-lg font-medium text-sage-deep">{p.tagline}</p>
+        <p className="mt-1 text-lg font-medium text-rose-deep">{p.tagline}</p>
         <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">{p.cause}</p>
       </Card>
 
@@ -119,7 +119,7 @@ export default function MapaPage() {
       </Card>
 
       {/* Plano */}
-      <Card elevation="soft" className="bg-sage-tint/40">
+      <Card elevation="soft" className="bg-rose-tint/40">
         <h3 className="font-semibold tracking-tight text-ink">Seu plano</h3>
         <p className="mt-1.5 text-[15px] leading-relaxed text-ink-soft">{p.plan}</p>
         <div className="mt-4 flex items-stretch gap-2">
@@ -128,7 +128,7 @@ export default function MapaPage() {
               key={x.when}
               className="flex-1 rounded-2xl bg-surface px-3 py-3 text-center"
             >
-              <div className="font-display text-lg font-semibold text-sage-deep">
+              <div className="font-display text-lg font-semibold text-rose-deep">
                 {x.when}
               </div>
               <div className="mt-0.5 text-[11px] leading-tight text-ink-soft">
@@ -154,7 +154,7 @@ export default function MapaPage() {
       {/* Mensagem da nutri */}
       <Card elevation="soft">
         <div className="mb-2 flex items-center gap-2">
-          <Quote className="size-4 text-sage-deep" />
+          <Quote className="size-4 text-rose-deep" />
           <h3 className="font-semibold tracking-tight text-ink">
             {WELCOME_VIDEO.title}
           </h3>

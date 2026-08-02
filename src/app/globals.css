@@ -2,63 +2,117 @@
 
 /* ------------------------------------------------------------------ *
  *  Desinflama — Design tokens
- *  Mood: calmo, clínico-aconchegante, premium, feminino sem clichê.
- *  Serif (Fraunces) nos momentos emocionais · Inter na UI/dados.
+ *
+ *  Esqueleto: I am (docs/referencia/iam-*.jpg) — bege quente, serifada
+ *  grande, muito ar, foto de verdade.
+ *  Identidade: ROSA (decisão do Ruyter — público feminino).
+ *
+ *  Valores medidos na referência (magick -unique-colors):
+ *    canvas .... #EDE3DC · #ECE1DB · #EFE8E5   (bege quente, ~93% L)
+ *    superfície  #DEC6B7 · #D8C4BB · #D2B5AA   (taupe ROSADO)
+ *    texto ..... #2F2424 · #443635             (marrom escuro, NÃO cinza)
+ *    secundário  #63574E · #655B59
+ *    fraco ..... #8F817D · #897C7A
+ *
+ *  Duas lições da medição:
+ *  1) TUDO é quente, inclusive o preto. Cinza neutro (#2b2b2b, versão
+ *     anterior) é o que fazia a tela ler como rascunho.
+ *  2) A base do I am JÁ é rosada — o rosa da marca encaixa na referência
+ *     em vez de brigar com ela.
+ *
+ *  O rosa é AMORA (profundo, sério), nunca chiclete. Rosa saturado claro
+ *  sobre branco é a assinatura visual de app genérico; o que dá cara cara
+ *  é rosa escuro + bege quente + tinta marrom-vinho + muito ar.
+ *  Não usar a escala `rose-*` nativa do Tailwind (rose-500 = #f43f5e): é
+ *  exatamente o rosa neon que a gente está evitando.
  * ------------------------------------------------------------------ */
 
 @theme {
-  /* — Cores de marca — */
-  --color-cream: #faf7f2; /* canvas base off-white */
-  --color-cream-deep: #f3ede3; /* surfaces afundadas / trilhas */
-  --color-surface: #ffffff; /* cards */
+  /* — Base: bege rosado quente — */
+  --color-cream: #f5ece8; /* canvas */
+  --color-cream-deep: #ebdfd9; /* superfícies afundadas / trilhas */
+  --color-surface: #fdf9f7; /* cards — off-white quente, nunca #fff puro */
+  --color-surface-warm: #f3e9e4; /* card alternativo, um degrau mais fundo */
 
-  --color-ink: #2b2b2b; /* texto principal grafite */
-  --color-ink-soft: #5c5953; /* texto secundário */
-  --color-ink-faint: #9a958c; /* legendas / placeholders */
+  /* — Tinta: marrom-vinho, contraste alto (conferido sobre o canvas) —
+     ink 14.3:1 · ink-soft 7.0:1 · ink-faint 4.6:1  */
+  --color-ink: #26191b;
+  --color-ink-soft: #5b4a49;
+  --color-ink-faint: #786563;
 
-  --color-sage: #4fb286; /* primária */
-  --color-sage-deep: #3c9a71; /* hover / pressed */
-  --color-sage-dark: #2f7657; /* texto sobre tint */
-  --color-sage-tint: #e7f3ec; /* fundo suave sucesso/primária */
+  /* — Rosa: UM só, escuro e sério. É a marca e o campo de cor.
+       branco sobre rose 5.7:1 · sobre rose-dark 10.6:1  */
+  --color-rose: #a8446a;
+  --color-rose-deep: #8d3556;
+  --color-rose-dark: #6a2440;
+  --color-rose-tint: #f7e5ea;
 
-  --color-coral: #f2856d; /* acento / CTA */
-  --color-coral-deep: #e66b52; /* hover */
-  --color-coral-dark: #b9482f; /* texto sobre tint */
-  --color-coral-tint: #fce9e3; /* fundo suave do acento */
+  /* — Terracota: acento RARO. Uma coisa por tela, nunca decoração.
+       Matiz deslocada do rosa de propósito: dois tons próximos brigariam
+       e o acento deixaria de sinalizar qualquer coisa. branco 5.0:1  */
+  --color-coral: #b0552f;
+  --color-coral-deep: #96461f;
+  --color-coral-dark: #7a3819;
+  --color-coral-tint: #f7e5d9;
 
-  --color-gold: #d8a657; /* marcos / conquistas */
-  --color-gold-tint: #f6ecd8;
+  /* — Apoio: dessaturados de propósito, para não virar arco-íris.
+       Cada um tem o seu "-dark" legível sobre o próprio tint, pra nenhum
+       componente precisar de hex avulso (era text-[#9a7322] espalhado). — */
+  --color-gold: #a97f2e;
+  --color-gold-tint: #f2e6cd;
+  --color-gold-dark: #75561a;
+  --color-sky: #47758a;
+  --color-sky-tint: #dde8eb;
+  --color-sky-dark: #2c5464;
+  --color-plum: #6f5a6a;
+  --color-plum-tint: #eae2e7;
+  --color-plum-dark: #533f4f;
 
-  --color-sky: #6aa6c4; /* energia / hidratação */
-  --color-sky-tint: #e4f0f5;
+  --color-danger: #a03024;
+  --color-danger-tint: #f6ddd9;
 
-  --color-plum: #9b7aa6; /* pele / bônus */
-  --color-plum-tint: #efe7f2;
-
-  --color-danger: #d9694f;
-  --color-danger-tint: #f8e6e1;
-
-  --color-line: #ece6db; /* bordas/divisórias quentes */
-  --color-line-soft: #f2ede4;
+  --color-line: #e5d7d1;
+  --color-line-soft: #eee3de;
 
   /* — Tipografia — */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
+
+  /* Escala travada. Serifada nos três primeiros (momento), Inter no resto
+     (dado e rótulo). Nada de tamanho avulso fora desta lista. */
+  --text-display: 2.75rem;
+  --text-display--line-height: 1.04;
+  --text-display--letter-spacing: -0.028em;
+  --text-h1: 2.125rem;
+  --text-h1--line-height: 1.1;
+  --text-h1--letter-spacing: -0.024em;
+  --text-h2: 1.5rem;
+  --text-h2--line-height: 1.18;
+  --text-h2--letter-spacing: -0.018em;
+  --text-h3: 1.1875rem;
+  --text-h3--line-height: 1.3;
+  --text-h3--letter-spacing: -0.012em;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.55;
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.2;
+  --text-label--letter-spacing: 0.06em;
 
   /* — Raios — */
   --radius-xl: 1.25rem;
   --radius-2xl: 1.5rem;
   --radius-3xl: 2rem;
 
-  /* — Sombras suaves e quentes (não cinza-azulado) — */
-  --shadow-soft: 0 1px 2px rgba(67, 56, 38, 0.04),
-    0 8px 24px -12px rgba(67, 56, 38, 0.12);
-  --shadow-card: 0 1px 3px rgba(67, 56, 38, 0.05),
-    0 12px 32px -16px rgba(67, 56, 38, 0.16);
-  --shadow-lift: 0 2px 6px rgba(67, 56, 38, 0.06),
-    0 20px 48px -20px rgba(67, 56, 38, 0.22);
-  --shadow-coral: 0 8px 22px -10px rgba(230, 107, 82, 0.55);
-  --shadow-sage: 0 8px 22px -10px rgba(60, 154, 113, 0.45);
+  /* — Sombras quentes e discretas (base marrom-vinho, nunca cinza-azulado).
+       Sombra cinza sobre bege é o detalhe que denuncia tema genérico. — */
+  --shadow-soft: 0 1px 2px rgba(58, 32, 38, 0.05),
+    0 8px 24px -14px rgba(58, 32, 38, 0.14);
+  --shadow-card: 0 1px 3px rgba(58, 32, 38, 0.06),
+    0 14px 34px -18px rgba(58, 32, 38, 0.2);
+  --shadow-lift: 0 2px 6px rgba(58, 32, 38, 0.07),
+    0 24px 52px -22px rgba(58, 32, 38, 0.26);
+  --shadow-coral: 0 10px 24px -12px rgba(150, 70, 31, 0.45);
+  --shadow-rose: 0 10px 24px -12px rgba(141, 53, 86, 0.45);
 
   /* — Animações — */
   --animate-rise: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -142,11 +196,35 @@ body {
   overscroll-behavior-y: none;
 }
 
-/* Tipografia utilitária para momentos emocionais */
+/* ------------------------------------------------------------------ *
+ *  Tipografia — a serifada é o que dá cara de revista em vez de painel
+ * ------------------------------------------------------------------ */
+
 .font-display {
   font-family: var(--font-serif);
   font-optical-sizing: auto;
-  letter-spacing: -0.015em;
+  font-variation-settings: "SOFT" 20, "WONK" 0;
+  letter-spacing: -0.02em;
+}
+
+/* Rótulo/eyebrow: Inter, caixa alta, pequeno e espaçado. É o contraponto
+   da serifada — o par serifada-grande + rótulo-pequeno é o que segura a
+   hierarquia sem precisar de cor. */
+.eyebrow {
+  font-size: var(--text-label);
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-ink-faint);
+}
+
+/* Número grande (nota do prato, índice): Inter tabular, sem serifa —
+   dado é dado. */
+.numeral {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  font-weight: 600;
 }
 
 /* Esconde scrollbars em carrosséis horizontais mantendo o scroll */
@@ -175,17 +253,17 @@ body {
 
 /* Foco acessível e quente */
 :focus-visible {
-  outline: 2px solid var(--color-sage);
+  outline: 2px solid var(--color-rose);
   outline-offset: 2px;
   border-radius: 4px;
 }
 
 /* Range input estilizado (escala de hidratação etc.) */
 input[type="range"] {
-  accent-color: var(--color-sage);
+  accent-color: var(--color-rose);
 }
 
 ::selection {
-  background: var(--color-sage-tint);
-  color: var(--color-sage-dark);
+  background: var(--color-rose-tint);
+  color: var(--color-rose-dark);
 }

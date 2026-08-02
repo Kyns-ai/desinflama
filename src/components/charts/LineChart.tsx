@@ -6,8 +6,8 @@ import { shortDate, todayKey } from "@/lib/date";
 import type { SeriesPoint } from "@/lib/analytics";
 
 const TONES = {
-  sage: "#3C9A71",
-  coral: "#E66B52",
+  rose: "#8D3556",
+  coral: "#B0552F",
   sky: "#4f8fad",
   plum: "#8a6597",
   gold: "#c79234",
@@ -27,7 +27,7 @@ const W = 320;
 export function LineChart({
   data,
   domain,
-  tone = "sage",
+  tone = "rose",
   height = 120,
   className,
 }: LineChartProps) {
@@ -96,7 +96,7 @@ export function LineChart({
               x2={W}
               y1={H - padY - g * (H - padY * 2)}
               y2={H - padY - g * (H - padY * 2)}
-              stroke="#ECE6DB"
+              stroke="#E5D7D1"
               strokeWidth="1"
               vectorEffect="non-scaling-stroke"
             />

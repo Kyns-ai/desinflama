@@ -132,5 +132,5 @@ export function reconcileAchievements(
 }
 
 export function emojiFor(id: string): string {
-  return ACHIEVEMENTS.find((a) => a.id === id)?.emoji ?? "🏅";
+ return ACHIEVEMENTS.find((a) => a.id === id)?.emoji??"";
 }

@@ -36,7 +36,7 @@ export default function Conquistas() {
 
       <div className="grid grid-cols-2 gap-3">
         <Card elevation="soft" className="text-center">
-          <p className="font-display text-3xl font-semibold text-sage-deep">
+          <p className="font-display text-3xl font-semibold text-rose-deep">
             {unlockedCount}/{ACHIEVEMENTS.length}
           </p>
           <p className="text-sm text-ink-soft">desbloqueadas</p>

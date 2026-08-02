@@ -3,7 +3,18 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { ArrowLeft, Lock, ChevronRight, Sprout, Shield } from "lucide-react";
+import {
+  ArrowLeft,
+  BookOpen,
+  CheckCircle2,
+  ChevronRight,
+  HeartPulse,
+  Lock,
+  Shield,
+  Sprout,
+  Trophy,
+  Wind,
+} from "lucide-react";
 import { Card, ProgressBar } from "@/components/ui";
 import { Art } from "@/components/Art";
 import { artId } from "@/content/cardArt";
@@ -49,7 +60,7 @@ export default function Jardim() {
         <h2 className="mt-3 font-display text-2xl font-semibold tracking-tight text-ink">
           {g.level.name}
         </h2>
-        <p className="mt-1 inline-flex items-center gap-1.5 text-sage-deep">
+        <p className="mt-1 inline-flex items-center gap-1.5 text-rose-deep">
           <Sprout className="size-4" />
           <span className="font-semibold">{seeds} sementes</span>
         </p>
@@ -58,51 +69,52 @@ export default function Jardim() {
           <ProgressBar value={g.progress} height={10} />
           <p className="mt-2 text-sm text-ink-soft">
             {g.nextLevel
-              ? `Faltam ${g.toNext} sementes para ${g.nextLevel.name} ${g.nextLevel.emoji}`
-              : "Você cultivou o jardim completo 🎉"}
+              ? `Faltam ${g.toNext} sementes para ${g.nextLevel.name}`
+              : "Você cultivou o jardim completo"}
           </p>
         </div>
       </Card>
 
-      {/* Como ganhar sementes */}
+      {/* Como ganhar sementes — cada linha com o ícone da própria ação,
+          não emoji (regra travada do padrão de design). */}
       <Card elevation="soft">
         <h3 className="mb-3 font-semibold tracking-tight text-ink">
           Como ganhar sementes
         </h3>
-        <ul className="space-y-2 text-[15px] text-ink-soft">
-          <li className="flex justify-between">
-            <span>📖 Concluir uma aula</span>
-            <span className="font-semibold text-sage-deep">+{SEEDS.lesson} 🌱</span>
-          </li>
-          <li className="flex justify-between">
-            <span>💚 Fazer o check-in do dia</span>
-            <span className="font-semibold text-sage-deep">+{SEEDS.checkin} 🌱</span>
-          </li>
-          <li className="flex justify-between">
-            <span>✅ Concluir um dia</span>
-            <span className="font-semibold text-sage-deep">+{SEEDS.completeDay} 🌱</span>
-          </li>
-          <li className="flex justify-between">
-            <span>🌬️ Calmaria do dia</span>
-            <span className="font-semibold text-sage-deep">+{SEEDS.calmaria} 🌱</span>
-          </li>
-          <li className="flex justify-between">
-            <span>🏆 Bater um marco (Dia 7, 14, 21)</span>
-            <span className="font-semibold text-sage-deep">+{SEEDS.milestone} 🌱</span>
-          </li>
+        <ul className="space-y-1">
+          {(
+            [
+              [BookOpen, "Concluir uma aula", SEEDS.lesson],
+              [HeartPulse, "Fazer o check-in do dia", SEEDS.checkin],
+              [CheckCircle2, "Concluir um dia", SEEDS.completeDay],
+              [Wind, "Calmaria do dia", SEEDS.calmaria],
+              [Trophy, "Bater um marco (Dia 7, 14, 21)", SEEDS.milestone],
+            ] as const
+          ).map(([Icon, label, valor]) => (
+            <li key={label} className="flex items-center gap-3 py-1.5">
+              <Icon className="size-[18px] shrink-0 text-ink-faint" />
+              <span className="min-w-0 flex-1 text-[15px] text-ink-soft">
+                {label}
+              </span>
+              <span className="inline-flex items-center gap-1 text-[15px] font-semibold text-rose-deep">
+                +{valor}
+                <Sprout className="size-4" />
+              </span>
+            </li>
+          ))}
         </ul>
       </Card>
 
       {/* Escudos — sequência perdoável */}
       <Card elevation="soft">
         <div className="flex items-center gap-3.5">
-          <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-sage-tint">
-            <Shield className="size-6 text-sage-deep" />
+          <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-rose-tint">
+            <Shield className="size-6 text-rose-deep" />
           </span>
           <div className="min-w-0 flex-1">
             <div className="flex items-center justify-between">
               <p className="font-semibold tracking-tight text-ink">Escudos</p>
-              <span className="text-sm font-semibold text-sage-deep">
+              <span className="text-sm font-semibold text-rose-deep">
                 {shields} de {MAX_SHIELDS}
               </span>
             </div>

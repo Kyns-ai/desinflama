@@ -2,7 +2,14 @@
 
 import { useMemo } from "react";
 import Link from "next/link";
-import { LineChart as LineChartIcon, TrendingDown, TrendingUp, AlertCircle, Trophy } from "lucide-react";
+import {
+  LineChart as LineChartIcon,
+  TrendingDown,
+  TrendingUp,
+  AlertCircle,
+  Flame,
+  Trophy,
+} from "lucide-react";
 import { EmptyState, buttonStyles, Card, Badge } from "@/components/ui";
 import { LineChart } from "@/components/charts/LineChart";
 import { PixelGrid } from "@/components/charts/PixelGrid";
@@ -29,7 +36,7 @@ const SYMPTOM_CARDS: {
   label: string;
   emoji: string;
   lowerBetter: boolean;
-  tone: "coral" | "sage" | "sky" | "plum";
+  tone: "coral" | "rose" | "sky" | "plum";
 }[] = [
   { key: "inchaco", label: "Inchaço", emoji: "🎈", lowerBetter: true, tone: "coral" },
   { key: "energia", label: "Energia", emoji: "⚡", lowerBetter: false, tone: "sky" },
@@ -83,14 +90,15 @@ export default function Progresso() {
       {/* Resumo rápido */}
       <div className="grid grid-cols-3 gap-3">
         <Card elevation="soft" className="px-2 py-4 text-center">
-          <p className="font-display text-2xl font-semibold text-sage-deep">
+          <p className="font-display text-2xl font-semibold text-rose-deep">
             {lastScore || "—"}
           </p>
           <p className="text-xs text-ink-soft">Índice hoje</p>
         </Card>
         <Card elevation="soft" className="px-2 py-4 text-center">
-          <p className="font-display text-2xl font-semibold text-coral-dark">
-            {streak.current}🔥
+          <p className="inline-flex items-center gap-1.5 font-display text-2xl font-semibold text-coral-dark">
+            <Flame className="size-5" />
+            {streak.current}
           </p>
           <p className="text-xs text-ink-soft">Ofensiva</p>
         </Card>
@@ -120,11 +128,11 @@ export default function Progresso() {
             <h2 className="font-semibold tracking-tight text-ink">
               Índice Intestinal no tempo
             </h2>
-            <span className="font-display text-2xl font-semibold text-sage-deep">
+            <span className="font-display text-2xl font-semibold text-rose-deep">
               {score[score.length - 1].value}
             </span>
           </div>
-          <LineChart data={score} domain={[0, 100]} tone="sage" />
+          <LineChart data={score} domain={[0, 100]} tone="rose" />
         </Card>
       )}
 
@@ -133,7 +141,6 @@ export default function Progresso() {
           <EmptyState
             icon={LineChartIcon}
             art="empty-grafico"
-            artEmoji="📈"
             title="Seus gráficos aparecem aqui"
             description="Assim que você fizer alguns registros, mostramos seu Índice Intestinal no tempo, a queda do inchaço e seus melhores e piores dias."
             action={
@@ -169,7 +176,7 @@ export default function Progresso() {
                   {t && (
                     <span
                       className={`inline-flex items-center gap-1 text-sm font-semibold ${
-                        t.good ? "text-sage-deep" : "text-coral-dark"
+                        t.good ? "text-rose-deep" : "text-coral-dark"
                       }`}
                     >
                       {s.lowerBetter ? (
@@ -197,7 +204,7 @@ export default function Progresso() {
           <div className="grid grid-cols-2 gap-3">
             <DayCard
               title="Melhor dia"
-              tone="sage"
+              tone="rose"
               date={best.log.date}
               meals={best.log.meals.map((m) => m.descricao)}
             />
@@ -266,7 +273,7 @@ function DayCard({
   meals,
 }: {
   title: string;
-  tone: "sage" | "coral";
+  tone: "rose" | "coral";
   date: string;
   meals: string[];
 }) {
@@ -274,14 +281,14 @@ function DayCard({
   return (
     <div
       className={`rounded-2xl border p-4 ${
-        tone === "sage"
-          ? "border-sage/30 bg-sage-tint/40"
+        tone === "rose"
+          ? "border-rose/30 bg-rose-tint/40"
           : "border-coral/30 bg-coral-tint/40"
       }`}
     >
       <p
         className={`text-xs font-semibold uppercase tracking-wide ${
-          tone === "sage" ? "text-sage-dark" : "text-coral-dark"
+          tone === "rose" ? "text-rose-dark" : "text-coral-dark"
         }`}
       >
         {title}

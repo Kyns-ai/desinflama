@@ -53,11 +53,11 @@ export default function Concluir() {
         transition={{ duration: 0.6, ease }}
         className="pt-10 text-center"
       >
-        <div className="mx-auto grid size-20 place-items-center rounded-full bg-gold text-white shadow-[var(--shadow-sage)]">
+        <div className="mx-auto grid size-20 place-items-center rounded-full bg-gold text-white shadow-[var(--shadow-rose)]">
           <Sparkles className="size-10" />
         </div>
         <h1 className="mt-6 font-display text-[2rem] font-semibold leading-tight tracking-tight text-ink">
-          {canReset ? "Você fechou os 14 dias 🗺️" : "Reset Profundo concluído 🌟"}
+ {canReset?"Você fechou os 14 dias":"Reset Profundo concluído"}
         </h1>
         <p className="mx-auto mt-2 max-w-sm text-[15px] leading-relaxed text-ink-soft">
           Seu intestino está em outro lugar. Agora a pergunta é: como manter — e
@@ -77,9 +77,9 @@ export default function Concluir() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1, ease }}
           >
-            <Card elevation="lift" className="border border-sage/30">
+            <Card elevation="lift" className="border border-rose/30">
               <div className="flex items-center gap-2">
-                <Rocket className="size-5 text-sage-deep" />
+                <Rocket className="size-5 text-rose-deep" />
                 <h2 className="font-display text-xl font-semibold tracking-tight text-ink">
                   Reset Profundo · +7 dias
                 </h2>
@@ -106,9 +106,9 @@ export default function Concluir() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2, ease }}
         >
-          <Card elevation={canReset ? "soft" : "lift"} className={canReset ? "" : "border border-sage/30"}>
+          <Card elevation={canReset ? "soft" : "lift"} className={canReset ? "" : "border border-rose/30"}>
             <div className="flex items-center gap-2">
-              <InfinityIcon className="size-5 text-sage-deep" />
+              <InfinityIcon className="size-5 text-rose-deep" />
               <h2 className="font-display text-xl font-semibold tracking-tight text-ink">
                 Modo Manutenção
               </h2>

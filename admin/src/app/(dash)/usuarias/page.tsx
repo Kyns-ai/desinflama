@@ -5,7 +5,7 @@ import { Card, PageHeader, Badge, type Tone } from "@/components/ui";
 import type { PlanId } from "@/lib/types";
 
 const PLAN_LABEL: Record<PlanId, { label: string; tone: Tone }> = {
-  annual: { label: "Anual", tone: "sage" },
+  annual: { label: "Anual", tone: "rose" },
   monthly: { label: "Mensal", tone: "sky" },
   trial: { label: "Trial", tone: "gold" },
   free: { label: "Grátis", tone: "neutral" },
@@ -31,7 +31,7 @@ export default async function Usuarias({
               name="q"
               defaultValue={q}
               placeholder="Buscar por nome ou e-mail…"
-              className="h-10 w-64 rounded-xl border border-line bg-surface pl-9 pr-3 text-sm text-ink placeholder:text-ink-faint focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/30"
+              className="h-10 w-64 rounded-xl border border-line bg-surface pl-9 pr-3 text-sm text-ink placeholder:text-ink-faint focus:border-rose focus:outline-none focus:ring-2 focus:ring-rose/30"
             />
           </form>
         }
@@ -56,7 +56,7 @@ export default async function Usuarias({
                   className="grid grid-cols-2 items-center gap-4 px-5 py-3.5 transition-colors hover:bg-canvas md:grid-cols-[2fr_1fr_1fr_1fr_1fr_auto]"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="grid size-9 shrink-0 place-items-center rounded-full bg-sage text-sm font-semibold text-white">
+                    <span className="grid size-9 shrink-0 place-items-center rounded-full bg-rose text-sm font-semibold text-white">
                       {u.name[0]}
                     </span>
                     <div className="min-w-0">

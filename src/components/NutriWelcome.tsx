@@ -11,7 +11,7 @@ import { Card } from "@/components/ui";
 
 function iniciais(nome: string): string {
   const limpo = nome.trim();
-  if (!limpo || limpo === "sua nutri") return "🩺";
+ if (!limpo || limpo ==="sua nutri") return"";
   return limpo
     .split(/\s+/)
     .slice(0, 2)
@@ -49,7 +49,7 @@ export function NutriWelcome() {
               className="size-12 shrink-0 rounded-full object-cover"
             />
           ) : (
-            <span className="grid size-12 shrink-0 place-items-center rounded-full bg-sage text-lg font-semibold text-white">
+            <span className="grid size-12 shrink-0 place-items-center rounded-full bg-rose text-lg font-semibold text-white">
               {iniciais(NUTRI.nome)}
             </span>
           )}

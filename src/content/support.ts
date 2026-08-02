@@ -1,5 +1,5 @@
 /**
- * Contato de suporte. ⚠️ FOUNDER: preencha com os canais REAIS antes de lançar.
+ * Contato de suporte. FOUNDER: preencha com os canais REAIS antes de lançar.
  * O botão de WhatsApp só aparece quando `whatsapp` tem um número de verdade
  * (não renderiza botão morto para a cliente).
  */

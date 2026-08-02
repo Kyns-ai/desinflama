@@ -40,7 +40,7 @@ function BootSplash() {
           className="size-16 rounded-[1.1rem] shadow-[var(--shadow-soft)] [animation:var(--animate-pop)]"
         />
         <div className="h-1.5 w-24 overflow-hidden rounded-full bg-cream-deep">
-          <div className="h-full w-1/3 rounded-full bg-sage [animation:var(--animate-shimmer)]" />
+          <div className="h-full w-1/3 rounded-full bg-rose [animation:var(--animate-shimmer)]" />
         </div>
       </div>
     </div>

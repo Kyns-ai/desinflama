@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { motion } from "framer-motion";
 
-const COLORS = ["#4FB286", "#F2856D", "#D8A657", "#6AA6C4", "#9B7AA6"];
+const COLORS = ["#A8446A", "#A8446A", "#A97F2E", "#47758A", "#6F5A6A"];
 
 // pseudo-aleatório determinístico (puro) — evita Math.random durante o render
 function rand(n: number): number {

@@ -2,25 +2,28 @@ import type { LucideIcon } from "lucide-react";
 import { IconCircle } from "./IconCircle";
 import { Art } from "@/components/Art";
 import { cn } from "@/lib/cn";
+import type { Tone } from "./tones";
 
+/**
+ * Estado vazio DESENHADO — ícone/arte + título + o que fazer ali.
+ * Container vazio sem isto lê como quebrado (regra do padrão de design).
+ */
 export function EmptyState({
   icon,
   art,
-  artEmoji = "🌱",
   title,
   description,
   action,
-  tone = "sage",
+  tone = "rose",
   className,
 }: {
   icon: LucideIcon;
   /** id de ilustração da marca (public/img/{id}.png); cai no ícone se ausente. */
   art?: string;
-  artEmoji?: string;
   title: string;
   description?: string;
   action?: React.ReactNode;
-  tone?: "sage" | "coral" | "gold" | "sky" | "plum" | "neutral";
+  tone?: Tone;
   className?: string;
 }) {
   return (
@@ -31,11 +34,7 @@ export function EmptyState({
       )}
     >
       {art ? (
-        <Art
-          id={art}
-          emoji={artEmoji}
-          className="mb-4 size-24 rounded-3xl text-5xl"
-        />
+        <Art id={art} className="mb-4 size-24 rounded-3xl" />
       ) : (
         <IconCircle icon={icon} tone={tone} size="lg" className="mb-4" />
       )}

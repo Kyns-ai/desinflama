@@ -11,7 +11,7 @@ import { addDays, diffDays } from "@/lib/date";
 import type { DailyLog } from "@/types/domain";
 
 // 1 (leve) → 5 (difícil), na paleta da marca — nada de verde/vermelho puros.
-const SCALE = ["#4FB286", "#93CBA8", "#E3C878", "#F0A589", "#E66B52"] as const;
+const SCALE = ["#A8446A", "#C9799A", "#D9AE72", "#CE8A62", "#B0552F"] as const;
 const EMPTY = "#F1ECE3";
 
 function colorFor(discomfort: number): string {
@@ -46,7 +46,7 @@ export function PixelGrid({ logs }: { logs: DailyLog[] }) {
         <h2 className="font-semibold tracking-tight text-ink">
           Seus dias, de relance
         </h2>
-        <span className="text-sm font-semibold text-sage-deep">
+        <span className="text-sm font-semibold text-rose-deep">
           {lightDays} {lightDays === 1 ? "dia leve" : "dias leves"}
         </span>
       </div>

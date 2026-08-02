@@ -49,9 +49,9 @@ export function isScoreStalled(scores: GutScorePoint[]): boolean {
 
 /** Microcopy que varia com o estado do score (acolhedora, sempre próximo passo). */
 export function scoreMicrocopy(value: number, delta: number): string {
-  if (delta > 6) return "Que salto! Seu intestino está respondendo rápido 🌱";
-  if (delta > 0) return "Seu intestino está respondendo. Continua assim 🌱";
-  if (delta < 0) return "Sem culpa — todo dia conta. Vamos com calma hoje 💛";
+ if (delta > 6) return"Que salto! Seu intestino está respondendo rápido";
+ if (delta > 0) return"Seu intestino está respondendo. Continua assim";
+ if (delta < 0) return"Sem culpa — todo dia conta. Vamos com calma hoje";
   if (value >= 75) return "Você está num ótimo lugar. Manter é o segredo agora.";
   if (value >= 50) return "Bom caminho. Cada registro deixa seu mapa mais claro.";
   return "Começo é começo. Pequenos passos já mudam tudo.";

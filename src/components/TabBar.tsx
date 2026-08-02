@@ -80,7 +80,7 @@ function TabLink({
       aria-current={active ? "page" : undefined}
       className={cn(
         "flex w-16 flex-col items-center justify-center gap-1 pt-1 transition-colors",
-        active ? "text-sage-deep" : "text-ink-faint"
+        active ? "text-rose-deep" : "text-ink-faint"
       )}
     >
       <Icon className="size-6" strokeWidth={active ? 2.4 : 2} />

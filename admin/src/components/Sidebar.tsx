@@ -49,7 +49,7 @@ export function Sidebar() {
               className={cn(
                 "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
                 on
-                  ? "bg-sage-tint text-sage-dark"
+                  ? "bg-rose-tint text-rose-dark"
                   : "text-ink-soft hover:bg-canvas"
               )}
             >

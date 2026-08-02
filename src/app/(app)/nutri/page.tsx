@@ -67,14 +67,14 @@ const SEMAFORO = {
   calma: {
     rotulo: "Cai bem pra você",
     Icone: Leaf,
-    texto: "text-sage-dark",
-    fundo: "bg-sage-tint",
-    borda: "border-sage/40",
+    texto: "text-rose-dark",
+    fundo: "bg-rose-tint",
+    borda: "border-rose/40",
   },
   atencao: {
     rotulo: "Depende da porção",
     Icone: TriangleAlert,
-    texto: "text-[#9a7322]",
+    texto: "text-gold-dark",
     fundo: "bg-gold-tint",
     borda: "border-gold/40",
   },
@@ -100,7 +100,7 @@ export default function NutriIAPage() {
 function AberturaCarregando() {
   return (
     <div className="flex items-center gap-2.5 pt-8 text-[15px] text-ink-soft">
-      <Loader2 className="size-4 animate-spin text-sage-deep" />
+      <Loader2 className="size-4 animate-spin text-rose-deep" />
       Abrindo sua conversa…
     </div>
   );
@@ -282,7 +282,7 @@ function NutriIA() {
   return (
     <div className="flex min-h-[calc(100dvh-2rem)] flex-col">
       {/* Campo de cor — mesma linguagem da home: a marca ocupa o topo */}
-      <header className="-mx-5 -mt-safe bg-sage-dark px-5 pt-safe">
+      <header className="-mx-5 -mt-safe bg-rose-dark px-5 pt-safe">
         <div className="flex items-center gap-3 py-4">
           <span className="grid size-11 shrink-0 place-items-center rounded-2xl bg-white/15 text-white">
             <Sparkles className="size-5" />
@@ -331,7 +331,7 @@ function NutriIA() {
               </p>
             ) : (
               <span className="flex items-center gap-2 text-[15px] text-ink-soft">
-                <Loader2 className="size-4 animate-spin text-sage-deep" />
+                <Loader2 className="size-4 animate-spin text-rose-deep" />
                 Pensando no seu caso…
               </span>
             )}
@@ -365,7 +365,7 @@ function NutriIA() {
               <button
                 key={s}
                 onClick={() => void perguntar(s)}
-                className="rounded-full border border-sage/40 bg-surface px-3.5 py-2 text-sm font-medium text-sage-dark transition-transform active:scale-95"
+                className="rounded-full border border-rose/40 bg-surface px-3.5 py-2 text-sm font-medium text-rose-dark transition-transform active:scale-95"
               >
                 {s}
               </button>
@@ -397,7 +397,7 @@ function NutriIA() {
             aria-label="Analisar a foto do meu prato"
             disabled={pensando}
             onClick={() => fotoRef.current?.click()}
-            className="grid size-12 shrink-0 place-items-center rounded-2xl border border-line bg-surface text-sage-dark transition-transform active:scale-95 disabled:opacity-50"
+            className="grid size-12 shrink-0 place-items-center rounded-2xl border border-line bg-surface text-rose-dark transition-transform active:scale-95 disabled:opacity-50"
           >
             <Camera className="size-5" />
           </button>
@@ -405,13 +405,13 @@ function NutriIA() {
             value={rascunho}
             onChange={(e) => setRascunho(e.target.value)}
             placeholder="Pergunte qualquer coisa…"
-            className="h-12 min-w-0 flex-1 rounded-2xl border border-line bg-surface px-4 text-[15px] text-ink placeholder:text-ink-faint focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/40"
+            className="h-12 min-w-0 flex-1 rounded-2xl border border-line bg-surface px-4 text-[15px] text-ink placeholder:text-ink-faint focus:border-rose focus:outline-none focus:ring-2 focus:ring-rose/40"
           />
           <button
             type="submit"
             aria-label="Enviar"
             disabled={pensando || !rascunho.trim()}
-            className="grid size-12 shrink-0 place-items-center rounded-2xl bg-sage text-white shadow-[var(--shadow-sage)] transition-transform active:scale-95 disabled:opacity-40 disabled:shadow-none"
+            className="grid size-12 shrink-0 place-items-center rounded-2xl bg-rose text-white shadow-[var(--shadow-rose)] transition-transform active:scale-95 disabled:opacity-40 disabled:shadow-none"
           >
             <ArrowUp className="size-5" strokeWidth={2.5} />
           </button>
@@ -431,7 +431,7 @@ function BalaoNutri({ children }: { children: React.ReactNode }) {
       transition={{ duration: 0.35, ease }}
       className="flex gap-2.5"
     >
-      <span className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-xl bg-sage-tint text-sage-dark">
+      <span className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-xl bg-rose-tint text-rose-dark">
         <Sparkles className="size-4" />
       </span>
       <div className="min-w-0 flex-1 rounded-2xl rounded-tl-md bg-surface p-4 shadow-[var(--shadow-soft)]">
@@ -449,7 +449,7 @@ function BalaoCliente({ mensagem }: { mensagem: Mensagem }) {
       transition={{ duration: 0.3, ease }}
       className="flex justify-end"
     >
-      <div className="max-w-[85%] overflow-hidden rounded-2xl rounded-tr-md bg-sage-tint">
+      <div className="max-w-[85%] overflow-hidden rounded-2xl rounded-tr-md bg-rose-tint">
         {mensagem.analise?.previa && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -458,7 +458,7 @@ function BalaoCliente({ mensagem }: { mensagem: Mensagem }) {
             className="h-40 w-full object-cover"
           />
         )}
-        <p className="px-4 py-3 text-[15px] leading-relaxed text-sage-dark">
+        <p className="px-4 py-3 text-[15px] leading-relaxed text-rose-dark">
           {mensagem.texto}
         </p>
       </div>
@@ -538,7 +538,7 @@ function RespostaDaNutri({ mensagem }: { mensagem: Mensagem }) {
           className={cn(
             "grid size-8 place-items-center rounded-full border transition-colors",
             voto === "sim"
-              ? "border-sage bg-sage-tint text-sage-dark"
+              ? "border-rose bg-rose-tint text-rose-dark"
               : "border-line text-ink-faint",
           )}
         >
@@ -596,7 +596,7 @@ function EscolhaDeEstilo({
             }}
             className={cn(
               "flex w-full items-center gap-4 rounded-2xl border bg-surface p-4 text-left transition-transform active:scale-[0.99] disabled:opacity-60",
-              atual === e.id ? "border-sage bg-sage-tint/40" : "border-line",
+              atual === e.id ? "border-rose bg-rose-tint/40" : "border-line",
             )}
           >
             <div className="min-w-0 flex-1">
@@ -606,7 +606,7 @@ function EscolhaDeEstilo({
               </p>
             </div>
             {salvando === e.id && (
-              <Loader2 className="size-5 shrink-0 animate-spin text-sage-deep" />
+              <Loader2 className="size-5 shrink-0 animate-spin text-rose-deep" />
             )}
           </button>
         ))}

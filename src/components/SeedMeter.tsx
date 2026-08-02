@@ -19,21 +19,21 @@ export function SeedMeter() {
           <Art
             id={g.level.art}
             emoji={g.level.emoji}
-            className="size-12 shrink-0 rounded-2xl bg-sage-tint text-2xl"
+            className="size-12 shrink-0 rounded-2xl bg-rose-tint text-2xl"
           />
           <div className="min-w-0 flex-1">
             <div className="flex items-center justify-between">
               <p className="font-semibold tracking-tight text-ink">
                 {g.level.name}
               </p>
-              <span className="text-sm font-semibold text-sage-deep">
-                {seeds} 🌱
+              <span className="text-sm font-semibold text-rose-deep">
+ {seeds}
               </span>
             </div>
             <p className="text-sm text-ink-soft">
               {g.nextLevel
                 ? `Faltam ${g.toNext} para ${g.nextLevel.name} ${g.nextLevel.emoji}`
-                : "Jardim completo 🎉"}
+:"Jardim completo"}
             </p>
           </div>
           <ChevronRight className="size-5 shrink-0 text-ink-faint" />

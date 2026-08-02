@@ -26,7 +26,7 @@ interface Row {
   label: string;
   caption?: string;
   href: string;
-  tone: "sage" | "coral" | "gold" | "sky" | "plum" | "neutral";
+  tone: "rose" | "coral" | "gold" | "sky" | "plum" | "neutral";
   kind?: "link" | "toggle";
 }
 
@@ -34,7 +34,7 @@ const GRUPOS: { titulo: string; rows: Row[] }[] = [
   {
     titulo: "Você",
     rows: [
-      { icon: Map, label: "Meu Mapa de Inchaço", href: "/mapa", tone: "sage" },
+      { icon: Map, label: "Meu Mapa de Inchaço", href: "/mapa", tone: "rose" },
       {
         icon: HeartHandshake,
         label: "Confiança e ciência",
@@ -92,7 +92,7 @@ export default function Perfil() {
       </header>
 
       <Card elevation="card" className="flex items-center gap-4">
-        <span className="grid size-14 shrink-0 place-items-center rounded-full bg-sage text-xl font-semibold text-white">
+        <span className="grid size-14 shrink-0 place-items-center rounded-full bg-rose text-xl font-semibold text-white">
           {nome.charAt(0).toUpperCase()}
         </span>
         <div className="min-w-0 flex-1">
@@ -185,7 +185,7 @@ function NotifToggle({ row }: { row: Row }) {
         className={cn(
           "relative h-7 w-12 shrink-0 rounded-full transition-colors",
           !native && "opacity-40",
-          enabled && native ? "bg-sage" : "bg-cream-deep"
+          enabled && native ? "bg-rose" : "bg-cream-deep"
         )}
       >
         <span

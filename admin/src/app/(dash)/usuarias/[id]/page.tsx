@@ -30,7 +30,7 @@ export default async function UserDetail({
         {/* Perfil */}
         <Card className="lg:col-span-1">
           <div className="flex items-center gap-3">
-            <span className="grid size-14 place-items-center rounded-full bg-sage text-xl font-semibold text-white">
+            <span className="grid size-14 place-items-center rounded-full bg-rose text-xl font-semibold text-white">
               {u.name[0]}
             </span>
             <div className="min-w-0">
@@ -43,7 +43,7 @@ export default async function UserDetail({
             <Badge tone={u.isPremium ? "gold" : "neutral"}>
               <Crown className="size-3" /> {u.isPremium ? "Premium" : "Grátis"}
             </Badge>
-            <Badge tone="sage">{u.bloatType}</Badge>
+            <Badge tone="rose">{u.bloatType}</Badge>
           </div>
 
           <dl className="mt-5 space-y-3 border-t border-line pt-4 text-sm">
@@ -64,7 +64,7 @@ export default async function UserDetail({
           <Card>
             <div className="mb-1 flex items-center justify-between">
               <h2 className="font-semibold tracking-tight text-ink">Índice Intestinal</h2>
-              <span className="font-display text-2xl font-semibold text-sage-deep">
+              <span className="font-display text-2xl font-semibold text-rose-deep">
                 {u.score}
               </span>
             </div>

@@ -95,7 +95,7 @@ export interface BloatProfile {
   cause: string;
   /** O que o programa vai fazer por ela. */
   plan: string;
-  tone: "coral" | "sky" | "sage" | "plum";
+  tone: "coral" | "sky" | "rose" | "plum";
   emoji: string;
 }
 
@@ -124,7 +124,7 @@ export const BLOAT_PROFILES: Record<BloatType, BloatProfile> = {
     cause:
       "Quando o intestino trabalha devagar, tudo se acumula e fermenta por mais tempo — o resultado é barriga estufada e aquela sensação de estar sempre cheia.",
     plan: "Com fibras certas, hidratação e movimento, a gente devolve o ritmo do seu intestino sem forçar nem agredir.",
-    tone: "sage",
+    tone: "rose",
     emoji: "🐌",
   },
   estresse: {

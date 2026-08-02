@@ -6,7 +6,7 @@ import type { LeadStatus } from "@/lib/types";
 const STATUS: Record<LeadStatus, { label: string; tone: Tone }> = {
   novo: { label: "Novo", tone: "coral" },
   contatado: { label: "Contatado", tone: "sky" },
-  fechado: { label: "Fechado", tone: "sage" },
+  fechado: { label: "Fechado", tone: "rose" },
   perdido: { label: "Perdido", tone: "neutral" },
 };
 

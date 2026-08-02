@@ -1,6 +1,6 @@
 /**
  * Identidade da nutricionista por trás do programa — o maior ativo de confiança
- * do app. ⚠️ FOUNDER: preencha com os dados REAIS antes de lançar.
+ * do app. FOUNDER: preencha com os dados REAIS antes de lançar.
  *
  * O slot de vídeo só vira player quando `videoUrl` aponta pra um arquivo de
  * verdade (ex.: "/video/nutri-oi.mp4" em public/video ou um link hospedado).

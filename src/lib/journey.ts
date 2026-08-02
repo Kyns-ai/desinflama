@@ -11,13 +11,13 @@ export interface PhaseRange {
   start: number;
   end: number;
   focus: string;
-  tone: "coral" | "sage" | "sky" | "plum" | "gold";
+  tone: "coral" | "rose" | "sky" | "plum" | "gold";
 }
 
 /** Desafio principal de 14 dias (framework 5R). */
 export const MAIN14_PHASES: PhaseRange[] = [
   { phase: "Choque", start: 1, end: 3, focus: "Desinchar rápido", tone: "coral" },
-  { phase: "Remoção", start: 4, end: 7, focus: "Mapear seu gatilho", tone: "sage" },
+  { phase: "Remoção", start: 4, end: 7, focus: "Mapear seu gatilho", tone: "rose" },
   { phase: "Reintrodução", start: 8, end: 11, focus: "Testar tolerância", tone: "sky" },
   { phase: "Reparo", start: 12, end: 14, focus: "Reparar e fechar", tone: "plum" },
 ];

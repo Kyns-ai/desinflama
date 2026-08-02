@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { animate, motion, useMotionValue, useTransform } from "framer-motion";
+import { ArrowDown, ArrowUp } from "lucide-react";
 import { cn } from "@/lib/cn";
 
 interface ScoreRingProps {
@@ -76,9 +77,11 @@ export function ScoreRing({
     >
       <svg width={size} height={size} className="-rotate-90">
         <defs>
+          {/* Um rosa só, do claro ao escuro da própria marca — não é
+              gradiente decorativo, é volume no arco. */}
           <linearGradient id="score-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#5ABF92" />
-            <stop offset="100%" stopColor="#3C9A71" />
+            <stop offset="0%" stopColor="#B85179" />
+            <stop offset="100%" stopColor="#6A2440" />
           </linearGradient>
         </defs>
         <circle
@@ -126,11 +129,16 @@ export function ScoreRing({
               className={cn(
                 "mx-auto mt-2 inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold",
                 delta > 0
-                  ? "bg-sage-tint text-sage-dark"
+                  ? "bg-rose-tint text-rose-dark"
                   : "bg-coral-tint text-coral-dark"
               )}
             >
-              {delta > 0 ? "↑" : "↓"} {Math.abs(delta)} pts
+              {delta > 0 ? (
+                <ArrowUp className="size-3.5" strokeWidth={2.6} />
+              ) : (
+                <ArrowDown className="size-3.5" strokeWidth={2.6} />
+              )}
+              {Math.abs(delta)} pts
             </div>
           )}
         </div>

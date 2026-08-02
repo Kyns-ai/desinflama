@@ -168,10 +168,10 @@ function Gatilhos() {
       <Link href="/semaforo" className="block">
         <Card
           elevation="soft"
-          className="flex items-center gap-3 border border-sage/20 bg-sage-tint/30 transition-transform active:scale-[0.99]"
+          className="flex items-center gap-3 border border-rose/20 bg-rose-tint/30 transition-transform active:scale-[0.99]"
         >
           <div className="flex shrink-0 gap-1">
-            <span className="size-3 rounded-full bg-sage" />
+            <span className="size-3 rounded-full bg-rose" />
             <span className="size-3 rounded-full bg-gold" />
             <span className="size-3 rounded-full bg-coral" />
           </div>
@@ -202,7 +202,7 @@ function Gatilhos() {
               <p className="mt-1.5 text-[15px] leading-snug text-ink-soft">
                 {f.porque}
               </p>
-              <p className="mt-2 flex items-center gap-1.5 text-sm font-medium text-sage-dark">
+              <p className="mt-2 flex items-center gap-1.5 text-sm font-medium text-rose-dark">
                 <ArrowLeftRight className="size-4 shrink-0" /> {f.troca}
               </p>
             </div>
@@ -257,9 +257,9 @@ function Receitas() {
       <Link href="/cardapio" className="block">
         <Card
           elevation="soft"
-          className="flex items-center gap-3 border border-sage/20 bg-sage-tint/30 transition-transform active:scale-[0.99]"
+          className="flex items-center gap-3 border border-rose/20 bg-rose-tint/30 transition-transform active:scale-[0.99]"
         >
-          <UtensilsCrossed className="size-6 shrink-0 text-sage-deep" />
+          <UtensilsCrossed className="size-6 shrink-0 text-rose-deep" />
           <div className="min-w-0 flex-1">
             <h3 className="font-semibold tracking-tight text-ink">
               Cardápio da semana
@@ -313,7 +313,7 @@ function RecipeCard({ recipe }: { recipe: Recipe }) {
             {recipe.nome}
           </span>
           <span className="mt-0.5 flex items-center gap-2 text-xs text-ink-faint">
-            <Badge tone="sage">{recipe.phase}</Badge>
+            <Badge tone="rose">{recipe.phase}</Badge>
             <span className="inline-flex items-center gap-1">
               <Clock className="size-3" /> {recipe.tempo}
             </span>
@@ -355,7 +355,7 @@ function RecipeCard({ recipe }: { recipe: Recipe }) {
                       key={i}
                       className="flex gap-2 text-[15px] leading-snug text-ink-soft"
                     >
-                      <span className="mt-2 size-1.5 shrink-0 rounded-full bg-sage/60" />
+                      <span className="mt-2 size-1.5 shrink-0 rounded-full bg-rose/60" />
                       {ing}
                     </li>
                   ))}
@@ -371,7 +371,7 @@ function RecipeCard({ recipe }: { recipe: Recipe }) {
                       key={i}
                       className="flex gap-2.5 text-[15px] leading-snug text-ink-soft"
                     >
-                      <span className="grid size-5 shrink-0 place-items-center rounded-full bg-sage-tint text-xs font-semibold text-sage-dark">
+                      <span className="grid size-5 shrink-0 place-items-center rounded-full bg-rose-tint text-xs font-semibold text-rose-dark">
                         {i + 1}
                       </span>
                       {step}

@@ -167,7 +167,7 @@ export const DAYS: DayContent[] = [
       { de: "pão de trigo", para: "tapioca ou pão sem glúten" },
     ],
     completionMessage:
-      "Dia 1 feito 🎉 Você tirou o combustível da fermentação — agora é o corpo responder, no ritmo dele.",
+"Dia 1 feito Você tirou o combustível da fermentação — agora é o corpo responder, no ritmo dele.",
   },
   {
     day: 2,
@@ -253,7 +253,7 @@ export const DAYS: DayContent[] = [
       { de: "alho in natura", para: "azeite de alho (só o óleo)" },
     ],
     completionMessage:
-      "Dois dias! Sua barriga já deve estar reclamando menos à noite 🌙",
+"Dois dias! Sua barriga já deve estar reclamando menos à noite",
   },
   {
     day: 3,
@@ -339,7 +339,7 @@ export const DAYS: DayContent[] = [
       { de: "café com leite comum", para: "café puro ou com leite sem lactose" },
     ],
     completionMessage:
-      "Fim da Fase Choque 🔥 Você tirou o pé do acelerador da fermentação. Vem coisa boa.",
+"Fim da Fase Choque Você tirou o pé do acelerador da fermentação. Vem coisa boa.",
   },
 
   /* --------------------------- REMOVE (4–7) --------------------------- */
@@ -416,7 +416,7 @@ export const DAYS: DayContent[] = [
       { de: "molho de tomate pronto", para: "tomate fresco refogado no azeite de alho" },
     ],
     completionMessage:
-      "Dia 4 ✅ Seu diário começou a desenhar o seu mapa pessoal de gatilhos.",
+"Dia 4 Seu diário começou a desenhar o seu mapa pessoal de gatilhos.",
   },
   {
     day: 5,
@@ -490,7 +490,7 @@ export const DAYS: DayContent[] = [
       { de: "pão integral de trigo", para: "aveia sem glúten ou pão sem glúten" },
       { de: "granola com mel e trigo", para: "aveia sem glúten + sementes" },
     ],
-    completionMessage: "Dia 5 ✅ Você está aprendendo a escolher fibra a seu favor.",
+ completionMessage:"Dia 5 Você está aprendendo a escolher fibra a seu favor.",
   },
   {
     day: 6,
@@ -564,7 +564,7 @@ export const DAYS: DayContent[] = [
       { de: "frituras e ultraprocessados", para: "assados, grelhados e azeite cru" },
       { de: "chocolate ao leite", para: "chocolate 70%+ (1–2 quadradinhos)" },
     ],
-    completionMessage: "Dia 6 ✅ Amanhã é dia de comemorar: 1 semana inteira 💚",
+ completionMessage:"Dia 6 Amanhã é dia de comemorar: 1 semana inteira",
   },
   {
     day: 7,
@@ -614,7 +614,7 @@ export const DAYS: DayContent[] = [
       "Releia seus registros da semana: vê algum padrão?",
       "Compare como você se sente hoje x no Dia 1",
       "Tire uma foto de progresso (opcional)",
-      "Comemore de um jeito que não seja comida 🎉",
+"Comemore de um jeito que não seja comida",
       "Prepare-se: amanhã começa a reintrodução",
     ],
     meals: {
@@ -636,7 +636,7 @@ export const DAYS: DayContent[] = [
       lanche: ["Fruta da estação (low FODMAP)", "Castanhas", "Gelatina incolor com suco de uva natural"],
     },
     completionMessage:
-      "1 SEMANA 🏆 Você cortou os maiores fermentadores e começou seu mapa. Se o inchaço já caiu, comemora; se ainda não, seus registros são o caminho.",
+"1 SEMANA Você cortou os maiores fermentadores e começou seu mapa. Se o inchaço já caiu, comemora; se ainda não, seus registros são o caminho.",
   },
 
   /* ------------------------ REINTRODUÇÃO (8–11) ------------------------ */
@@ -709,7 +709,7 @@ export const DAYS: DayContent[] = [
       lanche: ["Banana", "Castanhas", "Laranja"],
     },
     completionMessage:
-      "Dia 8 ✅ Primeiro grupo testado! Seu mapa está ficando pessoal de verdade.",
+"Dia 8 Primeiro grupo testado! Seu mapa está ficando pessoal de verdade.",
   },
   {
     day: 9,
@@ -780,7 +780,7 @@ export const DAYS: DayContent[] = [
       lanche: ["1 colher de mel no iogurte (se for o teste)", "Castanhas", "Kiwi"],
     },
     completionMessage:
-      "Dia 9 ✅ Mais um grupo no mapa. Você já sabe mais do seu corpo do que ontem.",
+"Dia 9 Mais um grupo no mapa. Você já sabe mais do seu corpo do que ontem.",
   },
   {
     day: 10,
@@ -851,7 +851,7 @@ export const DAYS: DayContent[] = [
       lanche: ["Banana", "Castanhas", "Laranja"],
     },
     completionMessage:
-      "Dia 10 ✅ Você testou o gatilho mais comum de todos. Isso muda o jogo.",
+"Dia 10 Você testou o gatilho mais comum de todos. Isso muda o jogo.",
   },
   {
     day: 11,
@@ -922,7 +922,7 @@ export const DAYS: DayContent[] = [
       lanche: ["½ maçã (se for o teste de polióis)", "Castanhas", "Kiwi"],
     },
     completionMessage:
-      "Dia 11 ✅ Primeira rodada de testes completa! Seu mapa de tolerância já começou — e segue ficando mais preciso.",
+"Dia 11 Primeira rodada de testes completa! Seu mapa de tolerância já começou — e segue ficando mais preciso.",
   },
 
   /* ----------------------------- REPAIR (12–14) ----------------------------- */
@@ -994,7 +994,7 @@ export const DAYS: DayContent[] = [
       ],
       lanche: ["Sementes de abóbora", "Castanha-do-pará (2–3)", "Iogurte (tolerado)"],
     },
-    completionMessage: "Dia 12 ✅ Você está reconstruindo de dentro pra fora.",
+ completionMessage:"Dia 12 Você está reconstruindo de dentro pra fora.",
   },
   {
     day: 13,
@@ -1064,7 +1064,7 @@ export const DAYS: DayContent[] = [
       ],
       lanche: ["Banana com chia", "Castanhas", "Iogurte tolerado"],
     },
-    completionMessage: "Dia 13 ✅ Quase lá. Amanhã seu mapa fica pronto 🗺️",
+ completionMessage:"Dia 13 Quase lá. Amanhã seu mapa fica pronto",
   },
   {
     day: 14,
@@ -1136,7 +1136,7 @@ export const DAYS: DayContent[] = [
       lanche: ["Suas frutas e castanhas toleradas", "Iogurte tolerado", "Gelatina incolor com suco de uva natural"],
     },
     completionMessage:
-      "DESAFIO CONCLUÍDO 🏆🗺️ Você tem seu mapa. Agora é manter a leveza — e a gente segue com você.",
+"DESAFIO CONCLUÍDO Você tem seu mapa. Agora é manter a leveza — e a gente segue com você.",
   },
 
   /* ------------------- RESET PROFUNDO · Rebalance (15–21) ------------------- */
@@ -1190,7 +1190,7 @@ export const DAYS: DayContent[] = [
       jantar: ["Sopa leve de legumes + proteína", "Salmão + purê de batata-doce (porção pequena)", "Omelete + salada verde"],
       lanche: ["Frutas toleradas", "Castanhas", "Iogurte tolerado"],
     },
-    completionMessage: "Dia 15 ✅ Começou o ajuste fino do seu corpo todo.",
+ completionMessage:"Dia 15 Começou o ajuste fino do seu corpo todo.",
   },
   {
     day: 16,
@@ -1242,7 +1242,7 @@ export const DAYS: DayContent[] = [
       jantar: ["Jantar leve: sopa + proteína (cedo)", "Omelete + salada", "Peixe + legumes no vapor"],
       lanche: ["Banana", "Castanhas", "Chá de camomila"],
     },
-    completionMessage: "Dia 16 ✅ Sono cuidado é intestino que se repara sozinho.",
+ completionMessage:"Dia 16 Sono cuidado é intestino que se repara sozinho.",
   },
   {
     day: 17,
@@ -1294,7 +1294,7 @@ export const DAYS: DayContent[] = [
       jantar: ["Sopa reconfortante + proteína", "Omelete + salada", "Salmão + purê"],
       lanche: ["Frutas toleradas", "Castanhas", "Chá"],
     },
-    completionMessage: "Dia 17 ✅ Você ensinou seu corpo a digerir em paz.",
+ completionMessage:"Dia 17 Você ensinou seu corpo a digerir em paz.",
   },
   {
     day: 18,
@@ -1346,7 +1346,7 @@ export const DAYS: DayContent[] = [
       jantar: ["Sopa + proteína", "Omelete + salada", "Peixe + legumes"],
       lanche: ["Banana", "Castanhas", "Kiwi"],
     },
-    completionMessage: "Dia 18 ✅ Mexer o corpo é mexer o intestino. Sentiu?",
+ completionMessage:"Dia 18 Mexer o corpo é mexer o intestino. Sentiu?",
   },
   {
     day: 19,
@@ -1398,7 +1398,7 @@ export const DAYS: DayContent[] = [
       jantar: ["Sopa de legumes variados + proteína", "Salmão + purê", "Omelete + salada"],
       lanche: ["Frutas toleradas variadas", "Castanhas", "Iogurte tolerado"],
     },
-    completionMessage: "Dia 19 ✅ Variedade é força pra sua microbiota.",
+ completionMessage:"Dia 19 Variedade é força pra sua microbiota.",
   },
   {
     day: 20,
@@ -1450,7 +1450,7 @@ export const DAYS: DayContent[] = [
       jantar: ["Seu jantar leve preferido", "Sopa + proteína", "Omelete + salada"],
       lanche: ["Seus lanches seguros", "Castanhas", "Frutas toleradas"],
     },
-    completionMessage: "Dia 20 ✅ Sua rotina de leveza está quase pronta.",
+ completionMessage:"Dia 20 Sua rotina de leveza está quase pronta.",
   },
   {
     day: 21,
@@ -1493,7 +1493,7 @@ export const DAYS: DayContent[] = [
     },
     checklist: [
       "Compare sua barriga, energia e pele com o Dia 1",
-      "Comemore essa conquista (sem ser com comida) 🎉",
+"Comemore essa conquista (sem ser com comida)",
       "Ative o Modo Manutenção pra não voltar a inchar",
       "Escolha seu próximo desafio mensal quando quiser",
     ],
@@ -1504,7 +1504,7 @@ export const DAYS: DayContent[] = [
       lanche: ["Suas frutas e castanhas toleradas", "Iogurte tolerado", "Gelatina incolor com suco de uva natural"],
     },
     completionMessage:
-      "21 DIAS 🌟 Você se transformou. Agora é manutenção — e a gente segue do seu lado.",
+"21 DIAS Você se transformou. Agora é manutenção — e a gente segue do seu lado.",
   },
 ];
 

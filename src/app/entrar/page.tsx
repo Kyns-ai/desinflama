@@ -161,8 +161,8 @@ export default function EntrarPage() {
           animate={{ opacity: 1, y: 0 }}
           className="flex flex-col items-center text-center"
         >
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-sage-tint">
-            <Loader2 className="h-7 w-7 animate-spin text-sage-deep" />
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-rose-tint">
+            <Loader2 className="h-7 w-7 animate-spin text-rose-deep" />
           </div>
           <p className="mt-6 font-display text-2xl text-ink">
             {etapa === "entrando" && nome

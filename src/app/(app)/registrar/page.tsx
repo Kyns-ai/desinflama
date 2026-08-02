@@ -119,7 +119,7 @@ export default function Registrar() {
           initial={{ scale: 0.6, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ type: "spring", stiffness: 260, damping: 18 }}
-          className="grid size-20 place-items-center rounded-full bg-sage text-white shadow-[var(--shadow-sage)]"
+          className="grid size-20 place-items-center rounded-full bg-rose text-white shadow-[var(--shadow-rose)]"
         >
           <Check className="size-10" strokeWidth={3} />
         </motion.div>
@@ -127,7 +127,7 @@ export default function Registrar() {
           Registrado!
         </h2>
         <p className="mt-3 flex max-w-xs items-start gap-1.5 text-[15px] leading-relaxed text-ink-soft">
-          <TrendingUp className="mt-0.5 size-4 shrink-0 text-sage-deep" />
+          <TrendingUp className="mt-0.5 size-4 shrink-0 text-rose-deep" />
           {insight}
         </p>
         <Button
@@ -169,7 +169,7 @@ export default function Registrar() {
                 onClick={() => setMealType(m.key)}
                 className={cn(
                   "flex flex-1 flex-col items-center gap-1 rounded-xl py-2 text-xs font-medium transition-all active:scale-95",
-                  active ? "bg-sage-tint text-sage-dark" : "bg-cream-deep text-ink-soft"
+                  active ? "bg-rose-tint text-rose-dark" : "bg-cream-deep text-ink-soft"
                 )}
               >
                 <Icon className="size-4" />
@@ -185,7 +185,7 @@ export default function Registrar() {
               <button
                 key={s}
                 onClick={() => addMeal(s)}
-                className="rounded-full border border-line bg-surface px-3 py-1.5 text-sm text-ink-soft transition-colors active:bg-sage-tint/40"
+                className="rounded-full border border-line bg-surface px-3 py-1.5 text-sm text-ink-soft transition-colors active:bg-rose-tint/40"
               >
                 + {s.length > 28 ? s.slice(0, 28) + "…" : s}
               </button>
@@ -199,7 +199,7 @@ export default function Registrar() {
             onChange={(e) => setMealText(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && addMeal(mealText)}
             placeholder="Adicionar à mão…"
-            className="h-11 flex-1 rounded-xl border border-line bg-surface px-3.5 text-[15px] text-ink placeholder:text-ink-faint focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/30"
+            className="h-11 flex-1 rounded-xl border border-line bg-surface px-3.5 text-[15px] text-ink placeholder:text-ink-faint focus:border-rose focus:outline-none focus:ring-2 focus:ring-rose/30"
           />
           {/* Atalho da foto ao lado do registro (esqueleto de simple-5.jpg): é
               assim que a análise vira hábito diário em vez de novidade de uma
@@ -207,14 +207,14 @@ export default function Registrar() {
           <Link
             href="/nutri?camera=1"
             aria-label="Fotografar o prato e perguntar para a nutri"
-            className="grid size-11 shrink-0 place-items-center rounded-xl border border-sage/40 bg-sage-tint text-sage-dark transition-transform active:scale-95"
+            className="grid size-11 shrink-0 place-items-center rounded-xl border border-rose/40 bg-rose-tint text-rose-dark transition-transform active:scale-95"
           >
             <Camera className="size-5" />
           </Link>
           <button
             onClick={() => addMeal(mealText)}
             aria-label="Adicionar refeição"
-            className="grid size-11 shrink-0 place-items-center rounded-xl bg-sage text-white transition-transform active:scale-95"
+            className="grid size-11 shrink-0 place-items-center rounded-xl bg-rose text-white transition-transform active:scale-95"
           >
             <Plus className="size-5" />
           </button>
@@ -298,7 +298,7 @@ export default function Registrar() {
                       className={cn(
                         "h-10 flex-1 rounded-xl text-sm font-semibold transition-all active:scale-95",
                         active
-                          ? "bg-sage text-white shadow-[var(--shadow-sage)]"
+                          ? "bg-rose text-white shadow-[var(--shadow-rose)]"
                           : "bg-cream-deep text-ink-soft hover:bg-line"
                       )}
                       aria-pressed={active}
@@ -324,7 +324,7 @@ export default function Registrar() {
           <span
             className={cn(
               "grid size-7 shrink-0 place-items-center rounded-lg border-2 transition-all",
-              hidratacao ? "border-sage bg-sage text-white" : "border-line"
+              hidratacao ? "border-rose bg-rose text-white" : "border-line"
             )}
           >
             {hidratacao && <Check className="size-4" strokeWidth={3} />}
@@ -334,7 +334,7 @@ export default function Registrar() {
               Bebi ~2L de água hoje
             </span>
             <span className="text-sm text-ink-soft">
-              Hidratação conta pro seu Índice 💧
+ Hidratação conta pro seu Índice
             </span>
           </span>
         </button>

@@ -86,7 +86,7 @@ export default function Cardapio() {
           onClick={() => setTab("menu")}
           className={cn(
             "flex flex-1 items-center justify-center gap-1.5 rounded-xl py-2.5 text-sm font-semibold transition-all",
-            tab === "menu" ? "bg-sage-tint text-sage-dark" : "bg-cream-deep text-ink-soft"
+            tab === "menu" ? "bg-rose-tint text-rose-dark" : "bg-cream-deep text-ink-soft"
           )}
         >
           <UtensilsCrossed className="size-4" /> Cardápio
@@ -95,7 +95,7 @@ export default function Cardapio() {
           onClick={() => setTab("lista")}
           className={cn(
             "flex flex-1 items-center justify-center gap-1.5 rounded-xl py-2.5 text-sm font-semibold transition-all",
-            tab === "lista" ? "bg-sage-tint text-sage-dark" : "bg-cream-deep text-ink-soft"
+            tab === "lista" ? "bg-rose-tint text-rose-dark" : "bg-cream-deep text-ink-soft"
           )}
         >
           <ShoppingCart className="size-4" /> Lista de compras
@@ -140,7 +140,7 @@ function DayMenuCard({
           const Icon = m.icon;
           return (
             <div key={m.key} className="flex items-start gap-2.5 text-[15px]">
-              <Icon className="mt-0.5 size-4 shrink-0 text-sage-deep" />
+              <Icon className="mt-0.5 size-4 shrink-0 text-rose-deep" />
               <div className="min-w-0 flex-1">
                 <span className="text-xs font-semibold uppercase tracking-wide text-ink-faint">
                   {m.label}
@@ -223,7 +223,7 @@ function ShoppingListView({
                       <span
                         className={cn(
                           "grid size-5 shrink-0 place-items-center rounded-md border-2 transition-all",
-                          checked ? "border-sage bg-sage" : "border-line"
+                          checked ? "border-rose bg-rose" : "border-line"
                         )}
                       >
                         {checked && (

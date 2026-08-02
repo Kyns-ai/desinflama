@@ -26,7 +26,7 @@ export function LoginForm({ demo }: { demo: boolean }) {
           type="password"
           autoFocus
           placeholder="••••••••"
-          className="h-11 w-full rounded-xl border border-line bg-surface pl-11 pr-4 text-[15px] text-ink placeholder:text-ink-faint focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/30"
+          className="h-11 w-full rounded-xl border border-line bg-surface pl-11 pr-4 text-[15px] text-ink placeholder:text-ink-faint focus:border-rose focus:outline-none focus:ring-2 focus:ring-rose/30"
         />
       </div>
 
@@ -39,7 +39,7 @@ export function LoginForm({ demo }: { demo: boolean }) {
       <button
         type="submit"
         disabled={pending}
-        className="mt-5 h-11 w-full rounded-xl bg-sage font-semibold text-white transition-colors hover:bg-sage-deep disabled:opacity-50"
+        className="mt-5 h-11 w-full rounded-xl bg-rose font-semibold text-white transition-colors hover:bg-rose-deep disabled:opacity-50"
       >
         {pending ? "Entrando…" : "Entrar"}
       </button>

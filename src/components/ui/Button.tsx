@@ -4,17 +4,39 @@ import { forwardRef } from "react";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/cn";
 
-type Variant = "primary" | "sage" | "secondary" | "ghost" | "subtle" | "danger";
+type Variant =
+  | "primary"
+  | "rose"
+  | "accent"
+  | "onColor"
+  | "secondary"
+  | "ghost"
+  | "subtle"
+  | "danger";
 type Size = "sm" | "md" | "lg";
 
+/**
+ * `primary` é ROSA (a marca), não terracota.
+ *
+ * Antes o primário era o acento e, como quase todo CTA usa `primary`, o
+ * acento aparecia em todas as telas — o oposto de "acento raro" (Seção 8 do
+ * PLANO). Agora: rosa = marca e ação; `accent` (terracota) = o UM destaque
+ * por tela. `rose` fica como apelido de `primary` por compatibilidade com as
+ * chamadas que já existiam.
+ */
 const variants: Record<Variant, string> = {
   primary:
+    "bg-rose text-white shadow-[var(--shadow-rose)] hover:bg-rose-deep active:bg-rose-deep",
+  rose: "bg-rose text-white shadow-[var(--shadow-rose)] hover:bg-rose-deep active:bg-rose-deep",
+  accent:
     "bg-coral text-white shadow-[var(--shadow-coral)] hover:bg-coral-deep active:bg-coral-deep",
-  sage: "bg-sage text-white shadow-[var(--shadow-sage)] hover:bg-sage-deep active:bg-sage-deep",
+  /** Botão dentro do campo de cor escuro (home, paywall). */
+  onColor:
+    "bg-surface text-rose-dark hover:bg-white active:bg-cream-deep shadow-[var(--shadow-card)]",
   secondary:
     "bg-surface text-ink border border-line hover:border-ink-faint/60 active:bg-cream-deep",
   ghost: "bg-transparent text-ink-soft hover:bg-black/[0.04] active:bg-black/[0.06]",
-  subtle: "bg-sage-tint text-sage-dark hover:bg-sage-tint/70 active:bg-sage-tint",
+  subtle: "bg-rose-tint text-rose-dark hover:bg-rose-tint/70 active:bg-rose-tint",
   danger: "bg-danger-tint text-danger hover:bg-danger-tint/70 active:bg-danger-tint",
 };
 

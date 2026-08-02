@@ -63,7 +63,7 @@ export function ProtocoloCard({
       const { toPng } = await import("html-to-image");
       const dataUrl = await toPng(cardRef.current, {
         pixelRatio: 2,
-        backgroundColor: "#faf7f2",
+        backgroundColor: "#f5ece8",
       });
       const blob = await (await fetch(dataUrl)).blob();
       const file = new File([blob], `protocolo-desinflama-${firstName.toLowerCase()}.png`, {
@@ -105,7 +105,7 @@ export function ProtocoloCard({
               Protocolo da {firstName}
             </h3>
           </div>
-          <Art id="protocolo-selo" emoji="📜" className="size-12 shrink-0 rounded-2xl text-2xl" />
+ <Art id="protocolo-selo" className="size-12 shrink-0 rounded-2xl text-2xl" />
         </div>
 
         <p className="mt-2 text-sm text-ink-soft">
@@ -125,8 +125,8 @@ export function ProtocoloCard({
               ))}
             </ul>
           </div>
-          <div className="rounded-2xl bg-sage-tint/50 p-3.5">
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-sage-dark">
+          <div className="rounded-2xl bg-rose-tint/50 p-3.5">
+            <p className="text-[11px] font-semibold uppercase tracking-wide text-rose-dark">
               5 liberados à vontade
             </p>
             <ul className="mt-2 space-y-1.5">
@@ -141,7 +141,7 @@ export function ProtocoloCard({
 
         {win && (
           <p className="mt-3 rounded-2xl bg-plum-tint/50 px-3.5 py-2.5 text-[13px] leading-snug text-ink">
-            🌙 Sua próxima janela de inchaço hormonal:{" "}
+ Sua próxima janela de inchaço hormonal:{""}
             <strong className="font-semibold">
               ~{humanDayMonth(win.start)} – {humanDayMonth(win.end)}
             </strong>{" "}
@@ -152,10 +152,10 @@ export function ProtocoloCard({
         <div className="mt-3 flex items-stretch gap-2">
           {timeline.map((x) => (
             <div key={x.when} className="flex-1 rounded-xl bg-cream-deep/60 px-2 py-2 text-center">
-              <div className="font-display text-sm font-semibold text-sage-deep">
+              <div className="font-display text-sm font-semibold text-rose-deep">
                 {x.when}
               </div>
-              <div className="text-[10px] font-semibold text-sage-deep/80">
+              <div className="text-[10px] font-semibold text-rose-deep/80">
                 {x.dateLabel}
               </div>
               <div className="mt-0.5 text-[10px] leading-tight text-ink-soft">
@@ -173,7 +173,7 @@ export function ProtocoloCard({
       <button
         onClick={baixar}
         disabled={saving}
-        className="flex w-full items-center justify-center gap-1.5 border-t border-line py-3 text-sm font-semibold text-sage-deep transition-colors active:bg-sage-tint/40 disabled:opacity-50"
+        className="flex w-full items-center justify-center gap-1.5 border-t border-line py-3 text-sm font-semibold text-rose-deep transition-colors active:bg-rose-tint/40 disabled:opacity-50"
       >
         <Download className="size-4" />
         {saving

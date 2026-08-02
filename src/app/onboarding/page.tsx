@@ -3,9 +3,18 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Check, Moon, Quote, Sparkles } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  Handshake,
+  Moon,
+  Quote,
+  Sparkles,
+} from "lucide-react";
 import { Button, ProgressBar } from "@/components/ui";
 import { Art } from "@/components/Art";
+import { artId } from "@/content/cardArt";
 import { useAppStore } from "@/store/useAppStore";
 import { todayKey } from "@/lib/date";
 import { BloatWindowCard } from "@/components/BloatWindowCard";
@@ -154,11 +163,18 @@ export default function Onboarding() {
                   className={cn(
                     "flex w-full items-center gap-3.5 rounded-2xl border p-4 text-left transition-all active:scale-[0.99]",
                     active
-                      ? "border-sage bg-sage-tint/60 shadow-[var(--shadow-soft)]"
+                      ? "border-rose bg-rose-tint/60 shadow-[var(--shadow-soft)]"
                       : "border-line bg-surface"
                   )}
                 >
-                  {opt.emoji && <span className="text-2xl">{opt.emoji}</span>}
+                  {/* O campo `emoji` do conteúdo é CHAVE de busca da arte
+                      (ver content/cardArt.ts), nunca texto na tela. */}
+                  {opt.emoji && (
+                    <Art
+                      id={artId(opt.emoji) ?? ""}
+                      className="size-11 shrink-0 rounded-xl"
+                    />
+                  )}
                   <span className="min-w-0 flex-1">
                     <span className="block font-semibold tracking-tight text-ink">
                       {opt.label}
@@ -173,7 +189,7 @@ export default function Onboarding() {
                     className={cn(
                       "grid size-6 shrink-0 place-items-center rounded-full border-2 transition-colors",
                       active
-                        ? "border-sage bg-sage text-white"
+                        ? "border-rose bg-rose text-white"
                         : "border-line"
                     )}
                   >
@@ -243,12 +259,11 @@ function CompromissoStep({
         transition={{ duration: 0.32, ease }}
         className="flex flex-1 flex-col py-12"
       >
-        <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-sage-tint px-3 py-1 text-xs font-semibold text-sage-dark">
-          🤝 Seu compromisso
+        <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-rose-tint px-3 py-1 text-xs font-semibold text-rose-dark">
+          <Handshake className="size-3.5" /> Seu compromisso
         </span>
         <Art
           id="compromisso-pacto"
-          emoji="🤝"
           className="mt-5 size-20 rounded-2xl text-4xl"
         />
         <h1 className="mt-4 font-display text-[1.85rem] font-semibold leading-tight tracking-tight text-ink">
@@ -269,7 +284,7 @@ function CompromissoStep({
                 className={cn(
                   "flex w-full items-center gap-3.5 rounded-2xl border p-4 text-left transition-all active:scale-[0.99]",
                   active
-                    ? "border-sage bg-sage-tint/60 shadow-[var(--shadow-soft)]"
+                    ? "border-rose bg-rose-tint/60 shadow-[var(--shadow-soft)]"
                     : "border-line bg-surface"
                 )}
               >
@@ -291,7 +306,7 @@ function CompromissoStep({
                 <span
                   className={cn(
                     "grid size-6 shrink-0 place-items-center rounded-full border-2 transition-colors",
-                    active ? "border-sage bg-sage text-white" : "border-line"
+                    active ? "border-rose bg-rose text-white" : "border-line"
                   )}
                 >
                   {active && <Check className="size-3.5" strokeWidth={3} />}
@@ -360,7 +375,6 @@ function CicloStep({ onContinue }: { onContinue: (date: string | null) => void }
         </span>
         <Art
           id="ciclo-lua"
-          emoji="🌙"
           className="mt-5 size-20 rounded-2xl text-4xl"
         />
         <h1 className="mt-4 font-display text-[1.85rem] font-semibold leading-tight tracking-tight text-ink">
@@ -376,7 +390,7 @@ function CicloStep({ onContinue }: { onContinue: (date: string | null) => void }
           value={date}
           max={today}
           onChange={(e) => setDate(e.target.value)}
-          className="mt-7 w-full rounded-2xl border border-line bg-surface p-4 text-base text-ink outline-none focus:border-sage"
+          className="mt-7 w-full rounded-2xl border border-line bg-surface p-4 text-base text-ink outline-none focus:border-rose"
         />
 
         <div className="mt-auto space-y-3 pt-8">
@@ -426,9 +440,9 @@ function MapaLoader({ onDone }: { onDone: () => void }) {
       <div className="flex flex-col items-center text-center">
         <div className="relative mb-8 size-20">
           <div className="absolute inset-0 rounded-full border-4 border-cream-deep" />
-          <div className="absolute inset-0 animate-spin rounded-full border-4 border-transparent border-t-sage [animation-duration:1s]" />
+          <div className="absolute inset-0 animate-spin rounded-full border-4 border-transparent border-t-rose [animation-duration:1s]" />
           <div className="absolute inset-0 grid place-items-center">
-            <Sparkles className="size-7 text-sage-deep" />
+            <Sparkles className="size-7 text-rose-deep" />
           </div>
         </div>
         <AnimatePresence mode="wait">
@@ -470,7 +484,7 @@ function Mapa({
         className="flex flex-col py-8"
       >
         <Reveal>
-          <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-sage-tint px-3 py-1 text-xs font-semibold text-sage-dark">
+          <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-rose-tint px-3 py-1 text-xs font-semibold text-rose-dark">
             <Sparkles className="size-3.5" /> Seu Mapa de Inchaço
           </span>
         </Reveal>
@@ -488,7 +502,7 @@ function Mapa({
           </h1>
         </Reveal>
         <Reveal>
-          <p className="mt-1 text-lg font-medium text-sage-deep">{p.tagline}</p>
+          <p className="mt-1 text-lg font-medium text-rose-deep">{p.tagline}</p>
         </Reveal>
 
         <Reveal>
@@ -509,7 +523,7 @@ function Mapa({
                 key={x.when}
                 className="flex-1 rounded-2xl bg-cream-deep/60 px-3 py-3 text-center"
               >
-                <div className="font-display text-lg font-semibold text-sage-deep">
+                <div className="font-display text-lg font-semibold text-rose-deep">
                   {x.when}
                 </div>
                 <div className="mt-0.5 text-[11px] leading-tight text-ink-soft">
@@ -545,7 +559,7 @@ function Mapa({
         <Reveal>
           <div className="mt-5 rounded-2xl border border-line bg-surface p-4">
             <div className="mb-2 flex items-center gap-2">
-              <Quote className="size-4 text-sage-deep" />
+              <Quote className="size-4 text-rose-deep" />
               <h3 className="font-semibold tracking-tight text-ink">
                 {WELCOME_VIDEO.title}
               </h3>

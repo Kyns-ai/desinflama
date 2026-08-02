@@ -125,7 +125,7 @@ export function ToleranceTestCard({ day }: { day: number }) {
           className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-plum"
         >
           <Check className="size-4" strokeWidth={3} /> Anotado no seu Mapa de
-          Tolerância 🗺️
+ Tolerância
         </motion.p>
       )}
     </Card>

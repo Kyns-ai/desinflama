@@ -44,12 +44,12 @@ export default function Acompanhamento() {
           initial={{ scale: 0.6, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ type: "spring", stiffness: 260, damping: 18 }}
-          className="grid size-20 place-items-center rounded-full bg-sage text-white shadow-[var(--shadow-sage)]"
+          className="grid size-20 place-items-center rounded-full bg-rose text-white shadow-[var(--shadow-rose)]"
         >
           <Check className="size-10" strokeWidth={3} />
         </motion.div>
         <h2 className="mt-6 font-display text-2xl font-semibold tracking-tight text-ink">
-          Recebemos seu interesse 💚
+ Recebemos seu interesse
         </h2>
         <p className="mt-2 max-w-xs text-[15px] leading-relaxed text-ink-soft">
           A nutri vai entrar em contato com as opções de acompanhamento
@@ -75,7 +75,7 @@ export default function Acompanhamento() {
       </header>
 
       <div>
-        <div className="grid size-14 place-items-center rounded-2xl bg-gold-tint text-[#9a7322]">
+        <div className="grid size-14 place-items-center rounded-2xl bg-gold-tint text-gold-dark">
           <UserCheck className="size-7" />
         </div>
         <h1 className="mt-5 font-display text-[2rem] font-semibold leading-tight tracking-tight text-ink">
@@ -99,8 +99,8 @@ export default function Acompanhamento() {
         ))}
       </div>
 
-      <Card elevation="soft" className="bg-sage-tint/40 text-center">
-        <p className="font-display text-lg font-semibold leading-snug text-sage-dark">
+      <Card elevation="soft" className="bg-rose-tint/40 text-center">
+        <p className="font-display text-lg font-semibold leading-snug text-rose-dark">
           Quando o padrão trava sozinho, um olhar profissional costuma
           destravar
         </p>

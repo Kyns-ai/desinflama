@@ -42,21 +42,21 @@ function morningCopy(day: number, nome?: string): { title: string; body: string 
   const oi = nome ? `${nome}, ` : "";
   if (day === 1)
     return {
-      title: "Seu Dia 1 te espera 🌱",
+ title:"Seu Dia 1 te espera",
       body: "Começa leve: 1 respiração, 1 check-in. 3 minutos.",
     };
   if (day === 2)
     return {
-      title: "Bom dia 🌱",
+ title:"Bom dia",
       body: `${oi}sua barriga já deve reclamar menos hoje. Registra pra gente comparar?`,
     };
   if (day === 3)
     return {
-      title: "Último dia da fase Choque 🔥",
+ title:"Último dia da fase Choque",
       body: `${oi}feche as 72h e veja seu índice subir.`,
     };
   return {
-    title: "Bom dia 🌱",
+ title:"Bom dia",
     body: `Seu Dia ${day} te espera. Bora desinchar?`,
   };
 }
@@ -79,7 +79,7 @@ export async function scheduleRetentionNudges(
         },
         {
           id: IDS.streakRisk,
-          title: "Não perca sua ofensiva 🔥",
+ title:"Não perca sua ofensiva",
           body: "Faltou seu registro de hoje? Leva 30 segundos.",
           schedule: { on: { hour: 20, minute: 30 }, allowWhileIdle: true },
         },

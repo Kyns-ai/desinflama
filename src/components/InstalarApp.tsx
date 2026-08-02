@@ -142,11 +142,11 @@ export function InstalarApp({
     return (
       <div
         className={cn(
-          "flex items-center gap-3 rounded-2xl bg-sage-tint px-4 py-3",
+          "flex items-center gap-3 rounded-2xl bg-rose-tint px-4 py-3",
           className,
         )}
       >
-        <Check className="h-5 w-5 shrink-0 text-sage-deep" />
+        <Check className="h-5 w-5 shrink-0 text-rose-deep" />
         <p className="text-sm text-ink">
           O app já está na sua tela inicial. É só abrir por ele daqui pra frente.
         </p>
@@ -165,7 +165,7 @@ export function InstalarApp({
     >
       <div className="flex items-start gap-3">
         <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-cream-deep">
-          <Download className="h-5 w-5 text-sage-deep" />
+          <Download className="h-5 w-5 text-rose-deep" />
         </span>
         <div className="min-w-0">
           <h3 className="font-display text-lg leading-tight text-ink">

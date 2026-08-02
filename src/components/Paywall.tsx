@@ -86,7 +86,7 @@ export function Paywall({
         transition={{ duration: 0.5 }}
         className="pt-10"
       >
-        <div className="grid size-14 place-items-center rounded-2xl bg-gradient-to-br from-sage-deep to-sage-dark text-white shadow-[var(--shadow-sage)]">
+        <div className="grid size-14 place-items-center rounded-2xl bg-gradient-to-br from-rose-deep to-rose-dark text-white shadow-[var(--shadow-rose)]">
           <Crown className="size-7" />
         </div>
         <h1 className="mt-5 font-display text-[2rem] font-semibold leading-tight tracking-tight text-ink">
@@ -101,7 +101,7 @@ export function Paywall({
       <ul className="mt-6 space-y-2.5">
         {BENEFITS.map((b) => (
           <li key={b} className="flex items-start gap-2.5">
-            <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-sage text-white">
+            <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-rose text-white">
               <Check className="size-3" strokeWidth={3.5} />
             </span>
             <span className="text-[15px] text-ink">{b}</span>
@@ -119,13 +119,13 @@ export function Paywall({
               onClick={() => setSelected(o.id)}
               className={cn(
                 "relative flex w-full items-center gap-3 rounded-2xl border-2 p-4 text-left transition-all",
-                active ? "border-sage bg-sage-tint/40" : "border-line bg-surface"
+                active ? "border-rose bg-rose-tint/40" : "border-line bg-surface"
               )}
             >
               <span
                 className={cn(
                   "grid size-6 shrink-0 place-items-center rounded-full border-2",
-                  active ? "border-sage bg-sage text-white" : "border-line"
+                  active ? "border-rose bg-rose text-white" : "border-line"
                 )}
               >
                 {active && <Check className="size-3.5" strokeWidth={3} />}
@@ -173,7 +173,7 @@ export function Paywall({
       <button
         onClick={restaurar}
         disabled={restoring}
-        className="mt-3 w-full text-center text-sm font-medium text-sage-deep disabled:opacity-50"
+        className="mt-3 w-full text-center text-sm font-medium text-rose-deep disabled:opacity-50"
       >
         {restoring ? "Restaurando…" : "Restaurar compra"}
       </button>

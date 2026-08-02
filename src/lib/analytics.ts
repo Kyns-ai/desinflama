@@ -181,7 +181,7 @@ export function milestones(logs: DailyLog[], streakLongest: number): Milestone[]
     if (energia.length >= 4) {
       const firstAvg = avg(energia.slice(0, 2).map((p) => p.value));
       const lastAvg = avg(energia.slice(-2).map((p) => p.value));
-      if (lastAvg > firstAvg) out.push({ label: "Sua energia subiu 📈", emoji: "⚡" });
+ if (lastAvg > firstAvg) out.push({ label:"Sua energia subiu", emoji: "⚡" });
     }
   }
   if (streakLongest >= 3)

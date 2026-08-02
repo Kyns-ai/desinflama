@@ -7,7 +7,7 @@ interface ProgressBarProps {
   /** 0–1 */
   value: number;
   className?: string;
-  tone?: "sage" | "coral" | "gold";
+  tone?: "rose" | "coral" | "gold";
   /** segmentos: usado na barra de fases do onboarding/jornada */
   segments?: number;
   active?: number;
@@ -15,7 +15,7 @@ interface ProgressBarProps {
 }
 
 const tones = {
-  sage: "bg-sage",
+  rose: "bg-rose",
   coral: "bg-coral",
   gold: "bg-gold",
 };
@@ -23,7 +23,7 @@ const tones = {
 export function ProgressBar({
   value,
   className,
-  tone = "sage",
+  tone = "rose",
   segments,
   active = 0,
   height = 8,

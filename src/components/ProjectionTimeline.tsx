@@ -36,7 +36,7 @@ export function ProjectionTimeline() {
               <span
                 className={cn(
                   "absolute left-1/2 top-3 h-0.5 w-full",
-                  p.reached ? "bg-sage" : "bg-line"
+                  p.reached ? "bg-rose" : "bg-line"
                 )}
               />
             )}
@@ -44,20 +44,20 @@ export function ProjectionTimeline() {
               className={cn(
                 "relative z-10 grid size-6 place-items-center rounded-full border-2 transition-colors",
                 p.reached
-                  ? "border-sage bg-sage text-white"
+                  ? "border-rose bg-rose text-white"
                   : p.isNext
-                    ? "border-sage bg-cream"
+                    ? "border-rose bg-cream"
                     : "border-line bg-cream"
               )}
             >
               {p.reached ? (
                 <Check className="size-3.5" strokeWidth={3} />
               ) : (
-                <span className={cn("size-2 rounded-full", p.isNext ? "bg-sage" : "bg-line")} />
+                <span className={cn("size-2 rounded-full", p.isNext ? "bg-rose" : "bg-line")} />
               )}
             </span>
             <span className="mt-2 font-display text-sm font-semibold text-ink">{p.when}</span>
-            <span className={cn("text-[11px] font-semibold", p.isNext ? "text-sage-deep" : "text-ink-faint")}>
+            <span className={cn("text-[11px] font-semibold", p.isNext ? "text-rose-deep" : "text-ink-faint")}>
               {p.isNext ? `${p.dateLabel} · próximo` : p.dateLabel}
             </span>
             <span className="mt-0.5 text-[11px] leading-tight text-ink-soft">{p.label}</span>

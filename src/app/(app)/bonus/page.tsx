@@ -47,7 +47,6 @@ export default function BonusPage() {
       <Card elevation="card" className="flex items-center gap-4">
         <Art
           id="bonus-comerfora"
-          emoji="🍽️"
           className="size-16 shrink-0 rounded-2xl text-3xl"
         />
         <div className="min-w-0 flex-1">
@@ -55,8 +54,8 @@ export default function BonusPage() {
             {BONUS_D7.subtitulo}
           </p>
           {unlocked ? (
-            <Badge tone="sage" className="mt-2">
-              Desbloqueado 🎉
+            <Badge tone="rose" className="mt-2">
+ Desbloqueado
             </Badge>
           ) : (
             <div className="mt-2">
@@ -64,7 +63,7 @@ export default function BonusPage() {
                 <span className="inline-flex items-center gap-1 font-semibold text-ink-soft">
                   <Lock className="size-3" /> Desbloqueia no seu Dia 7
                 </span>
-                <span className="font-semibold text-sage-deep">
+                <span className="font-semibold text-rose-deep">
                   {diasFeitos}/7 dias
                 </span>
               </div>
@@ -86,7 +85,7 @@ export default function BonusPage() {
             São <strong className="font-semibold text-ink">10 estratégias
             práticas</strong> pra você ir a restaurante, churrasco, pizzaria e
             bar sem desfazer o seu progresso — e sem virar “a chata da mesa”.
-            Continue fechando seus dias que ele abre sozinho. 💛
+ Continue fechando seus dias que ele abre sozinho.
           </p>
           <ul className="mt-3 space-y-1.5">
             {BONUS_D7.dicas.slice(0, 4).map((d, i) => (

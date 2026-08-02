@@ -163,7 +163,7 @@ export default function AuthPage() {
             setMode(mode === "signup" ? "login" : "signup");
             setError(null);
           }}
-          className="font-semibold text-sage-deep"
+          className="font-semibold text-rose-deep"
         >
           {mode === "signup" ? "Entrar" : "Criar conta"}
         </button>

@@ -4,7 +4,7 @@ import { Card, PageHeader, Badge, type Tone } from "@/components/ui";
 import { fmtDate } from "@/lib/cn";
 
 const STATUS_TONE: Record<string, Tone> = {
-  publicado: "sage",
+  publicado: "rose",
   rascunho: "neutral",
   "em revisão": "gold",
 };
@@ -18,7 +18,7 @@ export default async function Conteudo() {
         title="Conteúdo"
         subtitle="A nutricionista revisa e edita o programa — sem mexer em código."
         right={
-          <button className="rounded-xl bg-sage px-4 py-2 text-sm font-semibold text-white hover:bg-sage-deep">
+          <button className="rounded-xl bg-rose px-4 py-2 text-sm font-semibold text-white hover:bg-rose-deep">
             + Novo conteúdo
           </button>
         }

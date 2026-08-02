@@ -39,7 +39,7 @@ export function PageHeader({
 }
 
 const tones = {
-  sage: "bg-sage-tint text-sage-dark",
+  rose: "bg-rose-tint text-rose-dark",
   coral: "bg-coral-tint text-coral-dark",
   gold: "bg-gold-tint text-[#9a7322]",
   sky: "bg-sky-tint text-[#3d6f88]",
@@ -76,7 +76,7 @@ export function KpiCard({
   value,
   delta,
   icon: Icon,
-  tone = "sage",
+  tone = "rose",
 }: {
   label: string;
   value: string;
@@ -95,7 +95,7 @@ export function KpiCard({
           <span
             className={cn(
               "inline-flex items-center gap-0.5 text-xs font-semibold",
-              up ? "text-sage-deep" : "text-coral-dark"
+              up ? "text-rose-deep" : "text-coral-dark"
             )}
           >
             {up ? <ArrowUpRight className="size-3.5" /> : <ArrowDownRight className="size-3.5" />}
@@ -115,7 +115,7 @@ export function KpiCard({
 
 export function SourceBadge({ source }: { source: "mock" | "supabase" }) {
   return source === "supabase" ? (
-    <Badge tone="sage">● Supabase</Badge>
+    <Badge tone="rose">● Supabase</Badge>
   ) : (
     <Badge tone="gold">● Dados de demonstração</Badge>
   );

@@ -17,7 +17,7 @@ import {
 import { cn } from "@/lib/cn";
 
 const VERDICT_STYLE: Record<Verdict, string> = {
-  avontade: "bg-sage-tint text-sage-dark",
+  avontade: "bg-rose-tint text-rose-dark",
   moderar: "bg-gold-tint text-[#7c5d18]",
   evitar: "bg-coral-tint text-coral-dark",
   naotestado: "bg-cream-deep text-ink-faint",
@@ -33,7 +33,7 @@ export function ToleranceMapCard() {
         <h2 className="font-display text-lg font-semibold tracking-tight text-ink">
           Seu Mapa de Tolerância
         </h2>
-        <span className="text-sm font-semibold text-sage-deep">{n}/5</span>
+        <span className="text-sm font-semibold text-rose-deep">{n}/5</span>
       </div>
       <p className="text-sm leading-relaxed text-ink-soft">
         {n === 0

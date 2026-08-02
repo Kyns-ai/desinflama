@@ -80,7 +80,7 @@ export function ChallengeView({ id }: { id: string }) {
             <span className="font-medium text-ink-soft">
               {doneCount} de {challenge.dias.length} dias
             </span>
-            <span className="font-semibold text-sage-deep">
+            <span className="font-semibold text-rose-deep">
               {Math.round((doneCount / challenge.dias.length) * 100)}%
             </span>
           </div>
@@ -99,7 +99,7 @@ export function ChallengeView({ id }: { id: string }) {
           </span>
           <div className="min-w-0 flex-1">
             <h3 className="font-semibold tracking-tight text-ink">
-              Desafio concluído 🎉
+ Desafio concluído
             </h3>
             <p className="text-sm text-ink-soft">
               {challenge.dias.length} dias fechados. Quer rodar de novo?
@@ -126,7 +126,7 @@ export function ChallengeView({ id }: { id: string }) {
                 <span
                   className={cn(
                     "grid size-9 shrink-0 place-items-center rounded-full text-sm font-semibold",
-                    done && "bg-sage text-white",
+                    done && "bg-rose text-white",
                     !done && !locked && "bg-coral text-white",
                     locked && "bg-cream-deep text-ink-faint"
                   )}
@@ -183,7 +183,7 @@ export function ChallengeView({ id }: { id: string }) {
                         ))}
                       </ul>
                       {done ? (
-                        <Badge tone="sage">
+                        <Badge tone="rose">
                           <Check className="size-3.5" strokeWidth={3} /> Concluído
                         </Badge>
                       ) : (

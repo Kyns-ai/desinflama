@@ -84,9 +84,9 @@ export const TIER_STYLE: Record<
   { dot: string; chip: string; ring: string }
 > = {
   calma: {
-    dot: "bg-sage",
-    chip: "bg-sage-tint text-sage-dark",
-    ring: "border-sage/25",
+    dot: "bg-rose",
+    chip: "bg-rose-tint text-rose-dark",
+    ring: "border-rose/25",
   },
   atencao: {
     dot: "bg-gold",

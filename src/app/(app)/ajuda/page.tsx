@@ -97,7 +97,7 @@ export default function Ajuda() {
         })}
       </div>
 
-      <Card elevation="card" className="bg-sage-tint/40">
+      <Card elevation="card" className="bg-rose-tint/40">
         <h2 className="font-semibold tracking-tight text-ink">
           Não achou o que procurava?
         </h2>
@@ -110,7 +110,7 @@ export default function Ajuda() {
               href={whatsappUrl()!}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-sage py-2.5 text-sm font-semibold text-white transition-colors hover:bg-sage-deep"
+              className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-rose py-2.5 text-sm font-semibold text-white transition-colors hover:bg-rose-deep"
             >
               <MessageCircle className="size-4" /> WhatsApp
             </a>

@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Wind, Sprout, Check, Info } from "lucide-react";
+import { ArrowLeft, Wind, Sprout, Check, Info, Sparkles } from "lucide-react";
 import { Card, Button } from "@/components/ui";
 import { Confetti } from "@/components/Confetti";
 import { useAppStore } from "@/store/useAppStore";
@@ -124,11 +124,11 @@ export default function Calmaria() {
             <div className="flex flex-1 flex-col justify-center gap-5 py-6">
               {primeiraVez && (
                 <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-coral-tint px-3 py-1 text-xs font-semibold text-coral-dark">
-                  ✨ Sua primeira vitória
+                  <Sparkles className="size-3.5" /> Sua primeira vitória
                 </span>
               )}
-              <div className="grid size-16 place-items-center rounded-3xl bg-sage-tint">
-                <Wind className="size-8 text-sage-deep" />
+              <div className="grid size-16 place-items-center rounded-3xl bg-rose-tint">
+                <Wind className="size-8 text-rose-deep" />
               </div>
               <div>
                 <h2 className="font-display text-2xl font-semibold tracking-tight text-ink">
@@ -162,7 +162,7 @@ export default function Calmaria() {
                 · ~{Math.round(totalSec / 60) || 1} min
               </Button>
               {doneToday && (
-                <p className="text-center text-sm text-sage-deep">
+                <p className="text-center text-sm text-rose-deep">
                   <Check className="mr-1 inline size-4" strokeWidth={3} />
                   Você já fez a Calmaria de hoje
                 </p>
@@ -183,13 +183,13 @@ export default function Calmaria() {
             <div className="relative grid place-items-center">
               {/* halo */}
               <motion.div
-                className="absolute rounded-full bg-sage-tint/50"
+                className="absolute rounded-full bg-rose-tint/50"
                 animate={{ scale: scale * 1.18 }}
                 transition={{ duration: seg?.seconds ?? 4, ease: "easeInOut" }}
                 style={{ width: 280, height: 280 }}
               />
               <motion.div
-                className="grid size-[200px] place-items-center rounded-full bg-sage text-white shadow-[var(--shadow-sage)]"
+                className="grid size-[200px] place-items-center rounded-full bg-rose text-white shadow-[var(--shadow-rose)]"
                 animate={{ scale }}
                 transition={{ duration: seg?.seconds ?? 4, ease: "easeInOut" }}
               >
@@ -231,11 +231,11 @@ export default function Calmaria() {
           >
             <Confetti />
             <div className="flex flex-1 flex-col justify-center gap-5 py-6">
-              <div className="grid size-16 place-items-center rounded-3xl bg-sage text-white shadow-[var(--shadow-sage)]">
+              <div className="grid size-16 place-items-center rounded-3xl bg-rose text-white shadow-[var(--shadow-rose)]">
                 <Check className="size-8" strokeWidth={3} />
               </div>
               <div>
-                <p className="inline-flex items-center gap-1.5 rounded-full bg-sage-tint px-3 py-1 text-sm font-semibold text-sage-dark">
+                <p className="inline-flex items-center gap-1.5 rounded-full bg-rose-tint px-3 py-1 text-sm font-semibold text-rose-dark">
                   <Sprout className="size-4" /> +1 semente
                 </p>
                 <h2 className="mt-3 font-display text-2xl font-semibold tracking-tight text-ink">
@@ -245,8 +245,11 @@ export default function Calmaria() {
                   {session.reframe.body}
                 </p>
                 {primeiraVez && (
-                  <p className="mt-4 rounded-2xl bg-sage-tint/50 px-4 py-3 text-[15px] font-medium leading-relaxed text-sage-dark">
-                    Primeira vitória registrada ✅ Esse alívio foi você que fez.
+                  <p className="mt-4 flex items-start gap-2 rounded-2xl bg-rose-tint/50 px-4 py-3 text-[15px] font-medium leading-relaxed text-rose-dark">
+                    <Check className="mt-0.5 size-4 shrink-0" strokeWidth={3} />
+                    <span>
+                      Primeira vitória registrada. Esse alívio foi você que fez.
+                    </span>
                   </p>
                 )}
               </div>

@@ -37,7 +37,7 @@ function DayArt({
       )}
     >
       {id ? (
-        <Art id={id} emoji="" className="size-full" />
+        <Art id={id} className="size-full" />
       ) : (
         <BookOpen className="size-5 text-ink-faint" />
       )}
@@ -82,7 +82,7 @@ export default function Jornada() {
             <span className="font-medium text-ink-soft">
               {completed.length} de {totalLabel} concluídos
             </span>
-            <span className="font-semibold text-sage-deep">
+            <span className="font-semibold text-rose-deep">
               {Math.round((completed.length / totalLabel) * 100)}%
             </span>
           </div>
@@ -114,7 +114,7 @@ export default function Jornada() {
                   className={cn(
                     "overflow-hidden rounded-2xl border transition-all",
                     isCurrent &&
-                      "border-sage/50 bg-surface shadow-[var(--shadow-card)]",
+                      "border-rose/50 bg-surface shadow-[var(--shadow-card)]",
                     done && "border-line bg-surface/70",
                     locked && "border-line/70 bg-cream-deep/30",
                     !locked && "active:scale-[0.99]"
@@ -131,7 +131,7 @@ export default function Jornada() {
                         <span
                           className={cn(
                             "text-xs font-semibold uppercase tracking-wide",
-                            locked ? "text-ink-faint" : "text-sage-deep"
+                            locked ? "text-ink-faint" : "text-rose-deep"
                           )}
                         >
                           Dia {d}
@@ -141,7 +141,7 @@ export default function Jornada() {
                         )}
                         {done && (
                           <Check
-                            className="size-3.5 text-sage-deep"
+                            className="size-3.5 text-rose-deep"
                             strokeWidth={3}
                           />
                         )}

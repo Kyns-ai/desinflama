@@ -93,7 +93,7 @@ export function LessonReader({ day }: { day: number }) {
               className="h-1.5 flex-1 overflow-hidden rounded-full bg-cream-deep"
             >
               <motion.div
-                className="h-full rounded-full bg-sage"
+                className="h-full rounded-full bg-rose"
                 initial={false}
                 animate={{ width: i <= step ? "100%" : "0%" }}
                 transition={{ duration: 0.35, ease }}
@@ -181,7 +181,7 @@ function QuizCard({
       transition={{ duration: 0.32, ease }}
       className="flex flex-1 flex-col py-8"
     >
-      <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-sage-tint px-3 py-1 text-xs font-semibold text-sage-dark">
+      <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-rose-tint px-3 py-1 text-xs font-semibold text-rose-dark">
         Quiz rápido
       </span>
       <h1 className="mt-4 font-display text-[1.7rem] font-semibold leading-tight tracking-tight text-ink">
@@ -207,7 +207,7 @@ function QuizCard({
               className={cn(
                 "flex w-full items-center gap-3 rounded-2xl border-2 p-4 text-left transition-all",
                 state === "idle" && "border-line bg-surface active:scale-[0.99]",
-                state === "correct" && "border-sage bg-sage-tint/60",
+                state === "correct" && "border-rose bg-rose-tint/60",
                 state === "wrong" && "border-danger bg-danger-tint/60",
                 state === "dim" && "border-line bg-surface opacity-50"
               )}
@@ -215,7 +215,7 @@ function QuizCard({
               <span
                 className={cn(
                   "grid size-6 shrink-0 place-items-center rounded-full border-2",
-                  state === "correct" && "border-sage bg-sage text-white",
+                  state === "correct" && "border-rose bg-rose text-white",
                   state === "wrong" && "border-danger bg-danger text-white",
                   (state === "idle" || state === "dim") && "border-line"
                 )}
@@ -237,7 +237,7 @@ function QuizCard({
             className={cn(
               "mt-4 rounded-xl px-4 py-3 text-[15px] leading-relaxed",
               picked === item.correctIndex
-                ? "bg-sage-tint/50 text-sage-dark"
+                ? "bg-rose-tint/50 text-rose-dark"
                 : "bg-cream-deep text-ink-soft"
             )}
           >
@@ -265,7 +265,7 @@ function LessonDone({
         initial={{ scale: 0.5, opacity: 0, rotate: -8 }}
         animate={{ scale: 1, opacity: 1, rotate: 0 }}
         transition={{ type: "spring", stiffness: 220, damping: 14 }}
-        className="grid size-24 place-items-center rounded-full bg-sage text-white shadow-[var(--shadow-sage)]"
+        className="grid size-24 place-items-center rounded-full bg-rose text-white shadow-[var(--shadow-rose)]"
       >
         <Check className="size-12" strokeWidth={3} />
       </motion.div>
@@ -284,7 +284,7 @@ function LessonDone({
           initial={{ opacity: 0, scale: 0.7 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.45, type: "spring", stiffness: 260, damping: 16 }}
-          className="mt-4 inline-flex items-center gap-2 rounded-full bg-sage-tint px-4 py-2 text-sage-dark"
+          className="mt-4 inline-flex items-center gap-2 rounded-full bg-rose-tint px-4 py-2 text-rose-dark"
         >
           <Sprout className="size-5" />
           <span className="font-semibold">+{seeds} semente</span>
@@ -296,7 +296,7 @@ function LessonDone({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-[#9a7322]"
+          className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-gold-dark"
         >
           <Trophy className="size-4" /> {milestone}
         </motion.p>

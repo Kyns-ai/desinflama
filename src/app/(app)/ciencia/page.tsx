@@ -74,7 +74,7 @@ export default function Ciencia() {
           <ul className="space-y-2.5">
             {CAN_DO.map((t) => (
               <li key={t} className="flex items-start gap-2.5 text-[15px] text-ink-soft">
-                <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-sage text-white">
+                <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-rose text-white">
                   <Check className="size-3.5" strokeWidth={3} />
                 </span>
                 {t}
@@ -101,9 +101,9 @@ export default function Ciencia() {
       </section>
 
       {/* Autochecagem de segurança */}
-      <Card elevation="soft" className="border border-sage/20 bg-sage-tint/30">
+      <Card elevation="soft" className="border border-rose/20 bg-rose-tint/30">
         <div className="flex items-start gap-3">
-          <ShieldCheck className="mt-0.5 size-5 shrink-0 text-sage-deep" />
+          <ShieldCheck className="mt-0.5 size-5 shrink-0 text-rose-deep" />
           <div className="min-w-0 flex-1">
             <h3 className="font-semibold tracking-tight text-ink">
               Autochecagem de segurança
@@ -245,7 +245,7 @@ function SafetyCheck({
                           className={
                             "h-10 flex-1 rounded-xl text-sm font-semibold transition-all active:scale-95 " +
                             (active
-                              ? "bg-sage text-white shadow-[var(--shadow-sage)]"
+                              ? "bg-rose text-white shadow-[var(--shadow-rose)]"
                               : "bg-cream-deep text-ink-soft hover:bg-line")
                           }
                           aria-pressed={active}
@@ -291,7 +291,7 @@ function SafetyCheck({
           </>
         ) : (
           <>
-            <span className="grid size-12 place-items-center rounded-2xl bg-sage text-white">
+            <span className="grid size-12 place-items-center rounded-2xl bg-rose text-white">
               <Check className="size-6" strokeWidth={3} />
             </span>
             <h2 className="mt-3 font-display text-xl font-semibold tracking-tight text-ink">

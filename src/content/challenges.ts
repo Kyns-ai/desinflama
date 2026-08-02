@@ -16,7 +16,7 @@ export interface MonthlyChallenge {
   nome: string;
   descricao: string;
   emoji: string;
-  tone: "coral" | "sage" | "sky" | "plum" | "gold";
+  tone: "coral" | "rose" | "sky" | "plum" | "gold";
   dias: ChallengeDay[];
 }
 
@@ -66,7 +66,7 @@ export const MONTHLY_CHALLENGES: MonthlyChallenge[] = [
       },
       {
         day: 7,
-        title: "Você voltou à leveza 🎯",
+ title:"Você voltou à leveza",
         body: "Em uma semana você voltou ao seu eixo, sem sofrimento. Esse é o poder de ter o seu mapa: você sabe exatamente como voltar.",
         checklist: ["Compare com o Dia 1", "Defina o que manter da semana", "Comemore (sem ser comida)", "Registre"],
       },
@@ -77,7 +77,7 @@ export const MONTHLY_CHALLENGES: MonthlyChallenge[] = [
     nome: "Semana sem açúcar",
     descricao: "7 dias cortando o açúcar adicionado pra ganhar energia e leveza.",
     emoji: "🍃",
-    tone: "sage",
+    tone: "rose",
     dias: [
       {
         day: 1,
@@ -117,7 +117,7 @@ export const MONTHLY_CHALLENGES: MonthlyChallenge[] = [
       },
       {
         day: 7,
-        title: "Leve, com mais energia 🍃",
+ title:"Leve, com mais energia",
         body: "Uma semana depois, a energia está mais estável e a vontade de doce, menor. Você não precisa ser radical pra sempre — só consciente.",
         checklist: ["Compare sua energia com o Dia 1", "Escolha 1 hábito pra manter", "Comemore", "Registre"],
       },

@@ -18,14 +18,14 @@ export default async function Assinaturas() {
           usingMock ? (
             <Badge tone="gold">RevenueCat não conectado</Badge>
           ) : (
-            <Badge tone="sage">RevenueCat conectado</Badge>
+            <Badge tone="rose">RevenueCat conectado</Badge>
           )
         }
       />
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <KpiCard label="MRR" value={fmtMoney(o.mrr.value)} delta={o.mrr.delta} icon={DollarSign} tone="coral" />
-        <KpiCard label="ARR (projeção)" value={fmtMoney(arr)} icon={TrendingDown} tone="sage" />
+        <KpiCard label="ARR (projeção)" value={fmtMoney(arr)} icon={TrendingDown} tone="rose" />
         <KpiCard label="Assinantes" value={fmtNum(o.premium.value)} delta={o.premium.delta} icon={Crown} tone="gold" />
         <KpiCard label="Churn" value={fmtPct(o.churn, 1)} icon={RefreshCw} tone="sky" />
       </div>

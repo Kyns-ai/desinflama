@@ -15,7 +15,7 @@ export default async function Overview() {
       />
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <KpiCard label="Usuárias" value={fmtNum(o.users.value)} delta={o.users.delta} icon={Users} tone="sage" />
+        <KpiCard label="Usuárias" value={fmtNum(o.users.value)} delta={o.users.delta} icon={Users} tone="rose" />
         <KpiCard label="Assinantes" value={fmtNum(o.premium.value)} delta={o.premium.delta} icon={Crown} tone="gold" />
         <KpiCard label="MRR" value={fmtMoney(o.mrr.value)} delta={o.mrr.delta} icon={DollarSign} tone="coral" />
         <KpiCard label="Conversão" value={fmtPct(o.conversion.value, 1)} delta={o.conversion.delta} icon={TrendingUp} tone="sky" />
@@ -87,7 +87,7 @@ export default async function Overview() {
             <div key={c.dia} className="flex flex-1 flex-col items-center gap-1.5">
               <div className="flex h-32 w-full items-end">
                 <div
-                  className="w-full rounded-t-lg bg-sage/80"
+                  className="w-full rounded-t-lg bg-rose/80"
                   style={{ height: `${c.pct * 100}%` }}
                 />
               </div>
@@ -104,7 +104,7 @@ export default async function Overview() {
 function Stat({ label, value, tone }: { label: string; value: string; tone?: "coral" }) {
   return (
     <div>
-      <p className={`font-display text-xl font-semibold ${tone === "coral" ? "text-coral-dark" : "text-sage-deep"}`}>
+      <p className={`font-display text-xl font-semibold ${tone === "coral" ? "text-coral-dark" : "text-rose-deep"}`}>
         {value}
       </p>
       <p className="text-xs text-ink-soft">{label}</p>

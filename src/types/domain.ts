@@ -91,7 +91,7 @@ export interface JourneyProgress {
 
 /* ------------------------------ Registros ------------------------------ */
 
-export type Mood = 1 | 2 | 3; // 😣 😐 😌
+export type Mood = 1 | 2 | 3; //
 
 export interface MealEntry {
   refeicao: "cafe" | "almoco" | "jantar" | "lanche";

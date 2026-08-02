@@ -84,7 +84,7 @@ export default function Plano() {
               {planNome(subscription.plan)}
             </span>
           </div>
-          <Badge tone={subscription.isPremium ? "sage" : "neutral"}>
+          <Badge tone={subscription.isPremium ? "rose" : "neutral"}>
             {subscription.isPremium ? "Ativo" : "Sem assinatura ativa"}
           </Badge>
         </div>
@@ -105,7 +105,7 @@ export default function Plano() {
       {/* Upgrade anual (ancoragem) */}
       {subscription.isPremium && subscription.plan === "monthly" && (
         <Link href="/paywall" className="block">
-          <div className="rounded-2xl bg-gradient-to-br from-sage-deep to-sage-dark p-5 text-white shadow-[var(--shadow-sage)] active:scale-[0.99]">
+          <div className="rounded-2xl bg-gradient-to-br from-rose-deep to-rose-dark p-5 text-white shadow-[var(--shadow-rose)] active:scale-[0.99]">
             <p className="font-semibold">Economize com o Anual</p>
             <p className="mt-1 text-sm text-white/85">
               Mude para o plano anual e pague bem menos por mês.
@@ -129,7 +129,7 @@ export default function Plano() {
               href={subscription.managementUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-sage-deep"
+              className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-rose-deep"
             >
               Gerenciar assinatura <ExternalLink className="size-4" />
             </a>

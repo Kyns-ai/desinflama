@@ -53,7 +53,7 @@ export function WeeklyRecap({
       const { toPng } = await import("html-to-image");
       const dataUrl = await toPng(cardRef.current, {
         pixelRatio: 2,
-        backgroundColor: "#faf7f2",
+        backgroundColor: "#f5ece8",
       });
       const blob = await (await fetch(dataUrl)).blob();
       const file = new File([blob], `desinflama-semana-${recap.week}.png`, {
@@ -151,7 +151,7 @@ export function WeeklyRecap({
               const Icon = s.icon;
               return (
                 <div key={i} className="flex items-center gap-3">
-                  <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-sage-tint text-sage-deep">
+                  <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-rose-tint text-rose-deep">
                     <Icon className="size-4" />
                   </span>
                   <p className="text-[15px] text-ink">
@@ -163,8 +163,8 @@ export function WeeklyRecap({
             })}
 
             {recap.bestDay && (
-              <div className="rounded-2xl bg-sage-tint/50 px-4 py-3">
-                <p className="text-xs font-semibold uppercase tracking-wide text-sage-dark">
+              <div className="rounded-2xl bg-rose-tint/50 px-4 py-3">
+                <p className="text-xs font-semibold uppercase tracking-wide text-rose-dark">
                   Seu melhor dia: {humanDayMonth(recap.bestDay.date)}
                 </p>
                 {recap.bestDay.meals.length > 0 && (
@@ -199,7 +199,7 @@ export function WeeklyRecap({
         <button
           onClick={salvarImagem}
           disabled={saving}
-          className="flex w-full items-center justify-center gap-1.5 border-t border-line py-3 text-sm font-semibold text-sage-deep transition-colors active:bg-sage-tint/40 disabled:opacity-50"
+          className="flex w-full items-center justify-center gap-1.5 border-t border-line py-3 text-sm font-semibold text-rose-deep transition-colors active:bg-rose-tint/40 disabled:opacity-50"
         >
           <Download className="size-4" />
           {saving
