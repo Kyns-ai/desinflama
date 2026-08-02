@@ -6,6 +6,8 @@
  * dieta genérica entrega. Honesto: grupo sem teste = "ainda não testou".
  */
 import { Card } from "@/components/ui";
+import { Art } from "@/components/Art";
+import { artId } from "@/content/cardArt";
 import { useAppStore } from "@/store/useAppStore";
 import {
   REINTRO_GROUPS,
@@ -49,7 +51,10 @@ export function ToleranceMapCard() {
               key={g.group}
               className="flex items-center gap-3 rounded-2xl bg-surface px-3.5 py-2.5"
             >
-              <span className="text-xl">{g.emoji}</span>
+              <Art
+                id={artId(g.emoji) ?? ""}
+                className="size-9 shrink-0 rounded-xl"
+              />
               <div className="min-w-0 flex-1">
                 <p className="text-[15px] font-semibold tracking-tight text-ink">
                   {g.nome}

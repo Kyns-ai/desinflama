@@ -120,7 +120,7 @@ export function ProtocoloCard({
             <ul className="mt-2 space-y-1.5">
               {pausar.map((f) => (
                 <li key={f.nome} className="text-[13px] leading-snug text-ink">
-                  {f.emoji} {f.nome}
+                  {f.nome}
                 </li>
               ))}
             </ul>
@@ -132,7 +132,7 @@ export function ProtocoloCard({
             <ul className="mt-2 space-y-1.5">
               {liberados.map((f) => (
                 <li key={f.nome} className="text-[13px] leading-snug text-ink">
-                  {f.emoji} {f.nome}
+                  {f.nome}
                 </li>
               ))}
             </ul>

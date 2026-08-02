@@ -65,6 +65,10 @@ interface AppState {
   /** Entra com a conta de demonstração já populada (modo mock). */
   enterDemo: () => Promise<void>;
   toggleChecklistItem: (day: number, index: number) => Promise<void>;
+  /** Marca a água do dia (+5 sementes, uma vez por dia). */
+  marcarAgua: () => Promise<{ jaFeito: boolean }>;
+  /** Marca "passei o dia sem o meu gatilho" (+15 sementes, uma vez por dia). */
+  marcarSemGatilho: () => Promise<{ jaFeito: boolean }>;
   /** Conclui a aula do dia: marca como feita e dá +1 semente (uma vez). */
   completeLesson: (day: number) => Promise<{ alreadyDone: boolean; seeds: number }>;
   /** Conclui a Calmaria (respiração guiada) do dia: +1 semente uma vez por dia,
@@ -109,6 +113,19 @@ function uid(): string {
   return `id_${Math.abs((Date.now() ^ (Math.floor(performance.now?.() ?? 0))) >>> 0)}`;
 }
 
+/**
+ * Creditar semente é SEMPRE por aqui.
+ *
+ * São dois contadores: `seeds` é o saldo (cai quando ela resgata um prazer) e
+ * `seedsLifetime` é o acumulado da vida (só sobe, define o nível do Broto).
+ * Mexer em `d.seeds` direto foi o que motivou este helper — quem esquecesse o
+ * segundo contador faria o personagem regredir quando ela gastasse.
+ */
+function ganharSementes(d: AppData, quantas: number) {
+  d.seeds += quantas;
+  d.seedsLifetime += quantas;
+}
+
 /** Aplica atividade na ofensiva + repõe 1 escudo a cada 7 dias seguidos (senão,
  *  na Manutenção — o "para sempre" do app — escudo gasto nunca voltaria). */
 function touchStreak(d: AppData, today: string) {
@@ -131,7 +148,7 @@ function notifyAchievements(novas: AchievementDef[]) {
   if (!useAppStore.getState().data.flags.notifications) return;
   for (const a of novas) {
     fireMilestoneNotification(
-      `Conquista desbloqueada ${a.emoji}`,
+      "Conquista desbloqueada",
       `${a.title} — ${a.description}`
     );
   }
@@ -346,10 +363,64 @@ export const useAppStore = create<AppState>((set, get) => {
     toggleChecklistItem: async (day, index) => {
       await get().update((d) => {
         const cur = d.checklists[day] ?? [];
-        d.checklists[day] = cur.includes(index)
-          ? cur.filter((i) => i !== index)
-          : [...cur, index];
+        const marcando = !cur.includes(index);
+        d.checklists[day] = marcando
+          ? [...cur, index]
+          : cur.filter((i) => i !== index);
+        // A semente da tarefa é paga UMA vez por tarefa, para sempre. Sem essa
+        // trava, marcar e desmarcar o mesmo item viraria uma fábrica de
+        // sementes — e sementes agora compram prazeres de verdade.
+        const pago = `tarefaPaga:${day}:${index}`;
+        if (marcando && !d.flags[pago]) {
+          d.flags[pago] = true;
+          ganharSementes(d, SEEDS.tarefa);
+        }
       });
+    },
+
+    /**
+     * Água do dia — linha própria do cartão do dia.
+     *
+     * É um toque direto, não um desvio até o check-in: água é a ação de menor
+     * atrito do dia e mandá-la preencher um formulário para marcar um copo
+     * mataria a linha. O `hydrationOk` do registro continua sendo a fonte do
+     * Índice, então quando já existe registro de hoje ele é atualizado junto.
+     */
+    marcarAgua: async () => {
+      const hoje = todayKey();
+      const chave = `agua:${hoje}`;
+      const jaFeito = !!get().data.flags[chave];
+      await get().update((d) => {
+        if (d.flags[chave]) return;
+        d.flags[chave] = true;
+        const pago = `aguaPaga:${hoje}`;
+        if (!d.flags[pago]) {
+          d.flags[pago] = true;
+          ganharSementes(d, SEEDS.agua);
+        }
+        const log = d.logs.find((l) => l.date === hoje);
+        if (log) {
+          log.hydrationOk = true;
+          d.scores = recomputedScores(d, hoje);
+        }
+        touchStreak(d, hoje);
+      });
+      return { jaFeito };
+    },
+
+    /** "Passei o dia sem o meu gatilho" — a linha mais valiosa do cartão do
+     *  dia (15 sementes), porque é a que exige a escolha difícil. */
+    marcarSemGatilho: async () => {
+      const hoje = todayKey();
+      const chave = `semGatilho:${hoje}`;
+      const jaFeito = !!get().data.flags[chave];
+      await get().update((d) => {
+        if (d.flags[chave]) return;
+        d.flags[chave] = true;
+        ganharSementes(d, SEEDS.semGatilho);
+        touchStreak(d, hoje);
+      });
+      return { jaFeito };
     },
 
     completeLesson: async (day) => {
@@ -357,7 +428,7 @@ export const useAppStore = create<AppState>((set, get) => {
       await get().update((d) => {
         if (!d.lessonsDone[day]) {
           d.lessonsDone[day] = true;
-          d.seeds += SEEDS.lesson;
+          ganharSementes(d, SEEDS.lesson);
           // a aula é 1 dos 3 passos do dia — conta como atividade da ofensiva
           touchStreak(d, todayKey());
         }
@@ -375,7 +446,7 @@ export const useAppStore = create<AppState>((set, get) => {
         d.flags[key] = true;
         // primeira Calmaria = a vitória sentida do Dia 0 (conquista + tracker)
         if (!d.flags.primeiroAlivio) d.flags.primeiroAlivio = true;
-        d.seeds += SEEDS.calmaria;
+        ganharSementes(d, SEEDS.calmaria);
         // conta como atividade do dia (ofensiva perdoável + score)
         touchStreak(d, today);
         d.scores = recomputedScores(d, today, { otherActivity: true });
@@ -406,9 +477,9 @@ export const useAppStore = create<AppState>((set, get) => {
         if (isNew) {
           d.progress.completedDays.push(day);
           d.progress.completedAt[day] = today;
-          d.seeds += SEEDS.completeDay;
+          ganharSementes(d, SEEDS.completeDay);
           if (day === 7 || day === 14 || day === 21) {
-            d.seeds += SEEDS.milestone;
+            ganharSementes(d, SEEDS.milestone);
             // marcos repõem um escudo (só na 1ª conclusão)
             d.streak = grantShield(d.streak, 1);
           }
@@ -451,7 +522,15 @@ export const useAppStore = create<AppState>((set, get) => {
         // substitui o registro do dia, se já existir
         d.logs = [...d.logs.filter((l) => l.date !== log.date), log];
         // check-in dá semente uma vez por dia
-        if (!hadLog) d.seeds += SEEDS.checkin;
+        if (!hadLog) ganharSementes(d, SEEDS.checkin);
+        // Água é uma linha separada do cartão do dia (tabela da Seção 5), então
+        // paga separado — e só uma vez, mesmo que ela reedite o registro.
+        const aguaPaga = `aguaPaga:${log.date}`;
+        if (log.hydrationOk && !d.flags[aguaPaga]) {
+          d.flags[aguaPaga] = true;
+          d.flags[`agua:${log.date}`] = true;
+          ganharSementes(d, SEEDS.agua);
+        }
         // a ofensiva só conta atividade de HOJE — editar um dia passado não
         // deve regredir nem inflar a streak atual.
         if (log.date === today) {
@@ -479,8 +558,8 @@ export const useAppStore = create<AppState>((set, get) => {
           ),
           result,
         ];
-        // +1 semente uma vez por grupo testado
-        if (firstForGroup) d.seeds += SEEDS.checkin;
+        // semente uma vez por grupo testado
+        if (firstForGroup) ganharSementes(d, SEEDS.checkin);
         const { list, newlyUnlocked } = reconcileAchievements(d, today);
         d.achievements = list;
         novas = newlyUnlocked;

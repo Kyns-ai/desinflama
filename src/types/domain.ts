@@ -191,8 +191,18 @@ export interface AppData {
   achievements: Achievement[];
   /** Itens do checklist marcados por dia da jornada (dia → índices). */
   checklists: Record<number, number[]>;
-  /** Sementes acumuladas (gamificação — viram nível/jardim e desbloqueios). */
+  /**
+   * Sementes DISPONÍVEIS para gastar na loja de Prazeres.
+   * Cai quando ela resgata um prazer.
+   */
   seeds: number;
+  /**
+   * Sementes ganhas na vida inteira. Só sobe — é o que define o nível do
+   * Broto. Separado do saldo de propósito: perder o personagem por ter se
+   * dado um brigadeiro puniria exatamente o comportamento que a gente quer
+   * normalizar (Seção 5 do PLANO, regra vinda do WeightWatchers).
+   */
+  seedsLifetime: number;
   /** Aulas concluídas por dia (dia → true). */
   lessonsDone: Record<number, boolean>;
   /** Plano "se-então" (implementation intention): âncora escolhida pela usuária,
@@ -244,6 +254,7 @@ export function emptyAppData(): AppData {
     achievements: [],
     checklists: {},
     seeds: 0,
+    seedsLifetime: 0,
     lessonsDone: {},
     tolerance: [],
     flags: {},

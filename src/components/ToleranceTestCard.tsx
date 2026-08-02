@@ -62,7 +62,7 @@ export function ToleranceTestCard({ day }: { day: number }) {
             Teste de hoje
           </p>
           <h2 className="font-display text-lg font-semibold tracking-tight text-ink">
-            {def.emoji} {def.nome}
+            {def.nome}
           </h2>
         </div>
       </div>
@@ -84,7 +84,7 @@ export function ToleranceTestCard({ day }: { day: number }) {
                     : "bg-cream-deep text-ink-soft"
                 )}
               >
-                {gd.emoji} {gd.nome}
+                {gd.nome}
               </button>
             );
           })}

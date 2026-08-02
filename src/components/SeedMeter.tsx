@@ -32,7 +32,7 @@ export function SeedMeter() {
             </div>
             <p className="text-sm text-ink-soft">
               {g.nextLevel
-                ? `Faltam ${g.toNext} para ${g.nextLevel.name} ${g.nextLevel.emoji}`
+                ? `Faltam ${g.toNext} para ${g.nextLevel.name}`
 :"Jardim completo"}
             </p>
           </div>

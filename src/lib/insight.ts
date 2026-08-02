@@ -30,7 +30,7 @@ export function logInsight(logs: DailyLog[], current: DailyLog): string {
 
   const positives = [
 "Registrado! Seu padrão está ficando mais claro",
-"Anotado Pequenos registros, grandes descobertas.",
+"Anotado. Pequenos registros, grandes descobertas.",
 "Feito! Seu intestino agradece a atenção",
 "Mais um dia mapeado. Você está no controle agora",
   ];

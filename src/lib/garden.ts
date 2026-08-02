@@ -23,13 +23,25 @@ export const LEVELS: GardenLevel[] = [
   { id: 3, name: "Jardim", emoji: "🪴", art: "garden-jardim", threshold: 50, unlock: "Comer fora sem inchar" },
 ];
 
-/** Sementes ganhas por ação (centralizado). */
+/**
+ * Sementes ganhas por ação (Seção 5 do PLANO).
+ *
+ * Os valores antigos (1, 1, 2, 3) vinham de uma época sem loja: serviam só
+ * para subir de nível. Com os Prazeres, o número precisa ter PREÇO — a média
+ * de quem faz tudo é ~60–70/dia, então uma taça de vinho (80) sai em pouco
+ * mais de um dia bem feito e a pizza (200) exige três.
+ */
 export const SEEDS = {
-  lesson: 1,
-  checkin: 1,
-  calmaria: 1,
-  completeDay: 2,
-  milestone: 3,
+  checkin: 10,
+  lesson: 10,
+  agua: 5,
+  tarefa: 5,
+  foto: 5,
+  semGatilho: 15,
+  calmaria: 5,
+  completeDay: 20,
+  /** Fechar a semana inteira (dias 7/14/21). */
+  milestone: 50,
 } as const;
 
 export interface GardenState {

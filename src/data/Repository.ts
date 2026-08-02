@@ -71,6 +71,9 @@ function normalize(d: Partial<AppData>): AppData {
     achievements: d.achievements ?? [],
     checklists: d.checklists ?? {},
     seeds: d.seeds ?? 0,
+    // Migração: quem já usava o app tinha um contador só, e nunca gastou nada
+    // (a loja de Prazeres não existia) — logo o acumulado é o próprio saldo.
+    seedsLifetime: d.seedsLifetime ?? d.seeds ?? 0,
     lessonsDone: d.lessonsDone ?? {},
     tolerance: d.tolerance ?? [],
     flags: d.flags ?? {},
