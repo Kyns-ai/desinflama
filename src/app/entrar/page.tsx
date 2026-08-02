@@ -120,7 +120,9 @@ export default function EntrarPage() {
             await setCycleStart(cliente.respostas.cycleStart);
           }
           await startJourney("main14");
-          router.replace("/bem-vinda");
+          // Ela já respondeu tudo no funil: entra direto no programa, sem uma
+          // segunda tela de "diagnóstico" repetindo o que ela acabou de dizer.
+          router.replace("/inicio");
           return;
         }
 

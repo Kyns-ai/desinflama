@@ -14,6 +14,12 @@ interface ScoreRingProps {
   stroke?: number;
   label?: string;
   className?: string;
+  /**
+   * "cream" = anel sobre fundo claro (padrão).
+   * "onColor" = anel sobre o campo de cor da home: trilha translúcida, arco e
+   * número em branco. Sem isso o grafite sobre verde some.
+   */
+  tone?: "cream" | "onColor";
 }
 
 /**
@@ -28,7 +34,9 @@ export function ScoreRing({
   stroke = 16,
   label = "Índice Intestinal",
   className,
+  tone = "cream",
 }: ScoreRingProps) {
+  const onColor = tone === "onColor";
   const start = from ?? value;
   const r = (size - stroke) / 2;
   const c = 2 * Math.PI * r;
@@ -78,7 +86,7 @@ export function ScoreRing({
           cy={size / 2}
           r={r}
           fill="none"
-          stroke="var(--color-cream-deep)"
+          stroke={onColor ? "rgba(255,255,255,0.22)" : "var(--color-cream-deep)"}
           strokeWidth={stroke}
         />
         <motion.circle
@@ -86,7 +94,7 @@ export function ScoreRing({
           cy={size / 2}
           r={r}
           fill="none"
-          stroke="url(#score-grad)"
+          stroke={onColor ? "#ffffff" : "url(#score-grad)"}
           strokeWidth={stroke}
           strokeLinecap="round"
           strokeDasharray={c}
@@ -95,11 +103,22 @@ export function ScoreRing({
       </svg>
 
       <div className="absolute inset-0 grid place-items-center text-center">
-        <div>
-          <div className="font-display text-[3.4rem] font-semibold leading-none tabular-nums text-ink">
+        {/* Preso ao diâmetro interno: sem isso o rótulo encosta no arco. */}
+        <div style={{ maxWidth: size - stroke * 2 - 12 }}>
+          <div
+            className={cn(
+              "font-display font-semibold leading-none tabular-nums",
+              onColor ? "text-[4rem] text-white" : "text-[3.4rem] text-ink"
+            )}
+          >
             {display}
           </div>
-          <div className="mt-1 text-xs font-semibold uppercase tracking-wide text-ink-faint">
+          <div
+            className={cn(
+              "mt-1 text-[11px] font-semibold uppercase leading-tight tracking-wide",
+              onColor ? "text-white/70" : "text-ink-faint"
+            )}
+          >
             {label}
           </div>
           {typeof delta === "number" && delta !== 0 && (

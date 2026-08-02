@@ -1071,7 +1071,7 @@ export const DAYS: DayContent[] = [
     phase: "Reparo",
     milestone: "Desafio concluído",
     lesson: {
-      title: "Seu mapa pessoal está pronto 🗺️",
+      title: "Seu mapa pessoal está pronto",
       durationMin: 2,
       body: "Catorze dias atrás você não sabia por que vivia estufada. Hoje você tem o SEU mapa — algo que nenhuma dieta genérica entrega.",
       cards: [
@@ -1457,7 +1457,7 @@ export const DAYS: DayContent[] = [
     phase: "Reequilíbrio",
     milestone: "Reset Profundo concluído",
     lesson: {
-      title: "21 dias: você se transformou 🌟",
+      title: "21 dias: você se transformou",
       durationMin: 2,
       body: "Três semanas atrás, viver estufada parecia normal. Hoje você tem mapa, rotina e — o mais importante — entende o seu corpo.",
       cards: [
@@ -1518,4 +1518,33 @@ export function lessonTitleFor(day: number): string {
   const d = getDay(day);
   if (d) return d.lesson.title;
   return `Aula do Dia ${day} · ${phaseForDay(day).phase}`;
+}
+
+/**
+ * Capa de um dia para a lista da jornada: o que a cliente VÊ antes de abrir.
+ * Dia bloqueado também tem capa — ela precisa enxergar o que comprou, não uma
+ * fileira de cadeados anônimos.
+ *
+ * `artKey` é a chave da ilustração da marca (ver content/cardArt); string vazia
+ * quando o dia não tem arte e a lista cai no ícone da fase.
+ */
+export interface DayCover {
+  title: string;
+  durationMin: number;
+  artKey: string;
+  milestone?: string;
+}
+
+export function dayCover(day: number): DayCover {
+  const d = getDay(day);
+  if (!d) {
+    return { title: lessonTitleFor(day), durationMin: 2, artKey: "" };
+  }
+  const firstWithArt = (d.lesson.cards ?? []).find((c) => c.emoji)?.emoji;
+  return {
+    title: d.lesson.title,
+    durationMin: d.lesson.durationMin ?? 2,
+    artKey: firstWithArt ?? "",
+    milestone: d.milestone,
+  };
 }

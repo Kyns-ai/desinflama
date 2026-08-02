@@ -162,6 +162,10 @@ body {
 .pt-safe {
   padding-top: var(--safe-top);
 }
+/* Faixa que sangra até o topo real da tela, por cima do padding do AppShell. */
+.-mt-safe {
+  margin-top: calc(-1 * var(--safe-top));
+}
 .pb-safe {
   padding-bottom: var(--safe-bottom);
 }

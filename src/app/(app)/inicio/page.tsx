@@ -178,46 +178,72 @@ export default function Inicio() {
   }
 
   return (
-    <div className="space-y-5">
-      {/* Header */}
-      <header className="flex items-center justify-between pt-5">
-        <div>
-          <p className="text-[15px] text-ink-soft">{saudacao()},</p>
-          <h1 className="font-display text-2xl font-semibold tracking-tight text-ink">
-            {firstName}
-          </h1>
-          {user?.onboarding?.bloatType && (
-            <Link
-              href="/mapa"
-              className="mt-1.5 inline-flex items-center gap-1.5 rounded-full bg-cream-deep px-2.5 py-1 text-xs font-semibold text-ink-soft transition-transform active:scale-95"
-            >
-              <span>{BLOAT_PROFILES[user.onboarding.bloatType].emoji}</span>
-              {BLOAT_PROFILES[user.onboarding.bloatType].name}
-            </Link>
-          )}
-        </div>
-        <div className="flex items-center gap-2">
-          <Link
-            href="/jardim"
-            className="inline-flex items-center gap-1.5 rounded-full bg-sage-tint px-3 py-1.5 text-sm font-semibold text-sage-dark transition-transform active:scale-95"
-          >
-            <Sprout className="size-4" /> {seeds}
-          </Link>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-coral-tint px-3 py-1.5 text-sm font-semibold text-coral-dark">
-            <Flame className="size-4" /> {streak.current}
-          </span>
-          <Link
-            href="/jardim"
-            title="Escudos: cada um perdoa um dia perdido sem zerar sua sequência"
-            className="inline-flex items-center gap-1.5 rounded-full bg-cream-deep px-3 py-1.5 text-sm font-semibold text-ink-soft transition-transform active:scale-95"
-          >
-            <Shield className="size-4 text-sage-deep" /> {streak.shields ?? MAX_SHIELDS}
-          </Link>
-        </div>
-      </header>
+    <div>
+      {/* CAMPO DE COR — o topo da tela pertence à marca.
+          Antes: creme sobre branco com acentos a 5% de saturação; tudo virava
+          card branco sobre off-white e a tela lia como rascunho. Agora o verde
+          primário aparece em força total num campo que sangra até o topo, e o
+          conteúdo sobe por cima numa folha creme. É o esqueleto de Reverse
+          Health (campo colorido + folha branca) com a cor que já é nossa. */}
+      <div className="-mx-5 -mt-safe bg-sage-dark px-5 pt-safe">
+        <div className="pb-14 pt-5">
+          <header className="flex items-start justify-between">
+            <div>
+              <p className="text-[15px] text-white/70">{saudacao()},</p>
+              <h1 className="font-display text-[2rem] font-semibold leading-tight tracking-tight text-white">
+                {firstName}
+              </h1>
+              {user?.onboarding?.bloatType && (
+                <Link
+                  href="/mapa"
+                  className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-white/15 px-2.5 py-1 text-xs font-semibold text-white transition-transform active:scale-95"
+                >
+                  {BLOAT_PROFILES[user.onboarding.bloatType].name}
+                  <ChevronRight className="-mr-1 size-3.5 opacity-70" />
+                </Link>
+              )}
+            </div>
+            <div className="flex items-center gap-1.5">
+              <Link
+                href="/jardim"
+                className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-2.5 py-1.5 text-sm font-semibold text-white transition-transform active:scale-95"
+              >
+                <Sprout className="size-4" /> {seeds}
+              </Link>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-2.5 py-1.5 text-sm font-semibold text-white">
+                <Flame className="size-4" /> {streak.current}
+              </span>
+              <Link
+                href="/jardim"
+                title="Escudos: cada um perdoa um dia perdido sem zerar sua sequência"
+                className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-2.5 py-1.5 text-sm font-semibold text-white transition-transform active:scale-95"
+              >
+                <Shield className="size-4" /> {streak.shields ?? MAX_SHIELDS}
+              </Link>
+            </div>
+          </header>
 
-      {/* Faixa da semana */}
-      <WeekStrip day={day} total={totalLabel} completed={progress?.completedDays ?? []} />
+          {/* O número da tela, dentro do campo de cor */}
+          <div className="mt-7 flex flex-col items-center">
+            <ScoreRing
+              value={score.value}
+              from={Math.max(0, score.value - score.delta)}
+              delta={score.delta}
+              size={188}
+              label="Índice Intestinal"
+              tone="onColor"
+            />
+            <p className="mt-4 max-w-[17rem] text-center text-[15px] leading-relaxed text-white/80">
+              {scoreMicrocopy(score.value, score.delta)}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* A folha creme sobe por cima do campo — é o degrau que dá profundidade */}
+      <div className="relative -mx-5 -mt-14 space-y-5 rounded-t-[2rem] bg-cream px-5 pt-6">
+        {/* Faixa da semana */}
+        <WeekStrip day={day} total={totalLabel} completed={progress?.completedDays ?? []} />
 
       {/* Programa fechado sem próximo passo escolhido → caminho pra /concluir
           (sem isso, quem sai da celebração nunca mais acha Reset/Manutenção) */}
@@ -243,12 +269,12 @@ export default function Inicio() {
         </Link>
       )}
 
+      {/* Ordem da home (espelha Simple e Reverse Health): campo de cor com o
+          número → régua de dias → a ação de hoje. Contexto, expectativa e
+          conteúdo extra vêm depois — antes, a cliente rolava 11 cards para
+          achar o que fazer. */}
       <ShieldSavedBanner />
-      <HonestWelcome />
       <WeeklyRecapBanner />
-      <ProjectionTimeline />
-
-      <CommitmentStrip />
 
       {/* Quem fechou o app antes da 1ª Calmaria: o Dia 0 recomeça pelo alívio */}
       {!data.flags.primeiroAlivio &&
@@ -274,10 +300,6 @@ export default function Inicio() {
             </Card>
           </Link>
         )}
-
-      <Tracker72h />
-
-      <RitualCard />
 
       {/* Seu dia de hoje — o ritual */}
       <motion.div
@@ -394,10 +416,11 @@ export default function Inicio() {
         </Card>
       </Link>
 
+      {/* Daqui pra baixo: contexto e conteúdo — nada disputa com a ação de hoje */}
+      <CommitmentStrip />
+      <Tracker72h />
+      <ProjectionTimeline />
       <CicloCard />
-
-      {/* Índice Intestinal */}
-      <ScoreCard score={score} />
 
       {/* Jardim / nível */}
       <SeedMeter />
@@ -496,6 +519,12 @@ export default function Inicio() {
           <ChevronRight className="size-5 shrink-0 text-ink-faint" />
         </Card>
       </Link>
+
+        {/* Âncora de hábito e a nossa promessa honesta: importam, mas são
+            leitura — ficam no fim, não na frente do que ela veio fazer. */}
+        <RitualCard />
+        <HonestWelcome />
+      </div>
     </div>
   );
 }

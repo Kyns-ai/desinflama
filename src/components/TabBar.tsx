@@ -12,7 +12,6 @@ import { cn } from "@/lib/cn";
 const IMMERSIVE = [
   /^\/calmaria(\/|$)/,
   /^\/jornada\/[^/]+\/aula(\/|$)/,
-  /^\/bem-vinda(\/|$)/,
 ];
 
 export function TabBar() {
