@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Plus } from "lucide-react";
+import { Camera } from "lucide-react";
 import { TABS } from "@/lib/nav";
 import { cn } from "@/lib/cn";
 
@@ -41,18 +41,18 @@ export function TabBar() {
             (medido: rótulo em 822–838, círculo em 784–840). */}
         <div className="relative w-20 shrink-0">
           <Link
-            href="/registrar"
-            aria-label="Registrar como você está"
+            href="/prato"
+            aria-label="Registrar o que você comeu"
             className={cn(
               "absolute left-1/2 -top-3 -translate-x-1/2 grid size-12 place-items-center rounded-full",
               "bg-coral text-white shadow-[var(--shadow-coral)] transition-transform active:scale-95",
-              isActive("/registrar") && "ring-4 ring-coral-tint"
+              isActive("/prato") && "ring-4 ring-coral-tint"
             )}
           >
-            <Plus className="size-6" strokeWidth={2.5} />
+            <Camera className="size-6" strokeWidth={2.2} />
           </Link>
           <span className="absolute inset-x-0 bottom-2 text-center text-[11px] font-medium text-ink-faint">
-            Registrar
+            Prato
           </span>
         </div>
 

@@ -1,4 +1,4 @@
-import { Home, Route, Sparkles, BarChart3, type LucideIcon } from "lucide-react";
+import { Home, Route, Sprout, User, type LucideIcon } from "lucide-react";
 
 export interface TabItem {
   href: string;
@@ -7,15 +7,22 @@ export interface TabItem {
 }
 
 /**
- * Abas laterais da barra inferior (o centro é o botão Registrar).
+ * As quatro abas laterais. O centro é a CÂMERA do prato (ver TabBar).
  *
- * A Nutri IA tem lugar fixo, do mesmo jeito que o Coach no Simple: coach é
- * produto, não link escondido no perfil. O Perfil saiu daqui para o cabeçalho
- * da home — é onde a cliente vai uma vez por mês, não todo dia.
+ * Mudou em relação à versão anterior (Seção 3 do PLANO):
+ *  - a "Nutri IA" saiu da barra e deixou de existir como destino. A IA não é o
+ *    produto: ela é uma função dentro do Prato, que olha a foto e sugere a
+ *    troca. Aba própria fazia o app se apresentar como "uma nutricionista de
+ *    IA", que é exatamente o que ele não é — e é risco de CFN;
+ *  - o check-in saiu do botão central e virou a primeira linha do cartão do
+ *    dia. O centro passou a ser a foto do prato, que é a ação mais frequente
+ *    e a que dá prazer imediato — é onde a ZOE também põe;
+ *  - "Prazeres" entrou, porque o cuidado acumulado precisa de destino visível
+ *    a um toque, senão a semente não significa nada.
  */
 export const TABS: TabItem[] = [
-  { href: "/inicio", label: "Início", icon: Home },
-  { href: "/nutri", label: "Nutri IA", icon: Sparkles },
-  { href: "/jornada", label: "Jornada", icon: Route },
-  { href: "/progresso", label: "Progresso", icon: BarChart3 },
+  { href: "/inicio", label: "Hoje", icon: Home },
+  { href: "/jornada", label: "Programa", icon: Route },
+  { href: "/prazeres", label: "Prazeres", icon: Sprout },
+  { href: "/progresso", label: "Eu", icon: User },
 ];

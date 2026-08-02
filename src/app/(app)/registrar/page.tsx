@@ -201,12 +201,12 @@ export default function Registrar() {
             placeholder="Adicionar à mão…"
             className="h-11 flex-1 rounded-xl border border-line bg-surface px-3.5 text-[15px] text-ink placeholder:text-ink-faint focus:border-rose focus:outline-none focus:ring-2 focus:ring-rose/30"
           />
-          {/* Atalho da foto ao lado do registro (esqueleto de simple-5.jpg): é
-              assim que a análise vira hábito diário em vez de novidade de uma
-              vez só. Abre a câmera já dentro da conversa com a nutri. */}
+          {/* Atalho da foto ao lado do registro: é assim que pontuar o prato
+              vira hábito diário em vez de novidade de uma vez só. Vai pro
+              Prato, não mais para uma conversa com a "nutri". */}
           <Link
-            href="/nutri?camera=1"
-            aria-label="Fotografar o prato e perguntar para a nutri"
+            href="/prato"
+            aria-label="Registrar o prato e ver a Nota Desinflama"
             className="grid size-11 shrink-0 place-items-center rounded-xl border border-rose/40 bg-rose-tint text-rose-dark transition-transform active:scale-95"
           >
             <Camera className="size-5" />

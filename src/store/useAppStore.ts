@@ -10,10 +10,16 @@ import type {
   AppData,
   ChallengeType,
   DailyLog,
+  ItemPrato,
   OnboardingData,
+  Prazer,
+  ReactionLevel,
+  RefeicaoAnalisada,
+  Resgate,
   Subscription,
   ToleranceResult,
 } from "@/types/domain";
+import { calcularNota, type NotaPrato } from "@/lib/notaPrato";
 import { emptyAppData } from "@/types/domain";
 import { newJourney, phaseForDay, totalDays } from "@/lib/journey";
 import { buildDemoData, DEMO_EMAIL } from "@/lib/demo";
@@ -78,6 +84,28 @@ interface AppState {
   /** Registra o resultado de um teste de reintrodução (Mapa de Tolerância). */
   addToleranceResult: (result: ToleranceResult) => Promise<void>;
   addLog: (log: DailyLog) => Promise<void>;
+  /** Salva uma refeição fotografada e calcula a Nota Desinflama dela. */
+  adicionarRefeicao: (entrada: {
+    momento: RefeicaoAnalisada["momento"];
+    fotoDataUrl?: string;
+    nome: string;
+    itens: ItemPrato[];
+    troca: string;
+    temFibra?: boolean;
+  }) => Promise<{
+    refeicao: RefeicaoAnalisada;
+    nota: NotaPrato;
+    sementes: number;
+  }>;
+  removerRefeicao: (id: string) => Promise<void>;
+  /** Resgata um prazer com sementes do SALDO (o nível do Broto não cai). */
+  resgatarPrazer: (prazer: Prazer) => Promise<
+    | { resgatado: false; saldo: number }
+    | { resgatado: true; saldo: number; resgate: Resgate }
+  >;
+  criarPrazer: (nome: string, preco: number) => Promise<Prazer>;
+  removerPrazer: (id: string) => Promise<void>;
+  registrarReacaoDoPrazer: (resgateId: string, reacao: ReactionLevel) => Promise<void>;
   addPhoto: (dataUrl: string) => Promise<void>;
   removePhoto: (id: string) => Promise<void>;
 
@@ -565,6 +593,130 @@ export const useAppStore = create<AppState>((set, get) => {
         novas = newlyUnlocked;
       });
       notifyAchievements(novas);
+    },
+
+    /**
+     * Salva uma refeição fotografada e PONTUA na hora.
+     *
+     * A nota nunca vem da IA — a IA só entrega os itens e os grupos. Aqui a
+     * gente aplica `calcularNota` com o Mapa de Tolerância e o perfil DELA,
+     * que é o que faz o mesmo prato valer notas diferentes para pessoas
+     * diferentes (e para a mesma pessoa em momentos diferentes da jornada).
+     */
+    adicionarRefeicao: async (entrada) => {
+      const hoje = todayKey();
+      const estado = get().data;
+
+      const nota = calcularNota(entrada.itens, {
+        tolerancia: estado.tolerance,
+        perfil: estado.user?.onboarding?.bloatType ?? null,
+        temFibra: entrada.temFibra,
+      });
+
+      let fotoRef: string | undefined;
+      if (entrada.fotoDataUrl) {
+        const id = `refeicao-${hoje}-${uid()}`;
+        fotoRef = await blobStore.save(id, entrada.fotoDataUrl);
+      }
+
+      const refeicao: RefeicaoAnalisada = {
+        id: uid(),
+        date: hoje,
+        momento: entrada.momento,
+        fotoRef,
+        nome: entrada.nome,
+        itens: entrada.itens,
+        nota: nota.nota,
+        troca: entrada.troca,
+        createdAt: new Date().toISOString(),
+      };
+
+      let sementes = 0;
+      await get().update((d) => {
+        d.refeicoes.push(refeicao);
+        // Teto de 2 fotos pagas por dia (Seção 5): sem teto, fotografar o
+        // mesmo prato dez vezes viraria a forma mais barata de comprar pizza.
+        const pagasHoje = d.refeicoes.filter(
+          (r) => r.date === hoje && d.flags[`fotoPaga:${r.id}`]
+        ).length;
+        if (pagasHoje < 2) {
+          d.flags[`fotoPaga:${refeicao.id}`] = true;
+          ganharSementes(d, SEEDS.foto);
+          sementes = SEEDS.foto;
+        }
+        touchStreak(d, hoje);
+      });
+
+      return { refeicao, nota, sementes };
+    },
+
+    removerRefeicao: async (id) => {
+      const alvo = get().data.refeicoes.find((r) => r.id === id);
+      if (alvo?.fotoRef) await blobStore.remove(alvo.fotoRef);
+      await get().update((d) => {
+        d.refeicoes = d.refeicoes.filter((r) => r.id !== id);
+      });
+    },
+
+    /* ---------------------------- Prazeres ---------------------------- */
+
+    /**
+     * Resgata um prazer. Gasta SÓ o saldo — `seedsLifetime` não é tocado, então
+     * o Broto nunca regride por ela ter se dado um prazer.
+     *
+     * Marca também o dia SEGUINTE: é lá que o check-in pergunta como o corpo
+     * reagiu, e é isso que faz o prazer virar dado do Mapa de Tolerância em
+     * vez de só uma recompensa que sai do sistema sem ensinar nada.
+     */
+    resgatarPrazer: async (prazer) => {
+      const hoje = todayKey();
+      if (get().data.seeds < prazer.preco) {
+        return { resgatado: false as const, saldo: get().data.seeds };
+      }
+
+      const resgate: Resgate = {
+        id: uid(),
+        prazerId: prazer.id,
+        nome: prazer.nome,
+        preco: prazer.preco,
+        date: hoje,
+      };
+
+      await get().update((d) => {
+        if (d.seeds < prazer.preco) return;
+        d.seeds -= prazer.preco;
+        d.resgates.push(resgate);
+        d.flags[`prazerResgatado:${hoje}`] = true;
+      });
+
+      return { resgatado: true as const, saldo: get().data.seeds, resgate };
+    },
+
+    criarPrazer: async (nome, preco) => {
+      const prazer: Prazer = {
+        id: `proprio-${uid()}`,
+        nome: nome.trim(),
+        preco: Math.max(5, Math.round(preco)),
+        proprio: true,
+      };
+      await get().update((d) => {
+        d.prazeresProprios.push(prazer);
+      });
+      return prazer;
+    },
+
+    removerPrazer: async (id) => {
+      await get().update((d) => {
+        d.prazeresProprios = d.prazeresProprios.filter((p) => p.id !== id);
+      });
+    },
+
+    /** Registra como o corpo reagiu ao prazer resgatado. */
+    registrarReacaoDoPrazer: async (resgateId, reacao) => {
+      await get().update((d) => {
+        const r = d.resgates.find((x) => x.id === resgateId);
+        if (r) r.reacao = reacao;
+      });
     },
 
     addPhoto: async (dataUrl) => {

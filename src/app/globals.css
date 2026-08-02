@@ -68,6 +68,17 @@
   --color-plum-tint: #eae2e7;
   --color-plum-dark: #533f4f;
 
+  /* — Nota Desinflama: cores SEMÂNTICAS, não de marca.
+       Semáforo precisa de semáforo: usar o rosa da marca para "bom" seria
+       ilegível, porque o rosa já significa "o app" em toda tela. Ficam
+       dessaturadas e quentes de propósito, pra pertencerem à paleta. — */
+  --color-nota-boa: #4f7a52;
+  --color-nota-boa-tint: #e2ebe0;
+  --color-nota-media: #b98a2e;
+  --color-nota-media-tint: #f3e7cd;
+  --color-nota-ruim: #b0552f;
+  --color-nota-ruim-tint: #f7e5d9;
+
   --color-danger: #a03024;
   --color-danger-tint: #f6ddd9;
 

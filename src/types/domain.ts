@@ -111,6 +111,69 @@ export interface DailyLog {
   createdAt: string; // ISO
 }
 
+/* --------------------------- Prato (Nota Desinflama) --------------------------- */
+
+/** Marcador não-FODMAP que pesa no inchaço de alguns perfis. */
+export type MarcadorPrato =
+  | "ultraprocessado"
+  | "sodioAlto"
+  | "cafeina"
+  | "gorduraPesada"
+  | "fritura";
+
+/** Um alimento identificado na foto. A IA preenche isto; a nota é nossa. */
+export interface ItemPrato {
+  nome: string;
+  grupo: ReintroGroup | null;
+  marcadores?: MarcadorPrato[];
+}
+
+/** Uma refeição fotografada e pontuada. */
+export interface RefeicaoAnalisada {
+  id: string;
+  date: string; // YYYY-MM-DD
+  momento: "cafe" | "almoco" | "jantar" | "lanche";
+  /** Referência da foto no blobStore (local e privada). */
+  fotoRef?: string;
+  /** Nome do prato, como a IA leu. */
+  nome: string;
+  itens: ItemPrato[];
+  /** 0–100, calculada em `lib/notaPrato.ts` — nunca vinda da IA. */
+  nota: number;
+  /** O que trocar da próxima vez. */
+  troca: string;
+  createdAt: string; // ISO
+}
+
+/* ------------------------------ Prazeres ------------------------------ */
+
+/** Um prazer da vida real, com preço em sementes (mecânica do Habitica). */
+export interface Prazer {
+  id: string;
+  nome: string;
+  /** Preço em sementes. */
+  preco: number;
+  /** Criado por ela, não pela gente. */
+  proprio?: boolean;
+}
+
+/**
+ * Um resgate. Guarda o preço da época de propósito: se a tabela mudar depois,
+ * o histórico dela não pode mudar junto.
+ */
+export interface Resgate {
+  id: string;
+  prazerId: string;
+  nome: string;
+  preco: number;
+  date: string; // YYYY-MM-DD
+  /**
+   * Como o corpo reagiu — perguntado no check-in do dia seguinte.
+   * É o que faz o prazer ENSINAR em vez de só recompensar.
+   */
+  reacao?: ReactionLevel;
+}
+
 /* ------------------------------ Score / Streak ------------------------------ */
 
 export interface GutScorePoint {
@@ -185,6 +248,8 @@ export interface AppData {
   subscription: Subscription;
   progress: JourneyProgress | null;
   logs: DailyLog[];
+  /** Refeições fotografadas e pontuadas (a aba Prato). */
+  refeicoes: RefeicaoAnalisada[];
   scores: GutScorePoint[];
   streak: Streak;
   photos: Photo[];
@@ -203,6 +268,10 @@ export interface AppData {
    * normalizar (Seção 5 do PLANO, regra vinda do WeightWatchers).
    */
   seedsLifetime: number;
+  /** Prazeres criados por ela, com o preço que ela mesma definiu. */
+  prazeresProprios: Prazer[];
+  /** Histórico de resgates da loja de Prazeres. */
+  resgates: Resgate[];
   /** Aulas concluídas por dia (dia → true). */
   lessonsDone: Record<number, boolean>;
   /** Plano "se-então" (implementation intention): âncora escolhida pela usuária,
@@ -248,6 +317,9 @@ export function emptyAppData(): AppData {
     subscription: { ...FREE_SUBSCRIPTION },
     progress: null,
     logs: [],
+    refeicoes: [],
+    prazeresProprios: [],
+    resgates: [],
     scores: [],
     streak: { ...EMPTY_STREAK },
     photos: [],
