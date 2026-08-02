@@ -15,7 +15,14 @@ const rcWebKey = process.env.NEXT_PUBLIC_REVENUECAT_WEB_KEY?.trim();
 const rcAppleKey = process.env.NEXT_PUBLIC_REVENUECAT_APPLE_KEY?.trim();
 const rcGoogleKey = process.env.NEXT_PUBLIC_REVENUECAT_GOOGLE_KEY?.trim();
 
+/** Serviço desinflama-api: Nutri IA, liberação de acesso pelo funil, push. */
+const apiUrl = process.env.NEXT_PUBLIC_API_URL?.trim();
+
 export const env = {
+  api: {
+    url: apiUrl?.replace(/\/$/, ""),
+    configured: Boolean(apiUrl),
+  },
   supabase: {
     url: supabaseUrl,
     anonKey: supabaseAnonKey,

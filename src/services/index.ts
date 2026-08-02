@@ -14,6 +14,7 @@ import {
   type SubscriptionService,
 } from "./SubscriptionService";
 import { RevenueCatSubscriptionService } from "./RevenueCatService";
+import { AcessoFunilSubscription } from "./AcessoFunilSubscription";
 
 export const repository: Repository = new LocalRepository();
 
@@ -23,8 +24,14 @@ export const authService: AuthService = env.supabase.configured
 
 // RevenueCat real (Web Billing + Apple IAP + Google Play Billing) quando há
 // chaves; caso contrário, mock funcional. A UI não muda — depende da interface.
-export const subscriptionService: SubscriptionService = env.revenuecat.configured
-  ? new RevenueCatSubscriptionService()
-  : new MockSubscriptionService();
+//
+// Por cima de qualquer um dos dois vem o acesso do funil: se a pessoa comprou
+// fora do app, ela é premium mesmo que o RevenueCat nunca tenha ouvido falar
+// dela.
+export const subscriptionService: SubscriptionService = new AcessoFunilSubscription(
+  env.revenuecat.configured
+    ? new RevenueCatSubscriptionService()
+    : new MockSubscriptionService(),
+);
 
 export type { AuthService, SubscriptionService, Repository };

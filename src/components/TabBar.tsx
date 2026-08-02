@@ -9,7 +9,11 @@ import { cn } from "@/lib/cn";
 /** Telas imersivas (respiração, leitor de aula) têm navegação própria (voltar/
  *  fechar) e ocupam a tela inteira — a tab bar fixa atrapalharia e seu botão
  *  central "+" sobrepunha o CTA principal. Some nelas. */
-const IMMERSIVE = [/^\/calmaria(\/|$)/, /^\/jornada\/[^/]+\/aula(\/|$)/];
+const IMMERSIVE = [
+  /^\/calmaria(\/|$)/,
+  /^\/jornada\/[^/]+\/aula(\/|$)/,
+  /^\/bem-vinda(\/|$)/,
+];
 
 export function TabBar() {
   const pathname = usePathname();

@@ -141,17 +141,22 @@ export const useAppStore = create<AppState>((set, get) => {
   // Evita hidratação dupla: signIn/signUp chamam hydrateUser diretamente e o
   // onAuthChange pode disparar pro MESMO usuário antes do set() — a segunda
   // hidratação carregaria dados velhos e sobrescreveria escritas recentes.
-  let hydratingId: string | null = null;
+  //
+  // Guardamos a PROMESSA em andamento, não só o id: quem chega depois espera a
+  // primeira terminar em vez de seguir em frente. Sem isso, `await signUp(...)`
+  // podia resolver antes de `data.user` existir, e a escrita seguinte (ex.: o
+  // onboarding vindo do funil) era sobrescrita quando a hidratação terminava.
+  let hidratacaoEmCurso: { id: string; promessa: Promise<void> } | null = null;
 
   /** Após autenticar: troca o namespace, carrega os dados do usuário e hidrata. */
   async function hydrateUser(user: AuthUser) {
-    if (hydratingId === user.id) return;
-    hydratingId = user.id;
-    try {
-      await doHydrate(user);
-    } finally {
-      hydratingId = null;
-    }
+    if (hidratacaoEmCurso?.id === user.id) return hidratacaoEmCurso.promessa;
+
+    const promessa = doHydrate(user).finally(() => {
+      if (hidratacaoEmCurso?.id === user.id) hidratacaoEmCurso = null;
+    });
+    hidratacaoEmCurso = { id: user.id, promessa };
+    return promessa;
   }
 
   async function doHydrate(user: AuthUser) {
