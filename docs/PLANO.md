@@ -1,5 +1,52 @@
 # PLANO DE REFUNDAÇÃO DO DESINFLAMA
 
+## ONDE ISTO ESTÁ — atualizado em 03/08/2026
+
+> **A cor mudou: a marca é ROSA** (decisão do Ruyter no meio da execução).
+> Rosa amora `#A8446A` / `#6A2440` sobre bege rosado `#F5ECE8`, tinta
+> marrom-vinho. Onde este documento fala em verde, leia rosa. A escolha se
+> apoia na Reverse Health (`docs/referencia/rh-*.jpg`), que é rosa e tem
+> 1,1 milhão de mulheres — não era só gosto.
+
+| Fase | Situação |
+|---|---|
+| 0 · Fundação visual | **feita** — tokens medidos do I am, emoji fora da UI, hex órfão eliminado |
+| 0b · Todas as telas | **parcial** — todas receberam a paleta e funcionam; só entrada, Hoje, Prato, Prazeres e Eu foram REESTRUTURADAS. As ~15 internas ainda têm o empilhamento de cards antigo |
+| 1 · Hoje + Broto | **feita** — Broto em SVG (16 poses), não MUAPI: ver "desvios" abaixo |
+| 2 · Prato + Nota | **feita** — `lib/notaPrato.ts` com 15 testes; montagem manual por catálogo além da foto |
+| 3 · Prazeres | **feita** — loja, teto semanal, "Estava no seu plano" |
+| 4 · Compartilhar | **feita** — frase do dia + 4 cards de conquista, via `html-to-image` |
+| 5 · Promessa e vitrine | **parcial** — promessa aplicada na landing (fonte única em `content/promise.ts`); paywall e onboarding ainda não foram reestruturados; `STORE_SUBMISSION.md` não foi reescrito |
+| 6 · Admin (fora do plano original) | **feito no front** — 19 rotas espelhando o app, lendo o conteúdo REAL via `externalDir`. Usuárias/leads/assinaturas ainda em mock |
+
+### Desvios conscientes deste plano
+
+1. **O Broto é SVG, não arte gerada no MUAPI.** O plano previa 12 poses
+   geradas, com plano B em código. Ficou o plano B por decisão técnica:
+   modelo de imagem erra a identidade do personagem entre poses, e 16
+   desenhos "quase iguais" é exatamente o que lê como feito por IA. Em vetor,
+   cabeça/olhos/vaso são o mesmo código. Se o Ruyter preferir a arte gerada, é
+   trocar o componente.
+2. **A economia de sementes entrou já na Fase 1**, não na 3: o nível do Broto
+   depende de `seedsLifetime` e não dava para adiar a separação saldo × acumulado.
+3. **O catálogo manual de alimentos não estava no plano.** Entrou porque a
+   `ANTHROPIC_API_KEY` não está na máquina — sem ele a aba Prato ficaria morta
+   e não testável.
+
+### O que falta, em ordem de valor
+
+1. **Fotografia real de mulher** na home, onboarding e paywall. É o que I am e
+   Reverse Health fazem e o que mais separa o nosso do "app bonito genérico".
+   Envolve decisão de marca (banco de imagem × geração × ensaio) — do Ruyter.
+2. **Onboarding e paywall reestruturados** no esqueleto de Reverse Health/Simple.
+3. **Prova social e garantia no paywall** — a estrutura existe, os números e a
+   promessa são decisão do Ruyter e não podem ser inventados.
+4. As ~15 telas internas restantes, uma a uma.
+5. Backend real do admin (hoje usuárias/leads/assinaturas são mock).
+
+---
+
+
 > Documento mestre. Escrito em 02/08/2026 para ser executado na sessão seguinte,
 > depois de um `/clear`. Quem pegar isto não precisa de contexto de conversa:
 > está tudo aqui — o que o produto é, de quem a gente copia o quê, as telas, a

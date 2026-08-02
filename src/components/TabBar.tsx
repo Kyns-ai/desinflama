@@ -12,6 +12,12 @@ import { cn } from "@/lib/cn";
 const IMMERSIVE = [
   /^\/calmaria(\/|$)/,
   /^\/jornada\/[^/]+\/aula(\/|$)/,
+  // O paywall é tela de decisão: a barra cobria o "Restaurar compra" e o
+  // "Pagamento seguro" — justamente as duas linhas que tiram o medo de
+  // comprar. E oferecer navegação para fora no meio da decisão é dar saída.
+  /^\/paywall(\/|$)/,
+  // Fim do programa: momento de escolher o próximo passo, não de vagar.
+  /^\/concluir(\/|$)/,
 ];
 
 export function TabBar() {
