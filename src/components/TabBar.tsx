@@ -36,20 +36,22 @@ export function TabBar() {
           ))}
         </div>
 
-        {/* Botão central — Registrar */}
+        {/* Botão central — Registrar. Sobe acima da barra: com ele deitado
+            dentro dos 64px, o círculo cobria a própria palavra "Registrar"
+            (medido: rótulo em 822–838, círculo em 784–840). */}
         <div className="relative w-20 shrink-0">
           <Link
             href="/registrar"
             aria-label="Registrar como você está"
             className={cn(
-              "absolute left-1/2 top-1 -translate-x-1/2 grid size-14 place-items-center rounded-full",
+              "absolute left-1/2 -top-3 -translate-x-1/2 grid size-12 place-items-center rounded-full",
               "bg-coral text-white shadow-[var(--shadow-coral)] transition-transform active:scale-95",
               isActive("/registrar") && "ring-4 ring-coral-tint"
             )}
           >
-            <Plus className="size-7" strokeWidth={2.5} />
+            <Plus className="size-6" strokeWidth={2.5} />
           </Link>
-          <span className="absolute inset-x-0 bottom-1.5 text-center text-[11px] font-medium text-ink-faint">
+          <span className="absolute inset-x-0 bottom-2 text-center text-[11px] font-medium text-ink-faint">
             Registrar
           </span>
         </div>

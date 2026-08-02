@@ -110,6 +110,13 @@ export const nutriApi = {
     return (await kv.get<EstiloNutri>(CHAVE_ESTILO)) ?? "gentil";
   },
 
+  /** Igual a `estilo()`, mas devolve null quando ela ainda NÃO escolheu — é o
+   *  que decide se a tela de escolha aparece (não dá para inferir de "gentil",
+   *  que também é o padrão de quem escolheu acolhimento). */
+  async estiloEscolhido(): Promise<EstiloNutri | null> {
+    return kv.get<EstiloNutri>(CHAVE_ESTILO);
+  },
+
   async guardarEstilo(estilo: EstiloNutri): Promise<void> {
     await kv.set(CHAVE_ESTILO, estilo);
   },

@@ -2,7 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Check, TrendingUp, Plus, X, Coffee, Sun, Moon, Apple } from "lucide-react";
+import Link from "next/link";
+import { Camera, Check, TrendingUp, Plus, X, Coffee, Sun, Moon, Apple } from "lucide-react";
 import { Button, Card } from "@/components/ui";
 import { useAppStore } from "@/store/useAppStore";
 import { todayKey } from "@/lib/date";
@@ -200,6 +201,16 @@ export default function Registrar() {
             placeholder="Adicionar à mão…"
             className="h-11 flex-1 rounded-xl border border-line bg-surface px-3.5 text-[15px] text-ink placeholder:text-ink-faint focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/30"
           />
+          {/* Atalho da foto ao lado do registro (esqueleto de simple-5.jpg): é
+              assim que a análise vira hábito diário em vez de novidade de uma
+              vez só. Abre a câmera já dentro da conversa com a nutri. */}
+          <Link
+            href="/nutri?camera=1"
+            aria-label="Fotografar o prato e perguntar para a nutri"
+            className="grid size-11 shrink-0 place-items-center rounded-xl border border-sage/40 bg-sage-tint text-sage-dark transition-transform active:scale-95"
+          >
+            <Camera className="size-5" />
+          </Link>
           <button
             onClick={() => addMeal(mealText)}
             aria-label="Adicionar refeição"
@@ -208,6 +219,10 @@ export default function Registrar() {
             <Plus className="size-5" />
           </button>
         </div>
+        <p className="mt-2 text-[13px] leading-relaxed text-ink-faint">
+          Na dúvida se o prato cai bem, toque na câmera: a nutri olha a foto e
+          responde antes de você comer.
+        </p>
 
         <AnimatePresence>
           {feedback && (

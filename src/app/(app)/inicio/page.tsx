@@ -12,6 +12,7 @@ import {
   Wind,
   Anchor,
   BookOpen,
+  Camera,
   HeartPulse,
   Info,
   ListChecks,
@@ -19,6 +20,7 @@ import {
   Check,
   ChevronRight,
   ArrowRight,
+  MessageCircle,
   Sparkles,
   UtensilsCrossed,
   Trophy,
@@ -203,13 +205,10 @@ export default function Inicio() {
                 </Link>
               )}
             </div>
+            {/* Contadores + entrada do Perfil. As sementes saíram daqui: elas
+                já têm o SeedMeter logo abaixo, e o Perfil precisava de porta
+                depois que a Nutri IA assumiu o lugar dele na barra de abas. */}
             <div className="flex items-center gap-1.5">
-              <Link
-                href="/jardim"
-                className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-2.5 py-1.5 text-sm font-semibold text-white transition-transform active:scale-95"
-              >
-                <Sprout className="size-4" /> {seeds}
-              </Link>
               <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-2.5 py-1.5 text-sm font-semibold text-white">
                 <Flame className="size-4" /> {streak.current}
               </span>
@@ -219,6 +218,13 @@ export default function Inicio() {
                 className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-2.5 py-1.5 text-sm font-semibold text-white transition-transform active:scale-95"
               >
                 <Shield className="size-4" /> {streak.shields ?? MAX_SHIELDS}
+              </Link>
+              <Link
+                href="/perfil"
+                aria-label="Seu perfil"
+                className="grid size-9 shrink-0 place-items-center rounded-full bg-white/15 text-sm font-semibold uppercase text-white transition-transform active:scale-95"
+              >
+                {firstName.slice(0, 1)}
               </Link>
             </div>
           </header>
@@ -378,6 +384,11 @@ export default function Inicio() {
           )}
         </Card>
       </motion.div>
+
+      {/* A nutri fala primeiro (esqueleto do card COACH AVO em simple-1.jpg):
+          o coach não espera pergunta — ele puxa conversa e mostra que está
+          acompanhando. Fica logo abaixo da ação de hoje. */}
+      <NutriProativa dia={day} fase={phase.phase} />
 
       {/* Calmaria — pilar Mente-Intestino (alívio sentido na hora) */}
       <Link href="/calmaria" className="block">
@@ -607,6 +618,52 @@ function ScoreCard({ score }: { score: { value: number; delta: number } }) {
           </motion.div>
         )}
       </AnimatePresence>
+    </Card>
+  );
+}
+
+/** A Nutri IA se apresentando na home, com uma frase que muda por fase e dois
+ *  atalhos reais (conversar / fotografar o prato). Sem custo de IA: o texto é
+ *  local; a conta só começa quando ela toca. */
+function NutriProativa({ dia, fase }: { dia: number; fase: string }) {
+  const fala: Record<string, string> = {
+    Choque: `Nos próximos 3 dias eu vou aprender o seu padrão pra afinar o seu protocolo. Me conta como você acordou hoje.`,
+    Remoção: `Nesta fase o inchaço começa a ceder. Se bater dúvida na hora de comer, me pergunta antes — é pra isso que eu estou aqui.`,
+    Reintrodução: `Cada teste desta fase vale ouro. Me conta como você reagiu ao de hoje que eu te ajudo a ler o resultado.`,
+    Reparo: `A partir daqui a gente devolve comida à sua mesa, no seu ritmo. Não corte nada por medo antes de falar comigo.`,
+    Reequilíbrio: `Você já sabe o que te incha. Agora é viver com isso sem virar prisão — me pergunta o que quiser.`,
+  };
+
+  return (
+    <Card elevation="soft" className="border border-sage/20 p-0">
+      <div className="flex items-start gap-3 p-4">
+        <span className="mt-0.5 grid size-10 shrink-0 place-items-center rounded-2xl bg-sage-tint text-sage-dark">
+          <Sparkles className="size-5" />
+        </span>
+        <div className="min-w-0 flex-1">
+          <p className="text-xs font-semibold uppercase tracking-wide text-ink-faint">
+            Nutri IA · dia {dia}
+          </p>
+          <p className="mt-1 text-[15px] leading-relaxed text-ink">
+            {fala[fase] ??
+              "Estou aqui com o seu histórico na mão — o que você comeu, como tem acordado e o que já descobrimos que te incha."}
+          </p>
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-px overflow-hidden rounded-b-2xl border-t border-line bg-line">
+        <Link
+          href="/nutri"
+          className="flex items-center justify-center gap-2 bg-surface py-3 text-sm font-semibold text-sage-dark transition-colors active:bg-sage-tint/40"
+        >
+          <MessageCircle className="size-4" /> Falar com ela
+        </Link>
+        <Link
+          href="/nutri?camera=1"
+          className="flex items-center justify-center gap-2 bg-surface py-3 text-sm font-semibold text-sage-dark transition-colors active:bg-sage-tint/40"
+        >
+          <Camera className="size-4" /> Analisar meu prato
+        </Link>
+      </div>
     </Card>
   );
 }

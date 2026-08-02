@@ -5,7 +5,7 @@
   "type": "module",
   "description": "Serviço de API do Desinflama: Nutri IA (foto + chat), liberação de acesso pelo funil e notificações.",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "tsx watch --env-file-if-exists=.env src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
     "typecheck": "tsc --noEmit"
