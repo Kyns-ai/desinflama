@@ -1,18 +1,40 @@
 <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Desinflama">
+  <!--
+    Marca do Desinflama.
+
+    Esqueleto copiado do I am (docs/referencia/iam-01.jpg mostra o ícone deles
+    na notificação): LETRA SERIFADA sobre gradiente quente. É o padrão de quem
+    tem 12,5 milhões de downloads no mesmo público — não é invenção nossa.
+    A cor é nossa: rosa amora, o mesmo do campo de cor da home.
+
+    A versão clara (letra escura sobre bege, como a deles) foi testada e
+    lavava em 40px sobre papel de parede claro. A escura segura.
+
+    O "D" é TRAÇADO, não texto: ícone que depende de fonte instalada quebra
+    em qualquer lugar que não seja o navegador com a Fraunces carregada.
+    Alto contraste na barriga (grossa no meio, fina nas pontas) é o que faz
+    ler como serifada de revista em vez de letra de sistema.
+  -->
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#5ABF92"/>
-      <stop offset="1" stop-color="#3C9A71"/>
-    </linearGradient>
-    <linearGradient id="leaf" x1="160" y1="120" x2="360" y2="400" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#FBF8F3"/>
-      <stop offset="1" stop-color="#F3EDE3"/>
+    <linearGradient id="fundo" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B85179"/>
+      <stop offset="1" stop-color="#6A2440"/>
     </linearGradient>
   </defs>
-  <rect width="512" height="512" rx="128" fill="url(#bg)"/>
-  <path d="M256 108c-86 0-150 60-150 150 0 78 56 146 150 146s150-68 150-146c0-90-64-150-150-150z" fill="url(#leaf)"/>
-  <path d="M256 360c0-70 6-128 0-196" stroke="#4FB286" stroke-width="16" stroke-linecap="round"/>
-  <path d="M256 230c22-6 44-22 52-48" stroke="#4FB286" stroke-width="16" stroke-linecap="round"/>
-  <path d="M256 280c-22-6-44-22-52-48" stroke="#4FB286" stroke-width="16" stroke-linecap="round"/>
-  <circle cx="256" cy="178" r="22" fill="#F2856D"/>
+
+  <rect width="512" height="512" rx="128" fill="url(#fundo)"/>
+
+  <!-- haste + barriga, com o contorno interno vazado -->
+  <path
+    fill-rule="evenodd"
+    fill="#F7E5EA"
+    d="M152 138 h96 c88 0 140 50 140 122 0 72 -52 122 -140 122 h-96 z
+       M212 178 v168 h40 c54 0 82 -32 82 -84 0 -52 -28 -84 -82 -84 z"
+  />
+  <!-- serifas em brackets, no espírito da Fraunces -->
+  <path fill="#F7E5EA" d="M128 138 h84 v20 h-84 z M128 362 h84 v20 h-84 z"/>
+
+  <!-- a folha no vazio da letra: o único lugar onde a natureza entra sem
+       transformar a marca em "mais um app de folhinha" -->
+  <path fill="#E4A0B8" d="M292 196c6-46 36-72 78-76 2 46-24 76-78 76z"/>
 </svg>

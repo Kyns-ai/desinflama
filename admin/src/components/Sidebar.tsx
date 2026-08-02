@@ -23,6 +23,7 @@ import {
   Wind,
   type LucideIcon,
 } from "lucide-react";
+import { Marca } from "@/components/Marca";
 import { cn } from "@/lib/cn";
 
 interface Item {
@@ -84,9 +85,7 @@ export function Sidebar() {
   return (
     <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col overflow-y-auto border-r border-line bg-surface px-3 py-5 lg:flex">
       <div className="flex items-center gap-2.5 px-3 pb-6">
-        <span className="grid size-9 place-items-center rounded-xl bg-rose text-white">
-          <Sprout className="size-5" />
-        </span>
+        <Marca size={36} className="rounded-xl" />
         <div className="leading-tight">
           <p className="font-display text-lg font-semibold text-ink">Desinflama</p>
           <p className="eyebrow">Admin</p>

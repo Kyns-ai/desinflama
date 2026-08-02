@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { Loader2, Share2 } from "lucide-react";
 import { useAppStore } from "@/store/useAppStore";
 import { cardsDisponiveis, type CardConquista } from "@/lib/cardsConquista";
+import { Marca } from "@/components/Marca";
 import { compartilharCard } from "@/lib/compartilhar";
 import { cn } from "@/lib/cn";
 
@@ -77,7 +78,10 @@ function CartaoCompartilhavel({ card }: { card: CardConquista }) {
             </p>
           </div>
 
-          <p className="text-[13px] font-medium text-white/55">@desinflama</p>
+          <div className="flex items-center gap-2">
+            <Marca size={24} className="rounded-md" />
+            <p className="text-[13px] font-medium text-white/55">@desinflama</p>
+          </div>
         </div>
       </div>
 

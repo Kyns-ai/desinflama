@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { Loader2, Share2 } from "lucide-react";
 import type { Frase } from "@/content/frases";
+import { Marca } from "@/components/Marca";
 import { compartilharCard } from "@/lib/compartilhar";
 import { cn } from "@/lib/cn";
 
@@ -51,7 +52,7 @@ export function FraseDoDia({ frase }: { frase: Frase }) {
           </p>
 
           <div className="absolute inset-x-0 bottom-0 flex items-center gap-2">
-            <MarcaDesinflama />
+            <Marca size={28} className="rounded-lg" />
             <span className="text-sm font-medium text-white/60">
               @desinflama
             </span>
@@ -76,30 +77,6 @@ export function FraseDoDia({ frase }: { frase: Frase }) {
         Compartilhar
       </button>
     </section>
-  );
-}
-
-/** Marca em SVG (broto dentro de um círculo) — some junto no print. */
-function MarcaDesinflama() {
-  return (
-    <span className="grid size-7 place-items-center rounded-lg bg-white/15">
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="#fff"
-        strokeWidth="1.9"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden
-      >
-        <path d="M7 20h10" />
-        <path d="M10 20c5.5-2.5.8-6.4 3-10" />
-        <path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z" />
-        <path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z" />
-      </svg>
-    </span>
   );
 }
 

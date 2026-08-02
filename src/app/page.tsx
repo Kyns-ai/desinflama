@@ -9,7 +9,14 @@ import { ArrowRight, Sparkles, PlayCircle } from "lucide-react";
 import { buttonStyles } from "@/components/ui";
 import { useAppStore } from "@/store/useAppStore";
 import { isFullyMocked } from "@/lib/env";
-import { PROJECTION, PROJECTION_NOTE } from "@/content/promise";
+import {
+  BENEFICIOS,
+  PROJECTION,
+  PROJECTION_NOTE,
+  PROMESSA_HONESTA,
+  PROMESSA_SUBTITULO,
+  PROMESSA_TITULO,
+} from "@/content/promise";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -68,9 +75,11 @@ export default function Welcome() {
           transition={{ duration: 0.6, delay: 0.18, ease }}
           className="font-display text-[2.6rem] font-semibold leading-[1.08] tracking-tight text-ink"
         >
-          Sua barriga leve
-          <br />
-          começa aqui.
+          {PROMESSA_TITULO.split("\n").map((linha) => (
+            <span key={linha} className="block">
+              {linha}
+            </span>
+          ))}
         </motion.h1>
 
         <motion.p
@@ -79,10 +88,26 @@ export default function Welcome() {
           transition={{ duration: 0.6, delay: 0.26, ease }}
           className="mt-4 max-w-sm text-[17px] leading-relaxed text-ink-soft"
         >
-          Descubra o que te incha e desinflame de verdade — sem contar caloria,
-          sem dieta da moda. Só você, sua digestão e um plano que te mostra o
-          que funciona pra você.
+          {PROMESSA_SUBTITULO}
         </motion.p>
+
+        {/* Os cinco benefícios, na ordem da força da evidência. A pele fica
+            por último e com o texto mais contido de propósito. */}
+        <motion.ul
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3, ease }}
+          className="mt-5 flex flex-wrap gap-1.5"
+        >
+          {BENEFICIOS.map((b) => (
+            <li
+              key={b.chave}
+              className="rounded-full border border-line bg-surface/70 px-3 py-1.5 text-[13px] font-medium text-ink-soft"
+            >
+              {b.titulo}
+            </li>
+          ))}
+        </motion.ul>
 
         <motion.div
           initial={{ opacity: 0, y: 14 }}
@@ -112,6 +137,19 @@ export default function Welcome() {
           className="mt-3 text-xs leading-relaxed text-ink-faint"
         >
           {PROJECTION_NOTE}
+        </motion.p>
+
+        {/* A frase honesta anda junto da promessa grande: resultado como
+            RELATO, nunca como garantia. É o que mantém a promessa longe de
+            "tratamento" e o que sustenta a confiança quando o corpo dela
+            demora mais que a média. */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.5, ease }}
+          className="mt-2 text-xs leading-relaxed text-ink-faint"
+        >
+          {PROMESSA_HONESTA}
         </motion.p>
       </div>
 

@@ -1,19 +1,43 @@
 {
   "name": "Desinflama",
   "short_name": "Desinflama",
-  "description": "O programa de 14 dias que descobre o que te incha e devolve sua barriga leve.",
+  "description": "Coma para desinflamar, não para contar caloria. Em 14 dias você descobre o que incha VOCÊ.",
   "lang": "pt-BR",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#FAF7F2",
-  "theme_color": "#FAF7F2",
-  "categories": ["health", "lifestyle", "medical"],
+  "background_color": "#F5ECE8",
+  "theme_color": "#F5ECE8",
+  "categories": [
+    "health",
+    "lifestyle",
+    "medical"
+  ],
   "icons": [
-    { "src": "/icons/icon-192.webp", "type": "image/webp", "sizes": "192x192", "purpose": "any" },
-    { "src": "/icons/icon-512.webp", "type": "image/webp", "sizes": "512x512", "purpose": "any" },
-    { "src": "/icons/icon-512.webp", "type": "image/webp", "sizes": "512x512", "purpose": "maskable" },
-    { "src": "/icons/icon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any" }
+    {
+      "src": "/icons/icon-192.webp",
+      "type": "image/webp",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.webp",
+      "type": "image/webp",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.webp",
+      "type": "image/webp",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    }
   ]
 }
