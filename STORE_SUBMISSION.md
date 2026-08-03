@@ -139,3 +139,91 @@ O app funciona offline-first. Para sync multi-device e contas reais:
   (apaga o usuário); o app já chama o fluxo de exclusão.
 - Configure um **webhook do RevenueCat → Edge Function** se quiser cache
   server-side do entitlement (a fonte da verdade continua sendo o RevenueCat).
+
+---
+
+## 11. Ficha das lojas — RASCUNHO, pendente de aprovação do Ruyter
+
+> **NÃO SUBMETER SEM ELE APROVAR.** Texto de loja é promessa pública: entra em
+> print, em anúncio e no radar do CFN/ANVISA. O Ruyter decide a palavra final —
+> aqui está a versão derivada de `src/content/promise.ts`, que é a fonte única
+> da promessa dentro do app. Se ele mudar aqui, mudar lá também (e vice-versa),
+> senão a loja promete uma coisa e o app entrega outra.
+
+### App Store
+
+**Nome (30 car.)**
+`Desinflama: seu intestino`
+
+**Subtítulo (30 car.)**
+`Coma para desinflamar`
+
+**Descrição**
+
+```
+Inchaço quase nunca é gordura — é gás.
+
+Certos carboidratos chegam ao intestino sem serem digeridos, viram comida para
+as bactérias e estufam a barriga. Por isso comer menos não resolve. E por isso
+não é falta de força de vontade.
+
+O Desinflama é um programa de 21 dias que descobre o que incha VOCÊ.
+
+• CARDÁPIO SEU, DE VERDADE
+  Você marca o que gosta e o que não come. O cardápio se monta em cima disso —
+  e dá pra trocar qualquer refeição.
+
+• NOTA DESINFLAMA
+  Registre o prato e veja uma nota de 0 a 100 calculada para o SEU corpo. A
+  mesma comida vale notas diferentes para pessoas diferentes, porque ela usa o
+  seu Mapa de Tolerância.
+
+• SEU MAPA DE TOLERÂNCIA
+  A cada teste de reintrodução, um grupo de alimento se acende na sua lista
+  pessoal: o que você tolera, o que modera e o que evita.
+
+• UM BROTO QUE NUNCA TE PUNE
+  Ele reage ao seu cuidado do dia. No pior dia, fica desanimado. Nunca adoece,
+  nunca morre, nunca some.
+
+• PRAZERES QUE ESTÃO NO PLANO
+  Cuidar rende sementes. Sementes viram chocolate, vinho, pizza — sem culpa,
+  porque estava no seu plano.
+
+Mulheres que fizeram o programa relatam barriga mais leve e mais disposição.
+Não é tratamento, não é garantia — é um método para você descobrir o seu
+padrão. Não substitui consulta com nutricionista ou médico.
+```
+
+**Palavras-chave (100 car.)**
+`inchaço,intestino,fodmap,digestão,barriga,inchada,gases,dieta,nutrição,bem-estar`
+
+### Google Play
+
+**Descrição curta (80 car.)**
+`Descubra o que incha VOCÊ. Cardápio seu, nota do prato e 21 dias sem sofrer.`
+
+**Descrição completa:** a mesma da App Store.
+
+### Capturas (7, na ordem)
+
+Refazer TODAS — as antigas são da paleta verde e da estrutura anterior.
+
+| # | Tela | Legenda sugerida |
+|---|---|---|
+| 1 | Hoje (Broto animado + cartão do dia) | Um broto que reage ao seu cuidado |
+| 2 | Prato com a nota | A foto do prato vira nota — pro SEU corpo |
+| 3 | Cardápio pessoal | Montado com a comida que você já gosta |
+| 4 | Mapa de Tolerância | O que VOCÊ tolera, descoberto por você |
+| 5 | Prazeres | Cuidar rende. E rende chocolate |
+| 6 | Progresso (Índice) | A prova de que está funcionando |
+| 7 | Frase do dia | Para postar |
+
+### O que ainda falta antes de submeter
+
+- [ ] Ruyter aprovar o texto acima
+- [ ] Prova social e garantia no paywall (números reais — não podem ser inventados)
+- [ ] Capturas novas, nas 7 telas acima, em 6.7" e 6.5"
+- [ ] `ANTHROPIC_API_KEY` no servidor, se a análise por foto entrar na v1
+- [ ] Política de privacidade cobrindo foto de refeição (fica local, mas o
+      texto precisa dizer isso)

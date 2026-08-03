@@ -16,8 +16,8 @@
 | 2 · Prato + Nota | **feita** — `lib/notaPrato.ts` com 15 testes; montagem manual por catálogo além da foto |
 | 3 · Prazeres | **feita** — loja, teto semanal, "Estava no seu plano" |
 | 4 · Compartilhar | **feita** — frase do dia + 4 cards de conquista, via `html-to-image` |
-| 5 · Promessa e vitrine | **parcial** — promessa (21 dias), enquadramento do problema e projeção na landing; paywall com preço/dia e benefícios novos; `STORE_SUBMISSION.md` NÃO foi reescrito |
-| 6 · Admin (fora do plano original) | **feito no front** — 20 rotas espelhando o app, lendo o conteúdo REAL via `externalDir`. Usuárias/leads/assinaturas ainda em mock |
+| 5 · Promessa e vitrine | **feita, aguardando o Ruyter** — promessa (21 dias), problema e projeção na landing; paywall com preço/dia; ficha das lojas redigida na Seção 11 do `STORE_SUBMISSION.md`, marcada como pendente de aprovação (texto de loja é promessa pública) |
+| 6 · Admin (fora do plano original) | **feito** — 21 rotas espelhando o app, lendo o conteúdo REAL via `externalDir`; schema da Onda 2, agregados de produto e a tela Sistema (que diz o que é real e o que é demo). Usuárias/leads/assinaturas seguem em mock até haver Supabase |
 | 7 · Cardápio pessoal (pedido do Ruyter) | **feito** — "gosto / não é pra mim", cardápio montado por preferência + tolerância, troca por refeição, tirar dúvida |
 
 ### Decisões do Ruyter tomadas depois deste plano
@@ -46,16 +46,24 @@
    `ANTHROPIC_API_KEY` não está na máquina — sem ele a aba Prato ficaria morta
    e não testável.
 
-### O que falta, em ordem de valor
+### O que falta — e o que trava em quem
 
-1. **Fotografia real de mulher** na home, onboarding e paywall. É o que I am e
-   Reverse Health fazem e o que mais separa o nosso do "app bonito genérico".
-   Envolve decisão de marca (banco de imagem × geração × ensaio) — do Ruyter.
-2. **Onboarding e paywall reestruturados** no esqueleto de Reverse Health/Simple.
-3. **Prova social e garantia no paywall** — a estrutura existe, os números e a
-   promessa são decisão do Ruyter e não podem ser inventados.
-4. As ~15 telas internas restantes, uma a uma.
-5. Backend real do admin (hoje usuárias/leads/assinaturas são mock).
+**Trava no Ruyter (não dá pra eu decidir):**
+1. **Aprovar a ficha das lojas** (Seção 11 do `STORE_SUBMISSION.md`).
+2. **Prova social e garantia no paywall** — a estrutura cabe; os números são
+   reais ou não existem, e inventar aqui é o pior tipo de mentira.
+3. **Fotografia real de mulher** na home, onboarding e paywall. É o que I am e
+   Reverse Health fazem e o que mais separa o nosso de "app bonito genérico".
+   Banco de imagem × geração × ensaio é decisão de marca e de orçamento.
+
+**Trava em infraestrutura:**
+4. Supabase de verdade (o admin já lê as tabelas; falta a chave).
+5. `ANTHROPIC_API_KEY` para a identificação por foto.
+
+**Pode seguir sem ninguém:**
+6. Capturas novas para as lojas, nas 7 telas listadas.
+7. Widget de tela de bloqueio (nativo) — a maior alavanca de retorno diário
+   que existe no plano, e a peça mais cara.
 
 ---
 
