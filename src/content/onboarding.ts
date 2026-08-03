@@ -156,7 +156,7 @@ export const WELCOME_VIDEO = {
   title: "Um oi da sua nutri",
   durationLabel: "1 min",
   transcript:
-    "Oi! Que bom que você está aqui. Quero te contar uma coisa que muda tudo: na maioria das vezes, o inchaço não tem a ver com o quanto você come, e sim com o QUE o seu intestino consegue digerir bem. Nos próximos 14 dias a gente vai descobrir isso juntas, no seu ritmo. Não é dieta, não é sofrimento — é entender o seu corpo. Te vejo no Dia 1.",
+    "Oi! Que bom que você está aqui. Quero te contar uma coisa que muda tudo: na maioria das vezes, o inchaço não tem a ver com o quanto você come, e sim com o QUE o seu intestino consegue digerir bem. Nos próximos dias a gente vai descobrir isso juntas, no seu ritmo. Não é dieta, não é sofrimento — é entender o seu corpo. Te vejo no Dia 1.",
 };
 
 export type AnswerMap = {

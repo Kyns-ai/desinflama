@@ -272,7 +272,7 @@ export function DayView({ day }: { day: number }) {
       {/* Concluir */}
       {!isDone && closedTodayAlready ? (
         <p className="rounded-2xl bg-cream-deep/60 px-4 py-3 text-center text-sm text-ink-soft">
- Um dia por dia O Dia {day} abre pra concluir amanhã — hoje você já
+ Um dia por dia. O Dia {day} abre pra concluir amanhã — hoje você já
           fechou o seu.
         </p>
       ) : !isDone ? (

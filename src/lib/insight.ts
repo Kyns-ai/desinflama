@@ -58,7 +58,7 @@ function improvedSymptom(prev: DailyLog, cur: DailyLog): string | null {
     const a = prev.symptoms[key];
     const b = cur.symptoms[key];
     if (a != null && b != null && b > a) {
- return`Sua ${labels[key]} subiu desde ontem O intestino agradece!`;
+ return`Sua ${labels[key]} subiu desde ontem. O intestino agradece!`;
     }
   }
   return null;

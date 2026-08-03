@@ -14,7 +14,7 @@ export const VALIDATION = {
     "Inchaço é o sintoma que mais incomoda pra maioria das pessoas com intestino sensível — e ser dispensada sobre isso é comum demais. Aqui a gente leva a sério: com ciência, com calma, sem detox milagroso e sem prometer o impossível.",
 };
 
-/** O que ESTES 14 dias honestamente podem fazer. */
+/** O que o programa honestamente pode fazer. */
 export const CAN_DO: string[] = [
   "Começar a acalmar o eixo intestino-cérebro com respiração e relaxamento — isso você sente já nos primeiros dias.",
   "Te ajudar a notar padrões e possíveis gatilhos com o registro diário.",
@@ -22,7 +22,7 @@ export const CAN_DO: string[] = [
   "Criar uma rotina gentil e simples que você consegue manter.",
 ];
 
-/** O que estes 14 dias NÃO podem fazer (honestidade que constrói confiança). */
+/** O que o programa NÃO faz (honestidade que constrói confiança). */
 export const CANNOT_DO: string[] = [
   "Curar SII ou “consertar” seu intestino tão rápido — isso não existe, e quem promete está te enganando.",
   "Descobrir TODOS os seus gatilhos: a reintrodução de alimentos leva semanas e vem depois.",

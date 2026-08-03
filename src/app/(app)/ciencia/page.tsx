@@ -65,11 +65,11 @@ export default function Ciencia() {
         </div>
       </Card>
 
-      {/* O que 14 dias podem / não podem */}
+      {/* O que o programa pode / não pode */}
       <section className="grid gap-3">
         <Card elevation="soft">
           <h3 className="mb-3 font-semibold tracking-tight text-ink">
-            O que estes 14 dias podem fazer
+            O que este programa pode fazer
           </h3>
           <ul className="space-y-2.5">
             {CAN_DO.map((t) => (
