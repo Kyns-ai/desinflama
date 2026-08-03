@@ -18,6 +18,15 @@ export interface SubPackage {
   priceLabel: string;
   /** Preço normalizado por mês (âncora do anual). */
   pricePerMonthLabel: string;
+  /**
+   * Preço por DIA — é o número que vai em destaque.
+   *
+   * Padrão dos funis grandes de assinatura de saúde (Fastic mostra
+   * US$0,22–0,86/dia): a mesma quantia lida como pequena por dia e como
+   * decisão por mês. Não muda o preço, muda a unidade de comparação — o
+   * cérebro compara R$0,55 com um café, e R$16,65 com uma conta.
+   */
+  pricePerDayLabel: string;
   period: "month" | "year";
   badge?: string;
   highlight?: boolean;
@@ -42,6 +51,7 @@ export const OFFERINGS: SubPackage[] = [
     title: "Anual",
     priceLabel: "R$ 199,90/ano",
     pricePerMonthLabel: "R$ 16,65/mês",
+    pricePerDayLabel: "R$ 0,55",
     period: "year",
     badge: "ECONOMIZE 58%",
     highlight: true,
@@ -51,6 +61,7 @@ export const OFFERINGS: SubPackage[] = [
     title: "Mensal",
     priceLabel: "R$ 39,90/mês",
     pricePerMonthLabel: "R$ 39,90/mês",
+    pricePerDayLabel: "R$ 1,33",
     period: "month",
   },
 ];

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import {
   Award,
   BookOpen,
+  ChefHat,
   CreditCard,
   Flower2,
   LayoutDashboard,
@@ -70,6 +71,7 @@ export const GRUPOS: { titulo: string; itens: Item[] }[] = [
       { href: "/mecanicas/sementes", label: "Sementes", icon: Sprout },
       { href: "/mecanicas/prazeres", label: "Prazeres", icon: Award },
       { href: "/mecanicas/nota", label: "Nota do prato", icon: ListChecks },
+      { href: "/mecanicas/cardapio", label: "Cardápio pessoal", icon: ChefHat },
       { href: "/mecanicas/frases", label: "Frases do dia", icon: Quote },
       { href: "/mecanicas/conquistas", label: "Conquistas", icon: Trophy },
       { href: "/mecanicas/tolerancia", label: "Mapa de Tolerância", icon: Map },

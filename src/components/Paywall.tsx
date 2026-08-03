@@ -11,12 +11,17 @@ import { OFFERINGS, type SubPackage } from "@/services/SubscriptionService";
 import { storeLabel } from "@/lib/platform";
 import { cn } from "@/lib/cn";
 
+/**
+ * O que ela leva. Ordem por VALOR PERCEBIDO, não por ordem de construção:
+ * cardápio e nota do prato são o que ela usa todo dia; desafio mensal é o que
+ * ela lê por último.
+ */
 const BENEFITS = [
-  "Programa completo de 14 dias + Reset de 21",
-  "Seu Mapa de Inchaço personalizado",
-  "Índice Intestinal e gráficos de progresso",
+  "Cardápio montado com a comida que VOCÊ já gosta",
+  "Nota Desinflama: a foto do prato vira nota, calculada pro seu corpo",
+  "Programa de 21 dias com o seu Mapa de Tolerância",
   "Biblioteca da nutri: aulas, receitas e trocas",
-  "Desafios mensais e Modo Manutenção",
+  "Prazeres: você troca cuidado por chocolate, vinho, pizza",
   "Cancele quando quiser, sem burocracia",
 ];
 
@@ -141,13 +146,22 @@ export function Paywall({
                     </span>
                   )}
                 </div>
-                <span className="text-sm text-ink-soft">{o.priceLabel}</span>
-              </div>
-              <span className="text-right">
-                <span className="block font-display text-lg font-semibold text-ink">
-                  {o.pricePerMonthLabel.split("/")[0]}
+                {/* A âncora "por mês" só entra quando ela AGREGA: no mensal
+                    ela repetia o próprio preço ("R$39,90/mês · R$39,90/mês"). */}
+                <span className="text-sm text-ink-soft">
+                  {o.priceLabel}
+                  {o.pricePerMonthLabel !== o.priceLabel &&
+                    ` · ${o.pricePerMonthLabel}`}
                 </span>
-                <span className="text-xs text-ink-faint">/mês</span>
+              </div>
+              {/* O número grande é o POR DIA. A mesma quantia lê como pequena
+                  por dia e como decisão por mês — o cérebro compara R$0,55 com
+                  um café e R$16,65 com uma conta. Padrão do Fastic. */}
+              <span className="shrink-0 text-right">
+                <span className="block font-display text-lg font-semibold text-ink">
+                  {o.pricePerDayLabel}
+                </span>
+                <span className="text-xs text-ink-faint">por dia</span>
               </span>
             </button>
           );
