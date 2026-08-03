@@ -18,6 +18,7 @@ import { WeeklyRecap } from "@/components/WeeklyRecap";
 import { latestRecap } from "@/lib/recap";
 import { PhotoGallery } from "@/components/PhotoGallery";
 import { CardsParaPostar } from "@/components/compartilhar/CardsParaPostar";
+import { RitualEscolhido } from "@/components/RitualCard";
 import { estadoBroto } from "@/lib/broto";
 import { currentScore, scoreMicrocopy } from "@/lib/score";
 import { useAppStore } from "@/store/useAppStore";
@@ -136,6 +137,8 @@ export default function Progresso() {
       <div className="relative -mx-5 -mt-4 space-y-5 rounded-t-[2rem] bg-cream px-5 pt-6">
       {/* Os cards de conquista vêm ANTES dos gráficos: gráfico é pra ela
           entender, card é pra ela mostrar — e mostrar é o que traz gente nova. */}
+      <RitualEscolhido />
+
       <CardsParaPostar />
 
       {/* Mosaico de dias — quantos dias bons você já teve, de relance */}

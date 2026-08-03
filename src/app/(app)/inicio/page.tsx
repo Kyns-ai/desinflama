@@ -24,6 +24,7 @@ import { Cenario } from "@/components/home/Cenario";
 import { CartaoDoDia, type LinhaDoDia } from "@/components/home/CartaoDoDia";
 import { FraseDoDia } from "@/components/home/FraseDoDia";
 import { Confetti } from "@/components/Confetti";
+import { RitualCard } from "@/components/RitualCard";
 import { WeeklyRecap } from "@/components/WeeklyRecap";
 import { Button, Card } from "@/components/ui";
 import { useAppStore } from "@/store/useAppStore";
@@ -268,6 +269,9 @@ export default function Inicio() {
             </Card>
           </Link>
         )}
+
+        {/* Só aparece enquanto ela não escolheu a âncora do hábito. */}
+        <RitualCard />
 
         <ProgressoDoBroto
           nome={broto.nivel.nome}

@@ -23,14 +23,14 @@ import type { Prazer } from "@/types/domain";
 export const PRAZERES_PADRAO: Prazer[] = [
   { id: "chocolate70", nome: "Um quadradinho de chocolate 70%", preco: 30 },
   { id: "cafeteria", nome: "Aquele café da cafeteria", preco: 40 },
-  { id: "paodequeijo", nome: "Pão de queijo quentinho", preco: 50 },
+  { id: "paodequeijo", nome: "Pão de queijo quentinho", preco: 50, grupo: "lactose" },
   { id: "banho", nome: "Banho demorado, sem pressa", preco: 50 },
   { id: "vinho", nome: "Taça de vinho", preco: 80 },
-  { id: "sorvete", nome: "Sorvete da sua casquinha favorita", preco: 90 },
-  { id: "brigadeiro", nome: "Brigadeiro", preco: 100 },
+  { id: "sorvete", nome: "Sorvete da sua casquinha favorita", preco: 90, grupo: "lactose" },
+  { id: "brigadeiro", nome: "Brigadeiro", preco: 100, grupo: "lactose" },
   { id: "serie", nome: "Maratonar a série sem culpa", preco: 120 },
-  { id: "hamburguer", nome: "Hambúrguer de verdade", preco: 180 },
-  { id: "pizza", nome: "Pizza de sexta", preco: 200 },
+  { id: "hamburguer", nome: "Hambúrguer de verdade", preco: 180, grupo: "frutanos" },
+  { id: "pizza", nome: "Pizza de sexta", preco: 200, grupo: "frutanos" },
 ];
 
 /**

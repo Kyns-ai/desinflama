@@ -6,18 +6,29 @@ import { Camera, Check, Loader2, Search, X } from "lucide-react";
 import { Button, Input } from "@/components/ui";
 import { MedidorArco } from "@/components/prato/MedidorArco";
 import { useAppStore } from "@/store/useAppStore";
-import { calcularNota } from "@/lib/notaPrato";
+import { calcularNota, normalizarGrupo } from "@/lib/notaPrato";
 import {
   buscarAlimentos,
+  CATALOGO,
   paraItem,
   sugerirTroca,
   temFibra,
   type AlimentoCatalogo,
 } from "@/content/catalogoPrato";
-import type { RefeicaoAnalisada } from "@/types/domain";
+import type { ItemPrato, RefeicaoAnalisada } from "@/types/domain";
 import { takePhoto } from "@/lib/camera";
+import { nutriApi } from "@/lib/nutriApi";
 import { haptic } from "@/lib/haptics";
 import { cn } from "@/lib/cn";
+
+/** Compara nomes ignorando caixa e acento (a IA escreve "Pao de trigo"). */
+function normalizarNome(s: string): string {
+  return s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
+}
 
 const MOMENTOS: { id: RefeicaoAnalisada["momento"]; rotulo: string }[] = [
   { id: "cafe", rotulo: "Café" },
@@ -51,10 +62,14 @@ export function NovaRefeicao({ aoFechar }: { aoFechar: () => void }) {
   const [escolhidos, setEscolhidos] = useState<AlimentoCatalogo[]>([]);
   const [foto, setFoto] = useState<string | null>(null);
   const [salvando, setSalvando] = useState(false);
+  const [analisando, setAnalisando] = useState(false);
+  const [avisoDaFoto, setAvisoDaFoto] = useState<string | null>(null);
+  /** Itens que a IA achou e o catálogo não tem — entram na nota mesmo assim. */
+  const [itensDaFoto, setItensDaFoto] = useState<ItemPrato[]>([]);
 
   const resultados = useMemo(() => buscarAlimentos(termo).slice(0, 24), [termo]);
 
-  const itens = escolhidos.map(paraItem);
+  const itens = [...escolhidos.map(paraItem), ...itensDaFoto];
   const previa = calcularNota(itens, {
     tolerancia,
     perfil,
@@ -70,18 +85,76 @@ export function NovaRefeicao({ aoFechar }: { aoFechar: () => void }) {
     );
   }
 
+  /**
+   * Tira a foto e MANDA IDENTIFICAR.
+   *
+   * Este era o caminho principal do Prato e estava desligado: a foto era
+   * guardada e pronto, então ela montava tudo à mão mesmo tendo fotografado.
+   *
+   * A IA só devolve ALIMENTOS e GRUPOS — a nota continua sendo calculada
+   * aqui, com o Mapa de Tolerância dela. O que a IA acha vira sugestão
+   * pré-marcada, nunca fato: ela confirma, tira e acrescenta antes de salvar.
+   * Se o serviço não estiver ligado, cai na montagem manual sem drama.
+   */
   async function tirarFoto() {
     const dataUrl = await takePhoto();
-    if (dataUrl) setFoto(dataUrl);
+    if (!dataUrl) return;
+    setFoto(dataUrl);
+    setAvisoDaFoto(null);
+    setItensDaFoto([]);
+
+    if (!nutriApi.configurada()) {
+      setAvisoDaFoto(
+        "A leitura automática ainda não está ligada. Marque abaixo o que tinha no prato."
+      );
+      return;
+    }
+
+    setAnalisando(true);
+    try {
+      const { dados } = await nutriApi.analisarFoto(dataUrl, {}, () => {});
+      const achados = dados?.itens ?? [];
+      if (!achados.length) {
+        setAvisoDaFoto("Não consegui ler esse prato. Marque abaixo o que tinha.");
+        return;
+      }
+
+      // Casa com o catálogo pelo nome: item conhecido entra com fibra,
+      // marcadores e troca específica — tudo que a IA não sabe.
+      const doCatalogo: AlimentoCatalogo[] = [];
+      const soltos: ItemPrato[] = [];
+      for (const item of achados) {
+        const conhecido = CATALOGO.find(
+          (a) => normalizarNome(a.nome) === normalizarNome(item.nome)
+        );
+        if (conhecido) doCatalogo.push(conhecido);
+        else soltos.push({ nome: item.nome, grupo: normalizarGrupo(item.grupo) });
+      }
+
+      setEscolhidos((atuais) => [
+        ...atuais,
+        ...doCatalogo.filter((c) => !atuais.some((a) => a.nome === c.nome)),
+      ]);
+      setItensDaFoto(soltos);
+      setAvisoDaFoto(
+        `Li ${achados.length} ${achados.length === 1 ? "alimento" : "alimentos"}. Confira e ajuste antes de salvar.`
+      );
+    } catch {
+      setAvisoDaFoto(
+        "Não consegui ler a foto agora. Marque abaixo o que tinha no prato."
+      );
+    } finally {
+      setAnalisando(false);
+    }
   }
 
   async function salvar() {
-    if (!escolhidos.length) return;
+    if (!itens.length) return;
     setSalvando(true);
     await adicionarRefeicao({
       momento,
       fotoDataUrl: foto ?? undefined,
-      nome: escolhidos.map((e) => e.nome).join(" + "),
+      nome: itens.map((i) => i.nome).join(" + "),
       itens,
       troca: sugerirTroca(itens),
       temFibra: temFibra(escolhidos),
@@ -144,12 +217,20 @@ export function NovaRefeicao({ aoFechar }: { aoFechar: () => void }) {
           )}
           <span className="min-w-0 flex-1">
             <span className="block font-semibold tracking-tight text-ink">
-              {foto ? "Foto adicionada" : "Foto do prato"}
+              {analisando
+                ? "Lendo o prato…"
+                : foto
+                  ? "Foto adicionada"
+                  : "Foto do prato"}
             </span>
             <span className="block text-sm text-ink-soft">
-              {foto ? "Toque para trocar" : "Opcional — fica só no seu aparelho"}
+              {avisoDaFoto ??
+                (foto ? "Toque para trocar" : "Opcional — fica só no seu aparelho")}
             </span>
           </span>
+          {analisando && (
+            <Loader2 className="size-5 shrink-0 animate-spin text-rose" />
+          )}
         </button>
 
         {/* busca */}
@@ -173,6 +254,25 @@ export function NovaRefeicao({ aoFechar }: { aoFechar: () => void }) {
                 className="inline-flex items-center gap-1.5 rounded-full bg-rose px-3 py-1.5 text-sm font-semibold text-white"
               >
                 {a.nome}
+                <X className="size-3.5" />
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Itens que a IA leu e o catálogo não tem. Entram na nota do mesmo
+            jeito — o catálogo é uma conveniência, não a fronteira do mundo. */}
+        {itensDaFoto.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-2">
+            {itensDaFoto.map((i) => (
+              <button
+                key={i.nome}
+                onClick={() =>
+                  setItensDaFoto((c) => c.filter((x) => x.nome !== i.nome))
+                }
+                className="inline-flex items-center gap-1.5 rounded-full border border-rose/40 bg-rose-tint px-3 py-1.5 text-sm font-semibold text-rose-dark"
+              >
+                {i.nome}
                 <X className="size-3.5" />
               </button>
             ))}
@@ -227,7 +327,7 @@ export function NovaRefeicao({ aoFechar }: { aoFechar: () => void }) {
         animate={{ y: 0 }}
         className="border-t border-line bg-surface px-5 pb-safe pt-3"
       >
-        {escolhidos.length > 0 ? (
+        {itens.length > 0 ? (
           <div className="flex items-center gap-4">
             <MedidorArco nota={previa.nota} rotulo="Prévia" tamanho={150} />
             <div className="min-w-0 flex-1">

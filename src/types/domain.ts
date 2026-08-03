@@ -155,6 +155,14 @@ export interface Prazer {
   preco: number;
   /** Criado por ela, não pela gente. */
   proprio?: boolean;
+  /**
+   * Grupo FODMAP que este prazer carrega, quando carrega.
+   *
+   * É o que fecha o ciclo do plano ("o prazer também ensina"): a reação que
+   * ela relata no dia seguinte vira teste do Mapa de Tolerância. Sem isto, o
+   * resgate seria só uma recompensa saindo do sistema sem ensinar nada.
+   */
+  grupo?: ReintroGroup;
 }
 
 /**
@@ -167,6 +175,8 @@ export interface Resgate {
   nome: string;
   preco: number;
   date: string; // YYYY-MM-DD
+  /** Grupo FODMAP do prazer, copiado no resgate (a tabela pode mudar depois). */
+  grupo?: ReintroGroup;
   /**
    * Como o corpo reagiu — perguntado no check-in do dia seguinte.
    * É o que faz o prazer ENSINAR em vez de só recompensar.

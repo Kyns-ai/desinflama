@@ -702,6 +702,7 @@ export const useAppStore = create<AppState>((set, get) => {
         prazerId: prazer.id,
         nome: prazer.nome,
         preco: prazer.preco,
+        grupo: prazer.grupo,
         date: hoje,
       };
 
@@ -734,11 +735,37 @@ export const useAppStore = create<AppState>((set, get) => {
       });
     },
 
-    /** Registra como o corpo reagiu ao prazer resgatado. */
+    /**
+     * Registra como o corpo reagiu ao prazer resgatado — e, quando o prazer
+     * tem grupo FODMAP, ALIMENTA O MAPA DE TOLERÂNCIA com isso.
+     *
+     * É esta última parte que cumpre a promessa da Seção 5 ("o prazer também
+     * ensina"). Sem ela, a pergunta do dia seguinte seria só uma pergunta: a
+     * resposta sairia do sistema sem mudar nada. Com ela, comer a pizza de
+     * sexta e relatar a reação melhora a Nota Desinflama de todos os pratos
+     * com frutano dali pra frente.
+     */
     registrarReacaoDoPrazer: async (resgateId, reacao) => {
       await get().update((d) => {
         const r = d.resgates.find((x) => x.id === resgateId);
-        if (r) r.reacao = reacao;
+        if (!r) return;
+        r.reacao = reacao;
+
+        if (r.grupo) {
+          // Substitui um teste do MESMO grupo na MESMA data (ela pode
+          // corrigir a resposta), mas preserva o histórico dos outros dias.
+          d.tolerance = [
+            ...d.tolerance.filter(
+              (t) => !(t.group === r.grupo && t.dateTested === r.date)
+            ),
+            {
+              group: r.grupo,
+              reaction: reacao,
+              dateTested: r.date,
+              notes: `Resgate na loja: ${r.nome}`,
+            },
+          ];
+        }
       });
     },
 

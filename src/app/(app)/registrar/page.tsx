@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { Camera, Check, TrendingUp, Plus, X, Coffee, Sun, Moon, Apple } from "lucide-react";
 import { Button, Card } from "@/components/ui";
+import { PerguntaDoPrazer } from "@/components/PerguntaDoPrazer";
 import { useAppStore } from "@/store/useAppStore";
 import { todayKey } from "@/lib/date";
 import { logInsight } from "@/lib/insight";
@@ -143,6 +144,10 @@ export default function Registrar() {
 
   return (
     <div className="space-y-6">
+      {/* A pergunta do prazer vem ANTES de tudo: é a única coisa aqui
+          que o app prometeu em voz alta e precisa cumprir. */}
+      <PerguntaDoPrazer />
+
       <header className="pt-5">
         <h1 className="font-display text-[1.75rem] font-semibold tracking-tight text-ink">
           Como você está hoje?
