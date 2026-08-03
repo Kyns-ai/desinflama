@@ -29,6 +29,22 @@ export const PROMESSA_SUBTITULO =
   "Em 21 dias você monta uma rotina que não te incha. Na 2ª semana já sabe o que incha VOCÊ — e junto vêm energia, sono e pele.";
 
 /**
+ * O ENQUADRAMENTO DO PROBLEMA — vem antes de qualquer venda.
+ *
+ * Padrão medido nos funis grandes de saúde: o Homemade Method ancora o ganho
+ * de peso em "GLP-1 e hormônios" ANTES de falar do produto. O efeito é tirar a
+ * culpa: enquanto a mulher achar que o problema é falta de força de vontade,
+ * ela compra achando que vai falhar de novo — e devolve.
+ *
+ * O nosso equivalente é o mais forte que existe neste nicho, porque é
+ * literalmente verdade e ninguém diz: inchaço não é gordura, é GÁS. Muda o que
+ * ela pensa que está comprando.
+ */
+export const PROBLEMA_TITULO = "Não é o quanto você come.";
+export const PROBLEMA_CORPO =
+  "Inchaço quase nunca é gordura — é gás. Certos carboidratos chegam ao intestino sem serem digeridos, viram comida para as bactérias e estufam a barriga. Por isso comer menos não resolve, e por isso não é falta de força de vontade.";
+
+/**
  * Ordem dos benefícios: força da evidência DECRESCENTE.
  * Inchaço é o mais sustentado; pele é o mais fraco e por isso entra por
  * último, com o texto mais contido. Reordenar isto é enfraquecer a promessa

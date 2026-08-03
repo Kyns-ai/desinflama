@@ -16,8 +16,21 @@
 | 2 · Prato + Nota | **feita** — `lib/notaPrato.ts` com 15 testes; montagem manual por catálogo além da foto |
 | 3 · Prazeres | **feita** — loja, teto semanal, "Estava no seu plano" |
 | 4 · Compartilhar | **feita** — frase do dia + 4 cards de conquista, via `html-to-image` |
-| 5 · Promessa e vitrine | **parcial** — promessa aplicada na landing (fonte única em `content/promise.ts`); paywall e onboarding ainda não foram reestruturados; `STORE_SUBMISSION.md` não foi reescrito |
-| 6 · Admin (fora do plano original) | **feito no front** — 19 rotas espelhando o app, lendo o conteúdo REAL via `externalDir`. Usuárias/leads/assinaturas ainda em mock |
+| 5 · Promessa e vitrine | **parcial** — promessa (21 dias), enquadramento do problema e projeção na landing; paywall com preço/dia e benefícios novos; `STORE_SUBMISSION.md` NÃO foi reescrito |
+| 6 · Admin (fora do plano original) | **feito no front** — 20 rotas espelhando o app, lendo o conteúdo REAL via `externalDir`. Usuárias/leads/assinaturas ainda em mock |
+| 7 · Cardápio pessoal (pedido do Ruyter) | **feito** — "gosto / não é pra mim", cardápio montado por preferência + tolerância, troca por refeição, tirar dúvida |
+
+### Decisões do Ruyter tomadas depois deste plano
+
+1. **A marca é ROSA** (não o verde escrito aqui).
+2. **21 dias, não 14** — "14 é muito pouco". O programa já era 14 + Reset de
+   21, então a promessa passou a falar do arco completo.
+3. **O quiz longo de venda é EXTERNO.** Este app começa depois do login; não se
+   constrói funil de venda aqui dentro.
+4. **Conversar com a nutri continua existindo**, mas como FUNÇÃO ("tirar
+   dúvida", entrando por uma pergunta concreta com o contexto carregado), nunca
+   como aba com nome e personalidade — isso é o que o plano manda matar.
+5. **Cardápio pessoal** ("gosto / não é pra mim") entrou como feature nova.
 
 ### Desvios conscientes deste plano
 

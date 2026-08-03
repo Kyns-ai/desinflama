@@ -11,6 +11,8 @@ import { useAppStore } from "@/store/useAppStore";
 import { isFullyMocked } from "@/lib/env";
 import {
   BENEFICIOS,
+  PROBLEMA_CORPO,
+  PROBLEMA_TITULO,
   PROJECTION,
   PROJECTION_NOTE,
   PROMESSA_HONESTA,
@@ -90,6 +92,23 @@ export default function Welcome() {
         >
           {PROMESSA_SUBTITULO}
         </motion.p>
+
+        {/* O PROBLEMA antes do produto: enquanto ela achar que o problema é
+            falta de força de vontade, compra achando que vai falhar de novo —
+            e devolve. Vem antes dos benefícios de propósito. */}
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.28, ease }}
+          className="mt-6 rounded-2xl border border-line bg-surface/70 px-4 py-4"
+        >
+          <p className="font-display text-h3 font-semibold text-ink">
+            {PROBLEMA_TITULO}
+          </p>
+          <p className="mt-1.5 text-[15px] leading-relaxed text-ink-soft">
+            {PROBLEMA_CORPO}
+          </p>
+        </motion.div>
 
         {/* Os cinco benefícios, na ordem da força da evidência. A pele fica
             por último e com o texto mais contido de propósito. */}
