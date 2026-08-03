@@ -7,6 +7,7 @@ import {
   BookOpen,
   ChefHat,
   CreditCard,
+  Database,
   Flower2,
   LayoutDashboard,
   ListChecks,
@@ -49,6 +50,7 @@ export const GRUPOS: { titulo: string; itens: Item[] }[] = [
       { href: "/usuarias", label: "Usuárias", icon: Users },
       { href: "/leads", label: "Leads", icon: Sparkles },
       { href: "/assinaturas", label: "Assinaturas", icon: CreditCard },
+      { href: "/sistema", label: "Sistema", icon: Database },
     ],
   },
   {
