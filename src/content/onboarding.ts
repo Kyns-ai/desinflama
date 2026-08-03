@@ -10,6 +10,15 @@ export interface QuizOption {
   label: string;
   emoji?: string;
   desc?: string;
+  /**
+   * Id da ilustração, quando a arte NÃO é achável pelo emoji.
+   *
+   * O caminho padrão traduz emoji -> id (content/cardArt.ts). Duas opções
+   * caíam no fallback porque o emoji delas não está nesse mapa, embora a arte
+   * exista: as quatro do perfil de inchaço (mapa-*.png) e "ao longo do dia".
+   * Ficava um azulejo cinza no meio de ilustrações — parecia imagem quebrada.
+   */
+  arte?: string;
 }
 
 export interface QuizQuestion {
@@ -28,24 +37,28 @@ export const QUESTIONS: QuizQuestion[] = [
     options: [
       {
         value: "fermentacao",
+        arte: "mapa-fermentacao",
         label: "Estufa e faz barulho",
         emoji: "🎈",
         desc: "Gases, ronco, aperta a roupa à noite",
       },
       {
         value: "retencao",
+        arte: "mapa-retencao",
         label: "Fica pesada e inchada",
         emoji: "💧",
         desc: "Sensação de retenção, principalmente no calor ou TPM",
       },
       {
         value: "lentidao",
+        arte: "mapa-lentidao",
         label: "Vivo presa",
         emoji: "🐌",
         desc: "Intestino lento, dias sem ir ao banheiro",
       },
       {
         value: "estresse",
+        arte: "mapa-estresse",
         label: "Estufa quando fico ansiosa",
         emoji: "🌪️",
         desc: "Piora em dias de estresse ou correria",
@@ -70,7 +83,7 @@ export const QUESTIONS: QuizQuestion[] = [
     title: "Quando você incha mais?",
     options: [
       { value: "manha", label: "De manhã", emoji: "🌅" },
-      { value: "tarde", label: "Ao longo do dia", emoji: "☀️" },
+      { value: "tarde", label: "Ao longo do dia", emoji: "☀️", arte: "card-amanhecer" },
       { value: "noite", label: "À noite", emoji: "🌙", desc: "A barriga cresce até dormir" },
       { value: "refeicoes", label: "Logo depois de comer", emoji: "🍽️" },
     ],

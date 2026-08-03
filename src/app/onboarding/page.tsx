@@ -169,9 +169,9 @@ export default function Onboarding() {
                 >
                   {/* O campo `emoji` do conteúdo é CHAVE de busca da arte
                       (ver content/cardArt.ts), nunca texto na tela. */}
-                  {opt.emoji && (
+                  {(opt.arte || opt.emoji) && (
                     <Art
-                      id={artId(opt.emoji) ?? ""}
+                      id={opt.arte ?? artId(opt.emoji) ?? ""}
                       className="size-11 shrink-0 rounded-xl"
                     />
                   )}
