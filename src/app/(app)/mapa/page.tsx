@@ -1,24 +1,41 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Sparkles, Quote } from "lucide-react";
-import { Card, Badge } from "@/components/ui";
+import { ArrowLeft, ChevronDown, Quote } from "lucide-react";
+import { Card } from "@/components/ui";
 import { Art } from "@/components/Art";
 import { BloatWindowCard } from "@/components/BloatWindowCard";
 import { ProtocoloCard } from "@/components/ProtocoloCard";
 import { ToleranceMapCard } from "@/components/ToleranceMapCard";
 import { useAppStore } from "@/store/useAppStore";
-import { artId } from "@/content/cardArt";
 import { BLOAT_PROFILES, WELCOME_VIDEO } from "@/content/onboarding";
 import { PROJECTION, PROJECTION_NOTE } from "@/content/promise";
 import type { BloatType, SymptomKey } from "@/types/domain";
+import { cn } from "@/lib/cn";
 
-const SYMPTOM_LABEL: Record<SymptomKey, { label: string; emoji: string }> = {
-  inchaco: { label: "Inchaço", emoji: "🎈" },
-  gases: { label: "Gases", emoji: "💨" },
-  intestino: { label: "Intestino", emoji: "🚽" },
-  energia: { label: "Energia", emoji: "⚡" },
-  pele: { label: "Pele", emoji: "✨" },
+/**
+ * Seu Mapa de Inchaço.
+ *
+ * Era sete cartões brancos idênticos empilhados numa tela quilométrica — a
+ * mesma "sopa de card" que a Hoje tinha. Reestruturado no mesmo esqueleto:
+ * campo de cor no topo com QUEM ELA É, o entregável (Mapa de Tolerância) como
+ * o cartão em destaque, e o resto em faixa compacta ou recolhido.
+ */
+
+/**
+ * Sintoma → id da arte, direto.
+ *
+ * Antes isto guardava o emoji e chamava `artId(emoji)` para traduzir. Passar
+ * pelo emoji não servia pra nada aqui (o id é fixo e conhecido) e ainda
+ * deixava emoji no arquivo de uma tela, que é o que a regra proíbe.
+ */
+const SINTOMA: Record<SymptomKey, { label: string; arte: string }> = {
+  inchaco: { label: "Inchaço", arte: "card-balao" },
+  gases: { label: "Gases", arte: "card-gases" },
+  intestino: { label: "Intestino", arte: "card-intestino" },
+  energia: { label: "Energia", arte: "card-energia" },
+  pele: { label: "Pele", arte: "card-brilho" },
 };
 
 const GOAL_LABEL: Record<string, string> = {
@@ -46,123 +63,146 @@ export default function MapaPage() {
   const symptoms = onboarding?.symptoms ?? [];
 
   return (
-    <div className="space-y-5">
-      <header className="flex items-center gap-3 pt-5">
-        <button
-          onClick={() => router.back()}
-          aria-label="Voltar"
-          className="grid size-10 place-items-center rounded-full text-ink-soft transition-colors active:bg-black/5"
-        >
-          <ArrowLeft className="size-5" />
-        </button>
-        <h1 className="font-display text-[1.6rem] font-semibold tracking-tight text-ink">
-          Seu Mapa de Inchaço
-        </h1>
-      </header>
+    <div className="pb-4">
+      {/* ---------------- campo de cor: quem ela é ---------------- */}
+      <div className="-mx-5 -mt-safe bg-rose-dark px-5 pt-safe">
+        <div className="pb-9 pt-3">
+          <button
+            onClick={() => router.back()}
+            aria-label="Voltar"
+            className="-ml-2 grid size-10 place-items-center rounded-full text-white/70 transition-colors active:bg-white/10"
+          >
+            <ArrowLeft className="size-5" />
+          </button>
 
-      {/* Perfil */}
-      <Card elevation="lift">
-        <Badge tone="rose">
-          <Sparkles className="size-3.5" /> Perfil identificado
-        </Badge>
-        <Art
-          id={`mapa-${bloatType}`}
-          emoji={p.emoji}
-          className="mt-3 size-20 rounded-2xl text-4xl"
-        />
-        <h2 className="mt-2 font-display text-2xl font-semibold tracking-tight text-ink">
-          {p.name}
-        </h2>
-        <p className="mt-1 text-lg font-medium text-rose-deep">{p.tagline}</p>
-        <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">{p.cause}</p>
-      </Card>
+          <div className="mt-3 flex items-start gap-4">
+            <Art
+              id={`mapa-${bloatType}`}
+              className="size-[72px] shrink-0 rounded-2xl bg-white/10"
+            />
+            <div className="min-w-0 flex-1">
+              <p className="text-label font-semibold uppercase tracking-[0.06em] text-white/55">
+                Seu perfil
+              </p>
+              <h1 className="mt-1 font-display text-h2 font-semibold text-white">
+                {p.name}
+              </h1>
+              <p className="mt-0.5 text-[15px] font-medium text-white/75">
+                {p.tagline}
+              </p>
+            </div>
+          </div>
 
-      {/* O que estamos cuidando */}
-      <Card elevation="soft">
-        <h3 className="mb-3 font-semibold tracking-tight text-ink">
-          O que estamos cuidando em você
-        </h3>
-        <div className="mb-4 flex flex-wrap gap-2">
-          {symptoms.map((s) => {
-            const m = SYMPTOM_LABEL[s];
-            return (
+          <p className="mt-4 text-[15px] leading-relaxed text-white/70">
+            {p.cause}
+          </p>
+
+          {/* Sintomas e objetivo em linha, não em cartão: é contexto, não ação */}
+          <div className="mt-5 flex flex-wrap gap-1.5">
+            {symptoms.map((s) => (
               <span
                 key={s}
-                className="inline-flex items-center gap-1.5 rounded-full bg-cream-deep px-3 py-1.5 text-sm text-ink"
+                className="inline-flex items-center gap-1.5 rounded-full bg-white/12 px-2.5 py-1.5 text-[13px] font-medium text-white/85"
               >
-                <Art
-                  id={artId(m?.emoji) ?? ""}
-                  emoji={m?.emoji}
-                  className="size-5 rounded-md text-sm"
-                />{" "}
-                {m?.label}
+                <Art id={SINTOMA[s]?.arte ?? ""} className="size-4 rounded" />
+                {SINTOMA[s]?.label}
               </span>
-            );
-          })}
-        </div>
-        <dl className="space-y-2 border-t border-line pt-3 text-sm">
-          <div className="flex justify-between">
-            <dt className="text-ink-soft">Objetivo principal</dt>
-            <dd className="font-medium text-ink">
-              {GOAL_LABEL[onboarding?.goal ?? "desinchar"]}
-            </dd>
+            ))}
           </div>
-          {onboarding?.worstTime && (
-            <div className="flex justify-between">
-              <dt className="text-ink-soft">Incha mais</dt>
-              <dd className="font-medium text-ink">
-                {WHEN_LABEL[onboarding.worstTime]}
+
+          <dl className="mt-4 space-y-1.5 border-t border-white/15 pt-3.5 text-sm">
+            <div className="flex justify-between gap-4">
+              <dt className="text-white/55">Objetivo</dt>
+              <dd className="font-medium text-white/90">
+                {GOAL_LABEL[onboarding?.goal ?? "desinchar"]}
               </dd>
             </div>
-          )}
-        </dl>
-      </Card>
-
-      {/* Plano */}
-      <Card elevation="soft" className="bg-rose-tint/40">
-        <h3 className="font-semibold tracking-tight text-ink">Seu plano</h3>
-        <p className="mt-1.5 text-[15px] leading-relaxed text-ink-soft">{p.plan}</p>
-        <div className="mt-4 flex items-stretch gap-2">
-          {PROJECTION.map((x) => (
-            <div
-              key={x.when}
-              className="flex-1 rounded-2xl bg-surface px-3 py-3 text-center"
-            >
-              <div className="font-display text-lg font-semibold text-rose-deep">
-                {x.when}
+            {onboarding?.worstTime && (
+              <div className="flex justify-between gap-4">
+                <dt className="text-white/55">Incha mais</dt>
+                <dd className="font-medium text-white/90">
+                  {WHEN_LABEL[onboarding.worstTime]}
+                </dd>
               </div>
-              <div className="mt-0.5 text-[11px] leading-tight text-ink-soft">
-                {x.label}
+            )}
+          </dl>
+        </div>
+      </div>
+
+      {/* ---------------- a folha creme ---------------- */}
+      <div className="relative -mx-5 -mt-4 space-y-5 rounded-t-[2rem] bg-cream px-5 pt-6">
+        {/* O entregável central vem primeiro — é o que ela veio ver */}
+        <ToleranceMapCard />
+
+        <BloatWindowCard cycleStart={cycleStart} />
+
+        <section className="rounded-2xl border border-line bg-surface p-5">
+          <h2 className="font-semibold tracking-tight text-ink">Seu plano</h2>
+          <p className="mt-1.5 text-[15px] leading-relaxed text-ink-soft">
+            {p.plan}
+          </p>
+          <div className="mt-4 flex items-stretch gap-2">
+            {PROJECTION.map((x) => (
+              <div
+                key={x.when}
+                className="flex-1 rounded-xl bg-cream-deep/60 px-2 py-2.5 text-center"
+              >
+                <div className="font-display text-[15px] font-semibold text-rose-dark">
+                  {x.when}
+                </div>
+                <div className="mt-0.5 text-[11px] leading-tight text-ink-soft">
+                  {x.label}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-        <p className="mt-2 text-xs leading-relaxed text-ink-faint">
-          {PROJECTION_NOTE}
-        </p>
-      </Card>
+            ))}
+          </div>
+          <p className="mt-2.5 text-xs leading-relaxed text-ink-faint">
+            {PROJECTION_NOTE}
+          </p>
+        </section>
 
-      {/* Mapa de Tolerância — construído pela reintrodução (o payoff do 5R) */}
-      <ToleranceMapCard />
+        <ProtocoloCard bloatType={bloatType} cycleStart={cycleStart} />
 
-      {/* Janela de inchaço hormonal */}
-      <BloatWindowCard cycleStart={cycleStart} />
-
-      {/* Protocolo personalizado — baixável sempre */}
-      <ProtocoloCard bloatType={bloatType} cycleStart={cycleStart} />
-
-      {/* Mensagem da nutri */}
-      <Card elevation="soft">
-        <div className="mb-2 flex items-center gap-2">
-          <Quote className="size-4 text-rose-deep" />
-          <h3 className="font-semibold tracking-tight text-ink">
-            {WELCOME_VIDEO.title}
-          </h3>
-        </div>
-        <p className="text-[15px] leading-relaxed text-ink-soft">
+        {/* A mensagem da nutri é longa e ela lê UMA vez — recolhida por padrão,
+            senão empurra o resto da tela pra baixo pra sempre. */}
+        <Recolhivel titulo={WELCOME_VIDEO.title}>
           {WELCOME_VIDEO.transcript}
-        </p>
-      </Card>
+        </Recolhivel>
+      </div>
     </div>
+  );
+}
+
+function Recolhivel({
+  titulo,
+  children,
+}: {
+  titulo: string;
+  children: React.ReactNode;
+}) {
+  const [aberto, setAberto] = useState(false);
+  return (
+    <Card elevation="soft" className="p-0">
+      <button
+        onClick={() => setAberto((v) => !v)}
+        className="flex w-full items-center gap-2.5 px-5 py-4 text-left"
+      >
+        <Quote className="size-4 shrink-0 text-rose-deep" />
+        <span className="min-w-0 flex-1 font-semibold tracking-tight text-ink">
+          {titulo}
+        </span>
+        <ChevronDown
+          className={cn(
+            "size-5 shrink-0 text-ink-faint transition-transform",
+            aberto && "rotate-180"
+          )}
+        />
+      </button>
+      {aberto && (
+        <p className="px-5 pb-5 text-[15px] leading-relaxed text-ink-soft">
+          {children}
+        </p>
+      )}
+    </Card>
   );
 }

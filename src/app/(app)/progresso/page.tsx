@@ -8,17 +8,18 @@ import {
   TrendingUp,
   AlertCircle,
   Flame,
+  Sprout,
   Trophy,
 } from "lucide-react";
-import { EmptyState, buttonStyles, Card, Badge } from "@/components/ui";
+import { EmptyState, buttonStyles, Card, Badge, ScoreRing } from "@/components/ui";
 import { LineChart } from "@/components/charts/LineChart";
 import { PixelGrid } from "@/components/charts/PixelGrid";
 import { WeeklyRecap } from "@/components/WeeklyRecap";
 import { latestRecap } from "@/lib/recap";
 import { PhotoGallery } from "@/components/PhotoGallery";
-import { SeedMeter } from "@/components/SeedMeter";
-import { gardenFor } from "@/lib/garden";
 import { CardsParaPostar } from "@/components/compartilhar/CardsParaPostar";
+import { estadoBroto } from "@/lib/broto";
+import { currentScore, scoreMicrocopy } from "@/lib/score";
 import { useAppStore } from "@/store/useAppStore";
 import {
   scoreSeries,
@@ -74,51 +75,68 @@ export default function Progresso() {
   const triggers = triggerInsights(logs);
   const marcos = milestones(logs, streak.longest);
   const hasData = logs.length > 0;
-  const garden = gardenFor(data.seeds);
-  const lastScore = score.length ? score[score.length - 1].value : 0;
+  const indice = currentScore(data);
+  const broto = estadoBroto(data.seedsLifetime, 0, false);
 
   return (
-    <div className="space-y-6">
-      <header className="pt-5">
-        <h1 className="font-display text-h1 font-semibold text-ink">
-          Seu progresso
-        </h1>
-        <p className="mt-1 text-[15px] text-ink-soft">
-          A prova de que está funcionando — no seu corpo.
-        </p>
-      </header>
+    <div className="pb-4">
+      {/* CAMPO DE COR com o Índice.
+          O anel saiu da Hoje (lá o espaço é do Broto e do cartão do dia) e
+          veio para cá, que é a aba "Eu". Aqui ele é o motivo da visita, então
+          ganha o topo inteiro em vez de dividir uma fileira de três
+          quadradinhos com a ofensiva e o nível. */}
+      <div className="-mx-5 -mt-safe bg-rose-dark px-5 pt-safe">
+        <div className="pb-10 pt-4">
+          <p className="text-label font-semibold uppercase tracking-[0.06em] text-white/55">
+            Eu
+          </p>
+          <h1 className="mt-1 font-display text-h1 font-semibold text-white">
+            Seu progresso
+          </h1>
 
+          <div className="mt-6 flex flex-col items-center">
+            <ScoreRing
+              value={indice.value}
+              from={Math.max(0, indice.value - indice.delta)}
+              delta={indice.delta}
+              size={186}
+              label="Índice Intestinal"
+              tone="onColor"
+            />
+            <p className="mt-4 max-w-[17rem] text-center text-[15px] leading-relaxed text-white/75">
+              {scoreMicrocopy(indice.value, indice.delta)}
+            </p>
+          </div>
+
+          <div className="mt-7 grid grid-cols-3 gap-2 border-t border-white/15 pt-4 text-center">
+            <div>
+              <p className="numeral inline-flex items-center gap-1.5 font-display text-xl text-white">
+                <Flame className="size-4" />
+                {streak.current}
+              </p>
+              <p className="text-xs text-white/55">dias seguidos</p>
+            </div>
+            <div>
+              <p className="numeral inline-flex items-center gap-1.5 font-display text-xl text-white">
+                <Sprout className="size-4" />
+                {data.seeds}
+              </p>
+              <p className="text-xs text-white/55">sementes</p>
+            </div>
+            <div>
+              <p className="font-display text-xl text-white">
+                {broto.nivel.nome}
+              </p>
+              <p className="text-xs text-white/55">seu broto</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="relative -mx-5 -mt-4 space-y-5 rounded-t-[2rem] bg-cream px-5 pt-6">
       {/* Os cards de conquista vêm ANTES dos gráficos: gráfico é pra ela
           entender, card é pra ela mostrar — e mostrar é o que traz gente nova. */}
       <CardsParaPostar />
-
-      {/* Resumo rápido */}
-      <div className="grid grid-cols-3 gap-3">
-        <Card elevation="soft" className="px-2 py-4 text-center">
-          <p className="font-display text-2xl font-semibold text-rose-deep">
-            {lastScore || "—"}
-          </p>
-          <p className="text-xs text-ink-soft">Índice hoje</p>
-        </Card>
-        <Card elevation="soft" className="px-2 py-4 text-center">
-          <p className="inline-flex items-center gap-1.5 font-display text-2xl font-semibold text-coral-dark">
-            <Flame className="size-5" />
-            {streak.current}
-          </p>
-          <p className="text-xs text-ink-soft">Ofensiva</p>
-        </Card>
-        <Card elevation="soft" className="px-2 py-4 text-center">
-          <Art
-            id={garden.level.art}
-            emoji={garden.level.emoji}
-            className="mx-auto size-9 rounded-xl text-2xl"
-          />
-          <p className="text-xs text-ink-soft">{garden.level.name}</p>
-        </Card>
-      </div>
-
-      {/* Jardim / nível */}
-      <SeedMeter />
 
       {/* Mosaico de dias — quantos dias bons você já teve, de relance */}
       {hasData && <PixelGrid logs={logs} />}
@@ -267,6 +285,7 @@ export default function Progresso() {
 
       {/* Fotos privadas */}
       <PhotoGallery />
+      </div>
     </div>
   );
 }
