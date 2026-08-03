@@ -1,54 +1,115 @@
 "use client";
 
 /**
- * Cardápio da semana + lista de compras. Transforma as refeições soltas dos
- * dias numa "dieta" escaneável (principal + variações) e gera a lista de
- * compras da semana, marcável e levável ao mercado.
+ * O cardápio DELA + a lista de compras que sai dele.
+ *
+ * Antes era um cardápio fixo por fase, igual para todo mundo. Agora é montado
+ * a partir do "gosto / não é pra mim" — o padrão que os funis grandes de saúde
+ * usam (Homemade Method) porque plano com comida que ela já come é plano que
+ * ela segue, e plano genérico é o que ela abandona na terça.
+ *
+ * Cada refeição tem TROCA. Sem troca, cardápio vira imposição — e imposição em
+ * comida é exatamente o que faz a pessoa largar.
  */
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowLeft,
-  ChevronDown,
-  ShoppingCart,
-  UtensilsCrossed,
   Coffee,
-  Sun,
+  MessageCircle,
   Moon,
-  Apple,
+  RefreshCw,
+  Settings2,
+  ShoppingCart,
+  Sun,
+  UtensilsCrossed,
+  X,
 } from "lucide-react";
+import Link from "next/link";
 import { Card } from "@/components/ui";
+import { Preferencias } from "./Preferencias";
 import { useAppStore } from "@/store/useAppStore";
-import { WEEKS, menuForWeek, recipesForWeek } from "@/lib/weeklyMenu";
+import {
+  alternativasPara,
+  cardapioDaSemana,
+  type ContextoCardapio,
+  type DiaDoCardapio,
+} from "@/lib/cardapioPessoal";
+import { RECIPES, type Recipe } from "@/content/recipes";
 import {
   buildShoppingList,
-  CATEGORY_ORDER,
   CATEGORY_LABEL,
+  CATEGORY_ORDER,
   itemSlug,
 } from "@/lib/shoppingList";
 import { cn } from "@/lib/cn";
 
-const MEAL_META = [
-  { key: "cafe", label: "Café", icon: Coffee },
-  { key: "almoco", label: "Almoço", icon: Sun },
-  { key: "jantar", label: "Jantar", icon: Moon },
-  { key: "lanche", label: "Lanche", icon: Apple },
+const SEMANAS = [1, 2, 3];
+const REFEICOES = [
+  { chave: "cafe", rotulo: "Café", icone: Coffee },
+  { chave: "almoco", rotulo: "Almoço", icone: Sun },
+  { chave: "jantar", rotulo: "Jantar", icone: Moon },
 ] as const;
+
+type ChaveRefeicao = (typeof REFEICOES)[number]["chave"];
 
 export default function Cardapio() {
   const router = useRouter();
-  const [week, setWeek] = useState(1);
-  const [tab, setTab] = useState<"menu" | "lista">("menu");
+  const data = useAppStore((s) => s.data);
+  const trocarRefeicao = useAppStore((s) => s.trocarRefeicao);
 
-  const menu = useMemo(() => menuForWeek(week), [week]);
-  const list = useMemo(
-    () => buildShoppingList(recipesForWeek(week)),
-    [week]
+  const [semana, setSemana] = useState(1);
+  const [aba, setAba] = useState<"menu" | "lista">("menu");
+  const [editandoGostos, setEditandoGostos] = useState(false);
+  const [trocando, setTrocando] = useState<{
+    chave: string;
+    receita: Recipe;
+  } | null>(null);
+
+  const ctx: ContextoCardapio = useMemo(
+    () => ({ preferencias: data.preferencias, tolerancia: data.tolerance }),
+    [data.preferencias, data.tolerance]
+  );
+
+  const semPreferencias =
+    data.preferencias.gosta.length === 0 && data.preferencias.evita.length === 0;
+
+  const dias = useMemo(() => cardapioDaSemana(semana, ctx), [semana, ctx]);
+
+  /** Aplica as trocas que ela fez por cima do cardápio calculado. */
+  const diasComTrocas = useMemo(
+    () =>
+      dias.map((d) => {
+        const aplicar = (tipo: ChaveRefeicao, atual: Recipe | null) => {
+          const id = data.trocasCardapio[`${semana}:${d.dia}:${tipo}`];
+          return id ? (RECIPES.find((r) => r.id === id) ?? atual) : atual;
+        };
+        return {
+          ...d,
+          cafe: aplicar("cafe", d.cafe),
+          almoco: aplicar("almoco", d.almoco),
+          jantar: aplicar("jantar", d.jantar),
+        } satisfies DiaDoCardapio;
+      }),
+    [dias, data.trocasCardapio, semana]
+  );
+
+  const receitasDaSemana = useMemo(() => {
+    const vistas = new Map<string, Recipe>();
+    for (const d of diasComTrocas) {
+      for (const r of [d.cafe, d.almoco, d.jantar]) if (r) vistas.set(r.id, r);
+    }
+    return [...vistas.values()];
+  }, [diasComTrocas]);
+
+  const lista = useMemo(
+    () => buildShoppingList(receitasDaSemana),
+    [receitasDaSemana]
   );
 
   return (
-    <div className="space-y-5">
+    <div className="pb-4">
       <header className="flex items-center gap-3 pt-5">
         <button
           onClick={() => router.back()}
@@ -57,203 +118,329 @@ export default function Cardapio() {
         >
           <ArrowLeft className="size-5" />
         </button>
-        <h1 className="font-display text-[1.6rem] font-semibold tracking-tight text-ink">
+        <h1 className="font-display text-h2 font-semibold text-ink">
           Seu cardápio
         </h1>
       </header>
 
-      {/* Seletor de semana */}
-      <div className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5">
-        {WEEKS.map((w) => (
+      {/* Chamada para personalizar — some assim que ela responde */}
+      {semPreferencias ? (
+        <button
+          onClick={() => setEditandoGostos(true)}
+          className="mt-4 block w-full rounded-3xl bg-rose-dark p-5 text-left transition-transform active:scale-[0.99]"
+        >
+          <p className="text-label font-semibold uppercase tracking-[0.06em] text-white/55">
+            Falta 1 minuto
+          </p>
+          <p className="mt-1.5 font-display text-h3 font-semibold text-white">
+            Monte o cardápio com a comida que você já gosta
+          </p>
+          <p className="mt-1.5 text-[15px] leading-relaxed text-white/70">
+            Você marca o que come e o que não come. O resto a gente monta — e dá
+            pra trocar qualquer refeição depois.
+          </p>
+        </button>
+      ) : (
+        <button
+          onClick={() => setEditandoGostos(true)}
+          className="mt-4 flex w-full items-center gap-2.5 rounded-2xl border border-line bg-surface px-4 py-3 text-left text-sm transition-colors active:bg-cream-deep"
+        >
+          <Settings2 className="size-4 shrink-0 text-rose-deep" />
+          <span className="min-w-0 flex-1 text-ink">
+            Montado com {data.preferencias.gosta.length}{" "}
+            {data.preferencias.gosta.length === 1 ? "coisa" : "coisas"} que você
+            gosta
+          </span>
+          <span className="shrink-0 font-semibold text-rose-dark">Ajustar</span>
+        </button>
+      )}
+
+      {/* semanas */}
+      <div className="mt-4 flex gap-2">
+        {SEMANAS.map((s) => (
           <button
-            key={w.week}
-            onClick={() => setWeek(w.week)}
+            key={s}
+            onClick={() => setSemana(s)}
             className={cn(
-              "shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-all",
-              week === w.week
-                ? "bg-ink text-cream"
-                : "border border-line bg-surface text-ink-soft"
+              "flex-1 rounded-xl py-2 text-sm font-semibold transition-colors",
+              semana === s ? "bg-rose text-white" : "bg-cream-deep text-ink-soft"
             )}
           >
-            {w.label}
+            Semana {s}
           </button>
         ))}
       </div>
 
-      {/* Abas Menu / Lista */}
-      <div className="flex gap-2">
-        <button
-          onClick={() => setTab("menu")}
-          className={cn(
-            "flex flex-1 items-center justify-center gap-1.5 rounded-xl py-2.5 text-sm font-semibold transition-all",
-            tab === "menu" ? "bg-rose-tint text-rose-dark" : "bg-cream-deep text-ink-soft"
-          )}
-        >
-          <UtensilsCrossed className="size-4" /> Cardápio
-        </button>
-        <button
-          onClick={() => setTab("lista")}
-          className={cn(
-            "flex flex-1 items-center justify-center gap-1.5 rounded-xl py-2.5 text-sm font-semibold transition-all",
-            tab === "lista" ? "bg-rose-tint text-rose-dark" : "bg-cream-deep text-ink-soft"
-          )}
-        >
-          <ShoppingCart className="size-4" /> Lista de compras
-        </button>
+      {/* abas */}
+      <div className="mt-4 flex gap-2">
+        {(
+          [
+            ["menu", "Cardápio", UtensilsCrossed],
+            ["lista", "Lista de compras", ShoppingCart],
+          ] as const
+        ).map(([id, rotulo, Icone]) => (
+          <button
+            key={id}
+            onClick={() => setAba(id)}
+            className={cn(
+              "inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-sm font-semibold transition-colors",
+              aba === id ? "bg-ink text-white" : "bg-cream-deep text-ink-soft"
+            )}
+          >
+            <Icone className="size-4" />
+            {rotulo}
+          </button>
+        ))}
       </div>
 
-      {tab === "menu" ? (
-        <div className="space-y-3">
-          {menu.map((d) => (
-            <DayMenuCard key={d.day} dia={d} />
+      {aba === "menu" ? (
+        <ul className="mt-4 space-y-3">
+          {diasComTrocas.map((d) => (
+            <li key={d.dia}>
+              <Card elevation="soft" className="p-0">
+                <div className="flex items-baseline justify-between px-4 pb-2 pt-3.5">
+                  <p className="font-semibold tracking-tight text-ink">
+                    {d.diaSemana}
+                  </p>
+                  <p className="text-xs text-ink-faint">
+                    dia {d.dia} · {d.fase}
+                  </p>
+                </div>
+                <ul className="divide-y divide-line-soft border-t border-line-soft">
+                  {REFEICOES.map(({ chave, rotulo, icone: Icone }) => {
+                    const receita = d[chave];
+                    return (
+                      <li
+                        key={chave}
+                        className="flex items-center gap-3 px-4 py-2.5"
+                      >
+                        <Icone className="size-4 shrink-0 text-ink-faint" />
+                        <span className="w-14 shrink-0 text-xs font-medium text-ink-faint">
+                          {rotulo}
+                        </span>
+                        <span className="min-w-0 flex-1 text-[15px] text-ink">
+                          {receita?.nome ?? "—"}
+                        </span>
+                        {receita && (
+                          <button
+                            onClick={() =>
+                              setTrocando({
+                                chave: `${semana}:${d.dia}:${chave}`,
+                                receita,
+                              })
+                            }
+                            aria-label={`Trocar ${rotulo} de ${d.diaSemana}`}
+                            className="grid size-8 shrink-0 place-items-center rounded-lg text-ink-faint transition-colors active:bg-cream-deep"
+                          >
+                            <RefreshCw className="size-4" />
+                          </button>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </Card>
+            </li>
           ))}
-          <p className="px-1 text-xs leading-relaxed text-ink-faint">
-            Em destaque, a opção principal de cada refeição. Toque pra ver as
-            variações — todas seguem a fase do seu dia.
-          </p>
-        </div>
+        </ul>
       ) : (
-        <ShoppingListView week={week} list={list} />
+        <ListaDeCompras lista={lista} />
       )}
+
+      {/* Tirar dúvida sobre o cardápio — a conversa é FUNÇÃO daqui, não uma
+          aba própria: o produto não é uma nutricionista de IA. */}
+      <Link
+        href="/duvida?sobre=cardapio"
+        className="mt-5 flex items-center gap-3 rounded-2xl border border-line bg-surface px-4 py-3.5 transition-colors active:bg-cream-deep"
+      >
+        <MessageCircle className="size-5 shrink-0 text-rose-deep" />
+        <span className="min-w-0 flex-1">
+          <span className="block font-semibold tracking-tight text-ink">
+            Ficou com dúvida?
+          </span>
+          <span className="block text-sm text-ink-soft">
+            Pergunte sobre qualquer refeição do seu cardápio
+          </span>
+        </span>
+      </Link>
+
+      <AnimatePresence>
+        {editandoGostos && (
+          <Preferencias aoFechar={() => setEditandoGostos(false)} />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {trocando && (
+          <EscolherTroca
+            atual={trocando.receita}
+            ctx={ctx}
+            aoEscolher={async (id) => {
+              await trocarRefeicao(trocando.chave, id);
+              setTrocando(null);
+            }}
+            aoFechar={() => setTrocando(null)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
 
-function DayMenuCard({
-  dia,
+function ListaDeCompras({
+  lista,
 }: {
-  dia: ReturnType<typeof menuForWeek>[number];
-}) {
-  const [open, setOpen] = useState(false);
-  return (
-    <Card elevation="soft" className="overflow-hidden p-0">
-      <div className="flex items-center gap-3 px-4 pt-3">
-        <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-cream-deep text-sm font-bold text-ink-soft">
-          {dia.weekday}
-        </span>
-        <p className="font-semibold tracking-tight text-ink">Dia {dia.day}</p>
-      </div>
-      <div className="space-y-2 px-4 py-3">
-        {MEAL_META.map((m) => {
-          const opts = dia[m.key];
-          if (!opts.length) return null;
-          const Icon = m.icon;
-          return (
-            <div key={m.key} className="flex items-start gap-2.5 text-[15px]">
-              <Icon className="mt-0.5 size-4 shrink-0 text-rose-deep" />
-              <div className="min-w-0 flex-1">
-                <span className="text-xs font-semibold uppercase tracking-wide text-ink-faint">
-                  {m.label}
-                </span>
-                <p className="text-ink">{opts[0]}</p>
-                <AnimatePresence initial={false}>
-                  {open && opts.length > 1 && (
-                    <motion.ul
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      className="overflow-hidden"
-                    >
-                      {opts.slice(1).map((o, i) => (
-                        <li key={i} className="mt-1 text-sm text-ink-soft">
-                          ou {o}
-                        </li>
-                      ))}
-                    </motion.ul>
-                  )}
-                </AnimatePresence>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      <button
-        onClick={() => setOpen((o) => !o)}
-        className="flex w-full items-center justify-center gap-1 border-t border-line py-2 text-xs font-semibold text-ink-faint"
-      >
-        {open ? "Esconder variações" : "Ver variações"}
-        <ChevronDown className={cn("size-4 transition-transform", open && "rotate-180")} />
-      </button>
-    </Card>
-  );
-}
-
-function ShoppingListView({
-  week,
-  list,
-}: {
-  week: number;
-  list: ReturnType<typeof buildShoppingList>;
+  lista: ReturnType<typeof buildShoppingList>;
 }) {
   const flags = useAppStore((s) => s.data.flags);
   const update = useAppStore((s) => s.update);
 
-  function toggle(slug: string) {
-    const key = `compras:${week}:${slug}`;
-    void update((d) => {
-      d.flags[key] = !d.flags[key];
-    });
+  const grupos = CATEGORY_ORDER.map((cat) => ({
+    cat,
+    itens: lista[cat] ?? [],
+  })).filter((g) => g.itens.length);
+
+  if (!grupos.length) {
+    return (
+      <p className="mt-6 rounded-2xl bg-surface px-4 py-6 text-center text-sm text-ink-soft">
+        A lista aparece quando o cardápio da semana estiver montado.
+      </p>
+    );
   }
 
   return (
-    <div className="space-y-4">
-      <p className="px-1 text-sm text-ink-soft">
-        Tudo que você precisa pra seguir o cardápio da semana sem pensar. Marque
-        conforme compra.
-      </p>
-      {CATEGORY_ORDER.map((cat) => {
-        const items = list[cat];
-        if (!items.length) return null;
-        const meta = CATEGORY_LABEL[cat];
-        return (
-          <Card key={cat} elevation="soft">
-            <h3 className="mb-2 flex items-center gap-2 font-semibold tracking-tight text-ink">
-              <span>{meta.emoji}</span> {meta.nome}
-            </h3>
-            <ul className="space-y-1">
-              {items.map((it) => {
-                const slug = itemSlug(it.item);
-                const checked = !!flags[`compras:${week}:${slug}`];
-                return (
-                  <li key={slug}>
-                    <button
-                      onClick={() => toggle(slug)}
-                      className="flex w-full items-center gap-3 rounded-xl px-2 py-2 text-left transition-colors active:bg-cream-deep/40"
+    <div className="mt-4 space-y-3">
+      {grupos.map((g) => (
+        <Card key={g.cat} elevation="soft">
+          <h2 className="eyebrow mb-2.5">{CATEGORY_LABEL[g.cat].nome}</h2>
+          <ul className="space-y-1">
+            {g.itens.map((i) => {
+              const chave = `compra:${itemSlug(i.item)}`;
+              const marcado = !!flags[chave];
+              return (
+                <li key={i.item}>
+                  <button
+                    onClick={() =>
+                      void update((d) => {
+                        d.flags[chave] = !d.flags[chave];
+                      })
+                    }
+                    className="flex w-full items-center gap-3 py-1.5 text-left"
+                  >
+                    <span
+                      className={cn(
+                        "grid size-5 shrink-0 place-items-center rounded-md border-2 transition-colors",
+                        marcado ? "border-rose bg-rose" : "border-line"
+                      )}
                     >
-                      <span
-                        className={cn(
-                          "grid size-5 shrink-0 place-items-center rounded-md border-2 transition-all",
-                          checked ? "border-rose bg-rose" : "border-line"
-                        )}
-                      >
-                        {checked && (
-                          <svg viewBox="0 0 24 24" className="size-3 text-white" fill="none" stroke="currentColor" strokeWidth={4}>
-                            <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
-                        )}
+                      {marcado && (
+                        <svg viewBox="0 0 12 12" className="size-3 text-white">
+                          <path
+                            d="M2 6.5 4.5 9 10 3"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      )}
+                    </span>
+                    <span
+                      className={cn(
+                        "min-w-0 flex-1 text-[15px]",
+                        marcado ? "text-ink-faint line-through" : "text-ink"
+                      )}
+                    >
+                      {i.item}
+                    </span>
+                    {i.qtys.length > 0 && (
+                      <span className="shrink-0 text-xs text-ink-faint">
+                        {i.qtys.join(" · ")}
                       </span>
-                      <span
-                        className={cn(
-                          "flex-1 text-[15px]",
-                          checked ? "text-ink-faint line-through" : "text-ink"
-                        )}
-                      >
-                        {it.item}
-                        {it.qtys.length > 0 && (
-                          <span className="text-ink-faint">
-                            {" "}
-                            — {it.qtys.join(", ")}
-                          </span>
-                        )}
-                      </span>
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          </Card>
-        );
-      })}
+                    )}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </Card>
+      ))}
     </div>
+  );
+}
+
+function EscolherTroca({
+  atual,
+  ctx,
+  aoEscolher,
+  aoFechar,
+}: {
+  atual: Recipe;
+  ctx: ContextoCardapio;
+  aoEscolher: (id: string) => void;
+  aoFechar: () => void;
+}) {
+  const opcoes = alternativasPara(atual, ctx, 6);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex flex-col justify-end bg-black/30"
+      onClick={aoFechar}
+    >
+      <motion.div
+        initial={{ y: 40 }}
+        animate={{ y: 0 }}
+        exit={{ y: 40 }}
+        onClick={(e) => e.stopPropagation()}
+        className="rounded-t-[2rem] bg-cream px-5 pb-safe pt-5"
+      >
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <h2 className="font-display text-h3 font-semibold text-ink">
+              Trocar por
+            </h2>
+            <p className="mt-0.5 text-sm text-ink-soft">
+              Mesmo tipo de refeição, ordenadas pelo que você gosta.
+            </p>
+          </div>
+          <button
+            onClick={aoFechar}
+            aria-label="Fechar"
+            className="grid size-9 shrink-0 place-items-center rounded-full text-ink-soft transition-colors active:bg-black/5"
+          >
+            <X className="size-5" />
+          </button>
+        </div>
+
+        <ul className="mb-4 mt-4 space-y-1.5">
+          {opcoes.map((r) => (
+            <li key={r.id}>
+              <button
+                onClick={() => aoEscolher(r.id)}
+                className="flex w-full items-center gap-3 rounded-2xl bg-surface px-4 py-3 text-left transition-transform active:scale-[0.99]"
+              >
+                <span className="min-w-0 flex-1">
+                  <span className="block font-medium text-ink">{r.nome}</span>
+                  <span className="block text-xs text-ink-faint">
+                    {r.tempo} · {r.phase}
+                  </span>
+                </span>
+                <RefreshCw className="size-4 shrink-0 text-rose-deep" />
+              </button>
+            </li>
+          ))}
+          {!opcoes.length && (
+            <li className="rounded-2xl bg-surface px-4 py-6 text-center text-sm text-ink-soft">
+              Não sobrou alternativa depois dos seus &ldquo;não é pra mim&rdquo;.
+              Ajuste as preferências para liberar mais opções.
+            </li>
+          )}
+        </ul>
+      </motion.div>
+    </motion.div>
   );
 }

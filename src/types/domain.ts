@@ -268,6 +268,17 @@ export interface AppData {
    * normalizar (Seção 5 do PLANO, regra vinda do WeightWatchers).
    */
   seedsLifetime: number;
+  /**
+   * O que ela gosta e o que ela não come — os toques de "gosto / não é pra
+   * mim" do onboarding do cardápio.
+   *
+   * É o que faz o plano parecer REAL antes de custar dinheiro: plano montado
+   * com comida que ela já come é plano que ela segue; plano genérico é o que
+   * ela abandona na terça-feira.
+   */
+  preferencias: { gosta: string[]; evita: string[] };
+  /** Trocas que ela fez no cardápio da semana (chave `semana:dia:refeicao`). */
+  trocasCardapio: Record<string, string>;
   /** Prazeres criados por ela, com o preço que ela mesma definiu. */
   prazeresProprios: Prazer[];
   /** Histórico de resgates da loja de Prazeres. */
@@ -318,6 +329,8 @@ export function emptyAppData(): AppData {
     progress: null,
     logs: [],
     refeicoes: [],
+    preferencias: { gosta: [], evita: [] },
+    trocasCardapio: {},
     prazeresProprios: [],
     resgates: [],
     scores: [],

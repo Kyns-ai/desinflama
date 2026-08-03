@@ -98,6 +98,10 @@ interface AppState {
     sementes: number;
   }>;
   removerRefeicao: (id: string) => Promise<void>;
+  /** Guarda o "gosto / não é pra mim" que personaliza o cardápio. */
+  definirPreferencias: (gosta: string[], evita: string[]) => Promise<void>;
+  /** Troca uma refeição do cardápio por outra receita (chave semana:dia:tipo). */
+  trocarRefeicao: (chave: string, receitaId: string) => Promise<void>;
   /** Resgata um prazer com sementes do SALDO (o nível do Broto não cai). */
   resgatarPrazer: (prazer: Prazer) => Promise<
     | { resgatado: false; saldo: number }
@@ -655,6 +659,25 @@ export const useAppStore = create<AppState>((set, get) => {
       if (alvo?.fotoRef) await blobStore.remove(alvo.fotoRef);
       await get().update((d) => {
         d.refeicoes = d.refeicoes.filter((r) => r.id !== id);
+      });
+    },
+
+      /* ---------------------------- Cardápio ---------------------------- */
+
+    /**
+     * Guarda o "gosto / não é pra mim". Substitui em vez de somar: se ela
+     * refaz a seleção, o que ficou de fora é porque ela tirou.
+     */
+    definirPreferencias: async (gosta, evita) => {
+      await get().update((d) => {
+        d.preferencias = { gosta, evita };
+      });
+    },
+
+    /** Troca uma refeição do cardápio da semana por outra receita. */
+    trocarRefeicao: async (chave, receitaId) => {
+      await get().update((d) => {
+        d.trocasCardapio[chave] = receitaId;
       });
     },
 

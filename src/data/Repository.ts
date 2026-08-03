@@ -67,6 +67,11 @@ function normalize(d: Partial<AppData>): AppData {
     subscription: { ...base.subscription, ...(d.subscription ?? {}) },
     logs: d.logs ?? [],
     refeicoes: d.refeicoes ?? [],
+    preferencias: {
+      gosta: d.preferencias?.gosta ?? [],
+      evita: d.preferencias?.evita ?? [],
+    },
+    trocasCardapio: d.trocasCardapio ?? {},
     prazeresProprios: d.prazeresProprios ?? [],
     resgates: d.resgates ?? [],
     scores: d.scores ?? [],

@@ -17,9 +17,16 @@
 /** A frase de capa. Curta o bastante para caber em duas linhas no celular. */
 export const PROMESSA_TITULO = "Coma para desinflamar,\nnão para contar caloria.";
 
-/** O que vem logo abaixo — é aqui que o multi-benefício aparece. */
+/**
+ * O que vem logo abaixo — é aqui que o multi-benefício aparece.
+ *
+ * 21 dias, não 14 (decisão do Ruyter em 03/08/2026: "14 é muito pouco").
+ * É honesto e é o arco real do produto: os 14 dias mapeiam os gatilhos, e o
+ * Reset de 21 é onde a rotina se monta. Prometer transformação em 14 seria
+ * prometer no meio do caminho.
+ */
 export const PROMESSA_SUBTITULO =
-  "Em 14 dias você descobre o que incha VOCÊ. E junto vêm energia, sono e pele.";
+  "Em 21 dias você monta uma rotina que não te incha. Na 2ª semana já sabe o que incha VOCÊ — e junto vêm energia, sono e pele.";
 
 /**
  * Ordem dos benefícios: força da evidência DECRESCENTE.
@@ -35,11 +42,18 @@ export const BENEFICIOS = [
   { chave: "pele", titulo: "Pele mais calma", detalhe: "para algumas pessoas" },
 ] as const;
 
-/** Projeção datada — o que acontece quando. */
+/**
+ * Projeção datada — o que acontece quando.
+ *
+ * Cada linha é um marco do MÉTODO, não uma promessa de resultado: 72h é o
+ * tempo de a fermentação ceder, 14 é quando a reintrodução termina, 21 é o
+ * fim do Reset. Datas que a gente controla, não que a gente torce.
+ */
 export const PROJECTION = [
   { when: "72h", dayOffset: 3, label: "fermentação acalmando" },
   { when: "7 dias", dayOffset: 7, label: "1ª vitória visível" },
   { when: "14 dias", dayOffset: 14, label: "seus gatilhos mapeados" },
+  { when: "21 dias", dayOffset: 21, label: "sua rotina montada" },
 ] as const;
 
 export const PROJECTION_NOTE =
@@ -52,4 +66,4 @@ export const PROJECTION_NOTE =
  * quando o corpo dela demora mais que a média.
  */
 export const PROMESSA_HONESTA =
-  "Mulheres que fizeram os 14 dias relatam barriga mais leve e mais disposição. Não é tratamento, não é garantia — é um método para você descobrir o seu padrão.";
+  "Mulheres que fizeram o programa relatam barriga mais leve e mais disposição. Não é tratamento, não é garantia — é um método para você descobrir o seu padrão.";

@@ -66,7 +66,7 @@ export default function Welcome() {
           transition={{ duration: 0.5, delay: 0.1, ease }}
           className="mb-4 inline-flex w-fit items-center gap-1.5 rounded-full bg-rose-tint px-3 py-1 text-xs font-semibold text-rose-dark"
         >
-          <Sparkles className="size-3.5" /> Desafio Desincha · 14 dias
+          <Sparkles className="size-3.5" /> Desafio Desincha · 21 dias
         </motion.span>
 
         <motion.h1
