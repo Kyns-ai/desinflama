@@ -44,8 +44,12 @@ export function LoginForm({ demo }: { demo: boolean }) {
         {pending ? "Entrando…" : "Entrar"}
       </button>
 
+      {/* A dica só aparece quando a senha de demonstração DE FATO funciona —
+          ou seja, fora de produção. Antes bastava não ter Supabase, o que
+          significa que um deploy em modo mock imprimiria a senha do painel
+          numa página pública. */}
       {demo && (
-        <p className="mt-4 rounded-lg bg-gold-tint px-3 py-2 text-xs text-[#9a7322]">
+        <p className="mt-4 rounded-lg bg-gold-tint px-3 py-2 text-xs text-gold-dark">
           Modo demonstração (sem Supabase). Senha: <strong>{DEMO_PASSWORD}</strong>
         </p>
       )}

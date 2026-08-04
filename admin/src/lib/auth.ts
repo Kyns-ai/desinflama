@@ -6,15 +6,28 @@ import { DEMO_PASSWORD } from "./constants";
 
 const COOKIE = "desinflama_admin";
 
-/** Em produção (Supabase configurado) exige ADMIN_PASSWORD — não cai no demo. */
+/**
+ * A senha de demonstração SÓ existe fora de produção.
+ *
+ * A regra anterior era "fail-closed quando o Supabase está configurado" — o
+ * que deixava um buraco exato: subir o admin em modo mock (sem Supabase), que
+ * é justamente o estado de hoje, abria o painel na internet com a senha
+ * `desinflama` para quem descobrisse a URL. O gatilho certo não é "tem
+ * backend?", é "está publicado?".
+ *
+ * Em produção sem ADMIN_PASSWORD o painel não abre para ninguém, de propósito:
+ * é melhor um deploy que não entra do que um painel aberto.
+ */
+const EM_PRODUCAO = process.env.NODE_ENV === "production";
+
 export function adminConfigured(): boolean {
-  return !env.supabase.configured || Boolean(env.admin.password);
+  return !EM_PRODUCAO || Boolean(env.admin.password);
 }
 
-/** Senha esperada, ou null quando há backend real sem ADMIN_PASSWORD (fail-closed). */
+/** Senha esperada, ou null quando está publicado sem ADMIN_PASSWORD. */
 export function expectedPassword(): string | null {
   if (env.admin.password) return env.admin.password;
-  return env.supabase.configured ? null : DEMO_PASSWORD;
+  return EM_PRODUCAO ? null : DEMO_PASSWORD;
 }
 
 /** Segredo para assinar o cookie (nunca o valor literal "ok", que seria forjável). */
