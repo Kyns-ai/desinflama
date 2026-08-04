@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Serviço de API do Desinflama: Nutri IA (foto + chat), liberação de acesso pelo funil e notificações.",
+  "description": "Servi\u00e7o de API do Desinflama: Nutri IA (foto + chat), libera\u00e7\u00e3o de acesso pelo funil e notifica\u00e7\u00f5es.",
   "scripts": {
     "dev": "tsx watch --env-file-if-exists=.env src/index.ts",
     "build": "tsc",
