@@ -2,7 +2,12 @@
 
 # Leia antes de tocar em qualquer coisa
 
-O trabalho atual segue **`docs/PLANO.md`** — o plano de refundação do produto
+**Comece por `docs/HANDOFF.md`.** Ele é mais novo que o plano e lista as
+decisões que o Ruyter tomou DEPOIS dele (a marca é rosa, são 21 dias, o quiz
+de venda é externo), as armadilhas desta base e como entrar no app em 5
+segundos para testar (`/demo`).
+
+Depois disso, o trabalho segue **`docs/PLANO.md`** — o plano de refundação do produto
 (promessa, personagem, economia de sementes, nota do prato, compartilhamento e
 identidade visual), com as fases na ordem de execução.
 
