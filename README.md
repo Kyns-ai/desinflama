@@ -1,5 +1,21 @@
 # Desinflama 🌿
 
+## No ar (Railway)
+
+| Serviço | URL |
+|---|---|
+| App da cliente | https://desinflama-production.up.railway.app |
+| Painel admin | https://desinflama-admin-production.up.railway.app |
+| API (Nutri IA, funil, webhook) | https://desinflama-api-production.up.railway.app |
+
+Os três deployam sozinhos a cada push na `main`. Configuração versionada em
+`railway.app.json`, `railway.admin.json` e `railway.api.json`; passo a passo e
+variáveis em `DEPLOY.md`.
+
+**O painel não abre sem `ADMIN_PASSWORD`** — em produção, sem ela, o login
+recusa todo mundo de propósito.
+
+
 Produto de saúde intestinal para mulheres (PT-BR). **Um codebase → Web/PWA +
 iOS (App Store) + Android (Google Play)**, com **Next.js (static export) +
 Capacitor**. Guia a usuária por um **Desafio Desincha de 14 dias** (Low FODMAP /

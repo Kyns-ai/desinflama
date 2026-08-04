@@ -24,8 +24,12 @@ export const metadata: Metadata = {
     default: "Desinflama — seu intestino, sem inchaço",
     template: "%s · Desinflama",
   },
+  // Sai da promessa em `content/promise.ts`, que é a fonte única. Estava com
+  // o texto antigo (14 dias, "barriga leve") e é isto que o Google e o
+  // WhatsApp mostram — desencontro aqui é desencontro na cara de quem recebe
+  // o link.
   description:
-    "O programa de 14 dias que descobre o que te incha e devolve sua barriga leve, sua energia e sua pele — sem dieta de calorias.",
+    "Coma para desinflamar, não para contar caloria. Em 21 dias você monta uma rotina que não te incha — e junto vêm energia, sono e pele.",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
